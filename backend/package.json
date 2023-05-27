@@ -8,7 +8,6 @@
       "start:prod": "set NODE_ENV=production && nodemon server.js"
    },
    "dependencies": {
-      "argon2": "^0.30.3",
       "cookie-parser": "~1.4.4",
       "debug": "~2.6.9",
       "dotenv": "^16.0.3",
@@ -17,8 +16,6 @@
       "js-guid": "^1.0.2",
       "morgan": "~1.9.1",
       "mssql": "^9.1.1",
-      "sequelize": "^6.31.1",
-      "tedious": "^16.1.0",
       "uuid": "^9.0.0"
    },
    "devDependencies": {

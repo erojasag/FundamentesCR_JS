@@ -1,20 +1,19 @@
-const Sequelize = require('sequelize');
-const path = require('path');
-const dotenv = require('dotenv');
+const mssql = require('mssql');
 
-dotenv.config({ path: path.join(__dirname, '../config.env') });
+const config = {
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  server: process.env.DB_URL,
+  database: process.env.DB,
+  options: {
+    trustServerCertificate: true,
+  },
+};
 
-const sequelize = new Sequelize(
-  process.env.DB,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    dialect: 'mssql',
-    logging: false,
-    define: {
-      freezeTableName: true,
-    },
-  }
-);
+mssql.connect(config).then(() => {
+  console.log('DB connection successful!');
+});
 
-module.exports = sequelize;
+const db = new mssql.Request();
+
+module.exports = db;
