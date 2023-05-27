@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const argon2 = require('argon2');
 const db = require('../config/db');
 
-const User = db.define('Usuarios', {
+const Usuarios = db.define('Usuarios', {
   IdUsuario: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -41,12 +41,12 @@ const User = db.define('Usuarios', {
   },
   Contrasena: {
     type: DataTypes.STRING(250),
-    allowNull: false,
+    allowNull: true,
   },
   ConfirmaContrasena: {
-    type: DataTypes.STRING(250),
+    type: DataTypes.VIRTUAL,
     required: true,
-    allowNull: false,
+    allowNull: true,
     validate: {
       passwordsMatch(Contrasena) {
         if (this.Contrasena !== Contrasena) {
@@ -57,6 +57,10 @@ const User = db.define('Usuarios', {
   },
   IdTipoUsuario: {
     type: DataTypes.UUID,
+    references: {
+      model: 'TipoUsuario',
+      key: 'IdTipoUsuario',
+    },
   },
   updatedAt: {
     type: DataTypes.DATE,
@@ -66,10 +70,14 @@ const User = db.define('Usuarios', {
   },
 });
 
-User.beforeCreate(async (user) => {
+Usuarios.beforeCreate(async (user) => {
   const hashPassword = await argon2.hash(user.Contrasena);
   user.Contrasena = hashPassword;
-  user.ConfirmaContrasena = hashPassword;
+  // user.ConfirmaContrasena = hashPassword;
 });
 
-module.exports = User;
+Usuarios.associate = (models) => {
+  Usuarios.belongsTo(models.TipoUsuario, { foreignKey: 'IdTipoUsuario' });
+};
+
+module.exports = Usuarios;

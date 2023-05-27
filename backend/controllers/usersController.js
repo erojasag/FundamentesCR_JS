@@ -1,12 +1,13 @@
-const UsuarioModel = require('../models/Usuario');
+const UsuarioModel = require('../models/Usuarios');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 const getAllUsers = catchAsync(async (req, res, next) => {
   const usuarios = await UsuarioModel.findAll({
-    attributes: { exclude: ['updatedAt', 'createdAt'] },
+    attributes: { exclude: ['Contrasena'] },
+    include: ['IdTipoUsuario'],
   });
-
+  console.log(usuarios);
   if (usuarios.length === 0) return next(new AppError('No hay usuarios', 404));
 
   res.status(200).json({
@@ -19,7 +20,9 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 
 const getUserById = catchAsync(async (req, res, next) => {
   const usuario = await UsuarioModel.findByPk(req.params.id, {
-    attributes: { exclude: ['updatedAt', 'createdAt'] },
+    attributes: {
+      exclude: ['Contrasena'],
+    },
   });
   console.log(usuario);
   if (!usuario) return next(new AppError('No existe el usuario', 404));
@@ -33,7 +36,7 @@ const getUserById = catchAsync(async (req, res, next) => {
 
 const updateUser = catchAsync(async (req, res, next) => {
   const usuario = await UsuarioModel.findByPk(req.params.id, {
-    attributes: { exclude: ['updatedAt', 'createdAt'] },
+    attributes: { exclude: ['updatedAt'] },
   });
 
   if (!usuario)

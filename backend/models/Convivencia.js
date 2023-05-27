@@ -23,11 +23,15 @@ const Convivencia = db.define('Convivencia', {
     allowNull: false,
   },
   OtraPersona: {
-    type: DataTypes.STRING,
+    type: DataTypes.BOOLEAN,
   },
   IdDatosPersona: {
     type: DataTypes.UUID,
     allowNull: false,
+    references: {
+      model: 'DatosPersona',
+      key: 'IdDatosPersona',
+    },
   },
 });
 

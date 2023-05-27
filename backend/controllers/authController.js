@@ -1,5 +1,5 @@
 const argon2 = require('argon2');
-const UserModel = require('../models/Usuario');
+const UserModel = require('../models/Usuarios');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const db = require('../config/db');

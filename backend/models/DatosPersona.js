@@ -38,8 +38,8 @@ const DatosPersona = db.define('DatosPersona', {
   Cedula: {
     type: DataTypes.STRING,
     allowNull: false,
-    
   },
+  
 });
 
 module.exports = DatosPersona;

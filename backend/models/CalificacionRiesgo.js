@@ -18,9 +18,13 @@ const CalificacionRiesgo = db.define('CalificacionRiesgo', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  IdDatosPerson: {
-    type: DataTypes.UUID,
+  IdDatosPersona: {
+    type: DataTypes.UUIDV4,
     allowNull: false,
+    references:{
+      model: 'DatosPersona',
+      key: 'IdDatosPersona',
+    }
   },
 });
 

@@ -11,12 +11,20 @@ const DatosExpedientes = db.define('DatosExpedientes', {
     allowNull: false,
   },
   IdUsuario: {
-    type: DataTypes.UUID,
+    type: DataTypes.UUIDV4,
     allowNull: false,
+    references: {
+      model: 'Usuario',
+      key: 'IdUsuario',
+    },
   },
   IdEstado: {
     type: DataTypes.UUID,
     allowNull: false,
+    references: {
+      model: 'Estado',
+      key: 'IdEstado',
+    },
   },
 });
 
