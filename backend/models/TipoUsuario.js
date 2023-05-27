@@ -12,8 +12,4 @@ const TipoUsuario = db.define('TipoUsuario', {
   },
 });
 
-TipoUsuario.associate = (models) => {
-  TipoUsuario.hasMany(models.Usuario, { foreignKey: 'IdTipoUsuario' });
-};
-
 module.exports = TipoUsuario;

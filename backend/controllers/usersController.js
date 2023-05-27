@@ -1,11 +1,11 @@
 const UsuarioModel = require('../models/Usuarios');
+
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 const getAllUsers = catchAsync(async (req, res, next) => {
   const usuarios = await UsuarioModel.findAll({
     attributes: { exclude: ['Contrasena'] },
-    include: ['IdTipoUsuario'],
   });
   console.log(usuarios);
   if (usuarios.length === 0) return next(new AppError('No hay usuarios', 404));
