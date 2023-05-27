@@ -1,121 +1,83 @@
-const db = require('../config/db');
-const UsuarioModel = require('../models/Usuario');
+const UsuarioModel = require('../models/Usuarios');
+const AppError = require('../utils/appError');
+const catchAsync = require('../utils/catchAsync');
 
-const getAllUsers = async (req, res) => {
-  try {
-    const query = await db.query('SELECT * FROM Usuario');
+const getAllUsers = catchAsync(async (req, res, next) => {
+  const usuarios = await UsuarioModel.findAll({
+    attributes: { exclude: ['Contrasena'] },
+    include: ['IdTipoUsuario'],
+  });
+  console.log(usuarios);
+  if (usuarios.length === 0) return next(new AppError('No hay usuarios', 404));
 
-    const listUsers = { ...query.recordset };
-    console.log(listUsers);
-    res.status(200).json({
-      status: 'success',
-      results: query.recordset.length,
-      data: {
-        listUsers,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      Usuarios: usuarios,
+    },
+  });
+});
 
-const createUser = async (req, res) => {
-  try {
-    const newUser = new UsuarioModel(
-      req.body.nombre,
-      req.body.apellido1,
-      req.body.apellido2,
-      req.body.cedula,
-      req.body.correo,
-      req.body.contrasena,
-      req.body.IdTipoUsuario
+const getUserById = catchAsync(async (req, res, next) => {
+  const usuario = await UsuarioModel.findByPk(req.params.id, {
+    attributes: {
+      exclude: ['Contrasena'],
+    },
+  });
+  console.log(usuario);
+  if (!usuario) return next(new AppError('No existe el usuario', 404));
+  res.status(200).json({
+    status: 'success',
+    data: {
+      usuario,
+    },
+  });
+});
+
+const updateUser = catchAsync(async (req, res, next) => {
+  const usuario = await UsuarioModel.findByPk(req.params.id, {
+    attributes: { exclude: ['updatedAt'] },
+  });
+
+  if (!usuario)
+    return next(
+      new AppError('El usuario que intenta modificar no existe', 404)
     );
-    console.log(newUser);
-    const query = await db.query(
-      `INSERT INTO Usuario (IdUsuario, Nombre, Apellido1, Apellido2, Cedula, Correo, Contrasena, IdTipoUsuario) 
-       VALUES (@IdUsuario, @Nombre, @Apellido1, @Apellido2, @Cedula, @Correo, @Contrasena, @IdTipoUsuario)`,
-      {
-        IdUsuario: newUser.idUsuario,
-        Nombre: newUser.nombre,
-        Apellido1: newUser.apellido1,
-        Apellido2: newUser.apellido2,
-        Cedula: newUser.cedula,
-        Correo: newUser.correo,
-        Contrasena: newUser.contrasena,
-        IdTipoUsuario: newUser.IdTipoUsuario
-      }
-    );
-    // const user = req.body;
-    // console.log(user);
-    res.status(200).json({
-      status: 'success',
-      data: {
-        query,
-      },
-      message: 'User created successfully!',
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
-};
 
-const getUserById = async (req, res) => {
-  try {
-    res.status(200).json({
-      status: 'success',
-      data: {
-        users: 'users',
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
-};
+  usuario.Nombre = req.body.Nombre;
+  usuario.Apellido1 = req.body.Apellido1;
+  usuario.Apellido2 = req.body.Apellido2;
+  usuario.Cedula = req.body.Cedula;
+  usuario.Correo = req.body.Correo;
+  usuario.Contrasena = req.body.Contrasena;
+  usuario.ConfirmaContrasena = req.body.ConfirmaContrasena;
 
-const updateUser = async (req, res) => {
-  try {
-    res.status(200).json({
-      status: 'success',
-      data: {
-        users: 'users',
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
-};
+  const query = await usuario.save();
+  if (!query)
+    return next(new AppError('No se pudo actualizar el usuario', 500));
 
-const deleteUserById = async (req, res) => {
-  try {
-    res.status(200).json({
-      status: 'success',
-      data: {
-        users: 'users',
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
+  res.status(200).json({
+    status: 'success',
+    message: 'Usuario actualizado',
+  });
+});
+
+const deleteUserById = async (req, res, next) => {
+  const query = await UsuarioModel.destroy({
+    where: {
+      IdUsuario: req.params.id,
+    },
+  });
+
+  if (!query) return next(new AppError('No se pudo eliminar el usuario', 500));
+  res.status(200).json({
+    status: 'success',
+    message: 'Usuario eliminado',
+  });
 };
 
 module.exports = {
   getAllUsers,
-  createUser,
   getUserById,
   updateUser,
   deleteUserById,
