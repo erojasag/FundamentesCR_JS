@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Home() {
+export default function Registrarse() {
   return (
     <React.Fragment>
-    <div class="container">
+            <div class="container">
 
 <div class="row justify-content-center">
 
@@ -11,9 +11,9 @@ export default function Home() {
 
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
+
                 <div class="row">
-                    <div class="col-lg-6 d-none d-lg-block bg-login-image" ></div>
-                       
+                    <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
                     <div class="col-lg-6">
                         <div class="p-5">
                             <div class="text-center">
@@ -21,10 +21,22 @@ export default function Home() {
                             </div>
                             <form class="user">
                                 <div class="form-group">
+                                    <input type="email" class="form-control form-control-user" placeholder="Nombre" asp-for="Nombre"/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-user" placeholder="Apellidos" asp-for="Apellidos"/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-user" placeholder="Cedula" asp-for="Cedula"/>
+                                </div>
+                                <div class="form-group">
                                     <input type="email" class="form-control form-control-user" placeholder="Correo" asp-for="Correo"/>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control form-control-user" placeholder="Contraseña" asp-for="Clave"/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-user" placeholder=" Confirmar Contraseña" asp-for="Clave"/>
                                 </div>
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox small">
@@ -33,25 +45,15 @@ export default function Home() {
                                     </div>
                                 </div>
 
-                               
-                                {/* <!-- @if (ViewData["Mensaje"] != null)
-                                        {
-                                            <div class="form-group">
-                                                <div class="alert alert-danger" role="alert">
-                                                    @ViewData["Mensaje"]
-                                                </div>
-                                            </div>
-                                        }
-                                         --> */}
-                                 
-                                 
-                                
-                                <a class="btn btn-primary btn-user btn-block" href="Registrarse">Registrarse</a>
-                                <a class="btn btn-primary btn-user btn-block" href='Inicio'>Iniciar</a>
-                            </form>
                             
+                                
+                                <a class="btn btn-primary btn-user btn-block" href="/Inicio">Ingresar</a>
+                             
+                                <a class="btn btn-primary btn-user btn-block" href="/">Cancelar</a>
+                            </form>
+                            <hr/>
                             <div class="text-center">
-                                <a class="small" href="forgotPass">¿Olvidó su contraseña?</a>
+                            
                             </div>
                         </div>
                     </div>
@@ -65,5 +67,6 @@ export default function Home() {
 
 </div>
     </React.Fragment>
-  )
+    )
+
 }

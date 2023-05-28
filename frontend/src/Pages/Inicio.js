@@ -51,8 +51,8 @@ export default function Index() {
                 </a>
                 <div id="collapseExpediente" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="usuarios.html">Paciente</a>
-                        <a class="collapse-item" href="EditarUsuario.html">Editar Paciente</a>
+                        <a class="collapse-item" href="/Pascientes">Paciente</a>
+                        <a class="collapse-item" href="/EditarPasciente">Editar Paciente</a>
                     </div>
                 </div>
             </li>
@@ -87,8 +87,8 @@ export default function Index() {
                 <div id="collapseEntrada" class="collapse" aria-labelledby="headingEntrada"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="PerfilEntrada.html">Perfil de Entrada</a>
-                        <a class="collapse-item" href="EditarPerfilEntrada.html">Editar Perfil de Entrada</a>
+                        <a class="collapse-item" href="/PerfilEntrada">Perfil de Entrada</a>
+                        <a class="collapse-item" href="/EditarPerfilEntrada">Editar Perfil de Entrada</a>
                     </div>
                 </div>
             </li>
@@ -101,8 +101,8 @@ export default function Index() {
                 <div id="collapseSalida" class="collapse" aria-labelledby="headingSalida"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="EditarPerfilSalida.html">Perfil de Salida</a>
-                        <a class="collapse-item" href="EditarPerfilSalida.html">Editar Perfil de Salida</a>
+                        <a class="collapse-item" href="/PerfilSalida">Perfil de Salida</a>
+                        <a class="collapse-item" href="/EditarPerfilSalida">Editar Perfil de Salida</a>
                     </div>
                 </div>
             </li>
@@ -115,8 +115,8 @@ export default function Index() {
                 <div id="collapseEncuesta" class="collapse" aria-labelledby="headingEncuesta"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="ListaEncuestas.html">Encuesta de Satisfacción</a>
-                        <a class="collapse-item" href="Encuestas.html">Agregar Encuesta</a>
+                        <a class="collapse-item" href="/EncuestaSatisfaccion">Encuesta de Satisfacción</a>
+                        <a class="collapse-item" href="/Encuestas">Agregar Encuesta</a>
                     </div>
                 </div>
             </li>
