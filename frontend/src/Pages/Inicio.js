@@ -37,8 +37,8 @@ export default function Index() {
                 </a>
                 <div id="collapseAdministracion" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="usuarioLog.html">Usuarios</a>
-                        <a class="collapse-item" href="EditarUsuarioLog.html">Editar Usuario</a>
+                        <a class="collapse-item" href="UsuarioLog">Usuarios</a>
+                        <a class="collapse-item" href="EditarUsuarioLog">Editar Usuario</a>
                     </div>
                 </div>
             </li>
@@ -65,15 +65,14 @@ export default function Index() {
                 </a>
                 <div id="collapseInventario" class="collapse" aria-labelledby="headingInventario" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="btn btn-primary btn-user btn-block" href="Index.html"></a>
-                        <a class="collapse-item" href="#">Datos de Expedientes</a>
+                        <a class="collapse-item" href="DatosExpediente">Datos de Expedientes</a>
                         <a class="collapse-item" href="usuarios.html">Datos de Pacientes</a>
-                        <a class="collapse-item" href="PersonaResponsable.html">Persona Responsable</a>
-                        <a class="collapse-item" href="#">Convivencia</a>
-                        <a class="collapse-item" href="#">Datos SocioEconomicos</a>
-                        <a class="collapse-item" href="#">Factor Psicosocial</a>
-                        <a class="collapse-item" href="#">Calificación Riesgo</a>
-                        <a class="collapse-item" href="#">Estado del Expediente</a>
+                        <a class="collapse-item" href="PersonaResponsable">Persona Responsable</a>
+                        <a class="collapse-item" href="Convivencia">Convivencia</a>
+                        <a class="collapse-item" href="DatosSocioEconomicos">Datos SocioEconomicos</a>
+                        <a class="collapse-item" href="FactorPsicosocial">Factor Psicosocial</a>
+                        <a class="collapse-item" href="CalificacionRiesgo">Calificación Riesgo</a>
+                        <a class="collapse-item" href="EstadoExpediente">Estado del Expediente</a>
                     </div>
                 </div>
             </li>
@@ -128,7 +127,7 @@ export default function Index() {
                 </a>
                 <div id="collapseReportes" class="collapse" aria-labelledby="headingInventario" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="reporteExpediente.html">Datos Expedientes</a>
+                        <a class="collapse-item" href="ReporteExpediente">Datos Expedientes</a>
                     </div>
                 </div>
             </li>
@@ -140,7 +139,7 @@ export default function Index() {
                 </a>
                 <div id="collapseAcciones" class="collapse" aria-labelledby="headingAcciones" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="Acciones.html">Reporte de Acciones</a>
+                        <a class="collapse-item" href="Acciones">Reporte de Acciones</a>
                     </div>
                 </div>
             </li>
