@@ -5,6 +5,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const userRouter = require('./routes/usersRoute');
 const expedienteRouter = require('./routes/expedientesRoute');
+const ErrorHandler = require('./controllers/errorController');
 // create and setup express app
 const app = express();
 app.use(express.json());
@@ -21,5 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', userRouter);
 app.use('/expedientes', expedienteRouter);
+
+app.use(ErrorHandler);
 
 module.exports = app;

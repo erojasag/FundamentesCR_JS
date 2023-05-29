@@ -1,4 +1,5 @@
 const UsuarioModel = require('../models/Usuarios');
+const TipoUsuarioModel = require('../models/TipoUsuario');
 
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
@@ -7,7 +8,6 @@ const getAllUsers = catchAsync(async (req, res, next) => {
   const usuarios = await UsuarioModel.findAll({
     attributes: { exclude: ['Contrasena'] },
   });
-  console.log(usuarios);
   if (usuarios.length === 0) return next(new AppError('No hay usuarios', 404));
 
   res.status(200).json({
@@ -19,13 +19,22 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 const getUserById = catchAsync(async (req, res, next) => {
+  //requests the user based on the id
   const usuario = await UsuarioModel.findByPk(req.params.id, {
     attributes: {
       exclude: ['Contrasena'],
     },
   });
-  console.log(usuario);
   if (!usuario) return next(new AppError('No existe el usuario', 404));
+
+  //requests the user type based on the IdTipoUsuario
+  const tipoUsuario = await TipoUsuarioModel.findByPk(usuario.IdTipoUsuario, {
+    attributes: {
+      exclude: ['createdAt', 'updatedAt'],
+    },
+  });
+  usuario.dataValues.IdTipoUsuario = tipoUsuario.dataValues.Descripcion;
+
   res.status(200).json({
     status: 'success',
     data: {

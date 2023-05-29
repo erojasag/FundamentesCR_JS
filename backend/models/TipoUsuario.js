@@ -3,7 +3,7 @@ const db = require('../config/db');
 
 const TipoUsuario = db.define('TipoUsuario', {
   IdTipoUsuario: {
-    type: DataTypes.UUIDV4,
+    type: DataTypes.UUID,
     primaryKey: true,
   },
   Descripcion: {
@@ -11,5 +11,14 @@ const TipoUsuario = db.define('TipoUsuario', {
     allowNull: false,
   },
 });
+
+TipoUsuario.getRole = async (id) => {
+  const { Descripcion } = await TipoUsuario.findByPk(id, {
+    attributes: {
+      exclude: ['createdAt', 'updatedAt'],
+    },
+  });
+  return Descripcion;
+};
 
 module.exports = TipoUsuario;
