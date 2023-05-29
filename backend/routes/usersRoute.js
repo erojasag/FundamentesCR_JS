@@ -2,8 +2,8 @@ const express = require('express');
 const {
   getAllUsers,
   getUserById,
-  deleteUserById,
-  updateUser,
+  deleteMe,
+  updateMe,
 } = require('../controllers/usersController');
 
 const {
@@ -13,6 +13,7 @@ const {
   restrictTo,
   forgotPassword,
   resetPassword,
+  updateMyPassword,
 } = require('../controllers/authController');
 
 const router = express.Router();
@@ -21,13 +22,15 @@ router
   .post('/signup', signup)
   .post('/login', login)
   .post('/forgotPassword', forgotPassword)
-  .patch('/resetPassword/:token', resetPassword);
+  .patch('/resetPassword/:token', resetPassword)
+  .post('/updateMyPassword', protect, updateMyPassword)
+  .patch('/updateMe', protect, updateMe)
+  .delete('/deleteMe', protect, deleteMe);
 
-router.route('/').get(protect, getAllUsers);
 router
-  .route('/:id')
-  .get(getUserById)
-  .patch(updateUser)
-  .delete(protect, restrictTo('Administrador', 'Psicologo'), deleteUserById);
+  .route('/')
+  .get(protect, restrictTo('Administrador', 'Psicologo'), getAllUsers);
+
+router.route('/:id').get(protect, getUserById);
 
 module.exports = router;

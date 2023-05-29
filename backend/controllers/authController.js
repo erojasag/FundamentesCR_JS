@@ -1,13 +1,12 @@
 const jwt = require('jsonwebtoken');
-// const { Op } = require('sequelize');
+const { Op } = require('sequelize');
 const crypto = require('crypto');
 const UsuarioModel = require('../models/Usuarios');
+const TipoUsuarioModel = require('../models/TipoUsuario');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
-
 const db = require('../config/db');
-const TipoUsuario = require('../models/TipoUsuario');
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -15,26 +14,33 @@ const signToken = (id) => {
   });
 };
 
-const signup = catchAsync(async (req, res, next) => {
-  const newUser = await UsuarioModel.build(req.body);
-  await db.query('DISABLE TRIGGER ALL ON Usuarios;');
-  const query = await newUser.save();
-  await db.query('ENABLE TRIGGER ALL ON Usuarios;');
+const verifyToken = async (token) => {
+  return await jwt.verify(token, process.env.JWT_SECRET);
+};
 
-  if (!query) return next(new AppError('No se pudo crear el usuario', 500));
-
-  const token = signToken(query.IdUsuario);
-
-  const rolUsuario = await TipoUsuario.getRole(query.IdTipoUsuario);
-
-  res.status(201).json({
+const createAndSendToken = (user, statusCode, res) => {
+  const token = signToken(user.IdUsuario);
+  res.status(statusCode).json({
     status: 'success',
     token,
     data: {
-      user: query,
-      role: rolUsuario,
+      user,
     },
   });
+};
+
+const signup = catchAsync(async (req, res, next) => {
+  await db.query('DISABLE TRIGGER ALL ON Usuarios;');
+  const newUser = await UsuarioModel.create(req.body);
+  await newUser.save();
+  await db.query('ENABLE TRIGGER ALL ON Usuarios;');
+
+  if (!newUser) return next(new AppError('No se pudo crear el usuario', 500));
+
+  const user = await UsuarioModel.findByPk(newUser.IdUsuario);
+
+  user.Contrasena = undefined;
+  createAndSendToken(user, 201, res);
 });
 
 const login = catchAsync(async (req, res, next) => {
@@ -50,21 +56,13 @@ const login = catchAsync(async (req, res, next) => {
   if (!user) return next(new AppError('El usuario no existe', 401));
   if (
     !user ||
-    !(await UsuarioModel.correctPassword(Contrasena, user.Contrasena))
+    !(await UsuarioModel.checkPassword(Contrasena, user.Contrasena))
   ) {
     return next(new AppError('Correo o contraseña incorrectos', 401));
   }
-  const token = signToken(user.IdUsuario);
-
-  res.status(200).json({
-    status: 'success',
-    token,
-  });
+  user.Contrasena = undefined;
+  createAndSendToken(user, 200, res);
 });
-
-const verifyToken = async (token) => {
-  return await jwt.verify(token, process.env.JWT_SECRET);
-};
 
 const protect = catchAsync(async (req, res, next) => {
   let token;
@@ -79,7 +77,13 @@ const protect = catchAsync(async (req, res, next) => {
   if (!token) return next(new AppError('Por favor inicie sesión', 401));
 
   const { id, iat } = await verifyToken(token);
-  const currentUser = await UsuarioModel.findByPk(id);
+  const currentUser = await UsuarioModel.findByPk(id, {
+    include: {
+      model: TipoUsuarioModel,
+      as: 'TipoUsuario',
+      attributes: ['Descripcion'],
+    },
+  });
   if (!currentUser)
     return next(
       new AppError('El usuario al que pertenece el token ya no existe', 401)
@@ -95,11 +99,9 @@ const protect = catchAsync(async (req, res, next) => {
     );
   }
 
-  const rolUsuario = await TipoUsuario.getRole(currentUser.IdTipoUsuario);
-  currentUser.role = rolUsuario;
-
   //GRANT ACCESS TO PROTECTED ROUTE
   req.user = currentUser;
+  req.user.role = currentUser.TipoUsuario.dataValues.Descripcion;
   next();
 });
 
@@ -136,7 +138,7 @@ const forgotPassword = catchAsync(async (req, res, next) => {
     'host'
   )}/users/resetPassword/${resetToken}`;
 
-  const message = `Olvidó su contraseña? Envíe un PATCH con su nueva contraseña y confirmación de contraseña a: ${resetURL}.\nSi no olvidó su contraseña, por favor ignore este correo`;
+  const message = `Olvidó su contraseña? Envíe un PATCH con su nueva contraseña y confirmación de contraseña a: ${resetURL}\nSi no olvidó su contraseña, por favor ignore este correo`;
 
   try {
     await sendEmail({
@@ -176,16 +178,12 @@ const resetPassword = catchAsync(async (req, res, next) => {
     .update(req.params.token)
     .digest('hex');
 
-  console.log(hashedToken);
-
   const user = await UsuarioModel.findOne({
     where: {
       ContrasenaResetToken: hashedToken,
-      // ContrasenaResetExpires: { [Op.gt]: Date.now() },
+      ContrasenaResetExpires: { [Op.gt]: Date.now() },
     },
   });
-
-  console.log(user);
 
   if (!user) {
     return next(new AppError('El token es inválido o ha expirado', 400));
@@ -199,14 +197,33 @@ const resetPassword = catchAsync(async (req, res, next) => {
   //salvamos los tokens nullos despues del reseteo
   await user.save();
 
-  const token = signToken(user.IdUsuario);
-  res.status(200).json({
-    status: 'success',
-    token,
-    message: 'Contraseña actualizada',
-  });
+  createAndSendToken(user, 200, res);
 });
 
+const updateMyPassword = catchAsync(async (req, res, next) => {
+  //get the user from collection
+  const user = await UsuarioModel.findByPk(req.user.IdUsuario, {
+    validators: true,
+  });
+
+  //check if posted current password is correct
+  if (
+    !(await UsuarioModel.correctPassword(
+      req.body.ContrasenaActual,
+      user.Contrasena
+    ))
+  ) {
+    return next(new AppError('Su contraseña actual es incorrecta', 401));
+  }
+
+  //if so, update password
+  user.Contrasena = req.body.Contrasena;
+  user.ConfirmaContrasena = req.body.ConfirmaContrasena;
+  await user.save();
+
+  //salvamos los tokens nullos despues del reseteo
+  createAndSendToken(user, 200, res);
+});
 module.exports = {
   signup,
   login,
@@ -214,4 +231,5 @@ module.exports = {
   restrictTo,
   forgotPassword,
   resetPassword,
+  updateMyPassword,
 };

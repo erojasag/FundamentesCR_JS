@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+// const Usuarios = require('./Usuarios');
 const db = require('../config/db');
 
 const TipoUsuario = db.define('TipoUsuario', {
@@ -20,5 +21,10 @@ TipoUsuario.getRole = async (id) => {
   });
   return Descripcion;
 };
+
+// TipoUsuario.hasMany(Usuarios, {
+//   foreignKey: 'IdTipoUsuario',
+//   as: 'Usuarios',
+// });
 
 module.exports = TipoUsuario;

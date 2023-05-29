@@ -12,23 +12,18 @@ const Usuarios = db.define(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      // allowNull: false,
     },
     Nombre: {
       type: DataTypes.STRING(100),
-      // allowNull: false,
     },
     Apellido1: {
       type: DataTypes.STRING(100),
-      // allowNull: false,
     },
     Apellido2: {
       type: DataTypes.STRING(100),
-      // allowNull: false,
     },
     Cedula: {
       type: DataTypes.STRING(15),
-      // allowNull: false,
       unique: true,
       validate: {
         isNumeric: true,
@@ -38,7 +33,6 @@ const Usuarios = db.define(
     },
     Correo: {
       type: DataTypes.STRING(100),
-      // allowNull: false,
       unique: true,
       validate: {
         isEmail: true,
@@ -88,6 +82,11 @@ const Usuarios = db.define(
       type: DataTypes.DATE,
       allowNull: true,
     },
+    Activo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      select: false,
+    },
   },
   {
     name: {
@@ -97,25 +96,51 @@ const Usuarios = db.define(
   }
 );
 
-Usuarios.beforeCreate(async (user) => {
-  const hashPassword = await argon2.hash(user.Contrasena);
-  user.Contrasena = hashPassword;
-  user.ConfirmaContrasena = undefined;
-});
-
 Usuarios.beforeUpdate(async (user) => {
   const hashPassword = await argon2.hash(user.Contrasena);
   user.Contrasena = hashPassword;
   user.ConfirmaContrasena = hashPassword;
 });
 
-Usuarios.beforeSave(async (user) => {
+Usuarios.beforeUpdate(async (user) => {
   if (user.changed('Contrasena') || user.isNewRecord) {
     user.ContrasenaChangedAt = Date.now() - 1000;
   }
 });
 
-Usuarios.correctPassword = async (candidatePassword, userPassword) => {
+Usuarios.beforeUpdate(async (user) => {
+  if (user.changed()) {
+    user.updatedAt = Date.now();
+  }
+});
+
+Usuarios.addHook('beforeFind', (options) => {
+  options.where = {
+    ...(options.where || {}),
+    Activo: true,
+  };
+  options.attributes = {
+    exclude: [
+      'Cedula',
+      'IdTipoUsuario',
+      'ContrasenaResetToken',
+      'ContrasenaResetExpires',
+      'Activo',
+      'ContrasenaChangedAt',
+      'createdAt',
+      'updatedAt',
+    ],
+  };
+  options.include = [
+    {
+      model: TipoUsuario,
+      as: 'TipoUsuario',
+      attributes: ['Descripcion'],
+    },
+  ];
+});
+
+Usuarios.checkPassword = async (candidatePassword, userPassword) => {
   return await argon2.verify(userPassword, candidatePassword);
 };
 
@@ -132,8 +157,12 @@ Usuarios.changedPasswordAfter = function (JWTTimestamp) {
 
 Usuarios.createPasswordResetToken = function () {
   const token = crypto.randomBytes(32).toString('hex');
-
   return token;
 };
+
+Usuarios.belongsTo(TipoUsuario, {
+  foreignKey: 'IdTipoUsuario',
+  as: 'TipoUsuario',
+});
 
 module.exports = Usuarios;
