@@ -4,31 +4,20 @@ export default function Index() {
 <React.Fragment>
 
     <div id="page-top">
-
-
     <div id="wrapper">
-
-
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-   
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Inicio">
                 <div class="sidebar-brand-icon">
-                    <img src="Assets/img/Logo.png" alt="" style={{width: '80px',height: '90px' ,float: 'left'}}/>
-                    
+                    <img src="Assets/img/Logo.png" alt="" style={{width: '80px',height: '90px' ,float: 'left'}}/>  
                 </div>
                 <div class="sidebar-brand-text mx-0">Fundamentes</div>
             </a>
-
             <hr class="sidebar-divider my-0"/>
-
-         
             <li class="nav-item">
                 <a class="nav-link" href="Inicio">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-       
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdministracion"
                     aria-expanded="true" aria-controls="collapseAdministracion">
@@ -66,7 +55,7 @@ export default function Index() {
                 <div id="collapseInventario" class="collapse" aria-labelledby="headingInventario" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="DatosExpediente">Datos de Expedientes</a>
-                        <a class="collapse-item" href="usuarios.html">Datos de Pacientes</a>
+                        <a class="collapse-item" href="Pascientes">Datos de Pacientes</a>
                         <a class="collapse-item" href="PersonaResponsable">Persona Responsable</a>
                         <a class="collapse-item" href="Convivencia">Convivencia</a>
                         <a class="collapse-item" href="DatosSocioEconomicos">Datos SocioEconomicos</a>
@@ -165,7 +154,7 @@ export default function Index() {
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="perfil.html">
+                                <a class="dropdown-item" href="Perfil">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
                                 </a>

@@ -31,6 +31,7 @@ import PerfilSalida from './Pages/PerfilSalida';
 import EditarPerfilSalida from './Pages/EditarPerfilSalida';
 import EncuestaSatisfaccion from './Pages/EncuestaSatisfaccion';
 import Encuestas from './Pages/Encuestas';
+import Perfil from './Pages/Perfil';
 
 export default function App() {
   return (
@@ -44,63 +45,31 @@ export default function App() {
           <Route path='/Pascientes' element={<Pascientes />} />
           <Route path='/EditarPasciente' element={<EditarPasciente />} />
           <Route path='/PerfilEntrada' element={<PerfilEntrada />} />
-          <Route
-            path='/EditarPerfilEntrada'
-            element={<EditarPerfilEntrada />}
-          />
+          <Route path='/EditarPerfilEntrada' element={<EditarPerfilEntrada />} />
           <Route path='/PerfilSalida' element={<PerfilSalida />} />
           <Route path='/EditarPerfilSalida' element={<EditarPerfilSalida />} />
-          <Route
-            path='/EncuestaSatisfaccion'
-            element={<EncuestaSatisfaccion />}
-          />
+          <Route path='/EncuestaSatisfaccion' element={<EncuestaSatisfaccion />} />
           <Route path='/Encuestas' element={<Encuestas />} />
           <Route path='/UsuarioLog' element={<UsuarioLog />} />
-                     
-          <Route path='/EditarUsuarioLog' element={<EditarUsuarioLog />} /> 
-                   
+          <Route path='/EditarUsuarioLog' element={<EditarUsuarioLog />} />
           <Route path='/DatosExpediente' element={<DatosExpediente />} />
-                     
           <Route path='/PersonaResponsable' element={<PersonaResponsable />} />
-                     
-          <Route
-            path='/EditarDatosExpediente'
-            element={<EditarDatosExpediente />}
-          />
-                     
+          <Route path='/EditarDatosExpediente' element={<EditarDatosExpediente />} />
           <Route path='/EditarParentezco' element={<EditarParentezco />} />
-                     
           <Route path='/Convivencia' element={<Convivencia />} />
-                     
           <Route path='/EditarConvivencia' element={<EditarConvivencia />} />
-                     
-          <Route
-            path='/DatosSocioEconomicos'
-            element={<DatosSocioEconomicos />}
-          />
-                     
+          <Route path='/DatosSocioEconomicos' element={<DatosSocioEconomicos />} />
           <Route path='/EditarDatosSE' element={<EditarDatosSE />} />
-                     
           <Route path='/FactorPsicosocial' element={<FactorPsicosocial />} />
-                    
           <Route path='/EditarFactor' element={<EditarFactor />} />
-                    
           <Route path='/CalificacionRiesgo' element={<CalificacionRiesgo />} />
-                    
-          <Route
-            path='/EditarCalificacionRiesgo'
-            element={<EditarCalificacionRiesgo />}
-          />
-                    
+          <Route path='/EditarCalificacionRiesgo' element={<EditarCalificacionRiesgo />} />
           <Route path='/EstadoExpediente' element={<EstadoExpendiente />} />
-                    
           <Route path='/EditarEstadoExp' element={<EditarEstadoExp />} />
-                    
           <Route path='/ReporteExpediente' element={<ReporteExpediente />} />
-                    
           <Route path='/Acciones' element={<Acciones />} />
-                    
           <Route path='/Error404' element={<Error404 />} />
+          <Route path='/Perfil' element={<Perfil />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -13,9 +13,8 @@ export default function EditarCalificacionRiesgo() {
                         <div class="sidebar-brand-text mx-0">Fundamentes</div>
                     </a>
                     <hr class="sidebar-divider my-0" />
-
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="Inicio">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Dashboard</span></a>
                     </li>
@@ -25,48 +24,48 @@ export default function EditarCalificacionRiesgo() {
                             <i class="fas fa-fw fa-cog"></i>
                             <span>Usuario Login</span>
                         </a>
-                        <div id="collapseAdministracion" class="collapse" aria-labelledby="headingTwo"
-                            data-parent="#accordionSidebar">
+                        <div id="collapseAdministracion" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="usuarioLog.html">Usuarios</a>
-                                <a class="collapse-item" href="EditarUsuarioLog.html">Editar Usuario</a>
+                                <a class="collapse-item" href="UsuarioLog">Usuarios</a>
+                                <a class="collapse-item" href="EditarUsuarioLog">Editar Usuario</a>
                             </div>
                         </div>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseExpediente"
                             aria-expanded="true" aria-controls="collapseExpediente">
                             <i class="fas fa-fw fa-clipboard-list"></i>
                             <span>Paciente</span>
                         </a>
-                        <div id="collapseExpediente" class="collapse" aria-labelledby="headingTwo"
-                            data-parent="#accordionSidebar">
+                        <div id="collapseExpediente" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="usuarios.html">Paciente</a>
-                                <a class="collapse-item" href="EditarUsuario.html">Editar Paciente</a>
+                                <a class="collapse-item" href="/Pascientes">Paciente</a>
+                                <a class="collapse-item" href="/EditarPasciente">Editar Paciente</a>
                             </div>
                         </div>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInventario"
                             aria-expanded="true" aria-controls="collapseInventario">
                             <i class="fas fa-fw fa-clipboard-list"></i>
                             <span>Expedientes</span>
                         </a>
-                        <div id="collapseInventario" class="collapse" aria-labelledby="headingInventario"
-                            data-parent="#accordionSidebar">
+                        <div id="collapseInventario" class="collapse" aria-labelledby="headingInventario" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="DatosExpediente.html">Datos de Expedientes</a>
-                                <a class="collapse-item" href="usuarios.html">Datos de Pacientes</a>
-                                <a class="collapse-item" href="PersonaResponsable.html">Persona Responsable</a>
-                                <a class="collapse-item" href="Convivencia.html">Convivencia</a>
-                                <a class="collapse-item" href="DatosSocioEconomicos.html">Datos SocioEconomicos</a>
-                                <a class="collapse-item" href="FactorPsicosocial.html">Factor Psicosocial</a>
-                                <a class="collapse-item" href="CalificacionRiesgo.html">Calificación Riesgo</a>
-                                <a class="collapse-item" href="EstadoExpediente.html">Estado del Expediente</a>
+                                <a class="collapse-item" href="DatosExpediente">Datos de Expedientes</a>
+                                <a class="collapse-item" href="Pascientes">Datos de Pacientes</a>
+                                <a class="collapse-item" href="PersonaResponsable">Persona Responsable</a>
+                                <a class="collapse-item" href="Convivencia">Convivencia</a>
+                                <a class="collapse-item" href="DatosSocioEconomicos">Datos SocioEconomicos</a>
+                                <a class="collapse-item" href="FactorPsicosocial">Factor Psicosocial</a>
+                                <a class="collapse-item" href="CalificacionRiesgo">Calificación Riesgo</a>
+                                <a class="collapse-item" href="EstadoExpediente">Estado del Expediente</a>
                             </div>
                         </div>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEntrada"
                             aria-expanded="true" aria-controls="collapseEntrada">
@@ -76,8 +75,8 @@ export default function EditarCalificacionRiesgo() {
                         <div id="collapseEntrada" class="collapse" aria-labelledby="headingEntrada"
                             data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="PerfilEntrada.html">Perfil de Entrada</a>
-                                <a class="collapse-item" href="EditarPerfilEntrada.html">Editar Perfil de Entrada</a>
+                                <a class="collapse-item" href="/PerfilEntrada">Perfil de Entrada</a>
+                                <a class="collapse-item" href="/EditarPerfilEntrada">Editar Perfil de Entrada</a>
                             </div>
                         </div>
                     </li>
@@ -90,8 +89,8 @@ export default function EditarCalificacionRiesgo() {
                         <div id="collapseSalida" class="collapse" aria-labelledby="headingSalida"
                             data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="PerfilSalida.html">Perfil de Salida</a>
-                                <a class="collapse-item" href="EditarPerfilSalida.html">Editar Perfil de Salida</a>
+                                <a class="collapse-item" href="/PerfilSalida">Perfil de Salida</a>
+                                <a class="collapse-item" href="/EditarPerfilSalida">Editar Perfil de Salida</a>
                             </div>
                         </div>
                     </li>
@@ -104,22 +103,20 @@ export default function EditarCalificacionRiesgo() {
                         <div id="collapseEncuesta" class="collapse" aria-labelledby="headingEncuesta"
                             data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="ListaEncuestas.html">Encuesta de Satisfacción</a>
-                                <a class="collapse-item" href="Encuestas.html">Agregar Encuesta</a>
+                                <a class="collapse-item" href="/EncuestaSatisfaccion">Encuesta de Satisfacción</a>
+                                <a class="collapse-item" href="/Encuestas">Agregar Encuesta</a>
                             </div>
                         </div>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes"
                             aria-expanded="true" aria-controls="collapseReportes">
                             <i class="fas fa-fw fa-chart-area"></i>
                             <span>Consulta de Estado</span>
                         </a>
-                        <div id="collapseReportes" class="collapse" aria-labelledby="headingInventario"
-                            data-parent="#accordionSidebar">
+                        <div id="collapseReportes" class="collapse" aria-labelledby="headingInventario" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="reporteExpediente.html">Datos Expedientes</a>
+                                <a class="collapse-item" href="ReporteExpediente">Datos Expedientes</a>
                             </div>
                         </div>
                     </li>
@@ -129,10 +126,9 @@ export default function EditarCalificacionRiesgo() {
                             <i class="fas fa-fw fa-chart-area"></i>
                             <span>Consulta de Bitácora</span>
                         </a>
-                        <div id="collapseAcciones" class="collapse" aria-labelledby="headingAcciones"
-                            data-parent="#accordionSidebar">
+                        <div id="collapseAcciones" class="collapse" aria-labelledby="headingAcciones" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="Acciones.html">Reporte de Acciones</a>
+                                <a class="collapse-item" href="Acciones">Reporte de Acciones</a>
                             </div>
                         </div>
                     </li>
@@ -166,7 +162,7 @@ export default function EditarCalificacionRiesgo() {
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                         aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="perfil.html">
+                                        <a class="dropdown-item" href="Perfil">
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Perfil
                                         </a>

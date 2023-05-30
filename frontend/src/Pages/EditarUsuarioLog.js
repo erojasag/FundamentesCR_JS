@@ -163,7 +163,7 @@ export default function EditarUsuarioLog() {
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                         aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="perfil.html">
+                                        <a class="dropdown-item" href="Perfil">
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Perfil
                                         </a>
@@ -194,20 +194,20 @@ export default function EditarUsuarioLog() {
                                                         <input type="text" class="form-control form-control-sm input-validar" id="txtNombre" name="Nombre" />
                                                     </div>
                                                     <div class="form-group col-sm-6">
-                                                        <label for="txtCorreo">Apellidos</label>
-                                                        <input type="email" class="form-control form-control-sm input-validar" id="Apellidos" name="Apellidos" />
+                                                        <label for="Apellidos">Apellidos</label>
+                                                        <input type="text" class="form-control form-control-sm input-validar" id="Apellidos" name="Apellidos" />
                                                     </div>
                                                     <div class="form-group col-sm-6">
-                                                        <label for="txtCorreo">Cedula</label>
-                                                        <input type="email" class="form-control form-control-sm input-validar" id="Cedula" name="Cedula" />
+                                                        <label for="Cedula">Cédula</label>
+                                                        <input type="number" class="form-control form-control-sm input-validar" id="Cedula" name="Cedula" />
                                                     </div>
                                                     <div class="form-group col-sm-6">
-                                                        <label for="txtCorreo">Correo</label>
+                                                        <label for="Correo">Correo</label>
                                                         <input type="email" class="form-control form-control-sm input-validar" id="Correo" name="Correo" />
                                                     </div>
                                                     <div class="form-group col-sm-6">
-                                                        <label for="txtCorreo">Contraseña</label>
-                                                        <input type="email" class="form-control form-control-sm input-validar" id="Contraseña" name="Contraseña" />
+                                                        <label for="Contraseña">Contraseña</label>
+                                                        <input type="password" class="form-control form-control-sm input-validar" id="Contraseña" name="Contraseña" />
                                                     </div>
                                                     <div class="form-group col-sm-6">
                                                         <label for="txtCorreo">Tipo Usuario</label>
