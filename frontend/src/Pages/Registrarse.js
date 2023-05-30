@@ -21,13 +21,13 @@ export default function Registrarse() {
                             </div>
                             <form class="user">
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" placeholder="Nombre" asp-for="Nombre"/>
+                                    <input type="text" class="form-control form-control-user" placeholder="Nombre" asp-for="Nombre"/>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" placeholder="Apellidos" asp-for="Apellidos"/>
+                                    <input type="text" class="form-control form-control-user" placeholder="Apellidos" asp-for="Apellidos"/>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" placeholder="Cedula" asp-for="Cedula"/>
+                                    <input type="number" class="form-control form-control-user" placeholder="Cedula" asp-for="Cedula"/>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user" placeholder="Correo" asp-for="Correo"/>
