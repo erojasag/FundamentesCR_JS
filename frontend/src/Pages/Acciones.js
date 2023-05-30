@@ -1,17 +1,25 @@
-import React from 'react'
+import React from 'react';
 export default function Acciones() {
   return (
-<React.Fragment>
-<div id="wrapper">
-
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon">
-            <img src="assets/img/Logo.png" alt="" style={{width: '80px',height: '90px', float: 'left'}}/>
-        </div>
-        <div class="sidebar-brand-text mx-0">Fundamentes</div>
-    </a>
+    <React.Fragment>
+      <div id="wrapper">
+        <ul
+          class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+          id="accordionSidebar"
+        >
+          <a
+            class="sidebar-brand d-flex align-items-center justify-content-center"
+            href="index.html"
+          >
+            <div class="sidebar-brand-icon">
+              <img
+                src="assets/img/Logo.png"
+                alt=""
+                style={{ width: '80px', height: '90px', float: 'left' }}
+              />
+            </div>
+            <div class="sidebar-brand-text mx-0">Fundamentes</div>
+          </a>
 
     <hr class="sidebar-divider my-0"/>
             <li class="nav-item">
@@ -146,102 +154,120 @@ export default function Acciones() {
 
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                 <i class="fa fa-bars"></i>
-            </button>
+              </button>
 
-            <ul class="navbar-nav ml-auto">
-
+              <ul class="navbar-nav ml-auto">
                 <div class="topbar-divider d-none d-sm-block"></div>
 
                 <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nataly</span>
-                        <img class="img-profile rounded-circle"
-                            src="https://images.unsplash.com/photo-1519648023493-d82b5f8d7b8a?w=300"/>
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="userDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                      Nataly
+                    </span>
+                    <img
+                      class="img-profile rounded-circle"
+                      src="https://images.unsplash.com/photo-1519648023493-d82b5f8d7b8a?w=300"
+                    />
+                  </a>
+                  <div
+                    class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                    aria-labelledby="userDropdown"
+                  >
+                    <a class="dropdown-item" href="perfil.html">
+                      <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Perfil
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                        aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="Perfil">
-                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Perfil
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Salir
-                        </a>
-                    </div>
+                    <div class="dropdown-divider"></div>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      data-toggle="modal"
+                      data-target="#logoutModal"
+                    >
+                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Salir
+                    </a>
+                  </div>
                 </li>
+              </ul>
+            </nav>
 
-            </ul>
-
-        </nav>
-
-        <div class="container-fluid">
-            <div class="card shadow mb-4">
+            <div class="container-fluid">
+              <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-second-primary">
-                    <h6 class="m-0 font-weight-bold text-white">Lista de Acciones</h6>
+                  <h6 class="m-0 font-weight-bold text-white">
+                    Lista de Acciones
+                  </h6>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table class="table table-bordered" id="tbdata" cellspacing="0" style={{width:'100%'}}>
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Nombre del Usuario</th>
-                                        <th>Acción</th>
-                                        <th>Tabla Afectada</th>
-                                        <th>Fecha</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Tiger Nixon</td>
-                                        <td>Inserción</td>
-                                        <td>Perfil de Entrada</td>
-                                        <td>01/01/2023</td>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Tiger Nixon</td>
-                                        <td>Inserción</td>
-                                        <td>Perfil de Entrada</td>
-                                        <td>01/01/2023</td>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Tiger Nixon</td>
-                                        <td>Inserción</td>
-                                        <td>Perfil de Entrada</td>
-                                        <td>01/01/2023</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <table
+                        class="table table-bordered"
+                        id="tbdata"
+                        cellspacing="0"
+                        style={{ width: '100%' }}
+                      >
+                        <thead>
+                          <tr>
+                            <th>Id</th>
+                            <th>Nombre del Usuario</th>
+                            <th>Acción</th>
+                            <th>Tabla Afectada</th>
+                            <th>Fecha</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>Tiger Nixon</td>
+                            <td>Inserción</td>
+                            <td>Perfil de Entrada</td>
+                            <td>01/01/2023</td>
+                          </tr>
+                        </tbody>
+                        <tbody>
+                          <tr>
+                            <td>2</td>
+                            <td>Tiger Nixon</td>
+                            <td>Inserción</td>
+                            <td>Perfil de Entrada</td>
+                            <td>01/01/2023</td>
+                          </tr>
+                        </tbody>
+                        <tbody>
+                          <tr>
+                            <td>3</td>
+                            <td>Tiger Nixon</td>
+                            <td>Inserción</td>
+                            <td>Perfil de Entrada</td>
+                            <td>01/01/2023</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
-
-        </div>
-
-    </div>
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
+          </div>
+          <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+              <div class="copyright text-center my-auto">
                 <span>Copyright &copy; Fundamentes</span>
+              </div>
             </div>
+          </footer>
         </div>
-    </footer>
-
-</div>
-
-</div>
-</React.Fragment>
-  )
+      </div>
+    </React.Fragment>
+  );
 }
