@@ -15,14 +15,13 @@ export default function EditarUsuarioLog() {
                     </a>
 
                     <hr class="sidebar-divider my-0" />
-
                     <li class="nav-item">
                         <a class="nav-link" href="Inicio">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Dashboard</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdministracion"
+                        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseAdministracion"
                             aria-expanded="true" aria-controls="collapseAdministracion">
                             <i class="fas fa-fw fa-cog"></i>
                             <span>Usuario Login</span>
@@ -34,40 +33,43 @@ export default function EditarUsuarioLog() {
                             </div>
                         </div>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseExpediente"
+                        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseExpediente"
                             aria-expanded="true" aria-controls="collapseExpediente">
                             <i class="fas fa-fw fa-clipboard-list"></i>
                             <span>Paciente</span>
                         </a>
                         <div id="collapseExpediente" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="usuarios.html">Paciente</a>
-                                <a class="collapse-item" href="EditarUsuario.html">Editar Paciente</a>
+                                <a class="collapse-item" href="/Pascientes">Paciente</a>
+                                <a class="collapse-item" href="/EditarPasciente">Editar Paciente</a>
                             </div>
                         </div>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInventario"
+                        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseInventario"
                             aria-expanded="true" aria-controls="collapseInventario">
                             <i class="fas fa-fw fa-clipboard-list"></i>
                             <span>Expedientes</span>
                         </a>
                         <div id="collapseInventario" class="collapse" aria-labelledby="headingInventario" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="DatosExpediente.html">Datos de Expedientes</a>
-                                <a class="collapse-item" href="usuarios.html">Datos de Pacientes</a>
-                                <a class="collapse-item" href="PersonaResponsable.html">Persona Responsable</a>
-                                <a class="collapse-item" href="Convivencia.html">Convivencia</a>
-                                <a class="collapse-item" href="DatosSocioEconomicos.html">Datos SocioEconomicos</a>
-                                <a class="collapse-item" href="FactorPsicosocial.html">Factor Psicosocial</a>
-                                <a class="collapse-item" href="CalificacionRiesgo.html">Calificación Riesgo</a>
-                                <a class="collapse-item" href="EstadoExpediente.html">Estado del Expediente</a>
+                                <a class="collapse-item" href="DatosExpediente">Datos de Expedientes</a>
+                                <a class="collapse-item" href="Pascientes">Datos de Pacientes</a>
+                                <a class="collapse-item" href="PersonaResponsable">Persona Responsable</a>
+                                <a class="collapse-item" href="Convivencia">Convivencia</a>
+                                <a class="collapse-item" href="DatosSocioEconomicos">Datos SocioEconomicos</a>
+                                <a class="collapse-item" href="FactorPsicosocial">Factor Psicosocial</a>
+                                <a class="collapse-item" href="CalificacionRiesgo">Calificación Riesgo</a>
+                                <a class="collapse-item" href="EstadoExpediente">Estado del Expediente</a>
                             </div>
                         </div>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEntrada"
+                        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseEntrada"
                             aria-expanded="true" aria-controls="collapseEntrada">
                             <i class="fas fa-fw fa-clipboard-list"></i>
                             <span>Perfil de Entrada</span>
@@ -75,13 +77,13 @@ export default function EditarUsuarioLog() {
                         <div id="collapseEntrada" class="collapse" aria-labelledby="headingEntrada"
                             data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="PerfilEntrada.html">Perfil de Entrada</a>
-                                <a class="collapse-item" href="EditarPerfilEntrada.html">Editar Perfil de Entrada</a>
+                                <a class="collapse-item" href="/PerfilEntrada">Perfil de Entrada</a>
+                                <a class="collapse-item" href="/EditarPerfilEntrada">Editar Perfil de Entrada</a>
                             </div>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSalida"
+                        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseSalida"
                             aria-expanded="true" aria-controls="collapseSalida">
                             <i class="fas fa-fw fa-clipboard-list"></i>
                             <span>Perfil de Salida</span>
@@ -89,13 +91,13 @@ export default function EditarUsuarioLog() {
                         <div id="collapseSalida" class="collapse" aria-labelledby="headingSalida"
                             data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="PerfilSalida.html">Perfil de Salida</a>
-                                <a class="collapse-item" href="EditarPerfilSalida.html">Editar Perfil de Salida</a>
+                                <a class="collapse-item" href="PerfilSalida">Perfil de Salida</a>
+                                <a class="collapse-item" href="EditarPerfilSalida">Editar Perfil de Salida</a>
                             </div>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEncuesta"
+                        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseEncuesta"
                             aria-expanded="true" aria-controls="collapseEncuesta">
                             <i class="fas fa-fw fa-clipboard-list"></i>
                             <span>Grado de Satisfacción</span>
@@ -103,33 +105,20 @@ export default function EditarUsuarioLog() {
                         <div id="collapseEncuesta" class="collapse" aria-labelledby="headingEncuesta"
                             data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="ListaEncuestas.html">Encuesta de Satisfacción</a>
-                                <a class="collapse-item" href="Encuestas.html">Agregar Encuesta</a>
+                                <a class="collapse-item" href="EncuestaSatisfaccion">Encuesta de Satisfacción</a>
+                                <a class="collapse-item" href="Encuestas">Agregar Encuesta</a>
                             </div>
                         </div>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes"
+                        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseReportes"
                             aria-expanded="true" aria-controls="collapseReportes">
                             <i class="fas fa-fw fa-chart-area"></i>
                             <span>Consulta de Estado</span>
                         </a>
                         <div id="collapseReportes" class="collapse" aria-labelledby="headingInventario" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="reporteExpediente.html">Datos Expedientes</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAcciones"
-                            aria-expanded="true" aria-controls="collapseAcciones">
-                            <i class="fas fa-fw fa-chart-area"></i>
-                            <span>Consulta de Bitácora</span>
-                        </a>
-                        <div id="collapseAcciones" class="collapse" aria-labelledby="headingAcciones" data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="Acciones.html">Reporte de Acciones</a>
+                                <a class="collapse-item" href="ReporteExpediente">Datos Expedientes</a>
                             </div>
                         </div>
                     </li>
@@ -163,7 +152,7 @@ export default function EditarUsuarioLog() {
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                         aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="perfil.html">
+                                        <a class="dropdown-item" href="Perfil">
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Perfil
                                         </a>
@@ -194,20 +183,20 @@ export default function EditarUsuarioLog() {
                                                         <input type="text" class="form-control form-control-sm input-validar" id="txtNombre" name="Nombre" />
                                                     </div>
                                                     <div class="form-group col-sm-6">
-                                                        <label for="txtCorreo">Apellidos</label>
-                                                        <input type="email" class="form-control form-control-sm input-validar" id="Apellidos" name="Apellidos" />
+                                                        <label for="Apellidos">Apellidos</label>
+                                                        <input type="text" class="form-control form-control-sm input-validar" id="Apellidos" name="Apellidos" />
                                                     </div>
                                                     <div class="form-group col-sm-6">
-                                                        <label for="txtCorreo">Cedula</label>
-                                                        <input type="email" class="form-control form-control-sm input-validar" id="Cedula" name="Cedula" />
+                                                        <label for="Cedula">Cédula</label>
+                                                        <input type="number" class="form-control form-control-sm input-validar" id="Cedula" name="Cedula" />
                                                     </div>
                                                     <div class="form-group col-sm-6">
-                                                        <label for="txtCorreo">Correo</label>
+                                                        <label for="Correo">Correo</label>
                                                         <input type="email" class="form-control form-control-sm input-validar" id="Correo" name="Correo" />
                                                     </div>
                                                     <div class="form-group col-sm-6">
-                                                        <label for="txtCorreo">Contraseña</label>
-                                                        <input type="email" class="form-control form-control-sm input-validar" id="Contraseña" name="Contraseña" />
+                                                        <label for="Contraseña">Contraseña</label>
+                                                        <input type="password" class="form-control form-control-sm input-validar" id="Contraseña" name="Contraseña" />
                                                     </div>
                                                     <div class="form-group col-sm-6">
                                                         <label for="txtCorreo">Tipo Usuario</label>
