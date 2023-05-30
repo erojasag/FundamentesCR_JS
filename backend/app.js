@@ -1,27 +1,61 @@
 const express = require('express');
-
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 const path = require('path');
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 const userRouter = require('./routes/usersRoute');
 const expedienteRouter = require('./routes/expedientesRoute');
 const ErrorHandler = require('./controllers/errorController');
+const AppError = require('./utils/appError');
 // create and setup express app
 const app = express();
 app.use(express.json());
 
+//MIDDLEWARES
+//set security HTTP headers
+app.use(helmet());
+
+//development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(logger('dev'));
 }
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+
+//limit requests from same IP
+const limiter = rateLimit({
+  max: 300,
+  windowMs: 60 * 60 * 1000, //1 hour
+  message: 'Too many requests from this IP, please try again in an hour!',
+});
+app.use('/', limiter);
+
+//data sanitization against XSS
+app.use(xss());
+
+//prevent parameter pollution
+app.use(
+  hpp({
+    whitelist: ['Nombre', 'Apellido1', 'Apellido2', 'Cedula', 'Correo'],
+  })
+);
+
+//body parser, reading data from body into req.body
+app.use(express.json({ limit: '10kb' }));
+
+//serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// register routes
+app.use(express.urlencoded({ extended: false }));
 
+// register routes
 app.use('/users', userRouter);
 app.use('/expedientes', expedienteRouter);
+
+//404 handler
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
 
 app.use(ErrorHandler);
 

@@ -20,6 +20,20 @@ const verifyToken = async (token) => {
 
 const createAndSendToken = (user, statusCode, res) => {
   const token = signToken(user.IdUsuario);
+
+  const expirationTime =
+    (Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 100) /
+    100000;
+
+  const cookieOptions = {
+    maxAge: expirationTime,
+    httpOnly: true,
+  };
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+  user.password = undefined;
+  res.cookie('jwt', token, cookieOptions);
+
   res.status(statusCode).json({
     status: 'success',
     token,
