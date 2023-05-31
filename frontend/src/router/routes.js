@@ -31,6 +31,7 @@ import PerfilSalida from '../Pages/PerfilSalida';
 import EditarPerfilSalida from '../Pages/EditarPerfilSalida';
 import EncuestaSatisfaccion from '../Pages/EncuestaSatisfaccion';
 import Encuestas from '../Pages/Encuestas';
+import ResetPass from '../Pages/ResetPass';
 
 function Router() {
   return (
@@ -72,6 +73,7 @@ function Router() {
       <Route path="/ReporteExpediente" element={<ReporteExpediente />} />
       <Route path="/Acciones" element={<Acciones />} />
       <Route path="/Error404" element={<Error404 />} />
+      <Route exact path="/ResetPassword/:token" element={<ResetPass />} />
     </Routes>
   );
 }
