@@ -121,7 +121,6 @@ Usuarios.addHook('beforeFind', (options) => {
   };
   options.attributes = {
     exclude: [
-      'Cedula',
       'IdTipoUsuario',
       'ContrasenaResetToken',
       'ContrasenaResetExpires',

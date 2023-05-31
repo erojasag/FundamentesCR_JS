@@ -7,12 +7,14 @@ const {
   updateExpediente,
 } = require('../controllers/expedientesController');
 
+const { protect, restrictTo } = require('../controllers/authController');
+
 const router = express.Router();
 
 router.route('/').get(getAllExpedientes).post(createExpediente);
 router
   .route('/:id')
-  .get(getExpedienteById)
+  .get(protect, restrictTo('Administrador', 'Psicologo'), getExpedienteById)
   .patch(deleteExpedienteById)
   .delete(updateExpediente);
 

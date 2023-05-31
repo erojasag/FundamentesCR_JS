@@ -9,6 +9,7 @@ const userRouter = require('./routes/usersRoute');
 const expedienteRouter = require('./routes/expedientesRoute');
 const ErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
+
 // create and setup express app
 const app = express();
 app.use(express.json());
@@ -29,6 +30,17 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour!',
 });
 app.use('/', limiter);
+
+//enable CORS
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // Replace '*' with your actual domain
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
 
 //data sanitization against XSS
 app.use(xss());
