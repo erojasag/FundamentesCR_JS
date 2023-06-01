@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import 'js-cookie';
 import Cookies from 'js-cookie';
+import Footer from '../utils/footer';
 
 export default function Home() {
   const [Correo, setCorreo] = useState('');
@@ -35,13 +35,11 @@ export default function Home() {
         navigate('/');
         return;
       }
-
       Cookies.set('jwt', response.data.token, { expires: 1 });
       Cookies.set('id', response.data.data.user.IdUsuario, { expires: 1 });
       Cookies.set('role', response.data.data.user.TipoUsuario.Descripcion, {
         expires: 1,
       });
-
       setCorreo('');
       setContrasena('');
       navigate('/Inicio');
@@ -111,7 +109,7 @@ export default function Home() {
                       </form>
 
                       <div className="text-center">
-                        <a className="small" href="forgotPass">
+                        <a className="small" href="OlvideMiContrasena">
                           ¿Olvidó su contraseña?
                         </a>
                       </div>
@@ -121,6 +119,7 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <Footer />
         </div>
       </div>
     </React.Fragment>
