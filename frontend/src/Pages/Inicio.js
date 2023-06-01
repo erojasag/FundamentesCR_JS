@@ -1,6 +1,5 @@
 import React from 'react';
-import Chart from './DoughnutChart';
-import { Doughnut } from 'react-chartjs-2';
+
 export default function Index() {
   return (
     <React.Fragment>
@@ -430,7 +429,6 @@ export default function Index() {
                         <h6 class="m-0 font-weight-bold text-white">
                           Rangos de edad atendidos
                         </h6>
-                        <Doughnut />
                       </div>
 
                       <div class="card-body">
