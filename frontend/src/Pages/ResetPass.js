@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import Footer from '../utils/footer';
 
 export default function ResetPass() {
   const { token } = useParams();
@@ -96,6 +97,7 @@ export default function ResetPass() {
               </div>
             </div>
           </div>
+          <Footer />
         </div>
       </div>
     </React.Fragment>
