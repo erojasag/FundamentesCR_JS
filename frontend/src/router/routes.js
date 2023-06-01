@@ -1,4 +1,3 @@
-import '../App.css';
 import { Route, Routes } from 'react-router-dom';
 import Home from '../Pages/Home';
 import Inicio from '../Pages/Inicio';
@@ -73,7 +72,7 @@ function Router() {
       <Route path="/ReporteExpediente" element={<ReporteExpediente />} />
       <Route path="/Acciones" element={<Acciones />} />
       <Route path="/Error404" element={<Error404 />} />
-      <Route exact path="/ResetPassword/:token" element={<ResetPass />} />
+      <Route path="/Users/ResetPassword/:token" element={<ResetPass />} />
     </Routes>
   );
 }

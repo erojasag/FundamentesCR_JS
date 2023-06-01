@@ -32,7 +32,7 @@ export default function UsuarioLog() {
           <li class="nav-item">
             <a
               class="nav-link collapsed"
-              href="#"
+              href="/"
               data-toggle="collapse"
               data-target="#collapseAdministracion"
               aria-expanded="true"
@@ -61,7 +61,7 @@ export default function UsuarioLog() {
           <li class="nav-item">
             <a
               class="nav-link collapsed"
-              href="#"
+              href="/"
               data-toggle="collapse"
               data-target="#collapseExpediente"
               aria-expanded="true"
@@ -90,7 +90,7 @@ export default function UsuarioLog() {
           <li class="nav-item">
             <a
               class="nav-link collapsed"
-              href="#"
+              href="/"
               data-toggle="collapse"
               data-target="#collapseInventario"
               aria-expanded="true"
@@ -137,7 +137,7 @@ export default function UsuarioLog() {
           <li class="nav-item">
             <a
               class="nav-link collapsed"
-              href="#"
+              href="/"
               data-toggle="collapse"
               data-target="#collapseEntrada"
               aria-expanded="true"
@@ -165,7 +165,7 @@ export default function UsuarioLog() {
           <li class="nav-item">
             <a
               class="nav-link collapsed"
-              href="#"
+              href="/"
               data-toggle="collapse"
               data-target="#collapseSalida"
               aria-expanded="true"
@@ -193,7 +193,7 @@ export default function UsuarioLog() {
           <li class="nav-item">
             <a
               class="nav-link collapsed"
-              href="#"
+              href="/"
               data-toggle="collapse"
               data-target="#collapseEncuesta"
               aria-expanded="true"
@@ -221,7 +221,7 @@ export default function UsuarioLog() {
           <li class="nav-item">
             <a
               class="nav-link collapsed"
-              href="#"
+              href="/"
               data-toggle="collapse"
               data-target="#collapseReportes"
               aria-expanded="true"
@@ -246,7 +246,7 @@ export default function UsuarioLog() {
           <li class="nav-item">
             <a
               class="nav-link collapsed"
-              href="#"
+              href="/"
               data-toggle="collapse"
               data-target="#collapseAcciones"
               aria-expanded="true"
@@ -290,7 +290,7 @@ export default function UsuarioLog() {
                 <li class="nav-item dropdown no-arrow">
                   <a
                     class="nav-link dropdown-toggle"
-                    href="#"
+                    href="/"
                     id="userDropdown"
                     role="button"
                     data-toggle="dropdown"
@@ -301,7 +301,7 @@ export default function UsuarioLog() {
                       Nataly
                     </span>
                     <img
-                      class="img-profile rounded-circle"
+                      class="img-profile rounded-circle" alt='imagen de perfil'
                       src="https://images.unsplash.com/photo-1519648023493-d82b5f8d7b8a?w=300"
                     />
                   </a>
@@ -317,7 +317,7 @@ export default function UsuarioLog() {
                     <div class="dropdown-divider"></div>
                     <a
                       class="dropdown-item"
-                      href="#"
+                      href="/"
                       data-toggle="modal"
                       data-target="#logoutModal"
                     >

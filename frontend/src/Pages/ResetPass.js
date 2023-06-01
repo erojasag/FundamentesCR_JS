@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export default function ResetPass() {
-  const params = useParams();
+  const { token } = useParams();
   const [Contrasena, setContrasena] = useState('');
   const [ConfirmaContrasena, setConfirmaContrasena] = useState('');
 
@@ -14,7 +14,6 @@ export default function ResetPass() {
   const handleConfirmaContrasenaChange = (event) => {
     setConfirmaContrasena(event.currentTarget.value);
   };
-  const token = params.token;
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -24,7 +23,6 @@ export default function ResetPass() {
         Contrasena,
         ConfirmaContrasena,
       };
-      console.log(token);
       const route = `http://localhost:3000/users/resetPassword/${token}`;
       const response = await axios.patch(route, data);
       console.log(response);

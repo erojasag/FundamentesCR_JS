@@ -73,9 +73,9 @@ export default function ForgotPass() {
                       </form>
                       <hr />
                       <div className="text-center">
-                        <button className="small" href="/">
+                        <a className="small" href="/">
                           Iniciar Sesión
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
