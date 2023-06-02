@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 
 const Parentezco = db.define('Parentezco', {
-  id: {
+  IdParentezco: {
     type: DataTypes.INTEGER,
     primaryKey: true,
   },

@@ -2,6 +2,11 @@ const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 
 const Acciones = db.define('Accion', {
+  IdAccion: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+  },
   NombreUsuario: {
     type: DataTypes.UUIDV4,
     allowNull: false,
@@ -19,6 +24,5 @@ const Acciones = db.define('Accion', {
     allowNull: false,
   },
 });
-
 
 module.exports = Acciones;
