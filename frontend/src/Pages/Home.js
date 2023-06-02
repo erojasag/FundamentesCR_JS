@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import Footer from '../utils/footer';
 
 export default function Home() {
   const [Correo, setCorreo] = useState('');
   const [Contrasena, setContrasena] = useState('');
+  const navigate = useNavigate();
 
   const handleCorreoChange = (event) => {
     setCorreo(event.currentTarget.value);
@@ -25,9 +28,21 @@ export default function Home() {
         'http://localhost:3000/users/login',
         data
       );
-      console.log(response);
+
+      if (!response.status) {
+        const message = `An error has occured: ${response.statusText}`;
+        window.alert(message);
+        navigate('/');
+        return;
+      }
+      Cookies.set('jwt', response.data.token, { expires: 1 });
+      Cookies.set('id', response.data.data.user.IdUsuario, { expires: 1 });
+      Cookies.set('role', response.data.data.user.TipoUsuario.Descripcion, {
+        expires: 1,
+      });
       setCorreo('');
       setContrasena('');
+      navigate('/Inicio');
     } catch (err) {
       console.log(err);
     }
@@ -81,20 +96,20 @@ export default function Home() {
                             </label>
                           </div>
                         </div>
+
+                        <button className="btn btn-primary btn-user btn-block">
+                          Iniciar
+                        </button>
                         <a
                           className="btn btn-primary btn-user btn-block"
                           href="Registrarse"
                         >
                           Registrarse
                         </a>
-                        <button className="btn btn-primary btn-user btn-block">
-                          <Link to="/Inicio"></Link>
-                          Iniciar
-                        </button>
                       </form>
 
                       <div className="text-center">
-                        <a className="small" href="forgotPass">
+                        <a className="small" href="OlvideMiContrasena">
                           ¿Olvidó su contraseña?
                         </a>
                       </div>
@@ -104,6 +119,7 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <Footer />
         </div>
       </div>
     </React.Fragment>

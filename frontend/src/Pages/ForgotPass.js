@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Footer from '../utils/footer';
 
 export default function ForgotPass() {
   const [Correo, setCorreo] = useState('');
@@ -73,9 +74,9 @@ export default function ForgotPass() {
                       </form>
                       <hr />
                       <div className="text-center">
-                        <button className="small" href="/">
+                        <a className="small" href="/">
                           Iniciar Sesión
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -83,6 +84,7 @@ export default function ForgotPass() {
               </div>
             </div>
           </div>
+          <Footer />
         </div>
       </div>
     </React.Fragment>

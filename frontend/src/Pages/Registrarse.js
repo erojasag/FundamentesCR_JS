@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Footer from '../utils/footer';
+import Cookies from 'js-cookie';
 
-function Registrarse() {
+export default function Registrarse() {
   const [Nombre, setNombre] = useState('');
   const [Apellido1, setApellido1] = useState('');
   const [Apellido2, setApellido2] = useState('');
@@ -9,6 +12,7 @@ function Registrarse() {
   const [Correo, setCorreo] = useState('');
   const [Contrasena, setContrasena] = useState('');
   const [ConfirmaContrasena, setConfirmaContrasena] = useState('');
+  const navigate = useNavigate();
 
   const handleNombreChange = (event) => {
     setNombre(event.currentTarget.value);
@@ -44,8 +48,21 @@ function Registrarse() {
         Contrasena,
         ConfirmaContrasena,
       };
-      await axios.post('http://localhost:3000/users/signup', data);
+      const response = await axios.post(
+        'http://localhost:3000/users/signup',
+        data
+      );
+      if (response.status !== 201) {
+        const message = `An error has occured: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
 
+      Cookies.set('jwt', response.data.token, { expires: 1 });
+      Cookies.set('id', response.data.data.user.IdUsuario, { expires: 1 });
+      Cookies.set('role', response.data.data.user.TipoUsuario.Descripcion, {
+        expires: 1,
+      });
       setNombre('');
       setApellido1('');
       setApellido2('');
@@ -53,6 +70,7 @@ function Registrarse() {
       setCorreo('');
       setContrasena('');
       setConfirmaContrasena('');
+      navigate('/Inicio');
     } catch (err) {
       console.log(err);
     }
@@ -156,7 +174,7 @@ function Registrarse() {
                           type="submit"
                           class="btn btn-primary btn-user btn-block"
                         >
-                          Ingresar
+                          Registrarse
                         </button>
 
                         <a class="btn btn-primary btn-user btn-block" href="/">
@@ -170,11 +188,10 @@ function Registrarse() {
                 </div>
               </div>
             </div>
+            <Footer />
           </div>
         </div>
       </div>
     </React.Fragment>
   );
 }
-
-export default Registrarse;
