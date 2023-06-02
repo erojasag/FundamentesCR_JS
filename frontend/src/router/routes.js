@@ -32,6 +32,8 @@ import EditarPerfilSalida from '../Pages/EditarPerfilSalida';
 import EncuestaSatisfaccion from '../Pages/EncuestaSatisfaccion';
 import Encuestas from '../Pages/Encuestas';
 
+
+
 function Router() {
   return (
     <Routes>
@@ -72,6 +74,7 @@ function Router() {
       <Route path="/ReporteExpediente" element={<ReporteExpediente />} />
       <Route path="/Acciones" element={<Acciones />} />
       <Route path="/Error404" element={<Error404 />} />
+     
     </Routes>
   );
 }

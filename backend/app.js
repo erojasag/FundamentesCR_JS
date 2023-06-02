@@ -7,8 +7,10 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const userRouter = require('./routes/usersRoute');
 const expedienteRouter = require('./routes/expedientesRoute');
+const PerfilEntradaRouter = require('./routes/PerfilEntradaRoute');
 const ErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
+
 
 // create and setup express app
 const app = express();
@@ -63,7 +65,7 @@ app.use(express.urlencoded({ extended: false }));
 // register routes
 app.use('/users', userRouter);
 app.use('/expedientes', expedienteRouter);
-
+app.use('/perfilEntrada', PerfilEntradaRouter);
 //404 handler
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
