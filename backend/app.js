@@ -5,6 +5,7 @@ const path = require('path');
 const logger = require('morgan');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cors = require('cors');
 const userRouter = require('./routes/usersRoute');
 const expedienteRouter = require('./routes/expedientesRoute');
 const PerfilEntradaRouter = require('./routes/PerfilEntradaRoute');
@@ -43,6 +44,8 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.use(cors());
 
 //data sanitization against XSS
 app.use(xss());
