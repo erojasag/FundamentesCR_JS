@@ -1,13 +1,12 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 const Usuarios = require('./Usuarios');
-const Casa = require('./Casa');
+const Casas = require('./Casas');
 
 const PerfilEntrada = db.define('PerfilEntrada', {
   IdEntrada: {
     type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true
+    primaryKey: true,
   },
   Nombre: { type: DataTypes.STRING(50) },
   Apellido1: { type: DataTypes.STRING(50) },
@@ -17,18 +16,46 @@ const PerfilEntrada = db.define('PerfilEntrada', {
 
   IdUsuario: {
     type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
     references: {
       model: Usuarios,
       key: 'IdUsuario',
     },
   },
   IdCasa: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     references: {
-      model: Casa,
+      model: Casas,
       key: 'IdCasa',
     },
   },
 });
+
+PerfilEntrada.beforeFind((options) => {
+  options.attributes = {
+    exclude: ['IdEntrada', 'createdAt', 'updatedAt', 'IdUsuario', 'IdCasa'],
+  };
+  options.include = [
+    {
+      model: Usuarios,
+      as: 'Usuarios',
+      attributes: ['Nombre', 'Apellido1', 'Apellido2', 'Cedula'],
+    },
+    {
+      model: Casas,
+      as: 'Casas',
+      attributes: ['Nombre', 'Ubicacion'],
+    },
+  ];
+});
+
+PerfilEntrada.belongsTo(Usuarios, {
+  foreignKey: 'IdUsuario',
+  as: 'Usuarios',
+});
+
+PerfilEntrada.belongsTo(Casas, {
+  foreignKey: 'IdCasa',
+  as: 'Casas',
+});
+
 module.exports = PerfilEntrada;
