@@ -148,11 +148,9 @@ const forgotPassword = catchAsync(async (req, res, next) => {
 
   await user.save();
 
-  const resetURL = `${req.protocol}://${req.get(
-    'host'
-  )}/users/resetPassword/${resetToken}`;
+  const resetURL = `${req.protocol}://localhost:5000/Users/ResetPassword/${resetToken}`;
 
-  const message = `Olvidó su contraseña? Envíe un PATCH con su nueva contraseña y confirmación de contraseña a: ${resetURL}\nSi no olvidó su contraseña, por favor ignore este correo`;
+  const message = `Olvidó su contraseña? Ingrese su nueva contraseña y confirmación de contraseña a: ${resetURL}\nSi no olvidó su contraseña, por favor ignore este correo`;
 
   try {
     await sendEmail({

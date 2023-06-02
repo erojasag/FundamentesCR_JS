@@ -11,7 +11,10 @@ const { protect, restrictTo } = require('../controllers/authController');
 
 const router = express.Router();
 
-router.route('/').get(getAllExpedientes).post(createExpediente);
+router
+  .route('/')
+  .get(protect, restrictTo('Administrador', 'Psicologo'), getAllExpedientes)
+  .post(createExpediente);
 router
   .route('/:id')
   .get(protect, restrictTo('Administrador', 'Psicologo'), getExpedienteById)
