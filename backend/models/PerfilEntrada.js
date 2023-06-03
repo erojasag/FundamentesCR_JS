@@ -7,6 +7,7 @@ const PerfilEntrada = db.define('PerfilEntrada', {
   IdEntrada: {
     type: DataTypes.UUID,
     primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
   },
   Nombre: { type: DataTypes.STRING(50) },
   Apellido1: { type: DataTypes.STRING(50) },
@@ -28,11 +29,17 @@ const PerfilEntrada = db.define('PerfilEntrada', {
       key: 'IdCasa',
     },
   },
+  updatedAt: {
+    type: DataTypes.DATE,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+  },
 });
 
 PerfilEntrada.beforeFind((options) => {
   options.attributes = {
-    exclude: ['IdEntrada', 'createdAt', 'updatedAt', 'IdUsuario', 'IdCasa'],
+    exclude: [ 'createdAt', 'updatedAt', 'IdUsuario', 'IdCasa'],
   };
   options.include = [
     {
@@ -47,7 +54,11 @@ PerfilEntrada.beforeFind((options) => {
     },
   ];
 });
-
+PerfilEntrada.beforeCreate((perfilEntrada) => {
+  perfilEntrada.attributes = {
+    exclude: [ 'createdAt', 'updatedAt'],
+  }
+});
 PerfilEntrada.belongsTo(Usuarios, {
   foreignKey: 'IdUsuario',
   as: 'Usuarios',
@@ -59,3 +70,4 @@ PerfilEntrada.belongsTo(Casas, {
 });
 
 module.exports = PerfilEntrada;
+

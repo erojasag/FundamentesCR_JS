@@ -58,6 +58,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/users', userRouter);
 app.use('/expedientes', expedienteRouter);
 app.use('/perfilEntrada', PerfilEntradaRouter);
+
+
+
 //404 handler
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
