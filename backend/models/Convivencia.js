@@ -5,6 +5,7 @@ const Convivencia = db.define('Convivencia', {
   IdConvivencia: {
     type: DataTypes.UUIDV4,
     allowNull: false,
+    primaryKey: true,
   },
   Madre: {
     type: DataTypes.BOOLEAN,

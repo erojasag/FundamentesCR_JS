@@ -8,6 +8,7 @@ const hpp = require('hpp');
 const cors = require('cors');
 const userRouter = require('./routes/usersRoute');
 const expedienteRouter = require('./routes/expedientesRoute');
+const PerfilEntradaRouter = require('./routes/peroute');
 const ErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
@@ -33,16 +34,6 @@ const limiter = rateLimit({
 app.use('/', limiter);
 
 //enable CORS
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*'); // Replace '*' with your actual domain
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  next();
-});
-
 app.use(cors());
 
 //data sanitization against XSS
@@ -66,6 +57,9 @@ app.use(express.urlencoded({ extended: false }));
 // register routes
 app.use('/users', userRouter);
 app.use('/expedientes', expedienteRouter);
+app.use('/perfilEntrada', PerfilEntradaRouter);
+
+
 
 //404 handler
 app.all('*', (req, res, next) => {

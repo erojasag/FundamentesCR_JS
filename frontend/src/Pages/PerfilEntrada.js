@@ -1,9 +1,54 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import SideMenu from '../utils/sideMenu';
 import Navbar from '../utils/navbar';
 import Footer from '../utils/footer';
 
 export default function PerfilEntrada() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios(
+        'http://localhost:3000/perfilEntrada/VerPerfiles'
+      );
+      console.log(response);
+      setData(response.data.data.perfilesEntrada);
+    };
+    fetchData();
+  }, []);
+
+  const getListPerfiles = () => {
+    return data.map((item) => (
+      <tr>
+        <td>
+          {item.Nombre} {item.Apellido1} {item.Apellido2}
+        </td>
+        <td>{item.Cedula}</td>
+        <td>{item.FechaIngreso}</td>
+        <td>
+          {item.Usuarios.Nombre} {item.Usuarios.Apellido1}{' '}
+          {item.Usuarios.Apellido2}
+        </td>
+        <td>{item.Casas.Nombre}</td>
+        <td>{item.Casas.Ubicacion}</td>
+        <td>
+          <a href="EditarPerfilEntrada" class="btn btn-primary btn-sm">
+            <i class="fas fa-pencil-alt"></i>
+          </a>
+          &nbsp;
+          <a
+            href="EditarPerfilEntrada"
+            class="btn btn-danger btn-sm"
+            data-toggle="modal"
+            data-target="#perfilModal"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </td>
+      </tr>
+    ));
+  };
   return (
     <div id="wrapper">
       <SideMenu />
@@ -40,43 +85,16 @@ export default function PerfilEntrada() {
                     >
                       <thead>
                         <tr>
-                          <th>Id</th>
-                          <th>Nombre</th>
-                          <th>Primer Apellido</th>
-                          <th>Segundo Apellido</th>
+                          <th>Paciente</th>
                           <th>Cédula</th>
                           <th>Fecha de Ingreso</th>
-                          <th>Casa EscuchArte</th>
+                          <th>Usuario</th>
+                          <th>Casa</th>
+                          <th>Ubicacion</th>
                           <th>Acciones</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Tiger</td>
-                          <td>Nixon</td>
-                          <td>Nixon</td>
-                          <td>1-1111-1111</td>
-                          <td>01/01/2023</td>
-                          <td>Sixaola</td>
-                          <td>
-                            <a
-                              href="EditarPerfilEntrada"
-                              class="btn btn-primary btn-sm"
-                            >
-                              <i class="fas fa-pencil-alt"></i>
-                            </a>
-                            <a
-                              href="EditarPerfilEntrada"
-                              class="btn btn-danger btn-sm"
-                              data-toggle="modal"
-                              data-target="#perfilModal"
-                            >
-                              <i class="fas fa-trash-alt"></i>
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
+                      <tbody>{getListPerfiles()}</tbody>
                     </table>
                   </div>
                 </div>

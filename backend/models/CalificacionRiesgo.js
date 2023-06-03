@@ -5,6 +5,7 @@ const CalificacionRiesgo = db.define('CalificacionRiesgo', {
   IdRiesgo: {
     type: DataTypes.UUIDV4,
     allowNull: false,
+    primaryKey: true,
   },
   CalificacionRiesgo: {
     type: DataTypes.NUMBER,

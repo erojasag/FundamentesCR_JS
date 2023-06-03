@@ -5,6 +5,7 @@ const DatosExpedientes = db.define('DatosExpedientes', {
   IdDatos: {
     type: DataTypes.UUIDV4,
     allowNull: false,
+    primaryKey: true,
   },
   FechaEntrevista: {
     type: DataTypes.DATE,
