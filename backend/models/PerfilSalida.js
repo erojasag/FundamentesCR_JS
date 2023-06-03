@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 
 const PerfilSalida = db.define('PerfilSalida', {
-  id: {
+  IdSalida: {
     type: DataTypes.INTEGER,
     primaryKey: true,
   },
