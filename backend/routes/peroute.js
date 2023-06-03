@@ -4,7 +4,7 @@ const { getPerfiles, insertProfileEnt, updateProfileEnt, deletePerEntra } = requ
 const router = express.Router();
 
 router.get('/VerPerfiles', getPerfiles)
-      .post('/insertProfile', insertProfileEnt)
+      .post('/insertProfileEnt', insertProfileEnt)
       .patch('/updateProfileEnt/:IdEntrada', updateProfileEnt)
       .delete('/deletePerfilEntrada/:IdEntrada', deletePerEntra);
 

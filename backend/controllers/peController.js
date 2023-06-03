@@ -2,7 +2,6 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const PerfilEntrada = require('../models/PerfilEntrada');
 
-
 // Mostrar Perfilentrada
 const getPerfiles = catchAsync(async (req, res, next) => {
   try {
@@ -21,80 +20,40 @@ const getPerfiles = catchAsync(async (req, res, next) => {
 });
 
 // Crear Perfilentrada
-const insertProfileEnt= catchAsync(async (req, res) => {
-  const profileData = req.body;
-  try {
-    const perfilesEntrada = await PerfilEntrada.create(
-      {
-        Nombre: profileData.Nombre,
-        Apellido1: profileData.Apellido1,
-        Apellido2: profileData.Apellido2,
-        Cedula: profileData.Cedula,
-        FechaIngreso: profileData.FechaIngreso,
-        IdUsuario: profileData.IdUsuario,
-        IdCasa: profileData.IdCasa
-      },
-      {
-        attributes: { exclude: ['createdAt', 'updatedAt'] }
-      }
-    );
-    return res.status(201).json({
+const insertProfileEnt = catchAsync(async (req, res, next) => {
+    // Crea un nuevo perfil
+    const newProfile = await PerfilEntrada.create(req.body);
+    res.status(201).json({
       status: 'success',
       data: {
-        perfilEntrada: perfilesEntrada,
+        perfilEntrada: newProfile,
       },
     });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      status: 'error',
-      message: 'Internal server error',
-    });
-  }
 });
 
 // Editar Perfilentrada
-const updateProfileEnt = catchAsync(async (req, res) => {
-  const profileId = req.params.id;
-  const profileData = req.body;
-  try {
-    const [rowsAffected, updatedProfile] = await PerfilEntrada.update(
-      {
-        Nombre: profileData.Nombre,
-        Apellido1: profileData.Apellido1,
-        Apellido2: profileData.Apellido2,
-        Cedula: profileData.Cedula,
-        FechaIngreso: profileData.FechaIngreso,
-        IdUsuario: profileData.IdUsuario,
-        IdCasa: profileData.IdCasa
-      },
-      {
-        where: { IdEntrada: profileId },
-        returning: true
-      }
-    );
-    if (rowsAffected === 0) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'Profile not found',
-      });
+const updateProfileEnt = catchAsync(async (req, res, next) => {
+    const profileData = req.body;
+    // Obtener el perfil existente
+    const existingProfile = await PerfilEntrada.findByPk(req.params.IdEntrada);
+    if (!existingProfile) {
+      return next(new AppError('El perfil que intenta modificar no existe', 404));
     }
-    const updatedProfileData = updatedProfile[0].get();
-    return res.status(200).json({
+    // Actualizar los campos del perfil
+    existingProfile.Nombre = profileData.Nombre;
+    existingProfile.Apellido1 = profileData.Apellido1;
+    existingProfile.Apellido2 = profileData.Apellido2;
+    existingProfile.Cedula = profileData.Cedula;
+    existingProfile.FechaIngreso = profileData.FechaIngreso;
+    // Guardar los cambios en la base de datos
+    await existingProfile.save();
+    res.status(200).json({
       status: 'success',
       data: {
-        perfilEntrada: updatedProfileData,
+        perfilEntrada: existingProfile,
       },
     });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      status: 'error',
-      message: 'Internal server error',
-    });
-  }
 });
-
 
 // Eliminar Perfilentrada
 const deletePerEntra = catchAsync(async (req, res, next) => {
