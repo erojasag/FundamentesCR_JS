@@ -9,6 +9,10 @@ const Nationality = db.define(
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
+    Description: {
+      type: DataTypes.STRING(50),
+      
+    }
   },
   {
     name: {
