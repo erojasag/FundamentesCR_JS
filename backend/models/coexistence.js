@@ -1,39 +1,44 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 
-const Convivencia = db.define('Convivencia', {
-  IdConvivencia: {
-    type: DataTypes.UUIDV4,
+const Coexistence = db.define('Coexistences', {
+  IdCoexistence: {
+    type: DataTypes.UUIDV1V4,
     allowNull: false,
     primaryKey: true,
   },
-  Madre: {
+  Mother: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
-  Padre: {
+  Father: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
-  Hermanos: {
+  Siblings: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
-  CantidadHermanos: {
+  SiblingsQty: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  OtraPersona: {
+  OtherPerson: {
     type: DataTypes.BOOLEAN,
   },
-  IdDatosPersona: {
-    type: DataTypes.UUID,
+  IdPersonData: {
+    type: DataTypes.UUIDV1,
     allowNull: false,
     references: {
-      model: 'DatosPersona',
-      key: 'IdDatosPersona',
+      model: 'PersonsData',
+      key: 'IdPersonData',
     },
   },
+},{
+  name:{
+    singular:'Coexistence',
+    plural  :'Coexistences'
+  }
 });
 
-module.exports = Convivencia;
+module.exports = Coexistence;

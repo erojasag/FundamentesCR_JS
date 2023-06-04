@@ -1,28 +1,28 @@
 const { DataTypes } = require('sequelize');
 const argon2 = require('argon2');
 const crypto = require('crypto');
+const userType = require('./userType');
 const db = require('../config/db');
-const TipoUsuario = require('./TipoUsuario');
 const AppError = require('../utils/appError');
 
-const Usuarios = db.define(
-  'Usuarios',
+const User = db.define(
+  'Users',
   {
-    IdUsuario: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUID,
+    IdUser: {
+      type: DataTypes.UUIDV1,
+      defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
-    Nombre: {
+    name: {
       type: DataTypes.STRING(100),
     },
-    Apellido1: {
+    firstLastName: {
       type: DataTypes.STRING(100),
     },
-    Apellido2: {
+    secondLastName: {
       type: DataTypes.STRING(100),
     },
-    Cedula: {
+    cedula: {
       type: DataTypes.STRING(15),
       unique: true,
       validate: {
@@ -31,35 +31,35 @@ const Usuarios = db.define(
         len: [9, 15],
       },
     },
-    Correo: {
+    email: {
       type: DataTypes.STRING(100),
       unique: true,
       validate: {
         isEmail: true,
       },
     },
-    Contrasena: {
+    password: {
       type: DataTypes.STRING(250),
       allowNull: true,
     },
-    ConfirmaContrasena: {
+    confirmPassword: {
       type: DataTypes.VIRTUAL,
       required: true,
       allowNull: true,
       validate: {
-        passwordsMatch(ConfirmaContrasena) {
-          if (this.Contrasena !== ConfirmaContrasena) {
-            console.log(ConfirmaContrasena);
+        passwordsMatch(confirmPassword) {
+          if (this.password !== confirmPassword) {
+            console.log(confirmPassword);
             throw new AppError('Las contraseñas no coinciden');
           }
         },
       },
     },
-    IdTipoUsuario: {
+    IdUserType: {
       type: DataTypes.UUID,
       references: {
-        model: TipoUsuario,
-        key: 'IdTipoUsuario',
+        model: userType,
+        key: 'IdUserType',
       },
       defaultValue: process.env.DEFAULT_ROLE,
     },
@@ -69,20 +69,20 @@ const Usuarios = db.define(
     createdAt: {
       type: DataTypes.DATE,
     },
-    ContrasenaChangedAt: {
+    passwordChangedAt: {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: DataTypes.NOW,
     },
-    ContrasenaResetToken: {
+    passwordResetToken: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    ContrasenaResetExpires: {
+    passwordResetExpires: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    Activo: {
+    active: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
       select: false,
@@ -90,63 +90,61 @@ const Usuarios = db.define(
   },
   {
     name: {
-      singular: 'Usuario',
-      plural: 'Usuarios',
+      singular: 'User',
+      plural: 'Users',
     },
   }
 );
 
-Usuarios.beforeUpdate(async (user) => {
-  const hashPassword = await argon2.hash(user.Contrasena);
-  user.Contrasena = hashPassword;
-  user.ConfirmaContrasena = hashPassword;
+User.beforeUpdate(async (user) => {
+  const hashPassword = await argon2.hash(user.password);
+  user.password = hashPassword;
+  user.confirmPassword = hashPassword;
 });
 
-Usuarios.beforeUpdate(async (user) => {
-  if (user.changed('Contrasena') || user.isNewRecord) {
-    user.ContrasenaChangedAt = Date.now() - 1000;
+User.beforeUpdate(async (user) => {
+  if (user.changed('password') || user.isNewRecord) {
+    user.passwordChangedAt = Date.now() - 1000;
   }
 });
 
-Usuarios.beforeUpdate(async (user) => {
+User.beforeUpdate(async (user) => {
   if (user.changed()) {
     user.updatedAt = Date.now();
   }
 });
 
-Usuarios.addHook('beforeFind', (options) => {
+User.addHook('beforeFind', (options) => {
   options.where = {
     ...(options.where || {}),
-    Activo: true,
+    active: true,
   };
   options.attributes = {
     exclude: [
-      'IdTipoUsuario',
-      'ContrasenaResetToken',
-      'ContrasenaResetExpires',
-      'Activo',
-      'ContrasenaChangedAt',
+      'IdUserType',
+      'active',
+      'passwordChangedAt',
       'createdAt',
       'updatedAt',
     ],
   };
   options.include = [
     {
-      model: TipoUsuario,
-      as: 'TipoUsuario',
-      attributes: ['Descripcion'],
+      model: userType,
+      as: 'UserType',
+      attributes: ['Description'],
     },
   ];
 });
 
-Usuarios.checkPassword = async (candidatePassword, userPassword) => {
+User.checkPassword = async (candidatePassword, userPassword) => {
   return await argon2.verify(userPassword, candidatePassword);
 };
 
-Usuarios.changedPasswordAfter = function (JWTTimestamp) {
-  if (this.ContrasenaChangedAt) {
+User.changedPasswordAfter = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
     const changedTimestamp = parseInt(
-      this.ContrasenaChangedAt.getTime() / 1000,
+      this.passwordChangedAt.getTime() / 1000,
       10
     );
     return JWTTimestamp < changedTimestamp;
@@ -154,14 +152,14 @@ Usuarios.changedPasswordAfter = function (JWTTimestamp) {
   return false;
 };
 
-Usuarios.createPasswordResetToken = function () {
+User.createPasswordResetToken = function () {
   const token = crypto.randomBytes(32).toString('hex');
   return token;
 };
 
-Usuarios.belongsTo(TipoUsuario, {
-  foreignKey: 'IdTipoUsuario',
-  as: 'TipoUsuario',
+User.belongsTo(userType, {
+  foreignKey: 'IdUserType',
+  as: 'UserType',
 });
 
-module.exports = Usuarios;
+module.exports = User;

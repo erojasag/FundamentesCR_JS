@@ -5,24 +5,24 @@ import Cookies from 'js-cookie';
 import Footer from '../utils/footer';
 
 export default function Home() {
-  const [Correo, setCorreo] = useState('');
-  const [Contrasena, setContrasena] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleCorreoChange = (event) => {
-    setCorreo(event.currentTarget.value);
+  const handleEmailChange = (event) => {
+    setEmail(event.currentTarget.value);
   };
 
-  const handleContrasenaChange = (event) => {
-    setContrasena(event.currentTarget.value);
+  const handlePasswordChange = (event) => {
+    setPassword(event.currentTarget.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const data = {
-        Correo,
-        Contrasena,
+        email,
+        password,
       };
       const response = await axios.post(
         'http://localhost:3000/users/login',
@@ -35,13 +35,14 @@ export default function Home() {
         navigate('/');
         return;
       }
+
       Cookies.set('jwt', response.data.token, { expires: 1 });
-      Cookies.set('id', response.data.data.user.IdUsuario, { expires: 1 });
-      Cookies.set('role', response.data.data.user.TipoUsuario.Descripcion, {
+      Cookies.set('id', response.data.data.user.IdUser, { expires: 1 });
+      Cookies.set('role', response.data.data.user.UserType.Description, {
         expires: 1,
       });
-      setCorreo('');
-      setContrasena('');
+      setEmail('');
+      setPassword('');
       navigate('/Inicio');
     } catch (err) {
       console.log(err);
@@ -67,9 +68,9 @@ export default function Home() {
                           <input
                             type="email"
                             className="form-control form-control-user"
-                            placeholder="Correo"
-                            value={Correo}
-                            onChange={handleCorreoChange}
+                            placeholder="email"
+                            value={email}
+                            onChange={handleEmailChange}
                           />
                         </div>
                         <div className="form-group">
@@ -77,8 +78,8 @@ export default function Home() {
                             type="password"
                             className="form-control form-control-user"
                             placeholder="Contraseña"
-                            value={Contrasena}
-                            onChange={handleContrasenaChange}
+                            value={password}
+                            onChange={handlePasswordChange}
                           />
                         </div>
                         <div className="form-group">

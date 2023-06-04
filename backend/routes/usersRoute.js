@@ -4,6 +4,7 @@ const {
   getUserById,
   deleteMe,
   updateMe,
+  deactivateUser,
 } = require('../controllers/usersController');
 
 const {
@@ -25,7 +26,13 @@ router
   .patch('/resetPassword/:token', resetPassword)
   .post('/updateMyPassword', protect, updateMyPassword)
   .patch('/updateMe', protect, updateMe)
-  .delete('/deleteMe', protect, deleteMe);
+  .delete('/deleteMe', protect, deleteMe)
+  .delete(
+    '/deactivateUser',
+    protect,
+    restrictTo('Administrador'),
+    deactivateUser
+  );
 
 router
   .route('/')

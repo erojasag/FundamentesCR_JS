@@ -5,15 +5,15 @@ import Footer from '../utils/footer';
 
 export default function ResetPass() {
   const { token } = useParams();
-  const [Contrasena, setContrasena] = useState('');
-  const [ConfirmaContrasena, setConfirmaContrasena] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleContrasenaChange = (event) => {
-    setContrasena(event.currentTarget.value);
+  const handlePasswordChange = (event) => {
+    setPassword(event.currentTarget.value);
   };
 
-  const handleConfirmaContrasenaChange = (event) => {
-    setConfirmaContrasena(event.currentTarget.value);
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.currentTarget.value);
   };
   const navigate = useNavigate();
 
@@ -21,8 +21,8 @@ export default function ResetPass() {
     event.preventDefault();
     try {
       const data = {
-        Contrasena,
-        ConfirmaContrasena,
+        password,
+        confirmPassword,
       };
       const route = `http://localhost:3000/users/resetPassword/${token}`;
       const response = await axios.patch(route, data);
@@ -35,8 +35,8 @@ export default function ResetPass() {
         return;
       }
 
-      setContrasena('');
-      setConfirmaContrasena('');
+      setPassword('');
+      setConfirmPassword('');
       navigate('/');
     } catch (err) {
       window.alert(`Record id: ${token} not found`);
@@ -71,8 +71,8 @@ export default function ResetPass() {
                             className="form-control form-control-user"
                             name="Contraseña"
                             placeholder="Ingrese su contraseña"
-                            value={Contrasena}
-                            onChange={handleContrasenaChange}
+                            value={password}
+                            onChange={handlePasswordChange}
                           />
                           <br />
                           <input
@@ -80,8 +80,8 @@ export default function ResetPass() {
                             className="form-control form-control-user"
                             name="ConfirmaContraseña"
                             placeholder="Confirme su contraseña"
-                            value={ConfirmaContrasena}
-                            onChange={handleConfirmaContrasenaChange}
+                            value={confirmPassword}
+                            onChange={handleConfirmPasswordChange}
                           />
                         </div>
                         <button
