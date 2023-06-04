@@ -7,8 +7,8 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
 const userRouter = require('./routes/usersRoute');
-const expedienteRouter = require('./routes/expedientesRoute');
-const PerfilEntradaRouter = require('./routes/peroute');
+const expedienteRouter = require('./routes/recordsRoute');
+const admissionInterviewsRouter = require('./routes/admissionInterviewRoute');
 const ErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
@@ -57,9 +57,7 @@ app.use(express.urlencoded({ extended: false }));
 // register routes
 app.use('/users', userRouter);
 app.use('/expedientes', expedienteRouter);
-app.use('/perfilEntrada', PerfilEntradaRouter);
-
-
+app.use('/perfilEntrada', admissionInterviewsRouter);
 
 //404 handler
 app.all('*', (req, res, next) => {

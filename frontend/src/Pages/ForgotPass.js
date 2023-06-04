@@ -4,17 +4,17 @@ import axios from 'axios';
 import Footer from '../utils/footer';
 
 export default function ForgotPass() {
-  const [Correo, setCorreo] = useState('');
+  const [email, setEmail] = useState('');
   const navigate = useNavigate();
-  const handleCorreoChange = (event) => {
-    setCorreo(event.currentTarget.value);
+  const handleEmailChange = (event) => {
+    setEmail(event.currentTarget.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const data = {
-        Correo,
+        email,
       };
       const response = await axios.post(
         'http://localhost:3000/users/forgotPassword',
@@ -28,7 +28,7 @@ export default function ForgotPass() {
         navigate('/');
         return;
       }
-      setCorreo('');
+      setEmail('');
       navigate('/');
     } catch (err) {
       console.log(err);
@@ -61,8 +61,8 @@ export default function ForgotPass() {
                             className="form-control form-control-user"
                             name="Correo"
                             placeholder="Ingrese su correo"
-                            value={Correo}
-                            onChange={handleCorreoChange}
+                            value={email}
+                            onChange={handleEmailChange}
                           />
                         </div>
                         <button

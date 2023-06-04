@@ -1,35 +1,35 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 
-const Casas = db.define(
-  'Casas',
+const House = db.define(
+  'Houses',
   {
-    IdCasa: {
-      type: DataTypes.UUID,
+    IdHouse: {
+      type: DataTypes.UUIDV1,
       allowNull: false,
       primaryKey: true,
     },
-    Nombre: {
+    Name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    Ubicacion: {
+    Location: {
       type: DataTypes.STRING,
       allowNull: false,
     },
   },
   {
     name: {
-      singular: 'Casa',
-      plural: 'Casas',
+      singular: 'House',
+      plural: 'Houses',
     },
   }
 );
 
-Casas.beforeFind((options) => {
+House.beforeFind((options) => {
   options.attributes = {
     exclude: ['createdAt', 'updatedAt'],
   };
 });
 
-module.exports = Casas;
+module.exports = House;
