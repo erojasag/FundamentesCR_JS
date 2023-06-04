@@ -4,12 +4,12 @@ const db = require('../config/db');
 const Gender = db.define(
   'Genders',
   {
-    IdSexo: {
+    IdGender: {
       type: DataTypes.UUIDV1,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
-    nombre: {
+    Description: {
       type: DataTypes.STRING(50),
     },
   },

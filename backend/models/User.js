@@ -8,7 +8,7 @@ const AppError = require('../utils/appError');
 const User = db.define(
   'Users',
   {
-    IdUser: {
+    idUser: {
       type: DataTypes.UUIDV1,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
@@ -55,7 +55,7 @@ const User = db.define(
         },
       },
     },
-    IdUserType: {
+    idUserType: {
       type: DataTypes.UUID,
       references: {
         model: userType,

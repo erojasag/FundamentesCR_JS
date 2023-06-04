@@ -4,7 +4,7 @@ const db = require('../config/db');
 const ExitInterview = db.define(
   'ExitInterviews',
   {
-    IdSalida: {
+    IdExitInterviews: {
       type: DataTypes.UUIDV1,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,

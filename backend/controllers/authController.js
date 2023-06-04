@@ -6,7 +6,7 @@ const userModel = require('../models/User');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
-const db = require('../config/db');
+
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -44,16 +44,15 @@ const createAndSendToken = (user, statusCode, res) => {
 };
 
 const signup = catchAsync(async (req, res, next) => {
-  await db.query('DISABLE TRIGGER ALL ON Users;');
   const newUser = await userModel.create(req.body);
   await newUser.save();
-  await db.query('ENABLE TRIGGER ALL ON Users;');
+ 
 
   if (!newUser) return next(new AppError('No se pudo crear el usuario', 500));
 
-  const user = await userModel.findByPk(newUser.IdUser);
+  const user = await userModel.findByPk(newUser.idUser);
 
-  user.Password = undefined;
+  user.password = undefined;
   createAndSendToken(user, 201, res);
 });
 
