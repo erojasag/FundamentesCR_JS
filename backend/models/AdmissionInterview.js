@@ -28,11 +28,12 @@ const AdmissionInterview = db.define(
         key: 'IdHouse',
       },
     },
-    updatedAt: {
-      type: DataTypes.DATE,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
+    IdDoctorUser: {
+      type: DataTypes.UUIDV1,
+      references: {
+        model: User,
+        key: 'IdDoctorUser',
+      },
     },
   },
   {
@@ -58,6 +59,11 @@ AdmissionInterview.beforeFind((options) => {
       as: 'Houses',
       attributes: ['Name', 'Location'],
     },
+    {
+      model: User,
+      as: 'Doctors',
+      attributes: ['Name', 'FirstLastName', 'SecondLastName', 'Cedula'],
+    },
   ];
 });
 AdmissionInterview.beforeCreate((admissionInterviews) => {
@@ -68,6 +74,11 @@ AdmissionInterview.beforeCreate((admissionInterviews) => {
 AdmissionInterview.belongsTo(User, {
   foreignKey: 'IdUser',
   as: 'Users',
+});
+
+AdmissionInterview.belongsTo(User, {
+  foreignKey: 'IdDoctorUser',
+  as: 'Doctors',
 });
 
 AdmissionInterview.belongsTo(house, {
