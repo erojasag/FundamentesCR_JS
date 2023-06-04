@@ -1,5 +1,5 @@
-const UsuarioModel = require('../models/Usuarios');
-const TipoUsuarioModel = require('../models/TipoUsuario');
+const userModel = require('../models/User');
+const userTypeModel = require('../models/userType');
 
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
@@ -13,53 +13,51 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
-
 //ONLY FOR ADMINS
 const getAllUsers = catchAsync(async (req, res, next) => {
-  const usuarios = await UsuarioModel.findAll();
+  const users = await userModel.findAll();
 
   res.status(200).json({
     status: 'success',
     data: {
-      Usuarios: usuarios,
+      Users: users,
     },
   });
 });
 
-
 //ONLY FOR ADMINS
 const getUserById = catchAsync(async (req, res, next) => {
   //requests the user based on the id
-  const usuario = await UsuarioModel.findByPk(req.params.id, {
+  const user = await userModel.findByPk(req.params.id, {
     attributes: {
       exclude: ['Contrasena'],
     },
   });
-  if (!usuario) return next(new AppError('No existe el usuario', 404));
+  if (!user) return next(new AppError('No existe el usuario', 404));
 
   //requests the user type based on the IdTipoUsuario
-  const tipoUsuario = await TipoUsuarioModel.findByPk(usuario.IdTipoUsuario);
-  usuario.dataValues.IdTipoUsuario = tipoUsuario.dataValues.Descripcion;
+  const rol = await userTypeModel.findByPk(user.IdUserType);
+  user.dataValues.IdUserType = rol.dataValues.Description;
 
   res.status(200).json({
     status: 'success',
     data: {
-      usuario,
+      user,
     },
   });
 });
 
 const updateMe = catchAsync(async (req, res, next) => {
-  if (req.body.Contrasena || req.body.ConfirmaContrasena)
+  if (req.body.Password || req.body.ConfirmPassword)
     return next(
       new AppError('Esta ruta no es para actualizar la contraseña', 400)
     );
 
-  const filteredBody = filterObj(req.body, 'Nombre', 'Correo');
-  // const oldUser = await UsuarioModel.findByPk(req.user.IdUsuario);
-  const updateUser = await UsuarioModel.update(filteredBody, {
+  const filteredBody = filterObj(req.body, 'name', 'email');
+
+  const updateUser = await userModel.update(filteredBody, {
     where: {
-      IdUsuario: req.user.IdUsuario,
+      IdUser: req.user.IdUser,
     },
     attributes: {
       exclude: ['updatedAt'],
@@ -74,23 +72,23 @@ const updateMe = catchAsync(async (req, res, next) => {
   if (!updateUser)
     return next(new AppError('No se pudo actualizar el usuario', 500));
 
-  const updatedUser = await UsuarioModel.findByPk(req.user.IdUsuario);
+  const updatedUser = await userModel.findByPk(req.user.IdUser);
 
   res.status(200).json({
     status: 'success',
     data: {
-      usuario: updatedUser,
+      user: updatedUser,
     },
   });
 });
 
-const deleteMe = async (req, res, next) => {
+const deleteMe = catchAsync(async (req, res, next) => {
   if (
-    !(await UsuarioModel.update(
-      { Activo: false },
+    !(await userModel.update(
+      { active: false },
       {
         where: {
-          IdUsuario: req.user.IdUsuario,
+          IdUser: req.user.IdUser,
         },
       }
     ))
@@ -102,11 +100,32 @@ const deleteMe = async (req, res, next) => {
     status: 'success',
     message: 'Usuario desactivado',
   });
-};
+});
+
+const deactivateUser = catchAsync(async (req, res, next) => {
+  if (
+    !(await userModel.update(
+      { active: false },
+      {
+        where: {
+          IdUser: req.body.id,
+        },
+      }
+    ))
+  ) {
+    return next(new AppError('No se pudo desactivar el usuario', 500));
+  }
+
+  res.status(204).json({
+    status: 'success',
+    message: 'Usuario desactivado',
+  });
+});
 
 module.exports = {
   getAllUsers,
   getUserById,
   updateMe,
   deleteMe,
+  deactivateUser,
 };
