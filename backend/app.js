@@ -9,7 +9,14 @@ const cors = require('cors');
 const userRouter = require('./routes/usersRoute');
 const expedienteRouter = require('./routes/recordsRoute');
 const admissionInterviewsRouter = require('./routes/admissionInterviewRoute');
+const houseRouter = require('./routes/houseRoute');
+const ActionLogRouter = require('./routes/ActionLogRoute');
+const coexistenceRouter = require('./routes/coexistenceRoute');
+const exitInterviewRouter = require('./routes/exitInterViewRoute');
+const personDataRouter = require('./routes/personDataRoute');
+const genderRouter = require('./routes/genderRoute');
 const ErrorHandler = require('./controllers/errorController');
+
 const AppError = require('./utils/appError');
 
 // create and setup express app
@@ -58,6 +65,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/users', userRouter);
 app.use('/expedientes', expedienteRouter);
 app.use('/perfilEntrada', admissionInterviewsRouter);
+app.use('/coexistence', coexistenceRouter);
+app.use('/ActionLog', ActionLogRouter);
+app.use('/perfilSalida', exitInterviewRouter);
+app.use('/gender', genderRouter);
+app.use('/personData', personDataRouter);
+app.use('/houses',houseRouter);
 
 //404 handler
 app.all('*', (req, res, next) => {
