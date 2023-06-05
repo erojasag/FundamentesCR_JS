@@ -3,9 +3,10 @@ const db = require('../config/db');
 
 const Coexistence = db.define('Coexistences', {
   IdCoexistence: {
-    type: DataTypes.UUIDV1V4,
+    type: DataTypes.UUIDV1,
     allowNull: false,
     primaryKey: true,
+    defaultValue: DataTypes.UUIDV1,
   },
   Mother: {
     type: DataTypes.BOOLEAN,
