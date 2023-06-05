@@ -8,6 +8,8 @@ const House = db.define(
       type: DataTypes.UUIDV1,
       allowNull: false,
       primaryKey: true,
+      defaultValue: DataTypes.UUIDV1,
+      
     },
     Name: {
       type: DataTypes.STRING,
@@ -25,8 +27,12 @@ const House = db.define(
     },
   }
 );
-
 House.beforeFind((options) => {
+  options.attributes = {
+    exclude: ['createdAt', 'updatedAt'],
+  };
+});
+House.beforeCreate((options) => {
   options.attributes = {
     exclude: ['createdAt', 'updatedAt'],
   };
