@@ -59,7 +59,26 @@ PersonInCharge.beforeFind((options) => {
     {
       model: personData,
       as: 'PersonsData',
-      attributes: ['FullName', 'Cedula'],
+      attributes: [
+        'FullName',
+        'Cedula',
+        'PhoneNumber',
+        'IdPersonData',
+        'School',
+        'Community',
+        'Diagnose',
+        'Allergies',
+        'Address',
+        'Age',
+        'BirthDate',
+        'Repetition',
+        'Immigrant',
+        'LGTBIQ',
+        'FatherMother',
+        'IdRecord',
+        'IdGender',
+        'IdNationality',
+      ],
     },
     {
       model: relationship,
@@ -79,4 +98,20 @@ PersonInCharge.beforeCreate((personInCharges) => {
     exclude: ['createdAt', 'updatedAt'],
   };
 });
+
+PersonInCharge.belongsTo(personData, {
+  foreignKey: 'IdPersonData',
+  as: 'PersonsData',
+});
+
+PersonInCharge.belongsTo(relationship, {
+  foreignKey: 'IdRelationship',
+  as: 'Relationships',
+});
+
+PersonInCharge.belongsTo(nationality, {
+  foreignKey: 'IdNationality',
+  as: 'Nationalities',
+});
+
 module.exports = PersonInCharge;

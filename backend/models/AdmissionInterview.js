@@ -46,7 +46,7 @@ const AdmissionInterview = db.define(
 
 AdmissionInterview.beforeFind((options) => {
   options.attributes = {
-    exclude: ['createdAt', 'updatedAt', 'IdUsuario', 'IdCasa'],
+    exclude: ['createdAt', 'updatedAt', 'IdUser', 'IdHouse'],
   };
   options.include = [
     {

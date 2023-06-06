@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
+const personData = require('./personData');
 
 const PsicosocialFactor = db.define(
   'PsicosocialFactors',
@@ -36,6 +37,10 @@ const PsicosocialFactor = db.define(
     },
     IdPersonData: {
       type: DataTypes.UUIDV1,
+      references: {
+        model: 'PersonsData',
+        key: 'IdPersonData',
+      },
     },
   },
   {
@@ -45,5 +50,42 @@ const PsicosocialFactor = db.define(
     },
   }
 );
+
+PsicosocialFactor.beforeFind((options) => {
+  options.attributes = {
+    exclude: ['createdAt', 'updatedAt', 'IdPersonInCharge', 'IdCasa'],
+  };
+  options.include = [
+    {
+      model: personData,
+      as: 'PersonsData',
+      attributes: [
+        'FullName',
+        'Cedula',
+        'PhoneNumber',
+        'IdPersonData',
+        'School',
+        'Community',
+        'Diagnose',
+        'Allergies',
+        'Address',
+        'Age',
+        'BirthDate',
+        'Repetition',
+        'Immigrant',
+        'LGTBIQ',
+        'FatherMother',
+        'IdRecord',
+        'IdGender',
+        'IdNationality',
+      ],
+    },
+  ];
+});
+
+PsicosocialFactor.belongsTo(personData, {
+  foreignKey: 'IdPersonData',
+  as: 'PersonsData',
+});
 
 module.exports = PsicosocialFactor;

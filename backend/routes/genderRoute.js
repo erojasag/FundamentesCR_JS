@@ -1,17 +1,17 @@
 const express = require('express');
 const {
-    getgender,
-    insertgender,
-    updategender,
-    deletegender
+  getGenders,
+  insertGender,
+  updateGender,
+  deleteGender,
 } = require('../controllers/genderController');
 
 const router = express.Router();
 
 router
-  .get('/Seegender', getgender)
-  .post('/insertgender', insertgender)
-  .patch('/updategender/:IdGender',     updategender)
-  .delete('/deletegender/:IdGender', deletegender);
+  .get('/', getGenders)
+  .post('/agregarGenero', insertGender)
+  .patch('/updategender/:IdGender', updateGender)
+  .delete('/deletegender/:IdGender', deleteGender);
 
 module.exports = router;

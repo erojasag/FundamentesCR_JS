@@ -9,9 +9,9 @@ const {
 const router = express.Router();
 
 router
-  .get('/VerEncargados', getPersonInCharge)
-  .post('/IngresarEncargados', insertPersonInCharge)
-  .patch('/EditarEncargados/:IdEncargado', updatePersonInCharge)
-  .delete('/EliminarEncargado/:IdEncargado', deletePersonInCharge);
+  .get('/', getPersonInCharge)
+  .post('/nuevoEncargado', insertPersonInCharge)
+  .patch('/editarEncargado/:IdEncargado', updatePersonInCharge)
+  .delete('/eliminarEncargado/:IdEncargado', deletePersonInCharge);
 
 module.exports = router;

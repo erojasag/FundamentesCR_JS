@@ -1,17 +1,17 @@
 const express = require('express');
 const {
-    getExistInterview,
-  insertExistInterview ,
-  updateExistInterview ,
-  deleteExistInterview
-} = require('../controllers/exisInterviewController');
+  getExitInterviews,
+  insertExitInterview,
+  updateExitInterview,
+  deleteExitInterview,
+} = require('../controllers/exitInterviewsController');
 
 const router = express.Router();
 
 router
-  .get('/SeeExistInterview', getExistInterview)
-  .post('/insertExistInterview', insertExistInterview)
-  .patch('/updateExistInterview/:IdExitInterviews', updateExistInterview)
-  .delete('/deleteExistInterview/:IdExitInterviews', deleteExistInterview);
+  .get('/', getExitInterviews)
+  .post('/nuevaEntrevista', insertExitInterview)
+  .patch('/actualizarEntrevista/:id', updateExitInterview)
+  .delete('/borrarEntrevista/:id', deleteExitInterview);
 
 module.exports = router;

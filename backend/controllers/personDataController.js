@@ -5,7 +5,6 @@ const personDataModel = require('../models/personData');
 
 const getpersonData = catchAsync(async (req, res, next) => {
   const personDataList = await personDataModel.findAll();
-  console.log(personDataList);
   res.status('200').json({
     status: 'success',
     data: {
@@ -16,7 +15,6 @@ const getpersonData = catchAsync(async (req, res, next) => {
 
 
 const insertpersonData= catchAsync(async (req, res, next) => {
-
   const newpersonData = await personDataModel.create(req.body);
   res.status(201).json({
     status: 'success',

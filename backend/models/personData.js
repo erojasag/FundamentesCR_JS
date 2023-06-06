@@ -1,5 +1,8 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
+const Gender = require('./gender');
+const Record = require('./record');
+const Nationality = require('./nationality');
 
 const PersonData = db.define(
   'PersonsData',
@@ -72,14 +75,26 @@ const PersonData = db.define(
     IdRecord: {
       type: DataTypes.UUIDV1,
       allowNull: false,
+      references: {
+        model: Record,
+        key: 'IdRecord',
+      },
     },
     IdGender: {
       type: DataTypes.UUIDV1,
       allowNull: false,
+      references: {
+        model: Gender,
+        key: 'IdGender',
+      },
     },
     IdNationality: {
       type: DataTypes.UUIDV1,
       allowNull: false,
+      references: {
+        model: Nationality,
+        key: 'IdNationality',
+      },
     },
   },
   {
@@ -89,5 +104,46 @@ const PersonData = db.define(
     },
   }
 );
+
+PersonData.beforeFind((options) => {
+  options.attributes = {
+    exclude: ['createdAt', 'updatedAt', 'IdUsuario', 'IdCasa'],
+  };
+  options.include = [
+    {
+      model: Record,
+      as: 'Records',
+      attributes: ['IdRecord', 'InterviewDate', 'IdStatus', 'IdUser'],
+    },
+    {
+      model: Gender,
+      as: 'Genders',
+      attributes: [
+        'IdGender',
+        'Description',
+      ],
+    },
+    {
+      model: Nationality,
+      as: 'Nationalities',
+      attributes: ['IdNationality', 'Description'],
+    },
+  ];
+});
+
+PersonData.belongsTo(Record, {
+  foreignKey: 'IdRecord',
+  as: 'Records',
+});
+
+PersonData.belongsTo(Gender, {
+  foreignKey: 'IdGender',
+  as: 'Genders',
+});
+
+PersonData.belongsTo(Nationality, {
+  foreignKey: 'IdNationality',
+  as: 'Nationalities',
+});
 
 module.exports = PersonData;

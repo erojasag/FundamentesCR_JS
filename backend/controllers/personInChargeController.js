@@ -5,7 +5,6 @@ const personInChargeModel = require('../models/personInCharge');
 // Mostrar PersonaEncargada
 const getPersonInCharge = catchAsync(async (req, res, next) => {
   const personInChargeList = await personInChargeModel.findAll();
-  console.log(personInChargeList);
   res.status('200').json({
     status: 'success',
     data: {

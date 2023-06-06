@@ -9,7 +9,6 @@ const House = db.define(
       allowNull: false,
       primaryKey: true,
       defaultValue: DataTypes.UUIDV1,
-      
     },
     Name: {
       type: DataTypes.STRING,
@@ -18,6 +17,12 @@ const House = db.define(
     Location: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
     },
   },
   {

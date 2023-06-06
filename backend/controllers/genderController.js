@@ -3,9 +3,8 @@ const catchAsync = require('../utils/catchAsync');
 const genderModel = require('../models/gender');
 
 // Mostrar gender
-const getgender = catchAsync(async (req, res, next) => {
+const getGenders = catchAsync(async (req, res, next) => {
   const genderList = await genderModel.findAll();
-  console.log(genderList);
   res.status('200').json({
     status: 'success',
     data: {
@@ -15,24 +14,22 @@ const getgender = catchAsync(async (req, res, next) => {
 });
 
 // Crear Perfilentrada
-const insertgender = catchAsync(async (req, res, next) => {
+const insertGender = catchAsync(async (req, res, next) => {
   // Crea un nuevo perfil
-  const newgender = await genderModel.create(req.body);
+  const newGender = await genderModel.create(req.body);
   res.status(201).json({
     status: 'success',
     data: {
-      perfilEntrada: newgender,
+      perfilEntrada: newGender,
     },
   });
 });
 
 // Editar Perfilentrada
-const updategender = catchAsync(async (req, res, next) => {
+const updateGender = catchAsync(async (req, res, next) => {
   const profilegender = req.body;
   // Obtener el perfil existente
-  const existingGender = await genderModel.findByPk(
-    req.params.IdGender
-  );
+  const existingGender = await genderModel.findByPk(req.params.IdGender);
   if (!existingGender) {
     return next(new AppError('El perfil que intenta modificar no existe', 404));
   }
@@ -49,7 +46,7 @@ const updategender = catchAsync(async (req, res, next) => {
 });
 
 // Eliminar Perfilentrada
-const deletegender = catchAsync(async (req, res, next) => {
+const deleteGender = catchAsync(async (req, res, next) => {
   try {
     const { IdGender } = req.params;
     await genderModel.destroy({
@@ -69,8 +66,8 @@ const deletegender = catchAsync(async (req, res, next) => {
   }
 });
 module.exports = {
-    getgender,
-    insertgender,
-    updategender,
-    deletegender
+  getGenders,
+  insertGender,
+  updateGender,
+  deleteGender,
 };

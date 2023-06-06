@@ -1,5 +1,4 @@
 const userModel = require('../models/User');
-const userTypeModel = require('../models/userType');
 
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
@@ -28,16 +27,8 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 //ONLY FOR ADMINS
 const getUserById = catchAsync(async (req, res, next) => {
   //requests the user based on the id
-  const user = await userModel.findByPk(req.params.id, {
-    attributes: {
-      exclude: ['Contrasena'],
-    },
-  });
+  const user = await userModel.findByPk(req.params.id);
   if (!user) return next(new AppError('No existe el usuario', 404));
-
-  //requests the user type based on the IdTipoUsuario
-  const rol = await userTypeModel.findByPk(user.IdUserType);
-  user.dataValues.IdUserType = rol.dataValues.Description;
 
   res.status(200).json({
     status: 'success',
@@ -48,16 +39,22 @@ const getUserById = catchAsync(async (req, res, next) => {
 });
 
 const updateMe = catchAsync(async (req, res, next) => {
-  if (req.body.Password || req.body.ConfirmPassword)
+  if (req.body.password || req.body.confirmPassword)
     return next(
       new AppError('Esta ruta no es para actualizar la contraseña', 400)
     );
 
-  const filteredBody = filterObj(req.body, 'name', 'email');
+  const filteredBody = filterObj(
+    req.body,
+    'name',
+    'firstLastName',
+    'secondLastName',
+    'email'
+  );
 
   const updateUser = await userModel.update(filteredBody, {
     where: {
-      IdUser: req.user.IdUser,
+      IdUser: req.user.idUser,
     },
     attributes: {
       exclude: ['updatedAt'],
@@ -72,7 +69,7 @@ const updateMe = catchAsync(async (req, res, next) => {
   if (!updateUser)
     return next(new AppError('No se pudo actualizar el usuario', 500));
 
-  const updatedUser = await userModel.findByPk(req.user.IdUser);
+  const updatedUser = await userModel.findByPk(req.user.idUser);
 
   res.status(200).json({
     status: 'success',

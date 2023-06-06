@@ -9,7 +9,7 @@ const {
 const router = express.Router();
 
 router
-  .get('/VerFavtores', getPsicosocialFactor)
+  .get('/VerFactores', getPsicosocialFactor)
   .post('/IngresarFactores', insertPsicosocialFactor)
   .patch('/EditarFactores/:IdFactor', updatePsicosocialFactor)
   .delete('/EliminarFactor/:IdFactor', deletePsicosocialFactor);

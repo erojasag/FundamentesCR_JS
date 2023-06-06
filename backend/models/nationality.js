@@ -11,8 +11,7 @@ const Nationality = db.define(
     },
     Description: {
       type: DataTypes.STRING(50),
-      
-    }
+    },
   },
   {
     name: {

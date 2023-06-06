@@ -9,9 +9,9 @@ const {
 const router = express.Router();
 
 router
-  .get('/SeeHouse', getHouse)
-  .post('/insertHouse', insertHouse)
-  .patch('/updateHouse/:IdHouse', updateHouse)
-  .delete('/deleteHouse/:IdHouse', deletehouse);
+  .get('/', getHouse)
+  .post('/nuevaCasa', insertHouse)
+  .patch('/actualizarCasa/:IdHouse', updateHouse)
+  .delete('/borrarCasa/:IdHouse', deletehouse);
 
 module.exports = router;
