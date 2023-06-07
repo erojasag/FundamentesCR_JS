@@ -20,15 +20,15 @@ const {
 const router = express.Router();
 
 router
-  .post('/signup', signup)
+  .post('/registrarse', signup)
   .post('/login', login)
-  .post('/forgotPassword', forgotPassword)
-  .patch('/resetPassword/:token', resetPassword)
-  .post('/updateMyPassword', protect, updateMyPassword)
-  .patch('/updateMe', protect, updateMe)
-  .delete('/deleteMe', protect, deleteMe)
+  .post('/olvidarContrasena', forgotPassword)
+  .patch('/reiniciarContrasena/:token', resetPassword)
+  .patch('/actualizarMiContrasena', protect, updateMyPassword)
+  .patch('/actualizarMiPerfil', protect, updateMe)
+  .delete('/desactivarMiCuenta', protect, deleteMe)
   .delete(
-    '/deactivateUser',
+    '/desactivarUsuario/:id',
     protect,
     restrictTo('Administrador'),
     deactivateUser

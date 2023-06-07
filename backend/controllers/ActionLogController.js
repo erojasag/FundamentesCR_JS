@@ -5,7 +5,6 @@ const ActionLogModel = require("../models/actionLog");
 // Mostrar ActionLog
 const getActionLog = catchAsync(async (req, res, next) => {
   const ActionLogList = await ActionLogModel.findAll();
-  console.log(ActionLogList);
   res.status("200").json({
     status: "success",
     data: {
@@ -14,9 +13,8 @@ const getActionLog = catchAsync(async (req, res, next) => {
   });
 });
 
-// Crear Perfilentrada
+
 const insertActionLog = catchAsync(async (req, res, next) => {
-  // Crea un nuevo perfil
   const newActionLog = await ActionLogModel.create(req.body);
   res.status(201).json({
     status: "success",

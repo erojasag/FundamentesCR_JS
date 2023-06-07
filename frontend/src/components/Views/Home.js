@@ -3,12 +3,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Footer from '../layouts/footer';
-// import ErrorPopUp from '../layouts/errorPopUp';
-
+import ErrorPopUp from '../layouts/errorPopUp';
+// import UsuariosDropdown from '../layouts/usuariosDropdown';
 export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
@@ -22,12 +22,16 @@ export default function Home() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      if (!email || !password) {
+        setErrorMessage('Por favor ingrese un usuario y una contrasena');
+        return;
+      }
       const data = {
         email,
         password,
       };
       const response = await axios.post(
-        'http://localhost:3000/users/login',
+        'http://localhost:3000/usuarios/login',
         data
       );
       console.log(response);
@@ -47,21 +51,18 @@ export default function Home() {
       setPassword('');
       navigate('/Inicio');
     } catch (err) {
+      console.log(err);
       let errMessage = JSON.parse(err.request.response);
       errMessage = errMessage.message;
       if (errMessage === 'Correo o contraseña incorrectos') {
         console.log(errMessage);
-        // setErrorMessage(errMessage);
+        setErrorMessage(errMessage);
       }
       if (errMessage === 'El usuario no existe') {
-        // setErrorMessage(errMessage);
+        setErrorMessage(errMessage);
       }
     }
   };
-
-  // const handleClose = () => {
-  //   setErrorMessage(null);
-  // };
   return (
     <React.Fragment>
       <div className="container">
@@ -71,7 +72,7 @@ export default function Home() {
               <div className="card-body p-0">
                 <div className="row">
                   <div className="col-lg-6 d-none d-lg-block bg-login-image"></div>
-
+                  {/* <UsuariosDropdown /> */}
                   <div className="col-lg-6">
                     <div className="p-5">
                       <div className="text-center">
@@ -122,12 +123,7 @@ export default function Home() {
                           Registrarse
                         </a>
                       </form>
-                      {/* {errorMessage && (
-                        <ErrorPopUp
-                          message={errorMessage}
-                          onClose={handleClose}
-                        />
-                      )} */}
+                      {errorMessage && <ErrorPopUp message={errorMessage} />}
                       <div className="text-center">
                         <a className="small" href="OlvideMiContrasena">
                           ¿Olvidó su contraseña?

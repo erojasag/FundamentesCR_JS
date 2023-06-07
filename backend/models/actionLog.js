@@ -35,4 +35,10 @@ const ActionLog = db.define(
   }
 );
 
+ActionLog.addHook('beforeFind', (options) => {
+  options.attributes = {
+    exclude: ['createdAt', 'updatedAt'],
+  };
+});
+
 module.exports = ActionLog;

@@ -1,17 +1,17 @@
 const express = require('express');
 const {
-    getcoexistence,
-    insertcoexistence,
-    updatecoexistence,
-    deletecoexistence
+  getcoexistence,
+  insertcoexistence,
+  updatecoexistence,
+  deletecoexistence,
 } = require('../controllers/coexistenceController');
 
 const router = express.Router();
 
 router
-  .get('/Seecoexistence', getcoexistence)
-  .post('/insertcoexistence', insertcoexistence)
-  .patch('/updatecoexistence/:IdCoexistence', updatecoexistence)
-  .delete('/deletecoexistence/:IdCoexistence', deletecoexistence);
+  .get('/', getcoexistence)
+  .post('/insertarCoexistencia', insertcoexistence)
+  .patch('/actualizarCoexistencia/:IdCoexistence', updatecoexistence)
+  .delete('/borrarCoexistencia/:IdCoexistence', deletecoexistence);
 
 module.exports = router;

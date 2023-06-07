@@ -96,6 +96,7 @@ const User = db.define(
   }
 );
 
+
 User.beforeUpdate(async (user) => {
   const hashPassword = await argon2.hash(user.password);
   user.password = hashPassword;

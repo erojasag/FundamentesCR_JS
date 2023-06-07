@@ -24,7 +24,7 @@ export default function ResetPass() {
         password,
         confirmPassword,
       };
-      const route = `http://localhost:3000/users/resetPassword/${token}`;
+      const route = `http://localhost:3000/usuarios/reiniciarContrasena/${token}`;
       const response = await axios.patch(route, data);
       console.log(response);
 

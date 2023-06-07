@@ -5,7 +5,6 @@ const houseModel = require('../models/house');
 // Mostrar house
 const getHouse = catchAsync(async (req, res, next) => {
   const houseList = await houseModel.findAll();
-  console.log(houseList);
   res.status('200').json({
     status: 'success',
     data: {
@@ -17,30 +16,32 @@ const getHouse = catchAsync(async (req, res, next) => {
 // Crear Perfilentrada
 const insertHouse = catchAsync(async (req, res, next) => {
   // Crea un nuevo perfil
+
   const newHouse = await houseModel.create(req.body);
+
+  if (!newHouse) {
+    return next(new AppError('No se pudo crear la casa', 404));
+  }
   res.status(201).json({
     status: 'success',
     data: {
-      perfilEntrada: newHouse,
+      house: newHouse,
     },
   });
 });
 
 // Editar Perfilentrada
 const updateHouse = catchAsync(async (req, res, next) => {
-  const profileHouse = req.body;
   // Obtener el perfil existente
-  const existingHouse = await houseModel.findByPk(
-    req.params.IdHouse
-  );
+  const existingHouse = await houseModel.findByPk(req.params.IdHouse);
   if (!existingHouse) {
     return next(new AppError('El perfil que intenta modificar no existe', 404));
   }
   // Actualizar los campos del perfil
-  existingHouse.Name = profileHouse.Name;
-  existingHouse.Location = profileHouse.Location;
-  // Guardar los cambios en la base de datos
+  existingHouse.Name = req.body.Name;
+  existingHouse.Location = req.body.Location;
   await existingHouse.save();
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -70,8 +71,8 @@ const deletehouse = catchAsync(async (req, res, next) => {
   }
 });
 module.exports = {
-    getHouse,
-    insertHouse,
-    updateHouse,
-    deletehouse
+  getHouse,
+  insertHouse,
+  updateHouse,
+  deletehouse,
 };

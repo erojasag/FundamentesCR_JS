@@ -8,10 +8,11 @@ const {
 
 const router = express.Router();
 
+router.route('/').get(getAdmissionInterviews);
+
 router
-  .get('/VerPerfiles', getAdmissionInterviews)
-  .post('/insertProfileEnt', insertAdmissionInterview)
-  .patch('/updateProfileEnt/:IdEntrada', updateAdmissionInterview)
-  .delete('/deletePerfilEntrada/:IdEntrada', deleteAdmissionInterview);
+  .post('/nuevaEntrevistaEntrada', insertAdmissionInterview)
+  .patch('/actualizarEntrevistaEntrada/:IdEntrada', updateAdmissionInterview)
+  .delete('/borrarEntrevistaEntrada/:IdEntrada', deleteAdmissionInterview);
 
 module.exports = router;

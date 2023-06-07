@@ -2,11 +2,10 @@ const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 const crypto = require('crypto');
 const userModel = require('../models/User');
-// const userTypeModel = require('../models/userType');
+const db = require('../config/db');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
-
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -15,11 +14,11 @@ const signToken = (id) => {
 };
 
 const verifyToken = async (token) => {
-  return await jwt.verify(token, process.env.JWT_SECRET);
+  return jwt.verify(token, process.env.JWT_SECRET);
 };
 
 const createAndSendToken = (user, statusCode, res) => {
-  const token = signToken(user.IdUser);
+  const token = signToken(user.idUser);
 
   const expirationTime =
     (Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 100) /
@@ -44,9 +43,10 @@ const createAndSendToken = (user, statusCode, res) => {
 };
 
 const signup = catchAsync(async (req, res, next) => {
+  await db.query('DISABLE TRIGGER ALL ON Users ;');
   const newUser = await userModel.create(req.body);
   await newUser.save();
- 
+  await db.query('ENABLE TRIGGER ALL ON Users;');
 
   if (!newUser) return next(new AppError('No se pudo crear el usuario', 500));
 
@@ -138,7 +138,7 @@ const forgotPassword = catchAsync(async (req, res, next) => {
 
   await user.save();
 
-  const resetURL = `${req.protocol}://localhost:5000/Users/ResetPassword/${resetToken}`;
+  const resetURL = `${req.protocol}://localhost:5000/usuarios/reiniciarContrasena/${resetToken}`;
 
   const message = `Olvidó su contraseña? Ingrese su nueva contraseña y confirmación de contraseña a: ${resetURL}\nSi no olvidó su contraseña, por favor ignore este correo`;
 
@@ -204,23 +204,20 @@ const resetPassword = catchAsync(async (req, res, next) => {
 
 const updateMyPassword = catchAsync(async (req, res, next) => {
   //get the user from collection
-  const user = await userModel.findByPk(req.user.IdUsuario, {
+  const user = await userModel.findByPk(req.user.idUser, {
     validators: true,
   });
 
   //check if posted current password is correct
   if (
-    !(await userModel.correctPassword(
-      req.body.ContrasenaActual,
-      user.Contrasena
-    ))
+    !(await userModel.checkPassword(req.body.currentPassword, user.password))
   ) {
     return next(new AppError('Su contraseña actual es incorrecta', 401));
   }
 
   //if so, update password
-  user.Contrasena = req.body.Contrasena;
-  user.ConfirmaContrasena = req.body.ConfirmaContrasena;
+  user.password = req.body.password;
+  user.confirmPassword = req.body.confirmPassword;
   await user.save();
 
   //salvamos los tokens nullos despues del reseteo

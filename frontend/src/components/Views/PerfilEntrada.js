@@ -10,7 +10,7 @@ export default function PerfilEntrada() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios(
-        'http://localhost:3000/perfilEntrada/VerPerfiles'
+        'http://localhost:3000/entrevistasEntrada/'
       );
       console.log(response);
       setData(response.data.data.admissionInterviewsList);
