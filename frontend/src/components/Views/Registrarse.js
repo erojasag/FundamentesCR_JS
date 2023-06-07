@@ -49,7 +49,7 @@ export default function Registrarse() {
         confirmPassword,
       };
       const response = await axios.post(
-        'http://localhost:3000/users/signup',
+        'http://localhost:3000/usuarios/registrarse',
         data
       );
       if (response.status !== 201) {

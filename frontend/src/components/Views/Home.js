@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Footer from '../layouts/footer';
 import ErrorPopUp from '../layouts/errorPopUp';
-import UsuariosDropdown from '../layouts/usuariosDropdown';
+// import UsuariosDropdown from '../layouts/usuariosDropdown';
 export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,7 +31,7 @@ export default function Home() {
         password,
       };
       const response = await axios.post(
-        'http://localhost:3000/users/login',
+        'http://localhost:3000/usuarios/login',
         data
       );
       console.log(response);
@@ -72,7 +72,7 @@ export default function Home() {
               <div className="card-body p-0">
                 <div className="row">
                   <div className="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                  <UsuariosDropdown />
+                  {/* <UsuariosDropdown /> */}
                   <div className="col-lg-6">
                     <div className="p-5">
                       <div className="text-center">

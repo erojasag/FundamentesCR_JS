@@ -17,7 +17,7 @@ export default function ForgotPass() {
         email,
       };
       const response = await axios.post(
-        'http://localhost:3000/users/forgotPassword',
+        'http://localhost:3000/usuarios/olvidarContrasena',
         data
       );
       console.log(response);
