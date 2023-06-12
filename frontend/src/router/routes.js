@@ -30,10 +30,11 @@ import EditarPerfilSalida from '../components/Views/EditarPerfilSalida';
 import Encuestas from '../components/Views/Encuestas';
 import EncuestaSatisfaccion from '../components/Views/EncuestaSatisfaccion';
 import ResetPass from '../components/Views/ResetPass';
-import Index from '../components/Views/DatosExpediente';
+import Index from '../components/Views/Inicio';
 import Perfil from '../components/Views/Perfil';
 import CambiarContrasena from '../components/Views/cambiarContrasena';
 import ForgotPass from '../components/Views/ForgotPass';
+
 function Router() {
   return (
     <Routes>

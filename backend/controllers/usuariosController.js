@@ -1,7 +1,9 @@
-const userModel = require('../models/User');
+const userModel = require('../models/Usuarios');
 
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+
+const { getOne, getAll } = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -13,30 +15,10 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 //ONLY FOR ADMINS
-const getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await userModel.findAll();
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      Users: users,
-    },
-  });
-});
+const getAllUsers = getAll(userModel);
 
 //ONLY FOR ADMINS
-const getUserById = catchAsync(async (req, res, next) => {
-  //requests the user based on the id
-  const user = await userModel.findByPk(req.params.id);
-  if (!user) return next(new AppError('No existe el usuario', 404));
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user,
-    },
-  });
-});
+const getUserById = getOne(userModel);
 
 const updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.confirmPassword)
@@ -46,15 +28,15 @@ const updateMe = catchAsync(async (req, res, next) => {
 
   const filteredBody = filterObj(
     req.body,
-    'name',
-    'firstLastName',
-    'secondLastName',
+    'nombre',
+    'primerApe',
+    'segundoApe',
     'email'
   );
 
   const updateUser = await userModel.update(filteredBody, {
     where: {
-      IdUser: req.user.idUser,
+      IdUser: req.user.usuarioId,
     },
     attributes: {
       exclude: ['updatedAt'],
@@ -69,7 +51,7 @@ const updateMe = catchAsync(async (req, res, next) => {
   if (!updateUser)
     return next(new AppError('No se pudo actualizar el usuario', 500));
 
-  const updatedUser = await userModel.findByPk(req.user.idUser);
+  const updatedUser = await userModel.findByPk(req.user.usuarioId);
 
   res.status(200).json({
     status: 'success',
@@ -82,10 +64,10 @@ const updateMe = catchAsync(async (req, res, next) => {
 const deleteMe = catchAsync(async (req, res, next) => {
   if (
     !(await userModel.update(
-      { active: false },
+      { activo: false },
       {
         where: {
-          IdUser: req.user.IdUser,
+          usuarioId: req.user.usuarioId,
         },
       }
     ))
@@ -102,10 +84,10 @@ const deleteMe = catchAsync(async (req, res, next) => {
 const deactivateUser = catchAsync(async (req, res, next) => {
   if (
     !(await userModel.update(
-      { active: false },
+      { activo: false },
       {
         where: {
-          IdUser: req.body.id,
+          usuarioId: req.body.usuarioId,
         },
       }
     ))

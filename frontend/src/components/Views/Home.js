@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Footer from '../layouts/footer';
 import ErrorPopUp from '../layouts/errorPopUp';
-// import UsuariosDropdown from '../layouts/usuariosDropdown';
+
 export default function Home() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [contrasena, setContrasena] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
@@ -16,25 +16,24 @@ export default function Home() {
   };
 
   const handlePasswordChange = (event) => {
-    setPassword(event.currentTarget.value);
+    setContrasena(event.currentTarget.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      if (!email || !password) {
+      if (!email || !contrasena) {
         setErrorMessage('Por favor ingrese un usuario y una contrasena');
         return;
       }
       const data = {
         email,
-        password,
+        contrasena,
       };
       const response = await axios.post(
         'http://localhost:3000/usuarios/login',
         data
       );
-      console.log(response);
       if (!response.status) {
         const message = `An error has occured: ${response.statusText}`;
         window.alert(message);
@@ -43,12 +42,16 @@ export default function Home() {
       }
 
       Cookies.set('jwt', response.data.token, { expires: 1 });
-      Cookies.set('id', response.data.data.user.IdUser, { expires: 1 });
-      Cookies.set('role', response.data.data.user.UserType.Description, {
+      Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
+      Cookies.set('rol', response.data.data.user.rol.nombreRol, {
         expires: 1,
       });
+      Cookies.set(
+        'nombre',
+        response.data.data.user.nombre + ' ' + response.data.data.user.primerApe
+      );
       setEmail('');
-      setPassword('');
+      setContrasena('');
       navigate('/Inicio');
     } catch (err) {
       console.log(err);
@@ -93,7 +96,7 @@ export default function Home() {
                             type="password"
                             className="form-control form-control-user"
                             placeholder="Contraseña"
-                            value={password}
+                            value={contrasena}
                             onChange={handlePasswordChange}
                           />
                         </div>

@@ -7,22 +7,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
 const userRouter = require('./routes/usersRoute');
-const expedienteRouter = require('./routes/recordsRoute');
-const admissionInterviewsRouter = require('./routes/admissionInterviewRoute');
-const houseRouter = require('./routes/houseRoute');
-const ActionLogRouter = require('./routes/ActionLogRoute');
-const coexistenceRouter = require('./routes/coexistenceRoute');
-const exitInterviewRouter = require('./routes/exitInterviewRoute');
-const personDataRouter = require('./routes/personDataRoute');
-const genderRouter = require('./routes/genderRoute');
-const personInChargeRouter = require('./routes/personInChargeRoute');
-const psicosocialFactorRouter = require('./routes/psicosocialFactorRoute');
-const recordRouter = require('./routes/recordRoute');
-const recordStatusRouter = require('./routes/recordStatusRoute');
-const relationshipRouter = require('./routes/relationshipRoute');
-const riskCalificationsRouter = require('./routes/riskCalificationsRoute');
-const socioEconomicsDataRouter = require('./routes/socioEconomicsDataRoute');
-const statusRouter = require('./routes/statusRoute');
+const pacientesRouter = require('./routes/pacientesRoute');
 
 const ErrorHandler = require('./controllers/errorController');
 
@@ -68,22 +53,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // register routes
 app.use('/usuarios', userRouter);
-app.use('/expedientes', expedienteRouter);
-app.use('/entrevistasEntrada', admissionInterviewsRouter);
-app.use('/entrevistasSalida', exitInterviewRouter);
-app.use('/coexistencia', coexistenceRouter);
-app.use('/logAcciones', ActionLogRouter);
-app.use('/generos', genderRouter);
-app.use('/datosPersona', personDataRouter);
-app.use('/casas', houseRouter);
-app.use('/personaResponsable', personInChargeRouter);
-app.use('/factorPsicosocial', psicosocialFactorRouter);
-app.use('/registro', recordRouter);
-app.use('/registroEstatus', recordStatusRouter);
-app.use('/relacion', relationshipRouter);
-app.use('/calificacion', riskCalificationsRouter);
-app.use('/datosSocioEconomicos', socioEconomicsDataRouter);
-app.use('/estatus', statusRouter);
+app.use('/pacientes', pacientesRouter);
 
 //404 handler
 app.all('*', (req, res, next) => {
