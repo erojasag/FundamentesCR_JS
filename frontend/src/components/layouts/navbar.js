@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
-import SearchBox from './searchBox';
 import Cookies from 'js-cookie';
+import SearchBox from './searchBox';
 import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const [logout, setLogout] = useState(false);
-
   const navigate = useNavigate();
+
+  const token = Cookies.get('jwt');
+  if (!token) {
+    window.location.href = '/';
+  }
+  const rol = Cookies.get('rol');
+  const nombre = Cookies.get('nombre');
+
   const handleLogout = () => {
     setLogout(true);
     Cookies.remove('jwt');
     Cookies.remove('id');
-    Cookies.remove('role');
+    Cookies.remove('rol');
     navigate('/');
   };
   return (
@@ -39,7 +46,7 @@ export default function Navbar() {
               aria-expanded="false"
             >
               <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                Nataly
+                {nombre}
               </span>
               <img
                 class="img-profile rounded-circle"

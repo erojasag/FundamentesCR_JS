@@ -5,7 +5,7 @@ const {
   deleteMe,
   updateMe,
   deactivateUser,
-} = require('../controllers/usersController');
+} = require('../controllers/usuariosController');
 
 const {
   signup,
@@ -26,18 +26,15 @@ router
   .patch('/reiniciarContrasena/:token', resetPassword)
   .patch('/actualizarMiContrasena', protect, updateMyPassword)
   .patch('/actualizarMiPerfil', protect, updateMe)
-  .delete('/desactivarMiCuenta', protect, deleteMe)
-  .delete(
-    '/desactivarUsuario/:id',
-    protect,
-    restrictTo('Administrador'),
-    deactivateUser
-  );
+  .delete('/desactivarMiCuenta', protect, deleteMe);
 
 router
   .route('/')
   .get(protect, restrictTo('Administrador', 'Psicologo'), getAllUsers);
 
-router.route('/:id').get(protect, getUserById);
+router
+  .route('/:id')
+  .get(protect, restrictTo('Administrador'), getUserById)
+  .delete(protect, restrictTo('Administrador'), deactivateUser);
 
 module.exports = router;
