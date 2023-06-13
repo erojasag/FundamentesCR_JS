@@ -5,13 +5,12 @@ import Footer from '../layouts/footer';
 import Cookies from 'js-cookie';
 
 export default function Registrarse() {
-  const [name, setName] = useState('');
-  const [firstLastName, setFirstLastName] = useState('');
-  const [secondLastName, setSecondLastName] = useState('');
-  const [cedula, setCedula] = useState('');
+  const [nombre, setName] = useState('');
+  const [primerApe, setFirstLastName] = useState('');
+  const [segundoApe, setSecondLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [contrasena, setPassword] = useState('');
+  const [confirmContrasena, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
   const handleNameChange = (event) => {
@@ -23,9 +22,7 @@ export default function Registrarse() {
   const handleSecondLastNameChange = (event) => {
     setSecondLastName(event.currentTarget.value);
   };
-  const handleCedulaChange = (event) => {
-    setCedula(event.currentTarget.value);
-  };
+
   const handleEmailChange = (event) => {
     setEmail(event.currentTarget.value);
   };
@@ -40,18 +37,18 @@ export default function Registrarse() {
     event.preventDefault();
     try {
       const data = {
-        name,
-        firstLastName,
-        secondLastName,
-        cedula,
+        nombre,
+        primerApe,
+        segundoApe,
         email,
-        password,
-        confirmPassword,
+        contrasena,
+        confirmContrasena,
       };
       const response = await axios.post(
-        'http://localhost:3000/users/signup',
+        'http://localhost:3000/usuarios/registrarse',
         data
       );
+      console.log(response);
       if (response.status !== 201) {
         const message = `An error has occured: ${response.statusText}`;
         window.alert(message);
@@ -59,14 +56,14 @@ export default function Registrarse() {
       }
 
       Cookies.set('jwt', response.data.token, { expires: 1 });
-      Cookies.set('id', response.data.data.user.IdUser, { expires: 1 });
-      Cookies.set('role', response.data.data.user.UserType.Description, {
+      Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
+      Cookies.set('rol', response.data.data.user.rol.nombreRol, {
         expires: 1,
       });
+      Cookies.set('nombre', response.data.data.user.nombre);
       setName('');
       setFirstLastName('');
       setSecondLastName('');
-      setCedula('');
       setEmail('');
       setPassword('');
       setConfirmPassword('');
@@ -96,7 +93,7 @@ export default function Registrarse() {
                             type="text"
                             class="form-control form-control-user"
                             placeholder="Nombre"
-                            value={name}
+                            value={nombre}
                             onChange={handleNameChange}
                           />
                         </div>
@@ -105,7 +102,7 @@ export default function Registrarse() {
                             type="text"
                             class="form-control form-control-user"
                             placeholder="Primer Apellido"
-                            value={firstLastName}
+                            value={primerApe}
                             onChange={handleFirstLastNameChange}
                           />
                         </div>
@@ -114,17 +111,8 @@ export default function Registrarse() {
                             type="text"
                             class="form-control form-control-user"
                             placeholder="Segundo Apellido"
-                            value={secondLastName}
+                            value={segundoApe}
                             onChange={handleSecondLastNameChange}
-                          />
-                        </div>
-                        <div class="form-group">
-                          <input
-                            type="number"
-                            class="form-control form-control-user"
-                            placeholder="Cedula"
-                            value={cedula}
-                            onChange={handleCedulaChange}
                           />
                         </div>
                         <div class="form-group">
@@ -141,7 +129,7 @@ export default function Registrarse() {
                             type="password"
                             class="form-control form-control-user"
                             placeholder="Contraseña"
-                            value={password}
+                            value={contrasena}
                             onChange={handlePasswordChange}
                           />
                         </div>
@@ -150,7 +138,7 @@ export default function Registrarse() {
                             type="password"
                             class="form-control form-control-user"
                             placeholder=" Confirmar Contraseña"
-                            value={confirmPassword}
+                            value={confirmContrasena}
                             onChange={handleConfirmPasswordChange}
                           />
                         </div>

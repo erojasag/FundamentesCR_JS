@@ -1,35 +1,26 @@
 const { DataTypes } = require('sequelize');
 const argon2 = require('argon2');
 const crypto = require('crypto');
-const userType = require('./userType');
+const roles = require('./Roles');
 const db = require('../config/db');
 const AppError = require('../utils/appError');
 
 const User = db.define(
-  'Users',
+  'usuarios',
   {
-    idUser: {
+    usuarioId: {
       type: DataTypes.UUIDV1,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
-    name: {
+    nombre: {
       type: DataTypes.STRING(100),
     },
-    firstLastName: {
+    primerApe: {
       type: DataTypes.STRING(100),
     },
-    secondLastName: {
+    segundoApe: {
       type: DataTypes.STRING(100),
-    },
-    cedula: {
-      type: DataTypes.STRING(15),
-      unique: true,
-      validate: {
-        isNumeric: true,
-        notEmpty: true,
-        len: [9, 15],
-      },
     },
     email: {
       type: DataTypes.STRING(100),
@@ -38,28 +29,32 @@ const User = db.define(
         isEmail: true,
       },
     },
-    password: {
+    contrasena: {
       type: DataTypes.STRING(250),
       allowNull: true,
+      validate: {
+        notEmpty: true,
+        len: [9, 32],
+      },
     },
-    confirmPassword: {
+    confirmContrasena: {
       type: DataTypes.VIRTUAL,
       required: true,
       allowNull: true,
       validate: {
-        passwordsMatch(confirmPassword) {
-          if (this.password !== confirmPassword) {
-            console.log(confirmPassword);
+        passwordsMatch(confirmContrasena) {
+          if (this.contrasena !== confirmContrasena) {
+            console.log(confirmContrasena);
             throw new AppError('Las contraseñas no coinciden');
           }
         },
       },
     },
-    idUserType: {
+    rolId: {
       type: DataTypes.UUID,
       references: {
-        model: userType,
-        key: 'IdUserType',
+        model: roles,
+        key: 'rolId',
       },
       defaultValue: process.env.DEFAULT_ROLE,
     },
@@ -69,20 +64,20 @@ const User = db.define(
     createdAt: {
       type: DataTypes.DATE,
     },
-    passwordChangedAt: {
+    contrasenaChangedAt: {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: DataTypes.NOW,
     },
-    passwordResetToken: {
+    contrasenaResetToken: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    passwordResetExpires: {
+    contrasenaResetExpires: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    active: {
+    activo: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
       select: false,
@@ -90,21 +85,21 @@ const User = db.define(
   },
   {
     name: {
-      singular: 'User',
-      plural: 'Users',
+      singular: 'usuario',
+      plural: 'usuarios',
     },
   }
 );
 
 User.beforeUpdate(async (user) => {
-  const hashPassword = await argon2.hash(user.password);
-  user.password = hashPassword;
+  const hashPassword = await argon2.hash(user.contrasena);
+  user.contrasena = hashPassword;
   user.confirmPassword = hashPassword;
 });
 
 User.beforeUpdate(async (user) => {
   if (user.changed('password') || user.isNewRecord) {
-    user.passwordChangedAt = Date.now() - 1000;
+    user.contrasenaChangedAt = Date.now() - 1000;
   }
 });
 
@@ -114,25 +109,26 @@ User.beforeUpdate(async (user) => {
   }
 });
 
-User.addHook('beforeFind', (options) => {
+User.addHook('beforeFind', async (options) => {
   options.where = {
     ...(options.where || {}),
-    active: true,
+    activo: true,
   };
   options.attributes = {
     exclude: [
-      'IdUserType',
-      'active',
-      'passwordChangedAt',
+      'rolId',
+      'activo',
+      'contrasenaChangedAt',
+      'confirmContrasena',
       'createdAt',
       'updatedAt',
     ],
   };
   options.include = [
     {
-      model: userType,
-      as: 'UserType',
-      attributes: ['Description'],
+      model: roles,
+      as: 'rol',
+      attributes: ['nombreRol'],
     },
   ];
 });
@@ -142,9 +138,9 @@ User.checkPassword = async (candidatePassword, userPassword) => {
 };
 
 User.changedPasswordAfter = function (JWTTimestamp) {
-  if (this.passwordChangedAt) {
+  if (this.contrasenaChangedAt) {
     const changedTimestamp = parseInt(
-      this.passwordChangedAt.getTime() / 1000,
+      this.contrasenaChangedAt.getTime() / 1000,
       10
     );
     return JWTTimestamp < changedTimestamp;
@@ -157,9 +153,9 @@ User.createPasswordResetToken = function () {
   return token;
 };
 
-User.belongsTo(userType, {
-  foreignKey: 'IdUserType',
-  as: 'UserType',
+User.belongsTo(roles, {
+  foreignKey: 'rolId',
+  as: 'rol',
 });
 
 module.exports = User;

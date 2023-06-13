@@ -1,12 +1,10 @@
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 const crypto = require('crypto');
-const userModel = require('../models/User');
-// const userTypeModel = require('../models/userType');
+const userModel = require('../models/Usuarios');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
-
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -15,11 +13,11 @@ const signToken = (id) => {
 };
 
 const verifyToken = async (token) => {
-  return await jwt.verify(token, process.env.JWT_SECRET);
+  return jwt.verify(token, process.env.JWT_SECRET);
 };
 
 const createAndSendToken = (user, statusCode, res) => {
-  const token = signToken(user.IdUser);
+  const token = signToken(user.usuarioId);
 
   const expirationTime =
     (Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 100) /
@@ -31,7 +29,7 @@ const createAndSendToken = (user, statusCode, res) => {
   };
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
-  user.password = undefined;
+  user.contrasena = undefined;
   res.cookie('jwt', token, cookieOptions);
 
   res.status(statusCode).json({
@@ -46,20 +44,19 @@ const createAndSendToken = (user, statusCode, res) => {
 const signup = catchAsync(async (req, res, next) => {
   const newUser = await userModel.create(req.body);
   await newUser.save();
- 
 
   if (!newUser) return next(new AppError('No se pudo crear el usuario', 500));
 
-  const user = await userModel.findByPk(newUser.idUser);
+  const user = await userModel.findByPk(newUser.usuarioId);
 
-  user.password = undefined;
+  user.contrasena = undefined;
   createAndSendToken(user, 201, res);
 });
 
 const login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, contrasena } = req.body;
 
-  if (!email || !password)
+  if (!email || !contrasena)
     return next(new AppError('Por favor ingrese su correo y contraseña', 400));
 
   const user = await userModel.findOne({
@@ -67,10 +64,10 @@ const login = catchAsync(async (req, res, next) => {
   });
 
   if (!user) return next(new AppError('El usuario no existe', 401));
-  if (!user || !(await userModel.checkPassword(password, user.password))) {
+  if (!user || !(await userModel.checkPassword(contrasena, user.contrasena))) {
     return next(new AppError('Correo o contraseña incorrectos', 401));
   }
-  user.password = undefined;
+  user.contrasena = undefined;
   createAndSendToken(user, 200, res);
 });
 
@@ -105,7 +102,7 @@ const protect = catchAsync(async (req, res, next) => {
 
   //GRANT ACCESS TO PROTECTED ROUTE
   req.user = currentUser;
-  req.user.role = currentUser.UserType.dataValues.Description;
+  req.user.role = currentUser.rol.nombreRol;
   next();
 });
 
@@ -130,15 +127,15 @@ const forgotPassword = catchAsync(async (req, res, next) => {
   }
 
   const resetToken = userModel.createPasswordResetToken();
-  user.passwordResetToken = crypto
+  user.contrasenaResetToken = crypto
     .createHash('sha256')
     .update(resetToken)
     .digest('hex');
-  user.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+  user.contrasenaResetExpires = Date.now() + 10 * 60 * 1000;
 
   await user.save();
 
-  const resetURL = `${req.protocol}://localhost:5000/Users/ResetPassword/${resetToken}`;
+  const resetURL = `${req.protocol}://localhost:5000/usuarios/reiniciarContrasena/${resetToken}`;
 
   const message = `Olvidó su contraseña? Ingrese su nueva contraseña y confirmación de contraseña a: ${resetURL}\nSi no olvidó su contraseña, por favor ignore este correo`;
 
@@ -154,8 +151,8 @@ const forgotPassword = catchAsync(async (req, res, next) => {
       message: 'Token enviado a su correo',
     });
   } catch (err) {
-    user.passwordResetToken = null;
-    user.passwordResetExpires = null;
+    user.contrasenaResetToken = null;
+    user.contrasenaResetExpires = null;
     await user.save();
 
     return next(
@@ -168,7 +165,7 @@ const forgotPassword = catchAsync(async (req, res, next) => {
 });
 
 const resetPassword = catchAsync(async (req, res, next) => {
-  if (!req.body.password || !req.body.confirmPassword)
+  if (!req.body.contrasena || !req.body.confirmContrasena)
     return next(
       new AppError(
         'Por favor ingrese su nueva contraseña y confirmación de contraseña',
@@ -182,8 +179,8 @@ const resetPassword = catchAsync(async (req, res, next) => {
 
   const user = await userModel.findOne({
     where: {
-      passwordResetToken: hashedToken,
-      passwordResetExpires: { [Op.gt]: Date.now() },
+      contrasenaResetToken: hashedToken,
+      contrasenaResetExpires: { [Op.gt]: Date.now() },
     },
   });
 
@@ -191,10 +188,10 @@ const resetPassword = catchAsync(async (req, res, next) => {
     return next(new AppError('El token es inválido o ha expirado', 400));
   }
 
-  user.password = req.body.password;
-  user.confirmPassword = req.body.confirmPassword;
-  user.passwordResetToken = null;
-  user.passwordResetExpires = null;
+  user.contrasena = req.body.contrasena;
+  user.contrasenaPassword = req.body.contrasenaPassword;
+  user.contrasenaResetToken = null;
+  user.contrasenaResetExpires = null;
 
   //salvamos los tokens nullos despues del reseteo
   await user.save();
@@ -204,23 +201,23 @@ const resetPassword = catchAsync(async (req, res, next) => {
 
 const updateMyPassword = catchAsync(async (req, res, next) => {
   //get the user from collection
-  const user = await userModel.findByPk(req.user.IdUsuario, {
+  const user = await userModel.findByPk(req.user.usuarioId, {
     validators: true,
   });
 
   //check if posted current password is correct
   if (
-    !(await userModel.correctPassword(
-      req.body.ContrasenaActual,
-      user.Contrasena
+    !(await userModel.checkPassword(
+      req.body.currentContrasena,
+      user.contrasena
     ))
   ) {
     return next(new AppError('Su contraseña actual es incorrecta', 401));
   }
 
   //if so, update password
-  user.Contrasena = req.body.Contrasena;
-  user.ConfirmaContrasena = req.body.ConfirmaContrasena;
+  user.contrasena = req.body.contrasena;
+  user.confirmContrasena = req.body.confirmContrasena;
   await user.save();
 
   //salvamos los tokens nullos despues del reseteo

@@ -1,8 +1,9 @@
-const userModel = require('../models/User');
-const userTypeModel = require('../models/userType');
+const userModel = require('../models/Usuarios');
 
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+
+const { getOne, getAll } = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -14,50 +15,28 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 //ONLY FOR ADMINS
-const getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await userModel.findAll();
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      Users: users,
-    },
-  });
-});
+const getAllUsers = getAll(userModel);
 
 //ONLY FOR ADMINS
-const getUserById = catchAsync(async (req, res, next) => {
-  //requests the user based on the id
-  const user = await userModel.findByPk(req.params.id, {
-    attributes: {
-      exclude: ['Contrasena'],
-    },
-  });
-  if (!user) return next(new AppError('No existe el usuario', 404));
-
-  //requests the user type based on the IdTipoUsuario
-  const rol = await userTypeModel.findByPk(user.IdUserType);
-  user.dataValues.IdUserType = rol.dataValues.Description;
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user,
-    },
-  });
-});
+const getUserById = getOne(userModel);
 
 const updateMe = catchAsync(async (req, res, next) => {
-  if (req.body.Password || req.body.ConfirmPassword)
+  if (req.body.password || req.body.confirmPassword)
     return next(
       new AppError('Esta ruta no es para actualizar la contraseña', 400)
     );
 
-  const filteredBody = filterObj(req.body, 'name', 'email');
+  const filteredBody = filterObj(
+    req.body,
+    'nombre',
+    'primerApe',
+    'segundoApe',
+    'email'
+  );
 
   const updateUser = await userModel.update(filteredBody, {
     where: {
-      IdUser: req.user.IdUser,
+      IdUser: req.user.usuarioId,
     },
     attributes: {
       exclude: ['updatedAt'],
@@ -72,7 +51,7 @@ const updateMe = catchAsync(async (req, res, next) => {
   if (!updateUser)
     return next(new AppError('No se pudo actualizar el usuario', 500));
 
-  const updatedUser = await userModel.findByPk(req.user.IdUser);
+  const updatedUser = await userModel.findByPk(req.user.usuarioId);
 
   res.status(200).json({
     status: 'success',
@@ -85,10 +64,10 @@ const updateMe = catchAsync(async (req, res, next) => {
 const deleteMe = catchAsync(async (req, res, next) => {
   if (
     !(await userModel.update(
-      { active: false },
+      { activo: false },
       {
         where: {
-          IdUser: req.user.IdUser,
+          usuarioId: req.user.usuarioId,
         },
       }
     ))
@@ -105,10 +84,10 @@ const deleteMe = catchAsync(async (req, res, next) => {
 const deactivateUser = catchAsync(async (req, res, next) => {
   if (
     !(await userModel.update(
-      { active: false },
+      { activo: false },
       {
         where: {
-          IdUser: req.body.id,
+          usuarioId: req.body.usuarioId,
         },
       }
     ))

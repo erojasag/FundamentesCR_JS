@@ -3,22 +3,22 @@ const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 
 const userType = db.define(
-  'UsersType',
+  'Roles',
   {
-    IdUserType: {
+    RolId: {
       type: DataTypes.UUIDV1,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
-    Description: {
+    nombreRol: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
   },
   {
     name: {
-      singular: 'PersonInCharge',
-      plural: 'PersonsInCharge',
+      singular: 'Rol',
+      plural: 'Roles',
     },
   }
 );

@@ -7,9 +7,10 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
 const userRouter = require('./routes/usersRoute');
-const expedienteRouter = require('./routes/recordsRoute');
-const admissionInterviewsRouter = require('./routes/admissionInterviewRoute');
+const pacientesRouter = require('./routes/pacientesRoute');
+
 const ErrorHandler = require('./controllers/errorController');
+
 const AppError = require('./utils/appError');
 
 // create and setup express app
@@ -40,11 +41,7 @@ app.use(cors());
 app.use(xss());
 
 //prevent parameter pollution
-app.use(
-  hpp({
-    whitelist: ['Nombre', 'Apellido1', 'Apellido2', 'Cedula', 'Correo'],
-  })
-);
+app.use(hpp());
 
 //body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
@@ -55,9 +52,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
 // register routes
-app.use('/users', userRouter);
-app.use('/expedientes', expedienteRouter);
-app.use('/perfilEntrada', admissionInterviewsRouter);
+app.use('/usuarios', userRouter);
+app.use('/pacientes', pacientesRouter);
 
 //404 handler
 app.all('*', (req, res, next) => {
