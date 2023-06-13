@@ -7,22 +7,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
 const userRouter = require('./routes/usersRoute');
-const expedienteRouter = require('./routes/recordsRoute');
-const admissionInterviewsRouter = require('./routes/admissionInterviewRoute');
-const houseRouter = require('./routes/houseRoute');
-const ActionLogRouter = require('./routes/ActionLogRoute');
-const coexistenceRouter = require('./routes/coexistenceRoute');
-const exitInterviewRouter = require('./routes/exitInterViewRoute');
-const personDataRouter = require('./routes/personDataRoute');
-const genderRouter = require('./routes/genderRoute');
-const personInChargeRouter = require('./routes/personInChargeRoute');
-const psicosocialFactorRouter = require('./routes/psicosocialFactorRoute');
-const recordRouter = require('./routes/recordRoute');
-const recordStatusRouter = require('./routes/recordStatusRoute');
-const relationshipRouter = require('./routes/relationshipRoute');
-const riskCalificationsRouter = require('./routes/riskCalificationsRoute');
-const socioEconomicsDataRouter = require('./routes/socioEconomicsDataRoute');
-const statusRouter = require('./routes/statusRoute');
+const pacientesRouter = require('./routes/pacientesRoute');
 
 const ErrorHandler = require('./controllers/errorController');
 
@@ -56,11 +41,7 @@ app.use(cors());
 app.use(xss());
 
 //prevent parameter pollution
-app.use(
-  hpp({
-    whitelist: ['Nombre', 'Apellido1', 'Apellido2', 'Cedula', 'Correo'],
-  })
-);
+app.use(hpp());
 
 //body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
@@ -71,23 +52,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
 // register routes
-app.use('/users', userRouter);
-app.use('/expedientes', expedienteRouter);
-app.use('/perfilEntrada', admissionInterviewsRouter);
-app.use('/coexistence', coexistenceRouter);
-app.use('/ActionLog', ActionLogRouter);
-app.use('/perfilSalida', exitInterviewRouter);
-app.use('/gender', genderRouter);
-app.use('/personData', personDataRouter);
-app.use('/houses',houseRouter);
-app.use('/personaResponsable', personInChargeRouter);
-app.use('/FactorPsicosocial', psicosocialFactorRouter);
-app.use('/Registro', recordRouter);
-app.use('/RegistroEstatus', recordStatusRouter);
-app.use('/Relacion', relationshipRouter);
-app.use('/Calificacion', riskCalificationsRouter);
-app.use('/DatosSocioEconomicos', socioEconomicsDataRouter);
-app.use('/Estatus', statusRouter);
+app.use('/usuarios', userRouter);
+app.use('/pacientes', pacientesRouter);
 
 //404 handler
 app.all('*', (req, res, next) => {
