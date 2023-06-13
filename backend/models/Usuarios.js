@@ -1,65 +1,60 @@
 const { DataTypes } = require('sequelize');
 const argon2 = require('argon2');
 const crypto = require('crypto');
+const roles = require('./Roles');
 const db = require('../config/db');
-const TipoUsuario = require('./TipoUsuario');
 const AppError = require('../utils/appError');
 
-const Usuarios = db.define(
-  'Usuarios',
+const User = db.define(
+  'usuarios',
   {
-    IdUsuario: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUID,
+    usuarioId: {
+      type: DataTypes.UUIDV1,
+      defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
-    Nombre: {
+    nombre: {
       type: DataTypes.STRING(100),
     },
-    Apellido1: {
+    primerApe: {
       type: DataTypes.STRING(100),
     },
-    Apellido2: {
+    segundoApe: {
       type: DataTypes.STRING(100),
     },
-    Cedula: {
-      type: DataTypes.STRING(15),
-      unique: true,
-      validate: {
-        isNumeric: true,
-        notEmpty: true,
-        len: [9, 15],
-      },
-    },
-    Correo: {
+    email: {
       type: DataTypes.STRING(100),
       unique: true,
       validate: {
         isEmail: true,
       },
     },
-    Contrasena: {
+    contrasena: {
       type: DataTypes.STRING(250),
       allowNull: true,
+      validate: {
+        notEmpty: true,
+        len: [9, 32],
+      },
     },
-    ConfirmaContrasena: {
+    confirmContrasena: {
       type: DataTypes.VIRTUAL,
       required: true,
       allowNull: true,
       validate: {
-        passwordsMatch(ConfirmaContrasena) {
-          if (this.Contrasena !== ConfirmaContrasena) {
-            console.log(ConfirmaContrasena);
+        passwordsMatch(confirmContrasena) {
+          if (this.contrasena !== confirmContrasena) {
+            console.log(confirmContrasena);
             throw new AppError('Las contraseñas no coinciden');
           }
         },
       },
     },
-    IdTipoUsuario: {
+    rolId: {
       type: DataTypes.UUID,
       references: {
-        model: TipoUsuario,
-        key: 'IdTipoUsuario',
+        model: roles,
+        key: 'rolId',
       },
       defaultValue: process.env.DEFAULT_ROLE,
     },
@@ -69,20 +64,20 @@ const Usuarios = db.define(
     createdAt: {
       type: DataTypes.DATE,
     },
-    ContrasenaChangedAt: {
+    contrasenaChangedAt: {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: DataTypes.NOW,
     },
-    ContrasenaResetToken: {
+    contrasenaResetToken: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    ContrasenaResetExpires: {
+    contrasenaResetExpires: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    Activo: {
+    activo: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
       select: false,
@@ -90,63 +85,62 @@ const Usuarios = db.define(
   },
   {
     name: {
-      singular: 'Usuario',
-      plural: 'Usuarios',
+      singular: 'usuario',
+      plural: 'usuarios',
     },
   }
 );
 
-Usuarios.beforeUpdate(async (user) => {
-  const hashPassword = await argon2.hash(user.Contrasena);
-  user.Contrasena = hashPassword;
-  user.ConfirmaContrasena = hashPassword;
+User.beforeUpdate(async (user) => {
+  const hashPassword = await argon2.hash(user.contrasena);
+  user.contrasena = hashPassword;
+  user.confirmPassword = hashPassword;
 });
 
-Usuarios.beforeUpdate(async (user) => {
-  if (user.changed('Contrasena') || user.isNewRecord) {
-    user.ContrasenaChangedAt = Date.now() - 1000;
+User.beforeUpdate(async (user) => {
+  if (user.changed('password') || user.isNewRecord) {
+    user.contrasenaChangedAt = Date.now() - 1000;
   }
 });
 
-Usuarios.beforeUpdate(async (user) => {
+User.beforeUpdate(async (user) => {
   if (user.changed()) {
     user.updatedAt = Date.now();
   }
 });
 
-Usuarios.addHook('beforeFind', (options) => {
+User.addHook('beforeFind', async (options) => {
   options.where = {
     ...(options.where || {}),
-    Activo: true,
+    activo: true,
   };
   options.attributes = {
     exclude: [
-      'IdTipoUsuario',
-      'ContrasenaResetToken',
-      'ContrasenaResetExpires',
-      'Activo',
-      'ContrasenaChangedAt',
+      'rolId',
+      'activo',
+      'contrasenaChangedAt',
+      'confirmContrasena',
       'createdAt',
       'updatedAt',
     ],
   };
   options.include = [
     {
-      model: TipoUsuario,
-      as: 'TipoUsuario',
-      attributes: ['Descripcion'],
+      model: roles,
+      as: 'rol',
+      attributes: ['nombreRol'],
     },
   ];
 });
 
-Usuarios.checkPassword = async (candidatePassword, userPassword) => {
+User.checkPassword = async (candidatePassword, userPassword) => {
   return await argon2.verify(userPassword, candidatePassword);
 };
 
-Usuarios.changedPasswordAfter = function (JWTTimestamp) {
-  if (this.ContrasenaChangedAt) {
+User.changedPasswordAfter = function (JWTTimestamp) {
+  if (this.contrasenaChangedAt) {
     const changedTimestamp = parseInt(
-      this.ContrasenaChangedAt.getTime() / 1000,
+      this.contrasenaChangedAt.getTime() / 1000,
       10
     );
     return JWTTimestamp < changedTimestamp;
@@ -154,14 +148,14 @@ Usuarios.changedPasswordAfter = function (JWTTimestamp) {
   return false;
 };
 
-Usuarios.createPasswordResetToken = function () {
+User.createPasswordResetToken = function () {
   const token = crypto.randomBytes(32).toString('hex');
   return token;
 };
 
-Usuarios.belongsTo(TipoUsuario, {
-  foreignKey: 'IdTipoUsuario',
-  as: 'TipoUsuario',
+User.belongsTo(roles, {
+  foreignKey: 'rolId',
+  as: 'rol',
 });
 
-module.exports = Usuarios;
+module.exports = User;

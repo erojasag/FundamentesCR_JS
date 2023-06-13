@@ -4,7 +4,8 @@ const {
   getUserById,
   deleteMe,
   updateMe,
-} = require('../controllers/usersController');
+  deactivateUser,
+} = require('../controllers/usuariosController');
 
 const {
   signup,
@@ -19,18 +20,21 @@ const {
 const router = express.Router();
 
 router
-  .post('/signup', signup)
+  .post('/registrarse', signup)
   .post('/login', login)
-  .post('/forgotPassword', forgotPassword)
-  .patch('/resetPassword/:token', resetPassword)
-  .post('/updateMyPassword', protect, updateMyPassword)
-  .patch('/updateMe', protect, updateMe)
-  .delete('/deleteMe', protect, deleteMe);
+  .post('/olvidarContrasena', forgotPassword)
+  .patch('/reiniciarContrasena/:token', resetPassword)
+  .patch('/actualizarMiContrasena', protect, updateMyPassword)
+  .patch('/actualizarMiPerfil', protect, updateMe)
+  .delete('/desactivarMiCuenta', protect, deleteMe);
 
 router
   .route('/')
   .get(protect, restrictTo('Administrador', 'Psicologo'), getAllUsers);
 
-router.route('/:id').get(protect, getUserById);
+router
+  .route('/:id')
+  .get(protect, restrictTo('Administrador'), getUserById)
+  .delete(protect, restrictTo('Administrador'), deactivateUser);
 
 module.exports = router;
