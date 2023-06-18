@@ -9,6 +9,7 @@ const getAll = (Model) =>
 
     res.status(200).json({
       status: 'success',
+      results: doc.length,
       data: {
         data: doc,
       },
