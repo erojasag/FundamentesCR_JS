@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 const crypto = require('crypto');
-const userModel = require('../models/Usuarios');
+const userModel = require('../models/usuario');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
@@ -172,6 +172,9 @@ const resetPassword = catchAsync(async (req, res, next) => {
         400
       )
     );
+  if (req.body.contrasena !== req.body.confirmContrasena)
+    return next(new AppError('Las contraseñas no coinciden', 400));
+
   const hashedToken = crypto
     .createHash('sha256')
     .update(req.params.token)

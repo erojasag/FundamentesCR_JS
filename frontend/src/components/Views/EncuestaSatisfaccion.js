@@ -3,17 +3,15 @@ import '../../App.css';
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
-import SearchBox from '../layouts/searchBox';
 
-export default function Encuestas() {
+
+export default function EncuestasSatisfaccion() {
   return (
     <div id="wrapper">
       <SideMenu />
       <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
-          <SearchBox />
           <Navbar />
-
           <div class="container-fluid">
             <div class="container">
               <section class="row">
