@@ -4,8 +4,8 @@ const {
   getAllPacientes,
   agregarPaciente,
   updatePaciente,
-  deletePaciente,
-} = require('../controllers/pacientesController');
+  desactivarPaciente,
+} = require('../controllers/pacienteController');
 const { protect, restrictTo } = require('../controllers/authController');
 
 const router = express.Router();
@@ -19,6 +19,12 @@ router
   .route('/:id')
   .get(protect, restrictTo('Administrador', 'Psicologo'), getPaciente)
   .patch(protect, restrictTo('Administrador', 'Psicologo'), updatePaciente)
-  .delete(protect, restrictTo('Administrador', 'Psicologo'), deletePaciente);
+  .delete(
+    protect,
+    restrictTo('Administrador', 'Psicologo'),
+    desactivarPaciente
+  );
+
+
 
 module.exports = router;

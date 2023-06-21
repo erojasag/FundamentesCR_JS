@@ -8,9 +8,23 @@ const hpp = require('hpp');
 const cors = require('cors');
 const userRouter = require('./routes/usersRoute');
 const pacientesRouter = require('./routes/pacientesRoute');
+const expedientesRouter = require('./routes/expedientesRoute');
+const datosMedicosRouter = require('./routes/datosMedicosRoute');
+const casasRouter = require('./routes/casasRoute');
+const rolRouter = require('./routes/rolRoute');
+const aspectoClinicoRouter = require('./routes/aspectoClinicoRoute');
+const aspectoComunitarioRouter = require('./routes/aspectoComunitarioRoute');
+const aspectoDesarrolloTallerRouter = require('./routes/aspectoDesarrolloTallerRoute');
+const aspectoPsicoEducativoRouter = require('./routes/aspectoPsicoEducativoRoute');
+const perfilesEntradaRouter = require('./routes/perfilEntradaRoute');
+const perfilesSalidaRouter = require('./routes/perfilSalidaRoute');
+const condicionesLaboralesRouter = require('./routes/condicionLaboralRoute');
+const encargadoRouter = require('./routes/encargadoRoute');
+const escolaridadRouter = require('./routes/escolaridadRoute');
+const dinamicaFamiliarRouter = require('./routes/dinamicaFamiliarRoute');
+const socioDemograficoRouter = require('./routes/sociodemograficoRoute');
 
 const ErrorHandler = require('./controllers/errorController');
-
 const AppError = require('./utils/appError');
 
 // create and setup express app
@@ -54,7 +68,21 @@ app.use(express.urlencoded({ extended: false }));
 // register routes
 app.use('/usuarios', userRouter);
 app.use('/pacientes', pacientesRouter);
-
+app.use('/expedientes', expedientesRouter);
+app.use('/datosMedicos', datosMedicosRouter);
+app.use('/casas', casasRouter);
+app.use('/roles', rolRouter);
+app.use('/aspectosClinicos', aspectoClinicoRouter);
+app.use('/aspectosComunitarios', aspectoComunitarioRouter);
+app.use('/aspectosDesarrolloTaller', aspectoDesarrolloTallerRouter);
+app.use('/aspectosPsicoEducativos', aspectoPsicoEducativoRouter);
+app.use('/entrevistasEntrada', perfilesEntradaRouter);
+app.use('/entrevistasSalida', perfilesSalidaRouter);
+app.use('/condicionesLaborales', condicionesLaboralesRouter);
+app.use('/encargados', encargadoRouter);
+app.use('/escolaridades', escolaridadRouter);
+app.use('/dinamicasFamiliares', dinamicaFamiliarRouter);
+app.use('/socioDemograficos', socioDemograficoRouter);
 //404 handler
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

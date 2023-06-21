@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const argon2 = require('argon2');
 const crypto = require('crypto');
-const roles = require('./Roles');
+const roles = require('./rol');
 const db = require('../config/db');
 const AppError = require('../utils/appError');
 
@@ -32,10 +32,6 @@ const User = db.define(
     contrasena: {
       type: DataTypes.STRING(250),
       allowNull: true,
-      validate: {
-        notEmpty: true,
-        len: [9, 32],
-      },
     },
     confirmContrasena: {
       type: DataTypes.VIRTUAL,
@@ -102,6 +98,8 @@ User.beforeUpdate(async (user) => {
     user.contrasenaChangedAt = Date.now() - 1000;
   }
 });
+
+
 
 User.beforeUpdate(async (user) => {
   if (user.changed()) {

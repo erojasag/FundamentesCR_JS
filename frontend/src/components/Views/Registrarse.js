@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../layouts/footer';
 import Cookies from 'js-cookie';
+import ErrorPopup from '../layouts/errorPopUp';
 
 export default function Registrarse() {
   const [nombre, setName] = useState('');
@@ -12,6 +13,7 @@ export default function Registrarse() {
   const [contrasena, setPassword] = useState('');
   const [confirmContrasena, setConfirmPassword] = useState('');
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleNameChange = (event) => {
     setName(event.currentTarget.value);
@@ -48,7 +50,6 @@ export default function Registrarse() {
         'http://localhost:3000/usuarios/registrarse',
         data
       );
-      console.log(response);
       if (response.status !== 201) {
         const message = `An error has occured: ${response.statusText}`;
         window.alert(message);
@@ -60,7 +61,10 @@ export default function Registrarse() {
       Cookies.set('rol', response.data.data.user.rol.nombreRol, {
         expires: 1,
       });
-      Cookies.set('nombre', response.data.data.user.nombre);
+      Cookies.set(
+        'nombre',
+        response.data.data.user.nombre + ' ' + response.data.data.user.primerApe
+      );
       setName('');
       setFirstLastName('');
       setSecondLastName('');
@@ -69,7 +73,19 @@ export default function Registrarse() {
       setConfirmPassword('');
       navigate('/Inicio');
     } catch (err) {
-      console.log(err);
+      let errMessage = JSON.parse(err.request.response);
+      errMessage = errMessage.err.errors[0].message;
+      console.log(errMessage);
+      if (errMessage === 'Las contraseñas no coinciden') {
+        setErrorMessage(errMessage);
+        return;
+      }
+      if (errMessage === 'UQ__usuarios__AB6E6164E0DACEBE must be unique') {
+        errMessage = 'El correo ya se encuentra registrado';
+        setErrorMessage(errMessage);
+        return;
+      }
+      navigate('/Registrarse');
     }
   };
 
@@ -169,6 +185,7 @@ export default function Registrarse() {
                           Cancelar
                         </a>
                       </form>
+                      {errorMessage && <ErrorPopup message={errorMessage} />}
                       <hr />
                       <div class="text-center"></div>
                     </div>

@@ -11,7 +11,6 @@ export default function Navbar() {
   if (!token) {
     window.location.href = '/';
   }
-  const rol = Cookies.get('rol');
   const nombre = Cookies.get('nombre');
 
   const handleLogout = () => {
