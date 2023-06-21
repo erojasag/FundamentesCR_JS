@@ -5,7 +5,7 @@ const {
   deleteMe,
   updateMe,
   deactivateUser,
-} = require('../controllers/usuariosController');
+} = require('../controllers/usuarioController');
 
 const {
   signup,

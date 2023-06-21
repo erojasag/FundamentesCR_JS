@@ -55,10 +55,7 @@ function Router() {
       />
       <Route path="/UsuarioLog" element={<UsuarioLog />} />
       <Route path="/EditarUsuarioLog" element={<EditarUsuarioLog />} />
-      <Route
-        path="/Expedientes/DatosExpediente"
-        element={<DatosExpediente />}
-      />
+      <Route path="/Expedientes" element={<DatosExpediente />} />
       <Route path="/PersonaResponsable" element={<PersonaResponsable />} />
       <Route
         path="/Expedientes/EditarDatosExpediente"
@@ -84,7 +81,10 @@ function Router() {
       <Route path="/ReporteExpediente" element={<ReporteExpediente />} />
       <Route path="/Acciones" element={<Acciones />} />
       <Route path="/Error404" element={<Error404 />} />
-      <Route path="/Users/ResetPassword/:token" element={<ResetPass />} />
+      <Route
+        path="/usuarios/reiniciarContrasena/:token"
+        element={<ResetPass />}
+      />
       <Route path="/Perfil" element={<Perfil />} />
       <Route path="/CambiarMiContrasena" element={<CambiarContrasena />} />
     </Routes>

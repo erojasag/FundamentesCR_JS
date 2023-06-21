@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Footer from '../layouts/footer';
+import ErrorPopUp from '../layouts/errorPopUp';
 
 export default function ResetPass() {
   const { token } = useParams();
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
+  const [contrasena, setPassword] = useState('');
+  const [confirmContrasena, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
   const handlePasswordChange = (event) => {
     setPassword(event.currentTarget.value);
   };
@@ -21,27 +22,21 @@ export default function ResetPass() {
     event.preventDefault();
     try {
       const data = {
-        password,
-        confirmPassword,
+        contrasena,
+        confirmContrasena,
       };
       const route = `http://localhost:3000/usuarios/reiniciarContrasena/${token}`;
       const response = await axios.patch(route, data);
       console.log(response);
 
-      if (response.status !== 200) {
-        const message = `An error has occured: ${response.statusText}`;
-        window.alert(message);
-        navigate('/');
-        return;
-      }
-
       setPassword('');
       setConfirmPassword('');
       navigate('/');
     } catch (err) {
-      window.alert(`Record id: ${token} not found`);
-      navigate('/');
-      return;
+      let errMessage = err.response.data.message;
+      if (errMessage === 'Las contraseñas no coinciden') {
+        setErrorMessage(errMessage);
+      }
     }
   };
 
@@ -71,7 +66,7 @@ export default function ResetPass() {
                             className="form-control form-control-user"
                             name="Contraseña"
                             placeholder="Ingrese su contraseña"
-                            value={password}
+                            value={contrasena}
                             onChange={handlePasswordChange}
                           />
                           <br />
@@ -80,7 +75,7 @@ export default function ResetPass() {
                             className="form-control form-control-user"
                             name="ConfirmaContraseña"
                             placeholder="Confirme su contraseña"
-                            value={confirmPassword}
+                            value={confirmContrasena}
                             onChange={handleConfirmPasswordChange}
                           />
                         </div>
@@ -91,6 +86,7 @@ export default function ResetPass() {
                           Ingresar
                         </button>
                       </form>
+                      {errorMessage && <ErrorPopUp message={errorMessage} />}
                     </div>
                   </div>
                 </div>
