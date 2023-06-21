@@ -34,18 +34,12 @@ export default function Home() {
         'http://localhost:3000/usuarios/login',
         data
       );
-      if (!response.status) {
-        const message = `An error has occured: ${response.statusText}`;
-        window.alert(message);
-        navigate('/');
-        return;
-      }
-
       Cookies.set('jwt', response.data.token, { expires: 1 });
       Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
       Cookies.set('rol', response.data.data.user.rol.nombreRol, {
         expires: 1,
       });
+
       Cookies.set(
         'nombre',
         response.data.data.user.nombre + ' ' + response.data.data.user.primerApe
@@ -64,6 +58,7 @@ export default function Home() {
       if (errMessage === 'El usuario no existe') {
         setErrorMessage(errMessage);
       }
+      setErrorMessage(null);
     }
   };
   return (

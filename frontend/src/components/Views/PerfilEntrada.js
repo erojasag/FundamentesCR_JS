@@ -3,17 +3,25 @@ import React, { useEffect, useState } from 'react';
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
+import Cookies from 'js-cookie';
 
 export default function PerfilEntrada() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${Cookies.get('jwt')}`,
+    };
     const fetchData = async () => {
       const response = await axios(
-        'http://localhost:3000/entrevistasEntrada/'
+        'http://localhost:3000/entrevistasEntrada/',
+        {
+          headers: headers,
+        }
       );
-      console.log(response);
-      setData(response.data.data.admissionInterviewsList);
+      console.log(response.data.data.data);
+      setData(response.data.data.data);
     };
     fetchData();
   }, []);
@@ -22,17 +30,70 @@ export default function PerfilEntrada() {
     return data.map((item) => (
       <tr>
         <td>
-          {item.Users.Name} {item.Users.FirstLastName}{' '}
-          {item.Users.SecondLastName}
+          {item.doctor.nombre} {item.doctor.primerApe} {item.doctor.segundoApe}
         </td>
-        <td>{item.Users.Cedula}</td>
-        <td>{item.AdmissionDate}</td>
         <td>
-          {item.Doctors.Name} {item.Doctors.FirstLastName}{' '}
-          {item.Doctors.SecondLastName}
+          {item.aspectoComunitario.altaVulnerabilidadViolencia ? 'Si' : 'No'}
         </td>
-        <td>{item.Houses.Name}</td>
-        <td>{item.Houses.Location}</td>
+        <td>{item.aspectoComunitario.puntajeAltaVulnerabilidadViolencia}</td>
+        <td>
+          {item.aspectoComunitario.observacionesAltaVulnerabilidadViolencia}
+        </td>
+        <td>{item.aspectoComunitario.reflexionEntorno ? 'Si' : 'No'}</td>
+        <td>{item.aspectoComunitario.puntajeReflexionEntorno}</td>
+        <td>
+          {item.aspectoComunitario.ObservarcionesReflexionEntorno ? 'Si' : 'No'}
+        </td>
+        <td>{item.aspectoComunitario.formasRelacionarse ? 'Si' : 'No'}</td>
+        <td>{item.aspectoComunitario.puntajeFormasRelacionarse}</td>
+        <td>{item.aspectoComunitario.observacionesFormasRelacionarse}</td>
+        <td>{item.aspectoComunitario.cuestionamientoNormas ? 'Si' : 'No'}</td>
+        <td>{item.aspectoComunitario.puntajeCuestionamientoNormas}</td>
+        <td>{item.aspectoComunitario.observacionesCuestionamientoNormas}</td>
+        <td>{item.aspectoComunitario.puntajeTotal}</td>
+        <td>{item.aspectoComunitario.prioridad}</td>
+        <td>{item.aspectoClinico.ideacionAutolesiones ? 'Si' : 'No'}</td>
+        <td>{item.aspectoClinico.puntajeIdeacion}</td>
+        <td>{item.aspectoClinico.observacionIdeacion}</td>
+        <td>{item.aspectoClinico.personaSignificativa ? 'Si' : 'No'}</td>
+        <td>{item.aspectoClinico.puntajePersonaSignificativa}</td>
+        <td>{item.aspectoClinico.observacionesPersonaSignificativa}</td>
+        <td>{item.aspectoClinico.violenciaIntrafamiliar}</td>
+        <td>
+          {item.aspectoClinico.puntajeViolenciaIntrafalimiar ? 'Si' : 'No'}
+        </td>
+        <td>{item.aspectoClinico.violenciaSexual ? 'Si' : 'No'}</td>
+        <td>{item.aspectoClinico.puntajeViolenciaSexual}</td>
+        <td>{item.aspectoClinico.observacionesViolenciaSexual}</td>
+        <td>{item.aspectoClinico.violenciaPsicologica ? 'Si' : 'No'}</td>
+        <td>{item.aspectoClinico.puntajeViolenciaPsicologica}</td>
+        <td>{item.aspectoClinico.observacionesViolenciaPsicologica}</td>
+        <td>{item.aspectoClinico.violenciaFisicaFamiliar ? 'Si' : 'No'}</td>
+        <td>{item.aspectoClinico.puntajeViolenciaFisicaFamiliar}</td>
+        <td>{item.aspectoClinico.observacionesViolenciaFisicaFamiliar}</td>
+        <td>{item.aspectoClinico.personasPrivadasLibertad ? 'Si' : 'No'}</td>
+        <td>{item.aspectoClinico.puntajePersonasPrivadasLibertad}</td>
+        <td>{item.aspectoClinico.observacionesPersonasPrivadasLibertad}</td>
+        <td>{item.aspectoClinico.consumoDrogasFamilia ? 'Si' : 'No'}</td>
+        <td>{item.aspectoClinico.puntajeConsumoDrogasFamilia}</td>
+        <td>{item.aspectoClinico.observacionesConsumoDrogasFamilia}</td>
+        <td>{item.aspectoClinico.abandonoFamiliar ? 'Si' : 'No'}</td>
+        <td>{item.aspectoClinico.puntajeAbandonoFamiliar}</td>
+        <td>{item.aspectoClinico.observacionesAbandonoFamiliar}</td>
+        <td>{item.aspectoClinico.relacionEmocionesCuerpo ? 'Si' : 'No'}</td>
+        <td>{item.aspectoClinico.puntajeRelacionEmocionesCuerpo}</td>
+        <td>{item.aspectoClinico.observacionesRelacionEmocionesCuerpo}</td>
+        <td>{item.aspectoClinico.responsabilidadCuidadores ? 'Si' : 'No'}</td>
+        <td>
+          {
+            item.aspectoClinico
+              .puntajeResponsabilidadCuidadoresobservacionesResponsabilidadCuidadores
+          }
+        </td>
+        <td>{item.aspectoClinico.observacionesResponsabilidadCuidadores}</td>
+        <td>{item.aspectoClinico.puntajeTotal}</td>
+        <td>{item.aspectoClinico.prioridad}</td>
+
         <td>
           <a href="EditarPerfilEntrada" class="btn btn-primary btn-sm">
             <i class="fas fa-pencil-alt"></i>
@@ -86,13 +147,57 @@ export default function PerfilEntrada() {
                     >
                       <thead>
                         <tr>
-                          <th>Paciente</th>
-                          <th>Cédula</th>
-                          <th>Fecha de Ingreso</th>
                           <th>Doctor</th>
-                          <th>Casa</th>
-                          <th>Ubicacion</th>
-                          <th>Acciones</th>
+                          <th>Aspectos Comunitarios</th>
+                          <th>Puntaje vulnerabilidad a violencia </th>
+                          <th>Observaciones vulnerabilidad a violencia</th>
+                          <th>Reflexión sobre el entorno</th>
+                          <th>Puntaje reflexión sobre el entorno</th>
+                          <th>Observaciones reflexión sobre el entorno</th>
+                          <th>Formas de relacionarse</th>
+                          <th>Puntaje formas de relacionarse</th>
+                          <th>Observaciones formas de relacionarse</th>
+                          <th>Cuestionamiento de normas</th>
+                          <th>Puntaje cuestionamiento de normas</th>
+                          <th>Observaciones cuestionamiento de normas</th>
+                          <th>Puntaje total A. Clinico</th>
+                          <th>Prioridad A. Clinico</th>
+                          <th>ideacionAutolesiones</th>
+                          <th>puntajeIdeacion</th>
+                          <th>observacionesIdeacion</th>
+                          <th>personaSignificativa</th>
+                          <th>puntajePersonaSignificativa</th>
+                          <th>observacionesPersonaSignificativa</th>
+                          <th>violenciaIntrafamiliar</th>
+                          <th>puntajeViolenciaIntrafamiliar</th>
+                          <th>observacionesViolenciaIntrafamiliar</th>
+                          <th>violenciaSexual</th>
+                          <th>puntajeViolenciaSexual</th>
+                          <th>observacionesViolenciaSexual</th>
+                          <th>violenciaPsicologica</th>
+                          <th>puntajeViolenciaPsicologica</th>
+                          <th>observacionesViolenciaPsicologica</th>
+                          <th>violenciaFisicaFamiliar</th>
+                          <th>puntajeViolenciaFisicaFamiliar</th>
+                          <th>observacionesViolenciaFisicaFamiliar</th>
+                          <th>personasPrivadasLibertad</th>
+                          <th>puntajePersonasPrivadasLibertad</th>
+                          <th>observacionesPersonasPrivadasLibertad</th>
+                          <th>consumoDrogasFamilia</th>
+                          <th>puntajeConsumoDrogasFamilia</th>
+                          <th>observacionesConsumoDrogasFamilia</th>
+                          <th>abandonoFamiliar</th>
+                          <th>puntajeAbandonoFamiliar</th>
+                          <th>observacionesAbandonoFamiliar</th>
+                          <th>relacionEmocionesCuerpo</th>
+                          <th>observacionesRelacionEmocionesCuerpo</th>
+                          <th>responsabilidadCuidadores</th>
+                          <th>puntajeResponsabilidadCuidadores</th>
+                          <th>observacionesResponsabilidadCuidadores</th>
+                          <th>puntajeTotal</th>
+                          <th>Prioridad</th>
+                          <th>Aspectos Psicoeducativos</th>
+                          <th property="Acciones">Acciones</th>
                         </tr>
                       </thead>
                       <tbody>{getListPerfiles()}</tbody>

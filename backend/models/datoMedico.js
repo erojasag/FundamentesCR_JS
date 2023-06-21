@@ -1,52 +1,39 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 
-const Pacientes = db.define(
-  'pacientes',
+const datosMedicos = db.define(
+  'datosMedicos',
   {
-    pacienteId: {
+    datosMedicosId: {
       type: DataTypes.UUIDV1,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
-    nombreCompleto: {
-      type: DataTypes.STRING(100),
+    alergias: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    cedula: {
-      type: DataTypes.STRING(15),
-      unique: true,
-      validate: {
-        isNumeric: true,
-        notEmpty: true,
-        len: [9, 15],
-      },
-    },
-    fechaNacimiento: {
-      type: DataTypes.DATEONLY,
+    consumo: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    contacto: {
-      type: DataTypes.STRING(15),
+    embarazo: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    edad: {
+    hijoshijas: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    nacionalidad: {
+    expedienteHNP: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    situacionParticular: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    genero: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    direccion: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    distritoResidencia: {
+    observaciones: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
@@ -62,10 +49,11 @@ const Pacientes = db.define(
   },
   {
     name: {
-      singular: 'paciente',
-      plural: 'pacientes',
+      singular: 'datoMedico',
+      plural: 'datosMedicos',
     },
   }
 );
 
-module.exports = Pacientes;
+
+module.exports = datosMedicos;
