@@ -50,7 +50,7 @@ function Router() {
       <Route path="/EditarPerfilSalida" element={<EditarPerfilSalida />} />
       <Route path="/Encuestas/" element={<Encuestas />} />
       <Route
-        path="/Encuestas/EncuestaSatisfaccion"
+        path="/EncuestaSatisfaccion"
         element={<EncuestaSatisfaccion />}
       />
       <Route path="/UsuarioLog" element={<UsuarioLog />} />

@@ -31,27 +31,15 @@ export default function SideMenu() {
         <li class="nav-item">
           <a
             class="nav-link collapsed"
-            href="/"
-            data-toggle="collapse"
-            data-target="#collapseAdministracion"
-            aria-expanded="true"
-            aria-controls="collapseAdministracion"
-          >
+            href="/" data-toggle="collapse" data-target="#collapseAdministracion"
+            aria-expanded="true" aria-controls="collapseAdministracion" >
             <i class="fas fa-fw fa-cog"></i>
-            <span>Usuario Login</span>
+            <span>Usuarios</span>
           </a>
-          <div
-            id="collapseAdministracion"
-            class="collapse"
-            aria-labelledby="headingTwo"
-            data-parent="#accordionSidebar"
-          >
+          <div id="collapseAdministracion" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" >
             <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item" href="UsuarioLog">
                 Usuarios
-              </a>
-              <a class="collapse-item" href="EditarUsuarioLog">
-                Editar Usuario
               </a>
             </div>
           </div>
@@ -67,7 +55,7 @@ export default function SideMenu() {
             aria-controls="collapseExpediente"
           >
             <i class="fas fa-fw fa-clipboard-list"></i>
-            <span>Paciente</span>
+            <span>Pacientes</span>
           </a>
           <div
             id="collapseExpediente"
@@ -77,10 +65,7 @@ export default function SideMenu() {
           >
             <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item" href="/Pascientes">
-                Paciente
-              </a>
-              <a class="collapse-item" href="/EditarPasciente">
-                Editar Paciente
+                Pacientes
               </a>
             </div>
           </div>
@@ -155,9 +140,6 @@ export default function SideMenu() {
               <a class="collapse-item" href="/PerfilEntrada">
                 Perfil de Entrada
               </a>
-              <a class="collapse-item" href="/EditarPerfilEntrada">
-                Editar Perfil de Entrada
-              </a>
             </div>
           </div>
         </li>
@@ -183,9 +165,6 @@ export default function SideMenu() {
               <a class="collapse-item" href="/PerfilSalida">
                 Perfil de Salida
               </a>
-              <a class="collapse-item" href="/EditarPerfilSalida">
-                Editar Perfil de Salida
-              </a>
             </div>
           </div>
         </li>
@@ -208,10 +187,10 @@ export default function SideMenu() {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="/EncuestaSatisfaccion">
+              <a class="collapse-item" href="/Encuestas">
                 Encuesta de Satisfacción
               </a>
-              <a class="collapse-item" href="/Encuestas">
+              <a class="collapse-item" href="/EncuestaSatisfaccion">
                 Agregar Encuesta
               </a>
             </div>
