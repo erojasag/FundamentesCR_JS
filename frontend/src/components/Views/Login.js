@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import Footer from '../layouts/footer';
 import ErrorPopUp from '../layouts/errorPopUp';
 
-export default function Home() {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);

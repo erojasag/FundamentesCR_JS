@@ -18,7 +18,8 @@ const getAll = (Model) =>
 
 const getOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findByPk(req.params.id);
+    const id = req.params.id;
+    const doc = await Model.findByPk(id);
 
     if (!doc) return next(new AppError('No se encontraron registros', 404));
 
