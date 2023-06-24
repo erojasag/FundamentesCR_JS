@@ -90,9 +90,9 @@ export default function EditarUsuarioLog() {
                           class="btn btn-danger btn-sm"
                           type="button"
                           id="btnGuardarCambios"
-                          href="/UsuarioLog"
+                          href="/ListaUsuarios"
                         >
-                          Volver
+                          Cancelar
                         </a>
                       </form>
                     </div>

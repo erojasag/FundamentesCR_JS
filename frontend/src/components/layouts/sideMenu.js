@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function SideMenu() {
+  const [isExpanded, setIsExpanded] = useState(true);
+
+  const handleToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
   return (
     <React.Fragment>
       <ul
-        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        className={`navbar-nav bg-gradient-primary sidebar sidebar-dark accordion ${
+          isExpanded ? '' : 'toggled'
+        }`}
         id="accordionSidebar"
       >
         <a
@@ -29,16 +36,24 @@ export default function SideMenu() {
           </a>
         </li>
         <li class="nav-item">
-          <a
+          <div
             class="nav-link collapsed"
-            href="/" data-toggle="collapse" data-target="#collapseAdministracion"
-            aria-expanded="true" aria-controls="collapseAdministracion" >
+            data-toggle="collapse"
+            data-target="#collapseAdministracion"
+            aria-expanded="true"
+            aria-controls="collapseAdministracion"
+          >
             <i class="fas fa-fw fa-cog"></i>
             <span>Usuarios</span>
-          </a>
-          <div id="collapseAdministracion" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" >
+          </div>
+          <div
+            id="collapseAdministracion"
+            class="collapse"
+            aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar"
+          >
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="UsuarioLog">
+              <a class="collapse-item" href="ListaUsuarios">
                 Usuarios
               </a>
             </div>
@@ -64,8 +79,8 @@ export default function SideMenu() {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="/Pascientes">
-                Pacientes
+              <a class="collapse-item" href="/Pacientes">
+                Ver Pacientes
               </a>
             </div>
           </div>
@@ -90,14 +105,11 @@ export default function SideMenu() {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="DatosExpediente">
-                Datos de Expedientes
+              <a class="collapse-item" href="Expedientes">
+                Ver Expedientes
               </a>
-              <a class="collapse-item" href="Pascientes">
-                Datos de Pacientes
-              </a>
-              <a class="collapse-item" href="PersonaResponsable">
-                Persona Responsable
+              <a class="collapse-item" href="Encargados">
+                Encargados
               </a>
               <a class="collapse-item" href="Convivencia">
                 Convivencia
@@ -248,7 +260,11 @@ export default function SideMenu() {
         </li>
         <hr class="sidebar-divider" />
         <div class="text-center d-none d-md-inline">
-          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+          <button
+            class="rounded-circle border-0"
+            id="sidebarToggle"
+            onClick={handleToggle}
+          ></button>
         </div>
       </ul>
     </React.Fragment>

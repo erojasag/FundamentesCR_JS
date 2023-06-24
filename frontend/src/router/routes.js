@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Login from '../components/Views/Login';
 
-import UsuarioLog from '../components/Views/UsuarioLog';
+import ListaUsuarios from '../components/Views/ListaUsuarios';
 import EditarUsuarioLog from '../components/Views/EditarUsuarioLog';
 import DatosExpediente from '../components/Views/DatosExpediente';
 import PersonaResponsable from '../components/Views/PersonaResponsable';
@@ -52,16 +52,13 @@ function Router() {
       <Route path="/PerfilSalida" element={<PerfilSalida />} />
       <Route path="/EditarPerfilSalida" element={<EditarPerfilSalida />} />
       <Route path="/Encuestas/" element={<Encuestas />} />
-      <Route
-        path="/EncuestaSatisfaccion"
-        element={<EncuestaSatisfaccion />}
-      />
-      <Route path="/UsuarioLog" element={<UsuarioLog />} />
-      <Route path="/EditarUsuarioLog" element={<EditarUsuarioLog />} />
+      <Route path="/EncuestaSatisfaccion" element={<EncuestaSatisfaccion />} />
+      <Route path="/ListaUsuarios" element={<ListaUsuarios />} />
+      <Route path="/EditarUsuario" element={<EditarUsuarioLog />} />
       <Route path="/Expedientes" element={<DatosExpediente />} />
-      <Route path="/PersonaResponsable" element={<PersonaResponsable />} />
+      <Route path="/Encargados" element={<PersonaResponsable />} />
       <Route
-        path="/Expedientes/EditarDatosExpediente"
+        path="/Expedientes/EditarExpediente"
         element={<EditarDatosExpediente />}
       />
       <Route path="/EditarParentezco" element={<EditarParentezco />} />

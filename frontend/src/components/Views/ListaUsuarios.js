@@ -1,9 +1,130 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SideMenu from '../layouts/sideMenu';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 
-export default function UsuarioLog() {
+export default function ListaUsuarios() {
+  const [data, setData] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [nombre, setName] = useState('');
+  const [primerApe, setFirstLastName] = useState('');
+  const [segundoApe, setSecondLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [contrasena, setPassword] = useState('');
+  const [confirmContrasena, setConfirmPassword] = useState('');
+  const [rolId, setRol] = useState('Psicologo');
+
+  const handleNameChange = (event) => {
+    setName(event.currentTarget.value);
+  };
+  const handleFirstLastNameChange = (event) => {
+    setFirstLastName(event.currentTarget.value);
+  };
+  const handleSecondLastNameChange = (event) => {
+    setSecondLastName(event.currentTarget.value);
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.currentTarget.value);
+  };
+  const handlePasswordChange = (event) => {
+    setPassword(event.currentTarget.value);
+  };
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.currentTarget.value);
+  };
+
+  const handleRolChange = (event) => {
+    setRol(event.currentTarget.value);
+  };
+
+  const fetchData = async () => {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${Cookies.get('jwt')}`,
+    };
+    const response = await axios.get('http://localhost:3000/usuarios', {
+      headers,
+    });
+    setData(response.data.data.data);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const deactivateUser = async (usuarioId) => {
+    console.log(usuarioId);
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${Cookies.get('jwt')}`,
+    };
+
+    const response = await axios.delete(
+      `http://localhost:3000/usuarios/${usuarioId}`,
+      {
+        headers,
+      }
+    );
+    if (response.status === 204) {
+      window.location.reload();
+    }
+  };
+
+  const createUser = async () => {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${Cookies.get('jwt')}`,
+    };
+
+    const body = {
+      nombre,
+      primerApe,
+      segundoApe,
+      email,
+      contrasena,
+      confirmContrasena,
+      rolId,
+    };
+
+    const response = await axios.post('http://localhost:3000/usuarios/', body, {
+      headers,
+    });
+    if (response.status === 201) {
+      window.location.reload();
+    }
+  };
+
+  const getUsuarios = () => {
+    return data.map((user) => (
+      <tr key={3}>
+        <td>{user.nombre} </td>
+        <td>{user.primerApe + ' ' + user.segundoApe}</td>
+        <td>{user.email}</td>
+        <td>{user.rol.nombreRol}</td>
+        <td>
+          <a
+            href="EditarUsuario"
+            class="btn btn-primary btn-sm"
+            value={user.usuarioId}
+          >
+            <i class="fas fa-pencil-alt"></i>
+          </a>
+          &nbsp; &nbsp;
+          <a
+            href="EditarUsuarioLogUsuario"
+            class="btn btn-danger btn-sm"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            onClick={() => setSelectedUserId(user.usuarioId)}
+          >
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </td>
+      </tr>
+    ));
+  };
   return (
     <React.Fragment>
       <div id="wrapper">
@@ -40,39 +161,15 @@ export default function UsuarioLog() {
                         style={{ width: '100%' }}
                       >
                         <thead>
-                          <tr>
+                          <tr key={4}>
                             <th>Nombre</th>
                             <th>Apellidos</th>
-                            <th>Cedula</th>
                             <th>Correo</th>
+                            <th>Tipo de Usuario</th>
                             <th>Accion</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr>
-                            <td>Tiger </td>
-                            <td>Nixon</td>
-                            <th>123456789</th>
-                            <td>Edi@gmail.com</td>
-                            <td>
-                              <a
-                                href="EditarUsuarioLog"
-                                class="btn btn-primary btn-sm"
-                              >
-                                <i class="fas fa-pencil-alt"></i>
-                              </a>
-                              &nbsp; &nbsp;
-                              <a
-                                href="EditarUsuarioLogUsuario"
-                                class="btn btn-danger btn-sm"
-                                data-toggle="modal"
-                                data-target="#exampleModal"
-                              >
-                                <i class="fas fa-trash-alt"></i>
-                              </a>
-                            </td>
-                          </tr>
-                        </tbody>
+                        <tbody>{getUsuarios()}</tbody>
                       </table>
                     </div>
                   </div>
@@ -102,7 +199,7 @@ export default function UsuarioLog() {
                       </button>
                     </div>
                     <div class="modal-body">
-                      <p>¿Seguro que desea eliminar el contenido?</p>
+                      <p>¿Seguro que desea desactivar el usuario?</p>
                     </div>
                     <div class="modal-footer">
                       <button
@@ -116,6 +213,7 @@ export default function UsuarioLog() {
                         type="button"
                         class="btn btn-danger"
                         data-dismiss="modal"
+                        onClick={() => deactivateUser(selectedUserId)}
                       >
                         Eliminar
                       </button>
@@ -158,24 +256,34 @@ export default function UsuarioLog() {
                                   class="form-control form-control-sm input-validar"
                                   id="txtNombre"
                                   name="Nombre"
+                                  value={nombre}
+                                  onChange={handleNameChange}
                                 />
                               </div>
                               <div class="form-group col-sm-6">
-                                <label for="txtCorreo">Apellidos</label>
+                                <label for="txtPrimerApe">
+                                  Primer Apellido
+                                </label>
                                 <input
-                                  type="email"
+                                  type="text"
                                   class="form-control form-control-sm input-validar"
-                                  id="Sexo"
-                                  name="Sexo"
+                                  id="primerApe"
+                                  name="primerApe"
+                                  value={primerApe}
+                                  onChange={handleFirstLastNameChange}
                                 />
                               </div>
                               <div class="form-group col-sm-6">
-                                <label for="txtCorreo">Cedula</label>
+                                <label for="txtSegundoApe">
+                                  Segundo Apellido
+                                </label>
                                 <input
-                                  type="email"
+                                  type="text"
                                   class="form-control form-control-sm input-validar"
-                                  id="Sexo"
-                                  name="Sexo"
+                                  id="segundoApe"
+                                  name="segundoApe"
+                                  value={segundoApe}
+                                  onChange={handleSecondLastNameChange}
                                 />
                               </div>
                               <div class="form-group col-sm-6">
@@ -183,27 +291,49 @@ export default function UsuarioLog() {
                                 <input
                                   type="email"
                                   class="form-control form-control-sm input-validar"
-                                  id="PoblacionPoblacion"
-                                  name="Poblacion"
+                                  id="email"
+                                  name="email"
+                                  value={email}
+                                  onChange={handleEmailChange}
                                 />
                               </div>
                               <div class="form-group col-sm-6">
-                                <label for="txtCorreo">Contraseña</label>
+                                <label for="txtContraseña">Contraseña</label>
                                 <input
-                                  type="email"
+                                  type="password"
                                   class="form-control form-control-sm input-validar"
-                                  id="Nacionalidad"
-                                  name="Nacionalidad"
+                                  id="contrasena"
+                                  name="contrasena"
+                                  value={contrasena}
+                                  onChange={handlePasswordChange}
                                 />
                               </div>
                               <div class="form-group col-sm-6">
-                                <label for="txtCorreo">Tipo Usuario</label>
+                                <label for="txtConfirmarContraseña">
+                                  Confirmar Contraseña
+                                </label>
+                                <input
+                                  type="password"
+                                  class="form-control form-control-sm input-validar"
+                                  id="confirmContrasena"
+                                  name="confirmContrasena"
+                                  value={confirmContrasena}
+                                  onChange={handleConfirmPasswordChange}
+                                />
+                              </div>
+                              <div class="form-group col-sm-6">
+                                <label for="txtRol">Tipo Usuario</label>
                                 <select
                                   class="custom-select"
-                                  id="cboTipoDocumentoVenta"
+                                  id="rolId"
+                                  name="rolId"
+                                  value={rolId}
+                                  onChange={handleRolChange}
                                 >
-                                  <option value="1">Administrador</option>
-                                  <option value="0">Psicologo</option>
+                                  <option value="Psicologo">Psicologo</option>
+                                  <option value="Administrador">
+                                    Administrador
+                                  </option>
                                 </select>
                               </div>
                             </div>
@@ -223,6 +353,7 @@ export default function UsuarioLog() {
                         class="btn btn-primary btn-sm"
                         type="button"
                         id="btnGuardar"
+                        onClick={createUser}
                       >
                         Guardar
                       </button>

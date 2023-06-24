@@ -87,6 +87,12 @@ const User = db.define(
   }
 );
 
+User.beforeCreate(async (user) => {
+  const hashPassword = await argon2.hash(user.contrasena);
+  user.contrasena = hashPassword;
+  user.confirmPassword = hashPassword;
+});
+
 User.beforeUpdate(async (user) => {
   const hashPassword = await argon2.hash(user.contrasena);
   user.contrasena = hashPassword;
@@ -98,8 +104,6 @@ User.beforeUpdate(async (user) => {
     user.contrasenaChangedAt = Date.now() - 1000;
   }
 });
-
-
 
 User.beforeUpdate(async (user) => {
   if (user.changed()) {
