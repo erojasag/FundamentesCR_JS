@@ -2,17 +2,17 @@ const { getAll, getOne, insertOne, updateOne } = require('./handlerFactory');
 
 const encargadoModel = require('../models/encargado');
 
-const getAllPerfilesSalida = getAll(encargadoModel);
+const getAllEncargados = getAll(encargadoModel);
 
-const getPerfilSalidaById = getOne(encargadoModel);
+const getEncargadoById = getOne(encargadoModel);
 
-const agregarPerfilSalida = insertOne(encargadoModel);
+const agregarEncargado = insertOne(encargadoModel);
 
-const updatePerfilSalida = updateOne(encargadoModel);
+const updateEncargado = updateOne(encargadoModel);
 
 module.exports = {
-  getAllPerfilesSalida,
-  getPerfilSalidaById,
-  agregarPerfilSalida,
-  updatePerfilSalida,
+  getAllEncargados,
+  getEncargadoById,
+  agregarEncargado,
+  updateEncargado,
 };

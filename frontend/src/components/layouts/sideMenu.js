@@ -16,7 +16,7 @@ export default function SideMenu() {
       >
         <a
           class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="index.html"
+          href="/Inicio"
         >
           <div class="sidebar-brand-icon">
             <img
@@ -79,7 +79,7 @@ export default function SideMenu() {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="/Pacientes">
+              <a class="collapse-item" href="/pacientes">
                 Ver Pacientes
               </a>
             </div>

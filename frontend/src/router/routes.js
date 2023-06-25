@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 import Login from '../components/Views/Login';
-
 import ListaUsuarios from '../components/Views/ListaUsuarios';
 import EditarUsuarioLog from '../components/Views/EditarUsuarioLog';
 import DatosExpediente from '../components/Views/DatosExpediente';
@@ -20,7 +19,7 @@ import EditarEstadoExp from '../components/Views/EditarEstadoExp';
 import ReporteExpediente from '../components/Views/ReporteExpediente';
 import Acciones from '../components/Views/Acciones';
 import Error404 from '../components/Views/Error404';
-import Resgistrarse from '../components/Views/Registrarse';
+import Registrarse from '../components/Views/Registrarse';
 import Pacientes from '../components/Views/Pacientes';
 import EditarPaciente from '../components/Views/EditarPaciente';
 import PerfilEntrada from '../components/Views/PerfilEntrada';
@@ -39,14 +38,13 @@ function Router() {
   return (
     <Routes>
       <Route index element={<Login />} />
+      <Route path="pacientes/" element={<Pacientes />} />
+      <Route path="pacientes/:id" element={<EditarPaciente />} />
+
       <Route path="/Inicio" element={<Index />} />
-      <Route path="/Registrarse" element={<Resgistrarse />} />
+      <Route path="/Registrarse" element={<Registrarse />} />
       <Route path="/OlvideMiContrasena" element={<ForgotPass />} />
-      <Route path="/Pacientes" element={<Pacientes />} />
-      <Route
-        path="/Pacientes/EditarPaciente/:id"
-        element={<EditarPaciente />}
-      />
+
       <Route path="/PerfilEntrada" element={<PerfilEntrada />} />
       <Route path="/EditarPerfilEntrada" element={<EditarPerfilEntrada />} />
       <Route path="/PerfilSalida" element={<PerfilSalida />} />
@@ -54,7 +52,7 @@ function Router() {
       <Route path="/Encuestas/" element={<Encuestas />} />
       <Route path="/EncuestaSatisfaccion" element={<EncuestaSatisfaccion />} />
       <Route path="/ListaUsuarios" element={<ListaUsuarios />} />
-      <Route path="/EditarUsuario" element={<EditarUsuarioLog />} />
+      <Route path="/editarUsuario/:id" element={<EditarUsuarioLog />} />
       <Route path="/Expedientes" element={<DatosExpediente />} />
       <Route path="/Encargados" element={<PersonaResponsable />} />
       <Route

@@ -105,7 +105,7 @@ export default function ListaUsuarios() {
         <td>{user.rol.nombreRol}</td>
         <td>
           <a
-            href="EditarUsuario"
+            href={`EditarUsuario/${user.usuarioId}`}
             class="btn btn-primary btn-sm"
             value={user.usuarioId}
           >

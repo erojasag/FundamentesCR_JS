@@ -5,6 +5,7 @@ import SideMenu from '../layouts/sideMenu';
 
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
+import { Link, Navigate } from 'react-router-dom';
 
 export default function Pacientes() {
   const [data, setData] = useState([]);
@@ -47,7 +48,9 @@ export default function Pacientes() {
   const handleGeneroChange = (event) => {
     setGenero(event.currentTarget.value);
   };
-
+  const handleSetSelectedUserId = (event) => {
+    setSelectedUserId(event.currentTarget.value);
+  };
   const deactivateUser = async (pacienteId) => {
     const headers = {
       'Content-Type': 'application/json',
@@ -82,9 +85,13 @@ export default function Pacientes() {
       genero,
     };
 
-    const response = await axios.post('http://localhost:3000/pacientes/', body, {
-      headers,
-    });
+    const response = await axios.post(
+      'http://localhost:3000/pacientes/',
+      body,
+      {
+        headers,
+      }
+    );
     if (response.status === 201) {
       window.location.reload();
     }
@@ -120,7 +127,7 @@ export default function Pacientes() {
         <td>{paciente.nacionalidad}</td>
         <td>
           <a
-            href={`/Pacientes/EditarPaciente/${paciente.pacienteId}`}
+            href={`pacientes/${paciente.pacienteId}`}
             className="btn btn-primary btn-sm"
           >
             <i className="fas fa-pencil-alt"></i>
@@ -131,7 +138,7 @@ export default function Pacientes() {
             className="btn btn-danger btn-sm"
             data-toggle="modal"
             data-target="#usuariosModal"
-            onClick={() => setSelectedUserId(paciente.pacienteId)}
+            value={paciente.pacienteId}
           >
             <i className="fas fa-trash-alt"></i>
           </a>
