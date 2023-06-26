@@ -74,17 +74,6 @@ export default function EncuestasSatisfaccion() {
                         />
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <label for="telefono">Teléfono:</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="telefono"
-                        placeholder="Número Telefónico"
-                        maxlength="12"
-                        required
-                      />
-                    </div>
                   </section>
                 </section>
               </section>

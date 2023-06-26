@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import Home from '../components/Views/Home';
+import Login from '../components/Views/Login';
 
 import UsuarioLog from '../components/Views/UsuarioLog';
 import EditarUsuarioLog from '../components/Views/EditarUsuarioLog';
@@ -38,19 +38,22 @@ import ForgotPass from '../components/Views/ForgotPass';
 function Router() {
   return (
     <Routes>
-      <Route index element={<Home />} />
+      <Route index element={<Login />} />
       <Route path="/Inicio" element={<Index />} />
       <Route path="/Registrarse" element={<Resgistrarse />} />
       <Route path="/OlvideMiContrasena" element={<ForgotPass />} />
       <Route path="/Pacientes" element={<Pacientes />} />
-      <Route path="/Pacientes/EditarPaciente" element={<EditarPaciente />} />
+      <Route
+        path="/Pacientes/EditarPaciente/:id"
+        element={<EditarPaciente />}
+      />
       <Route path="/PerfilEntrada" element={<PerfilEntrada />} />
       <Route path="/EditarPerfilEntrada" element={<EditarPerfilEntrada />} />
       <Route path="/PerfilSalida" element={<PerfilSalida />} />
       <Route path="/EditarPerfilSalida" element={<EditarPerfilSalida />} />
       <Route path="/Encuestas/" element={<Encuestas />} />
       <Route
-        path="/Encuestas/EncuestaSatisfaccion"
+        path="/EncuestaSatisfaccion"
         element={<EncuestaSatisfaccion />}
       />
       <Route path="/UsuarioLog" element={<UsuarioLog />} />

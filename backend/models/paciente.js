@@ -62,6 +62,7 @@ const Paciente = db.define(
     activo: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: true,
     },
     casaId: {
       type: DataTypes.UUIDV1,
