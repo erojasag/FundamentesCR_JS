@@ -52,13 +52,14 @@ export default function Login() {
       let errMessage = JSON.parse(err.request.response);
       errMessage = errMessage.message;
       if (errMessage === 'Correo o contraseña incorrectos') {
-        console.log(errMessage);
         setErrorMessage(errMessage);
       }
       if (errMessage === 'El usuario no existe') {
+        window.location.reload();
         setErrorMessage(errMessage);
       }
       setErrorMessage(null);
+      window.location.reload();
     }
   };
   return (
@@ -70,7 +71,6 @@ export default function Login() {
               <div className="card-body p-0">
                 <div className="row">
                   <div className="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                  {/* <UsuariosDropdown /> */}
                   <div className="col-lg-6">
                     <div className="p-5">
                       <div className="text-center">
@@ -114,14 +114,8 @@ export default function Login() {
                         <button className="btn btn-primary btn-user btn-block">
                           Iniciar
                         </button>
-                        <a
-                          className="btn btn-primary btn-user btn-block"
-                          href="Registrarse"
-                        >
-                          Registrarse
-                        </a>
+                        {errorMessage && <ErrorPopUp message={errorMessage} />}
                       </form>
-                      {errorMessage && <ErrorPopUp message={errorMessage} />}
                       <div className="text-center">
                         <a className="small" href="OlvideMiContrasena">
                           ¿Olvidó su contraseña?
