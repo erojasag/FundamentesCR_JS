@@ -5,7 +5,6 @@ import SideMenu from '../layouts/sideMenu';
 
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
-import { Link, Navigate } from 'react-router-dom';
 
 export default function Pacientes() {
   const [data, setData] = useState([]);
@@ -122,7 +121,6 @@ export default function Pacientes() {
         <td>{paciente.contacto}</td>
         <td>{paciente.edad}</td>
         <td>{paciente.fechaNacimiento}</td>
-        <td>Si</td>
         <td>{paciente.genero}</td>
         <td>{paciente.nacionalidad}</td>
         <td>
@@ -189,7 +187,6 @@ export default function Pacientes() {
                           <th>Teléfono</th>
                           <th>Edad Actual</th>
                           <th>Fecha de Nacimiento</th>
-                          <th>Migrante</th>
                           <th>Genero</th>
                           <th>Nacionalidad</th>
                           <th>Acciones</th>

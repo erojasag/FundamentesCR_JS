@@ -6,8 +6,8 @@ export default function Error404() {
     <React.Fragment>
       <div id="wrapper">
         <div id="content-wrapper" class="d-flex flex-column">
-          <div id="content">
-            <div class="container-fluid">
+          <div id="content" className="flex-grow">
+            <div class="container-fluid flex justify-center items-center">
               <div class="text-center">
                 <main
                   className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8"

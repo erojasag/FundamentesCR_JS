@@ -1,8 +1,95 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 export default function EditarUsuarioLog() {
+  const { id } = useParams();
+  console.log(id);
+  const [userData, setUserData] = useState([
+    {
+      nombre: '',
+      primerApe: '',
+      segundoApe: '',
+      email: '',
+      contrasena: '',
+      confirmContrasena: '',
+      rolId: '',
+    },
+  ]);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+      console.log(id);
+      const response = await axios.get(`http://localhost:3000/usuarios/${id}`, {
+        headers,
+      });
+      setUserData(response.data.data.data);
+    };
+    getUserData();
+  }, [id]);
+
+  const handleNameChange = (event) => {
+    setUserData({
+      ...userData,
+      nombre: event.currentTarget.value,
+    });
+  };
+  const handleFirstLastNameChange = (event) => {
+    setUserData({
+      ...userData,
+      primerApe: event.currentTarget.value,
+    });
+  };
+  const handleSecondLastNameChange = (event) => {
+    setUserData({
+      ...userData,
+      segundoApe: event.currentTarget.value,
+    });
+  };
+  const handleEmailChange = (event) => {
+    setUserData({
+      ...userData,
+      email: event.currentTarget.value,
+    });
+  };
+  const handlePasswordChange = (event) => {
+    setUserData({
+      ...userData,
+      contrasena: event.currentTarget.value,
+    });
+  };
+  const handleConfirmPasswordChange = (event) => {
+    setUserData({
+      ...userData,
+      confirmContrasena: event.currentTarget.value,
+    });
+  };
+  const handleRoleChange = (event) => {
+    setUserData({
+      ...userData,
+      rol: event.currentTarget.value,
+    });
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const data = {
+      nombre: userData.nombre,
+      primerApe: userData.primerApe,
+      segundoApe: userData.segundoApe,
+      email: userData.email,
+      contrasena: userData.contrasena,
+      confirmContrasena: userData.confirmContrasena,
+      rolId: userData.rolId,
+    };
+  };
   return (
     <React.Fragment>
       <div id="wrapper">
@@ -29,42 +116,80 @@ export default function EditarUsuarioLog() {
                               class="form-control form-control-sm input-validar"
                               id="txtNombre"
                               name="Nombre"
+                              value={userData.nombre}
+                              onChange={handleNameChange}
                             />
                           </div>
                           <div class="form-group col-sm-6">
-                            <label for="Apellidos">Apellidos</label>
+                            <label for="txtPrimerApellido">
+                              Primer Apellido
+                            </label>
                             <input
                               type="text"
                               class="form-control form-control-sm input-validar"
-                              id="Apellidos"
-                              name="Apellidos"
+                              id="primerApellido"
+                              name="primerApellido"
+                              value={userData.primerApe}
+                              onChange={handleFirstLastNameChange}
                             />
                           </div>
                           <div class="form-group col-sm-6">
-                            <label for="Cedula">Cédula</label>
+                            <label for="txtSegundoApellido">
+                              Segundo Apellido
+                            </label>
+                            <input
+                              type="text"
+                              class="form-control form-control-sm input-validar"
+                              id="segundoApellido"
+                              name="segundoApellido"
+                              value={userData.segundoApe}
+                              onChange={handleSecondLastNameChange}
+                            />
+                          </div>
+                          <div class="form-group col-sm-6">
+                            <label for="txtCedula">Cédula</label>
                             <input
                               type="number"
                               class="form-control form-control-sm input-validar"
                               id="Cedula"
                               name="Cedula"
+                              value={userData.cedula}
+                              onChange={handleEmailChange}
                             />
                           </div>
                           <div class="form-group col-sm-6">
-                            <label for="Correo">Correo</label>
+                            <label for="txtCorreo">Correo</label>
                             <input
                               type="email"
                               class="form-control form-control-sm input-validar"
                               id="Correo"
                               name="Correo"
+                              value={userData.email}
+                              onChange={handleEmailChange}
                             />
                           </div>
                           <div class="form-group col-sm-6">
-                            <label for="Contraseña">Contraseña</label>
+                            <label for="txtContrasena">Contraseña</label>
                             <input
                               type="password"
                               class="form-control form-control-sm input-validar"
                               id="Contraseña"
                               name="Contraseña"
+                              value={userData.contrasena}
+                              onChange={handlePasswordChange}
+                            />
+                          </div>
+                          <div class="form-group col-sm-6">
+                            <label for="txtConfirmContrasena">
+                              Confirma la Contraseña
+                            </label>
+                            <input
+                              type="password"
+                              class="form-control form-control-sm input-validar"
+                              id="confirmContrasena"
+                              name="confirmContrasena"
+                              value={userData.confirmContrasena}
+                              onChange={handleConfirmPasswordChange}
                             />
                           </div>
                           <div class="form-group col-sm-6">
@@ -73,8 +198,10 @@ export default function EditarUsuarioLog() {
                               class="custom-select"
                               id="cboTipoDocumentoVenta"
                             >
-                              <option value="1">Administrador</option>
-                              <option value="0">Psicologo</option>
+                              <option value="Administrado">
+                                Administrador
+                              </option>
+                              <option value="Psicologo">Psicologo</option>
                             </select>
                           </div>
                         </div>

@@ -52,7 +52,10 @@ function Router() {
       <Route path="/Encuestas/" element={<Encuestas />} />
       <Route path="/EncuestaSatisfaccion" element={<EncuestaSatisfaccion />} />
       <Route path="/ListaUsuarios" element={<ListaUsuarios />} />
-      <Route path="/editarUsuario/:id" element={<EditarUsuarioLog />} />
+      <Route
+        path="ListaUsuarios/editarUsuario/:id"
+        element={<EditarUsuarioLog />}
+      />
       <Route path="/Expedientes" element={<DatosExpediente />} />
       <Route path="/Encargados" element={<PersonaResponsable />} />
       <Route

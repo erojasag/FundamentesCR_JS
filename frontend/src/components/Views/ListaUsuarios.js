@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import SideMenu from '../layouts/sideMenu';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -104,13 +105,13 @@ export default function ListaUsuarios() {
         <td>{user.email}</td>
         <td>{user.rol.nombreRol}</td>
         <td>
-          <a
-            href={`EditarUsuario/${user.usuarioId}`}
-            class="btn btn-primary btn-sm"
+          <Link
+            to={`editarUsuario/${user.usuarioId}`}
+            className="btn btn-primary btn-sm"
             value={user.usuarioId}
           >
-            <i class="fas fa-pencil-alt"></i>
-          </a>
+            <i className="fas fa-pencil-alt"></i>
+          </Link>
           &nbsp; &nbsp;
           <a
             href="EditarUsuarioLogUsuario"
