@@ -55,14 +55,12 @@ const signup = catchAsync(async (req, res, next) => {
 
 const login = catchAsync(async (req, res, next) => {
   const { email, contrasena } = req.body;
-
   if (!email || !contrasena)
     return next(new AppError('Por favor ingrese su correo y contraseña', 400));
 
   const user = await userModel.findOne({
     where: { email: req.body.email },
   });
-
   if (!user) return next(new AppError('El usuario no existe', 401));
   if (!user || !(await userModel.checkPassword(contrasena, user.contrasena))) {
     return next(new AppError('Correo o contraseña incorrectos', 401));
@@ -74,6 +72,7 @@ const login = catchAsync(async (req, res, next) => {
 const protect = catchAsync(async (req, res, next) => {
   let token;
   //recibimos el token
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')

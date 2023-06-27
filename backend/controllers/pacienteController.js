@@ -22,7 +22,7 @@ const desactivarPaciente = catchAsync(async (req, res, next) => {
       },
     }
   );
-  res.status(200).json({
+  res.status(204).json({
     status: 'success',
     data: {
       data: paciente,

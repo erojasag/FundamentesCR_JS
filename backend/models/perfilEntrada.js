@@ -69,15 +69,7 @@ const perfilEntrada = db.define(
 
 perfilEntrada.addHook('beforeFind', async (options) => {
   options.attributes = {
-    exclude: [
-      'doctorId',
-      'aspectoComunitarioId',
-      'aspectoClinicoId',
-      'aspectoPsicoEducativoId',
-      'aspectoDesarrolloTallerId',
-      'createdAt',
-      'updatedAt',
-    ],
+    exclude: ['doctorId', 'createdAt', 'updatedAt'],
   };
   options.include = [
     {

@@ -1,5 +1,6 @@
 const express = require('express');
 const {
+  createUser,
   getAllUsers,
   getUserById,
   deleteMe,
@@ -30,7 +31,8 @@ router
 
 router
   .route('/')
-  .get(protect, restrictTo('Administrador', 'Psicologo'), getAllUsers);
+  .get(protect, restrictTo('Administrador'), getAllUsers)
+  .post(protect, restrictTo('Administrador'), createUser);
 
 router
   .route('/:id')

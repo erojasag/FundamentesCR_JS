@@ -4,8 +4,6 @@ import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 
 export default function Index() {
-
-
   return (
     <React.Fragment>
       <div id="page-top">

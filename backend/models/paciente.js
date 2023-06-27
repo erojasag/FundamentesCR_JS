@@ -62,6 +62,7 @@ const Paciente = db.define(
     activo: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: true,
     },
     casaId: {
       type: DataTypes.UUIDV1,
@@ -153,7 +154,7 @@ Paciente.addHook('beforeFind', async (options) => {
     {
       model: casas,
       as: 'casa',
-      attributes: ['nombreCasa', 'canton', 'provincia', 'direccion'],
+      attributes: ['casaId', 'nombreCasa', 'canton', 'provincia', 'direccion'],
     },
     {
       model: datoMedico,
