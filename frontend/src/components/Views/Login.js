@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Footer from '../layouts/footer';
 import ErrorPopUp from '../layouts/errorPopUp';
+import Loading from '../layouts/loading';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleEmailChange = (event) => {
     setEmail(event.currentTarget.value);
@@ -30,6 +32,8 @@ export default function Login() {
         email,
         contrasena,
       };
+
+      setLoading(true);
       const response = await axios.post(
         'http://localhost:3000/usuarios/login',
         data
@@ -48,7 +52,6 @@ export default function Login() {
       setContrasena('');
       navigate('/Inicio');
     } catch (err) {
-      console.log(err);
       let errMessage = JSON.parse(err.request.response);
       errMessage = errMessage.message;
       if (errMessage === 'Correo o contraseña incorrectos') {
@@ -60,10 +63,15 @@ export default function Login() {
       }
       setErrorMessage(null);
       window.location.reload();
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 10000);
     }
   };
   return (
     <React.Fragment>
+      {loading && <Loading />}
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-xl-10 col-lg-12 col-md-9">
@@ -76,6 +84,7 @@ export default function Login() {
                       <div className="text-center">
                         <h1 className="h4 text-gray-900 mb-4">Bienvenido</h1>
                       </div>
+
                       <form className="user" onSubmit={handleSubmit}>
                         <div className="form-group">
                           <input

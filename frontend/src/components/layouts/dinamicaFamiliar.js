@@ -1,56 +1,50 @@
 import React, { useState, useEffect } from 'react';
 
 export default function DinamicaFamiliar(props) {
-  const { dinamicaFamiliar } = props;
-  const [privLibertad, setPrivLibertad] = useState('');
-  const [violenciaMujer, setViolenciaMujer] = useState('');
-  const [violenciaFami, setViolenciaFami] = useState('');
-  const [acontecimientoRelev, setAcontecimientoRelev] = useState('');
+  const [dinamicaFamiliar, setDinamicaFamiliar] = useState({});
 
   useEffect(() => {
-    if (dinamicaFamiliar !== '') {
-      setPrivLibertad(dinamicaFamiliar.privLibertad);
-      setViolenciaMujer(dinamicaFamiliar.violenciaMujer);
-      setViolenciaFami(dinamicaFamiliar.violenciaFami);
-      setAcontecimientoRelev(dinamicaFamiliar.acontecimientoRelev);
+    if (props.dinamicaFamiliar !== '') {
+      setDinamicaFamiliar(props.dinamicaFamiliar);
     } else {
-      setPrivLibertad('');
-      setViolenciaMujer('');
-      setViolenciaFami('');
-      setAcontecimientoRelev('');
+      setDinamicaFamiliar([null]);
     }
-  }, [dinamicaFamiliar]);
+  }, [props.dinamicaFamiliar]);
 
   const handlePrivLibertadChange = (event) => {
-    setPrivLibertad(event.currentTarget.value);
-    props.setUpdatedDinamicaFamiliar({
-      ...props.dinamicaFamiliar,
+    const updatedDinamicaFamiliar = {
+      ...dinamicaFamiliar,
       privLibertad: event.currentTarget.value,
-    });
+    };
+    setDinamicaFamiliar(updatedDinamicaFamiliar);
+    props.setUpdatedDinamicaFamiliar(updatedDinamicaFamiliar);
   };
 
   const handleViolenciaMujerChange = (event) => {
-    setViolenciaMujer(event.currentTarget.value);
-    props.setUpdatedDinamicaFamiliar({
-      ...props.dinamicaFamiliar,
+    const updatedDinamicaFamiliar = {
+      ...dinamicaFamiliar,
       violenciaMujer: event.currentTarget.value,
-    });
+    };
+    setDinamicaFamiliar(updatedDinamicaFamiliar);
+    props.setUpdatedDinamicaFamiliar(updatedDinamicaFamiliar);
   };
 
   const handleViolenciaFamiChange = (event) => {
-    setViolenciaFami(event.currentTarget.value);
-    props.setUpdatedDinamicaFamiliar({
-      ...props.dinamicaFamiliar,
+    const updatedDinamicaFamiliar = {
+      ...dinamicaFamiliar,
       violenciaFami: event.currentTarget.value,
-    });
+    };
+    setDinamicaFamiliar(updatedDinamicaFamiliar);
+    props.setUpdatedDinamicaFamiliar(updatedDinamicaFamiliar);
   };
 
   const handleAcontecimientoRelevChange = (event) => {
-    setAcontecimientoRelev(event.currentTarget.value);
-    props.setUpdatedDinamicaFamiliar({
-      ...props.dinamicaFamiliar,
+    const updatedDinamicaFamiliar = {
+      ...dinamicaFamiliar,
       acontecimientoRelev: event.currentTarget.value,
-    });
+    };
+    setDinamicaFamiliar(updatedDinamicaFamiliar);
+    props.setUpdatedDinamicaFamiliar(updatedDinamicaFamiliar);
   };
 
   return (
@@ -63,12 +57,12 @@ export default function DinamicaFamiliar(props) {
 
       <div class="row">
         <div class="form-group col-sm-6">
-          <label for="txtTrabajaActualmente">Privado de Libertad?</label>
+          <label for="txtPrivadoLibertad">Privado de Libertad?</label>
           <select
             class="custom-select"
             id="privLibertad"
             name="privLibertad"
-            value={privLibertad}
+            value={dinamicaFamiliar.privLibertad}
             onChange={handlePrivLibertadChange}
           >
             <option value="Si">Si</option>
@@ -82,7 +76,7 @@ export default function DinamicaFamiliar(props) {
             class="form-control form-control-sm input-validar"
             id="violenciaMujer"
             name="violenciaMujer"
-            value={violenciaMujer}
+            value={dinamicaFamiliar.violenciaMujer}
             onChange={handleViolenciaMujerChange}
           />
         </div>
@@ -93,7 +87,7 @@ export default function DinamicaFamiliar(props) {
             class="form-control form-control-sm input-validar"
             id="violenciaFami"
             name="violenciaFami"
-            value={violenciaFami}
+            value={dinamicaFamiliar.violenciaFami}
             onChange={handleViolenciaFamiChange}
           />
         </div>
@@ -104,7 +98,7 @@ export default function DinamicaFamiliar(props) {
             class="form-control form-control-sm input-validar"
             id="acontecimientoRelev"
             name="acontecimientoRelev"
-            value={acontecimientoRelev}
+            value={dinamicaFamiliar.acontecimientoRelev}
             onChange={handleAcontecimientoRelevChange}
           />
         </div>

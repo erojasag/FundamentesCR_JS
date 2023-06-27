@@ -3,8 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 export default function Casa({ onCasaChange, selectedCasa }) {
-  const [data, setData] = useState([]);
-  const [casa] = useState('');
+  const [casaData, setCasaData] = useState([]);
 
   async function fetchData() {
     const headers = {
@@ -14,7 +13,7 @@ export default function Casa({ onCasaChange, selectedCasa }) {
     const response = await axios.get('http://localhost:3000/casas/', {
       headers,
     });
-    setData(response.data.data.data);
+    setCasaData(response.data.data.data);
   }
 
   useEffect(() => {
@@ -37,9 +36,13 @@ export default function Casa({ onCasaChange, selectedCasa }) {
             value={selectedCasa}
             onChange={onCasaChange}
           >
-            {data.map((casa) => (
+            {selectedCasa === null ||
+              (selectedCasa === undefined && (
+                <option value="null">-No especifica-</option>
+              ))}
+            {casaData.map((casa) => (
               <option value={casa.casaId} key={casa.casaId}>
-                {casa.nombreCasa}
+                {casa.nombreCasa} - {casa.canton}
               </option>
             ))}
           </select>

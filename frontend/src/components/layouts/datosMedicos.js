@@ -1,85 +1,72 @@
 import React, { useState, useEffect } from 'react';
 
 export default function DatosMedicos(props) {
-  const { datosMedicos } = props;
-  const [alergias, setAlergias] = useState(null);
-  const [consumo, setConsumo] = useState(null);
-  const [embarazo, setEmbarazo] = useState(null);
-  const [hijosHijas, setHijoshijas] = useState(null);
-  const [expedienteHNP, setExpedienteHNP] = useState(false);
-  const [situacionParticular, setSituacionParticular] = useState('');
-  const [observaciones, setObservaciones] = useState('');
+  const [datosMedicos, setDatosMedicos] = useState({});
 
   useEffect(() => {
-    if (datosMedicos !== null) {
-      console.log(datosMedicos);
-      setAlergias(datosMedicos.alergias);
-      setConsumo(datosMedicos.consumo);
-      setEmbarazo(datosMedicos.embarazo);
-      setHijoshijas(datosMedicos.hijoshijas);
-      setExpedienteHNP(datosMedicos.expedienteHNP);
-      setSituacionParticular(datosMedicos.situacionParticular);
-      setObservaciones(datosMedicos.observaciones);
+    if (props.datosMedicos !== null) {
+      setDatosMedicos(props.datosMedicos);
     } else {
-      setAlergias(null);
-      setConsumo(null);
-      setEmbarazo(null);
-      setHijoshijas(null);
-      setExpedienteHNP(null);
-      setSituacionParticular('');
-      setObservaciones('');
+      setDatosMedicos({});
     }
-  }, [datosMedicos]);
+  }, [props.datosMedicos]);
 
   const handleAlergiasChange = (event) => {
-    setAlergias(event.currentTarget.value);
-    props.setUpdatedDatosMedicos({
-      ...props.datosMedicos,
+    const updatedDatosMedicos = {
+      ...datosMedicos,
       alergias: event.currentTarget.value,
-    });
+    };
+    setDatosMedicos(updatedDatosMedicos);
+    props.setUpdatedDatosMedicos(updatedDatosMedicos);
   };
   const handleConsumoChange = (event) => {
-    setConsumo(event.currentTarget.value);
-    props.setUpdatedDatosMedicos({
-      ...props.datosMedicos,
+    const updatedDatosMedicos = {
+      ...datosMedicos,
       consumo: event.currentTarget.value,
-    });
+    };
+    setDatosMedicos(updatedDatosMedicos);
+    props.setUpdatedDatosMedicos(updatedDatosMedicos);
   };
   const handleEmbarazoChange = (event) => {
-    setEmbarazo(event.currentTarget.value);
-    props.setUpdatedDatosMedicos({
-      ...props.datosMedicos,
+    const updatedDatosMedicos = {
+      ...datosMedicos,
       embarazo: event.currentTarget.value,
-    });
+    };
+    setDatosMedicos(updatedDatosMedicos);
+    props.setUpdatedDatosMedicos(updatedDatosMedicos);
   };
   const handleHijoshijasChange = (event) => {
-    setHijoshijas(event.currentTarget.value);
-    props.setUpdatedDatosMedicos({
-      ...props.datosMedicos,
+    const updatedDatosMedicos = {
+      ...datosMedicos,
       hijoshijas: event.currentTarget.value,
-    });
+    };
+    setDatosMedicos(updatedDatosMedicos);
+    props.setUpdatedDatosMedicos(updatedDatosMedicos);
   };
   const handleExpedienteHNPChange = (event) => {
-    setExpedienteHNP(event.currentTarget.value);
-    props.setUpdatedDatosMedicos({
-      ...props.datosMedicos,
+    const updatedDatosMedicos = {
+      ...datosMedicos,
       expedienteHNP: event.currentTarget.value,
-    });
+    };
+    setDatosMedicos(updatedDatosMedicos);
+    props.setUpdatedDatosMedicos(updatedDatosMedicos);
   };
   const handleSituacionParticularChange = (event) => {
-    setSituacionParticular(event.currentTarget.value);
-    props.setUpdatedDatosMedicos({
-      ...props.datosMedicos,
+    const updatedDatosMedicos = {
+      ...datosMedicos,
       situacionParticular: event.currentTarget.value,
-    });
+    };
+    setDatosMedicos(updatedDatosMedicos);
+    props.setUpdatedDatosMedicos(updatedDatosMedicos);
   };
 
   const handleObservacionesChange = (event) => {
-    setObservaciones(event.currentTarget.value);
-    props.setUpdatedDatosMedicos({
-      ...props.datosMedicos,
+    const updatedDatosMedicos = {
+      ...datosMedicos,
       observaciones: event.currentTarget.value,
-    });
+    };
+    setDatosMedicos(updatedDatosMedicos);
+    props.setUpdatedDatosMedicos(updatedDatosMedicos);
   };
 
   return (
@@ -97,7 +84,7 @@ export default function DatosMedicos(props) {
             class="custom-select"
             id="alergias"
             name="alergias"
-            value={alergias}
+            value={datosMedicos.alergias}
             onChange={handleAlergiasChange}
           >
             <option value="null">-No especifica-</option>
@@ -111,7 +98,7 @@ export default function DatosMedicos(props) {
             class="custom-select"
             id="consumo"
             name="consumo"
-            value={consumo}
+            value={datosMedicos.consumo}
             onChange={handleConsumoChange}
           >
             <option value="null">-No especifica-</option>
@@ -125,7 +112,7 @@ export default function DatosMedicos(props) {
             class="custom-select"
             id="embarazo"
             name="embarazo"
-            value={embarazo}
+            value={datosMedicos.embarazo}
             onChange={handleEmbarazoChange}
           >
             <option value="null">-No especifica-</option>
@@ -139,7 +126,7 @@ export default function DatosMedicos(props) {
             class="custom-select"
             id="hijosHijas"
             name="hijosHijas"
-            value={hijosHijas}
+            value={datosMedicos.hijoshijas}
             onChange={handleHijoshijasChange}
           >
             <option value="null">-No especifica-</option>
@@ -153,10 +140,10 @@ export default function DatosMedicos(props) {
             class="custom-select"
             id="expedienteHNP"
             name="expedienteHNP"
-            value={expedienteHNP}
+            value={datosMedicos.expedienteHNP}
             onChange={handleExpedienteHNPChange}
           >
-            <option value="null">-No asignado-</option>
+            <option value="null">-No especifica-</option>
             <option value="true">Si</option>
             <option value="false">No</option>
           </select>
@@ -168,7 +155,7 @@ export default function DatosMedicos(props) {
             class="form-control form-control-sm input-validar"
             id="situacionParticular"
             name="situacionParticular"
-            value={situacionParticular}
+            value={datosMedicos.situacionParticular}
             onChange={handleSituacionParticularChange}
           />
         </div>
@@ -179,7 +166,7 @@ export default function DatosMedicos(props) {
             class="form-control form-control-sm input-validar"
             id="observaciones"
             name="observaciones"
-            value={observaciones}
+            value={datosMedicos.observaciones}
             onChange={handleObservacionesChange}
           />
         </div>
