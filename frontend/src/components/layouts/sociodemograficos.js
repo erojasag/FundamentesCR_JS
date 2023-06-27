@@ -1,133 +1,110 @@
 import React, { useState, useEffect } from 'react';
 
 export default function Sociodemograficos(props) {
-  const { sociodemograficos } = props;
-  
-  const [tipoVivienda, setTipoVivienda] = useState('');
-  const [habitantesHogar, setHabitantesHogar] = useState('');
-  const [cantidadFamilias, setCantidadFamilias] = useState(1);
-  const [electricidad, setElectricidad] = useState(null);
-  const [aguaPotable, setAguaPotable] = useState(null);
-  const [celular, setCelular] = useState(0);
-  const [internet, setInternet] = useState(null);
-  const [cable, setCable] = useState(null);
-  const [recibeSubsidio, setRecibeSubsidio] = useState(null);
-  const [institucion, setInstitucion] = useState('');
-  const [tipo, setTipo] = useState('');
+  const [sociodemograficos, setSociodemograficos] = useState({});
 
   useEffect(() => {
-    if (sociodemograficos !== '') {
-
-      setTipoVivienda(sociodemograficos.tipoVivienda);
-      setHabitantesHogar(sociodemograficos.habitantesHogar);
-      setCantidadFamilias(sociodemograficos.cantidadFamilias);
-      setElectricidad(sociodemograficos.electricidad);
-      setAguaPotable(sociodemograficos.aguaPotable);
-      setCelular(sociodemograficos.celular);
-      setInternet(sociodemograficos.internet);
-      setCable(sociodemograficos.cable);
-      setRecibeSubsidio(sociodemograficos.recibeSubsidio);
-      setInstitucion(sociodemograficos.institucion);
-      setTipo(sociodemograficos.tipo);
+    if (props.sociodemograficos !== null) {
+      setSociodemograficos(props.sociodemograficos);
     } else {
-      setTipoVivienda('');
-      setHabitantesHogar('');
-      setCantidadFamilias('');
-      setElectricidad(null);
-      setAguaPotable(null);
-      setCelular('');
-      setInternet(null);
-      setCable(null);
-      setRecibeSubsidio(null);
-      setInstitucion('');
-      setTipo('');
+      setSociodemograficos({});
     }
-  }, [sociodemograficos]);
+  }, [props.sociodemograficos]);
 
   const handleTipoViviendaChange = (event) => {
-    setTipoVivienda(event.currentTarget.value);
-    props.setUpdatedSociodemograficos({
-      ...props.sociodemograficos,
+    const updatedSociodemograficos = {
+      ...sociodemograficos,
       tipoVivienda: event.currentTarget.value,
-    });
+    };
+    setSociodemograficos(updatedSociodemograficos);
+    props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
   const handleHabitantesHogarChange = (event) => {
-    setHabitantesHogar(event.currentTarget.value);
-    props.setUpdatedSociodemograficos({
-      ...props.sociodemograficos,
+    const updatedSociodemograficos = {
+      ...sociodemograficos,
       habitantesHogar: event.currentTarget.value,
-    });
+    };
+    setSociodemograficos(updatedSociodemograficos);
+    props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
   const handleCantidadFamiliasChange = (event) => {
-    setCantidadFamilias(event.currentTarget.value);
-    props.setUpdatedSociodemograficos({
-      ...props.sociodemograficos,
+    const updatedSociodemograficos = {
+      ...sociodemograficos,
       cantidadFamilias: event.currentTarget.value,
-    });
+    };
+    setSociodemograficos(updatedSociodemograficos);
+    props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
   const handleElectricidadChange = (event) => {
-    setElectricidad(event.currentTarget.value);
-    props.setUpdatedSociodemograficos({
-      ...props.sociodemograficos,
+    const updatedSociodemograficos = {
+      ...sociodemograficos,
       electricidad: event.currentTarget.value,
-    });
+    };
+    setSociodemograficos(updatedSociodemograficos);
+    props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
 
   const handleAguaPotableChange = (event) => {
-    setAguaPotable(event.currentTarget.value);
-    props.setUpdatedSociodemograficos({
-      ...props.sociodemograficos,
+    const updatedSociodemograficos = {
+      ...sociodemograficos,
       aguaPotable: event.currentTarget.value,
-    });
+    };
+    setSociodemograficos(updatedSociodemograficos);
+    props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
 
   const handleCelularChange = (event) => {
-    setCelular(event.currentTarget.value);
-    props.setUpdatedSociodemograficos({
-      ...props.sociodemograficos,
+    const updatedSociodemograficos = {
+      ...sociodemograficos,
       celular: event.currentTarget.value,
-    });
+    };
+    setSociodemograficos(updatedSociodemograficos);
+    props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
 
   const handleInternetChange = (event) => {
-    setInternet(event.currentTarget.value);
-    props.setUpdatedSociodemograficos({
-      ...props.sociodemograficos,
+    const updatedSociodemograficos = {
+      ...sociodemograficos,
       internet: event.currentTarget.value,
-    });
+    };
+    setSociodemograficos(updatedSociodemograficos);
+    props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
 
   const handleCableChange = (event) => {
-    setCable(event.currentTarget.value);
-    props.setUpdatedSociodemograficos({
-      ...props.sociodemograficos,
+    const updatedSociodemograficos = {
+      ...sociodemograficos,
       cable: event.currentTarget.value,
-    });
+    };
+    setSociodemograficos(updatedSociodemograficos);
+    props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
 
   const handleRecibeSubsidioChange = (event) => {
-    const value = event.currentTarget.value === 'true';
-    setRecibeSubsidio(value);
-    props.setUpdatedSociodemograficos({
-      ...props.sociodemograficos,
-      recibeSubsidio: value,
-    });
+    const updatedSociodemograficos = {
+      ...sociodemograficos,
+      recibeSubsidio: event.currentTarget.value,
+    };
+    setSociodemograficos(updatedSociodemograficos);
+    props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
 
   const handleInstitucionChange = (event) => {
-    setInstitucion(event.currentTarget.value);
-    props.setUpdatedSociodemograficos({
-      ...props.sociodemograficos,
+    const updatedSociodemograficos = {
+      ...sociodemograficos,
       institucion: event.currentTarget.value,
-    });
+    };
+    setSociodemograficos(updatedSociodemograficos);
+    props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
 
   const handleTipoChange = (event) => {
-    setTipo(event.currentTarget.value);
-    props.setUpdatedSociodemograficos({
-      ...props.sociodemograficos,
+    const updatedSociodemograficos = {
+      ...sociodemograficos,
       tipo: event.currentTarget.value,
-    });
+    };
+    setSociodemograficos(updatedSociodemograficos);
+    props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
 
   return (
@@ -146,7 +123,7 @@ export default function Sociodemograficos(props) {
             class="form-control form-control-sm input-validar"
             id="tipoVivienda"
             name="tipoVivienda"
-            value={tipoVivienda}
+            value={sociodemograficos.tipoVivienda}
             onChange={handleTipoViviendaChange}
           />
         </div>
@@ -159,7 +136,7 @@ export default function Sociodemograficos(props) {
             class="form-control form-control-sm input-validar"
             id="habitantesHogar"
             name="habitantesHogar"
-            value={habitantesHogar}
+            value={sociodemograficos.habitantesHogar}
             onChange={handleHabitantesHogarChange}
           />
         </div>
@@ -170,7 +147,7 @@ export default function Sociodemograficos(props) {
             class="form-control form-control-sm input-validar"
             id="cantidadFamilias"
             name="cantidadFamilias"
-            value={cantidadFamilias}
+            value={sociodemograficos.cantidadFamilias}
             onChange={handleCantidadFamiliasChange}
           />
         </div>
@@ -180,11 +157,12 @@ export default function Sociodemograficos(props) {
             class="custom-select"
             id="electricidad"
             name="electricidad"
-            value={electricidad}
+            value={sociodemograficos.electricidad}
             onChange={handleElectricidadChange}
           >
+            <option value="null">-No especifica-</option>
             <option value="true">Si</option>
-            <option value="No">No</option>
+            <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
@@ -193,11 +171,12 @@ export default function Sociodemograficos(props) {
             class="custom-select"
             id="aguaPotable"
             name="aguaPotable"
-            value={aguaPotable}
+            value={sociodemograficos.aguaPotable}
             onChange={handleAguaPotableChange}
           >
+            <option value="null">-No especifica-</option>
             <option value="true">Si</option>
-            <option value="No">No</option>
+            <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
@@ -207,7 +186,7 @@ export default function Sociodemograficos(props) {
             class="form-control form-control-sm input-validar"
             id="celular"
             name="celular"
-            value={celular}
+            value={sociodemograficos.celular}
             onChange={handleCelularChange}
           />
         </div>
@@ -217,11 +196,12 @@ export default function Sociodemograficos(props) {
             class="custom-select"
             id="internet"
             name="internet"
-            value={internet}
+            value={sociodemograficos.internet}
             onChange={handleInternetChange}
           >
+            <option value="null">-No especifica-</option>
             <option value="true">Si</option>
-            <option value="No">No</option>
+            <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
@@ -230,11 +210,12 @@ export default function Sociodemograficos(props) {
             class="custom-select"
             id="cable"
             name="cable"
-            value={cable}
+            value={sociodemograficos.cable}
             onChange={handleCableChange}
           >
+            <option value="null">-No especifica-</option>
             <option value="true">Si</option>
-            <option value="No">No</option>
+            <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
@@ -243,15 +224,16 @@ export default function Sociodemograficos(props) {
             class="custom-select"
             id="recibeSubsidio"
             name="recibeSubsidio"
-            value={recibeSubsidio}
+            value={sociodemograficos.recibeSubsidio}
             onChange={handleRecibeSubsidioChange}
           >
+            <option value="null">-No especifica-</option>
             <option value="true">Si</option>
             <option value="false">No</option>
           </select>
-          {recibeSubsidio === true ? (
+          {sociodemograficos.recibeSubsidio === 'true' ||
+          sociodemograficos.recibeSubsidio === true ? (
             <>
-            
               <div class="form-group col-sm-6">
                 <label for="txtInstitucion">Institucion</label>
                 <input
@@ -259,7 +241,7 @@ export default function Sociodemograficos(props) {
                   class="form-control form-control-sm input-validar"
                   id="institucion"
                   name="institucion"
-                  value={institucion}
+                  value={sociodemograficos.institucion}
                   onChange={handleInstitucionChange}
                 />
               </div>
@@ -270,7 +252,7 @@ export default function Sociodemograficos(props) {
                   class="form-control form-control-sm input-validar"
                   id="tipo"
                   name="tipo"
-                  value={tipo}
+                  value={sociodemograficos.tipo}
                   onChange={handleTipoChange}
                 />
               </div>

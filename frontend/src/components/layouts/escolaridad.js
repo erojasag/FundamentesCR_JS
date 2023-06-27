@@ -1,125 +1,104 @@
 import React, { useState, useEffect } from 'react';
 
 export default function Escolaridad(props) {
-  const { escolaridad } = props;
-
-  const [inclusion, setInclusion] = useState(null);
-  const [expulsion, setExpulsion] = useState(null);
-  const [tipoEducacion, setTipoEducacion] = useState('');
-  const [anoEscolar, setAnoEscolar] = useState('');
-  const [centroEducativo, setCentroEducativo] = useState('');
-  const [repitencia, setRepitencia] = useState('');
-  const [adecuacion, setAdecuacion] = useState('');
-  const [ultimoAnoAprobado, setUltimoAnoAprobado] = useState('');
-  const [fechaSalida, setFechaSalida] = useState('');
-  const [motivoSalida, setMotivoSalida] = useState('');
-  const [reinsercion, setReinsercion] = useState('');
+  const [escolaridad, setEscolaridad] = useState({});
 
   useEffect(() => {
-    if (escolaridad !== '') {
-      setInclusion(escolaridad.inclusion);
-      setExpulsion(escolaridad.expulsion);
-      setTipoEducacion(escolaridad.tipoEducacion);
-      setAnoEscolar(escolaridad.anoEscolar);
-      setCentroEducativo(escolaridad.centroEducativo);
-      setRepitencia(escolaridad.repitencia);
-      setAdecuacion(escolaridad.adecuacion);
-      setUltimoAnoAprobado(escolaridad.ultimoAnoAprobado);
-      setFechaSalida(escolaridad.fechaSalida);
-      setMotivoSalida(escolaridad.motivoSalida);
-      setReinsercion(escolaridad.reinsercion);
+    if (props.escolaridad !== '') {
+      setEscolaridad(props.escolaridad);
     } else {
-      setInclusion(null);
-      setExpulsion(null);
-      setTipoEducacion('');
-      setAnoEscolar('');
-      setCentroEducativo('');
-      setRepitencia(null);
-      setAdecuacion(null);
-      setUltimoAnoAprobado('');
-      setFechaSalida('');
-      setMotivoSalida('');
-      setReinsercion(null);
+      setEscolaridad([null]);
     }
-  }, [escolaridad]);
+  }, [props.escolaridad]);
 
   const handleInclusionChange = (event) => {
-    setInclusion(event.currentTarget.value);
-    props.setUpdatedEscolaridad({
-      ...props.escolaridad,
+    const updatedEscolaridad = {
+      ...escolaridad,
       inclusion: event.currentTarget.value,
-    });
+    };
+    setEscolaridad(updatedEscolaridad);
+    props.setUpdatedEscolaridad(updatedEscolaridad);
   };
   const handleExpulsionChange = (event) => {
-    setExpulsion(event.currentTarget.value);
-    props.setUpdatedEscolaridad({
-      ...props.escolaridad,
+    const updatedEscolaridad = {
+      ...escolaridad,
       expulsion: event.currentTarget.value,
-    });
+    };
+    setEscolaridad(updatedEscolaridad);
+    props.setUpdatedEscolaridad(updatedEscolaridad);
   };
   const handleTipoEducacionChange = (event) => {
-    setTipoEducacion(event.currentTarget.value);
-    props.setUpdatedEscolaridad({
-      ...props.escolaridad,
+    const updatedEscolaridad = {
+      ...escolaridad,
       tipoEducacion: event.currentTarget.value,
-    });
+    };
+    setEscolaridad(updatedEscolaridad);
+    props.setUpdatedEscolaridad(updatedEscolaridad);
   };
   const handleAnoEscolarChange = (event) => {
-    setAnoEscolar(event.currentTarget.value);
-    props.setUpdatedEscolaridad({
-      ...props.escolaridad,
+    const updatedEscolaridad = {
+      ...escolaridad,
       anoEscolar: event.currentTarget.value,
-    });
+    };
+    setEscolaridad(updatedEscolaridad);
+    props.setUpdatedEscolaridad(updatedEscolaridad);
   };
   const handleCentroEducativoChange = (event) => {
-    setCentroEducativo(event.currentTarget.value);
-    props.setUpdatedEscolaridad({
-      ...props.escolaridad,
+    const updatedEscolaridad = {
+      ...escolaridad,
       centroEducativo: event.currentTarget.value,
-    });
+    };
+    setEscolaridad(updatedEscolaridad);
+    props.setUpdatedEscolaridad(updatedEscolaridad);
   };
   const handleRepitenciaChange = (event) => {
-    setRepitencia(event.currentTarget.value);
-    props.setUpdatedEscolaridad({
-      ...props.escolaridad,
+    const updatedEscolaridad = {
+      ...escolaridad,
       repitencia: event.currentTarget.value,
-    });
+    };
+    setEscolaridad(updatedEscolaridad);
+    props.setUpdatedEscolaridad(updatedEscolaridad);
   };
   const handleAdecuacionChange = (event) => {
-    setAdecuacion(event.currentTarget.value);
-    props.setUpdatedEscolaridad({
-      ...props.escolaridad,
+    const updatedEscolaridad = {
+      ...escolaridad,
       adecuacion: event.currentTarget.value,
-    });
+    };
+    setEscolaridad(updatedEscolaridad);
+    props.setUpdatedEscolaridad(updatedEscolaridad);
   };
   const handleUltimoAnoAprobadoChange = (event) => {
-    setUltimoAnoAprobado(event.currentTarget.value);
-    props.setUpdatedEscolaridad({
-      ...props.escolaridad,
+    const updatedEscolaridad = {
+      ...escolaridad,
       ultimoAnoAprobado: event.currentTarget.value,
-    });
+    };
+    setEscolaridad(updatedEscolaridad);
+    props.setUpdatedEscolaridad(updatedEscolaridad);
   };
   const handleFechaSalidaChange = (event) => {
-    setFechaSalida(event.currentTarget.value);
-    props.setUpdatedEscolaridad({
-      ...props.escolaridad,
+    const updatedEscolaridad = {
+      ...escolaridad,
       fechaSalida: event.currentTarget.value,
-    });
+    };
+    setEscolaridad(updatedEscolaridad);
+    props.setUpdatedEscolaridad(updatedEscolaridad);
   };
 
   const handleMotivoSalidaChange = (event) => {
-    setMotivoSalida(event.currentTarget.value);
-    props.setUpdatedEscolaridad({
-      ...props.escolaridad,
+    const updatedEscolaridad = {
+      ...escolaridad,
       motivoSalida: event.currentTarget.value,
-    });
+    };
+    setEscolaridad(updatedEscolaridad);
+    props.setUpdatedEscolaridad(updatedEscolaridad);
   };
   const handleReinsercionChange = (event) => {
-    setReinsercion(event.currentTarget.value);
-    props.setUpdatedEscolaridad({
-      ...props.escolaridad,
+    const updatedEscolaridad = {
+      ...escolaridad,
       reinsercion: event.currentTarget.value,
-    });
+    };
+    setEscolaridad(updatedEscolaridad);
+    props.setUpdatedEscolaridad(updatedEscolaridad);
   };
 
   return (
@@ -137,7 +116,7 @@ export default function Escolaridad(props) {
             class="custom-select"
             id="inclusion"
             name="inclusion"
-            value={inclusion}
+            value={escolaridad.inclusion}
             onChange={handleInclusionChange}
           >
             <option value="true">Si</option>
@@ -150,7 +129,7 @@ export default function Escolaridad(props) {
             class="custom-select"
             id="expulsion"
             name="expulsion"
-            value={expulsion}
+            value={escolaridad.expulsion}
             onChange={handleExpulsionChange}
           >
             <option value="true">Si</option>
@@ -163,7 +142,7 @@ export default function Escolaridad(props) {
             class="custom-select"
             id="tipoEducacion"
             name="tipoEducacion"
-            value={tipoEducacion}
+            value={escolaridad.tipoEducacion}
             onChange={handleTipoEducacionChange}
           >
             <option value="Preescolar Publico">Preescolar Publico</option>
@@ -194,7 +173,7 @@ export default function Escolaridad(props) {
             class="custom-select"
             id="anoEscolar"
             name="anoEscolar"
-            value={anoEscolar}
+            value={escolaridad.anoEscolar}
             onChange={handleAnoEscolarChange}
           >
             <option value="Pre-Kinder">Pre-Kinder</option>
@@ -221,7 +200,7 @@ export default function Escolaridad(props) {
             class="form-control form-control-sm input-validar"
             id="centroEducativo"
             name="centroEducativo"
-            value={centroEducativo}
+            value={escolaridad.centroEducativo}
             onChange={handleCentroEducativoChange}
           />
         </div>
@@ -231,7 +210,7 @@ export default function Escolaridad(props) {
             class="custom-select"
             id="repitencia"
             name="repitencia"
-            value={repitencia}
+            value={escolaridad.repitencia}
             onChange={handleRepitenciaChange}
           >
             <option value="Si">Si</option>
@@ -244,7 +223,7 @@ export default function Escolaridad(props) {
             class="custom-select"
             id="adecuacion"
             name="adecuacion"
-            value={adecuacion}
+            value={escolaridad.adecuacion}
             onChange={handleAdecuacionChange}
           >
             <option value="Adecuacion de Acceso">Adecuacion de Acceso</option>
@@ -263,7 +242,7 @@ export default function Escolaridad(props) {
             class="custom-select"
             id="ultimoAnoAprobado"
             name="ultimoAnoAprobado"
-            value={ultimoAnoAprobado}
+            value={escolaridad.ultimoAnoAprobado}
             onChange={handleUltimoAnoAprobadoChange}
           >
             <option value="Pre-Kinder">Pre-Kinder</option>
@@ -290,7 +269,7 @@ export default function Escolaridad(props) {
             class="form-control form-control-sm input-validar"
             id="fechaSalida"
             name="fechaSalida"
-            value={fechaSalida}
+            value={escolaridad.fechaSalida}
             onChange={handleFechaSalidaChange}
           />
         </div>
@@ -301,7 +280,7 @@ export default function Escolaridad(props) {
             class="form-control form-control-sm input-validar"
             id="motivoSalida"
             name="motivoSalida"
-            value={motivoSalida}
+            value={escolaridad.motivoSalida}
             onChange={handleMotivoSalidaChange}
           />
         </div>
@@ -311,7 +290,7 @@ export default function Escolaridad(props) {
             class="custom-select"
             id="reinsercion"
             name="reinsercion"
-            value={reinsercion}
+            value={escolaridad.reinsercion}
             onChange={handleReinsercionChange}
           >
             <option value="Si">Si</option>

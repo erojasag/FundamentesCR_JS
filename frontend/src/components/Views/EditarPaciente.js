@@ -12,98 +12,113 @@ import Sociodemograficos from '../layouts/sociodemograficos';
 import Encargado from '../layouts/encargado';
 import DinamicaFamiliar from '../layouts/dinamicaFamiliar';
 import Escolaridad from '../layouts/escolaridad';
+import PerfilEntrada from '../layouts/perfilEntrada';
 
 export default function EditarPaciente() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [fechaNacimiento, setFechaNacimiento] = useState('');
-  const [nombreCompleto, setNombreCompleto] = useState('');
-  const [contacto, setContacto] = useState('');
-  const [cedula, setCedula] = useState('');
-  const [edad, setEdad] = useState('');
-  const [nacionalidad, setNacionalidad] = useState('');
-  const [distritoResidencia, setDistritoResidencia] = useState('');
-  const [direccion, setDireccion] = useState('');
-  const [genero, setGenero] = useState('');
-  const [activo, setActivo] = useState(true);
-  const [casa, setCasa] = useState('');
-
+  const [pacienteData, setPacienteData] = useState({});
   //datos medicos
   const [datosMedicos, setDatosMedicos] = useState('');
-  const [datosMedicosId, setDatosMedicosId] = useState('');
   const [updatedDatosMedicos, setUpdatedDatosMedicos] = useState(null);
 
   //datos condicion laboral
   const [condicionLaboral, setCondicionLaboral] = useState('');
-  const [condicionLaboralId, setCondicionLaboralId] = useState('');
   const [updatedCondicionLaboral, setUpdatedCondicionLaboral] = useState(null);
 
   //datos sociodemograficos
   const [sociodemograficos, setSociodemograficos] = useState('');
-  const [sociodemograficosId, setSociodemograficosId] = useState('');
   const [updatedSociodemograficos, setUpdatedSociodemograficos] =
     useState(null);
 
   //datos encargado
   const [encargado, setEncargado] = useState('');
-  const [encargadoId, setEncargadoId] = useState('');
   const [updatedEncargado, setUpdatedEncargado] = useState(null);
 
   //datos dinamica familiar
   const [dinamicaFamiliar, setDinamicaFamiliar] = useState('');
-  const [dinamicaFamiliarId, setDinamicaFamiliarId] = useState('');
   const [updatedDinamicaFamiliar, setUpdatedDinamicaFamiliar] = useState(null);
 
   //datos escolaridad
   const [escolaridad, setEscolaridad] = useState('');
-  const [escolaridadId, setEscolaridadId] = useState('');
   const [updatedEscolaridad, setUpdatedEscolaridad] = useState(null);
 
   //datos perfilEntrada
   const [perfilEntrada, setPerfilEntrada] = useState('');
-  const [perfilEntradaId, setPerfilEntradaId] = useState('');
   const [updatedPerfilEntrada, setUpdatedPerfilEntrada] = useState(null);
 
   //datos perfilSalida
   const [perfilSalida, setPerfilSalida] = useState('');
-  const [perfilSalidaId, setPerfilSalidaId] = useState('');
   const [updatedPerfilSalida, setUpdatedPerfilSalida] = useState(null);
 
   const handleNameChange = (event) => {
-    setNombreCompleto(event.currentTarget.value);
+    setPacienteData({
+      ...pacienteData,
+      nombreCompleto: event.currentTarget.value,
+    });
   };
   const handleFechaNacimientoChange = (event) => {
-    setFechaNacimiento(event.currentTarget.value);
+    setPacienteData({
+      ...pacienteData,
+      fechaNacimiento: event.currentTarget.value,
+    });
   };
   const handleContactoChange = (event) => {
-    setContacto(event.currentTarget.value);
+    setPacienteData({
+      ...pacienteData,
+      contacto: event.currentTarget.value,
+    });
   };
   const handleCedulaChange = (event) => {
-    setCedula(event.currentTarget.value);
+    setPacienteData({
+      ...pacienteData,
+      cedula: event.currentTarget.value,
+    });
   };
   const handleEdadChange = (event) => {
-    setEdad(event.currentTarget.value);
+    setPacienteData({
+      ...pacienteData,
+      edad: event.currentTarget.value,
+    });
   };
   const handleNacionalidadChange = (event) => {
-    setNacionalidad(event.currentTarget.value);
+    setPacienteData({
+      ...pacienteData,
+      nacionalidad: event.currentTarget.value,
+    });
   };
   const handleDistritoResidenciaChange = (event) => {
-    setDistritoResidencia(event.currentTarget.value);
+    setPacienteData({
+      ...pacienteData,
+      distritoResidencia: event.currentTarget.value,
+    });
   };
   const handleDireccionChange = (event) => {
-    setDireccion(event.currentTarget.value);
+    setPacienteData({
+      ...pacienteData,
+      direccion: event.currentTarget.value,
+    });
   };
 
   const handleGeneroChange = (event) => {
-    setGenero(event.currentTarget.value);
+    setPacienteData({
+      ...pacienteData,
+      genero: event.currentTarget.value,
+    });
   };
 
   const handleActivoChange = (event) => {
-    setActivo(event.currentTarget.value);
+    setPacienteData({
+      ...pacienteData,
+      activo: event.currentTarget.value,
+    });
   };
 
   const handleCasaChange = (event) => {
-    setCasa(event.currentTarget.value);
+    setPacienteData({
+      ...pacienteData,
+      casaId: event.currentTarget.value,
+    });
   };
 
   async function fetchPaciente() {
@@ -116,82 +131,35 @@ export default function EditarPaciente() {
       headers,
     });
     const data = response.data.data.data;
-    setNombreCompleto(data.nombreCompleto);
-    setFechaNacimiento(data.fechaNacimiento);
-    setContacto(data.contacto);
-    setCedula(data.cedula);
-    setEdad(data.edad);
-    setNacionalidad(data.nacionalidad);
-    setDistritoResidencia(data.distritoResidencia);
-    setDireccion(data.direccion);
-    setGenero(data.genero);
-    setActivo(data.activo);
-    setCasa(data.casaId);
-    setDatosMedicosId(data.datosMedicosId);
-    setCondicionLaboralId(data.condicionLaboralId);
-    setSociodemograficosId(data.sociodemograficosId);
-    setEncargadoId(data.encargadoId);
-    setDinamicaFamiliarId(data.dinamicaFamiliarId);
-    setEscolaridadId(data.escolaridadId);
-    setPerfilEntradaId(data.perfilEntradaId);
-    setPerfilSalidaId(data.perfilSalidaId);
+    setPacienteData(data);
+    setDatosMedicos(data.datosMedicos);
+    setCondicionLaboral(data.condicionLaboral);
+    setSociodemograficos(data.sociodemograficos);
+    setEncargado(data.encargado);
+    setDinamicaFamiliar(data.dinamicaFamiliar);
+    setEscolaridad(data.escolaridad);
+    setPerfilEntrada(data.perfilEntrada);
 
-    if (data.datosMedicosId === null) return;
-
-    const responseDatosMedicos = await axios.get(
-      `http://localhost:3000/datosMedicos/${data.datosMedicosId}`,
-      {
-        headers,
-      }
-    );
-
-    const dataDatosMedicos = responseDatosMedicos.data.data.data;
-    setDatosMedicos(dataDatosMedicos);
-
-    const responseCondicionLaboral = await axios.get(
-      `http://localhost:3000/condicionesLaborales/${data.condicionLaboralId}`,
-      {
-        headers,
-      }
-    );
-    const dataCondicionLaboral = responseCondicionLaboral.data.data.data;
-    setCondicionLaboral(dataCondicionLaboral);
-
-    const responseSociodemograficos = await axios.get(
-      `http://localhost:3000/sociodemograficos/${data.sociodemograficosId}`,
-      {
-        headers,
-      }
-    );
-    const socioDemograficosData = responseSociodemograficos.data.data.data;
-    setSociodemograficos(socioDemograficosData);
-
-    const responseEncargado = await axios.get(
-      `http://localhost:3000/encargados/${data.encargadoId}`,
-      {
-        headers,
-      }
-    );
-    const encargadoData = responseEncargado.data.data.data;
-    setEncargado(encargadoData);
-
-    const responseDinamicaFamiliar = await axios.get(
-      `http://localhost:3000/dinamicasFamiliares/${data.dinamicaFamiliarId}`,
-      {
-        headers,
-      }
-    );
-    const dinamicaFamiliarData = responseDinamicaFamiliar.data.data.data;
-    setDinamicaFamiliar(dinamicaFamiliarData);
-
-    const responseEscolaridad = await axios.get(
-      `http://localhost:3000/escolaridades/${data.escolaridadId}`,
-      {
-        headers,
-      }
-    );
-    const escolaridadData = responseEscolaridad.data.data.data;
-    setEscolaridad(escolaridadData);
+    // if (data.perfilEntradaId !== null) {
+    //   const responsePerfilEntrada = await axios.get(
+    //     `http://localhost:3000/entrevistasEntrada/${data.perfilEntradaId}`,
+    //     {
+    //       headers,
+    //     }
+    //   );
+    //   const dataPerfilEntrada = responsePerfilEntrada.data.data.data;
+    //   setPerfilEntrada(dataPerfilEntrada);
+    // }
+    // if (data.perfilSalidaId !== null) {
+    //   const responsePerfilSalida = await axios.get(
+    //     `http://localhost:3000/entrevistasSalida/${data.perfilSalidaId}`,
+    //     {
+    //       headers,
+    //     }
+    //   );
+    //   const dataPerfilSalida = responsePerfilSalida.data.data.data;
+    //   setPerfilSalida(dataPerfilSalida);
+    // }
   }
 
   useEffect(() => {
@@ -204,35 +172,10 @@ export default function EditarPaciente() {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
-    const body = {
-      nombreCompleto,
-      fechaNacimiento,
-      contacto,
-      cedula,
-      edad,
-      nacionalidad,
-      distritoResidencia,
-      direccion,
-      genero,
-      activo,
-      casaId: casa,
-      datosMedicosId: datosMedicosId,
-      condicionLaboralId: condicionLaboralId,
-      sociodemograficosId: sociodemograficosId,
-      encargadoId: encargadoId,
-      dinamicaFamiliarId: dinamicaFamiliarId,
-      escolaridadId: escolaridadId,
-      perfilEntradaId: perfilEntradaId,
-      perfilSalidaId: perfilSalidaId,
-    };
-
-    await axios.patch(`http://localhost:3000/pacientes/${id}`, body, {
-      headers,
-    });
-
     if (updatedDatosMedicos !== null) {
+      console.log(updatedDatosMedicos);
       await axios.patch(
-        `http://localhost:3000/datosMedicos/${datosMedicosId}`,
+        `http://localhost:3000/datosMedicos/${pacienteData.datosMedicosId}`,
         updatedDatosMedicos,
         {
           headers,
@@ -241,7 +184,7 @@ export default function EditarPaciente() {
     }
     if (updatedCondicionLaboral !== null) {
       await axios.patch(
-        `http://localhost:3000/condicionesLaborales/${condicionLaboralId}`,
+        `http://localhost:3000/condicionesLaborales/${pacienteData.condicionLaboralId}`,
         updatedCondicionLaboral,
         {
           headers,
@@ -250,7 +193,7 @@ export default function EditarPaciente() {
     }
     if (updatedSociodemograficos !== null) {
       await axios.patch(
-        `http://localhost:3000/sociodemograficos/${sociodemograficosId}`,
+        `http://localhost:3000/sociodemograficos/${pacienteData.sociodemograficosId}`,
         updatedSociodemograficos,
         {
           headers,
@@ -259,7 +202,7 @@ export default function EditarPaciente() {
     }
     if (updatedEncargado !== null) {
       await axios.patch(
-        `http://localhost:3000/encargados/${encargadoId}`,
+        `http://localhost:3000/encargados/${pacienteData.encargadoId}`,
         updatedEncargado,
         {
           headers,
@@ -268,7 +211,7 @@ export default function EditarPaciente() {
     }
     if (updatedDinamicaFamiliar !== null) {
       await axios.patch(
-        `http://localhost:3000/dinamicasFamiliares/${dinamicaFamiliarId}`,
+        `http://localhost:3000/dinamicasFamiliares/${pacienteData.dinamicaFamiliarId}`,
         updatedDinamicaFamiliar,
         {
           headers,
@@ -277,13 +220,42 @@ export default function EditarPaciente() {
     }
     if (updatedEscolaridad !== null) {
       await axios.patch(
-        `http://localhost:3000/escolaridades/${escolaridadId}`,
+        `http://localhost:3000/escolaridades/${pacienteData.escolaridadId}`,
         updatedEscolaridad,
         {
           headers,
         }
       );
     }
+
+    const body = {
+      nombreCompleto: pacienteData.nombreCompleto,
+      fechaNacimiento: pacienteData.fechaNacimiento,
+      contacto: pacienteData.contacto,
+      cedula: pacienteData.cedula,
+      edad: pacienteData.edad,
+      nacionalidad: pacienteData.nacionalidad,
+      distritoResidencia: pacienteData.distritoResidencia,
+      direccion: pacienteData.direccion,
+      genero: pacienteData.genero,
+      activo: pacienteData.activo,
+      casaId: pacienteData.casaId,
+      datosMedicosId: pacienteData.datosMedicosId,
+      condicionLaboralId: pacienteData.condicionLaboralId,
+      sociodemograficosId: pacienteData.sociodemograficosId,
+      encargadoId: pacienteData.encargadoId,
+      dinamicaFamiliarId: pacienteData.dinamicaFamiliarId,
+      escolaridadId: pacienteData.escolaridadId,
+      perfilEntradaId: pacienteData.perfilEntradaId,
+      perfilSalidaId: pacienteData.perfilSalidaId,
+    };
+    await axios.patch(
+      `http://localhost:3000/pacientes/${pacienteData.pacienteId}`,
+      body,
+      {
+        headers,
+      }
+    );
     navigate('/pacientes');
   };
 
@@ -312,7 +284,7 @@ export default function EditarPaciente() {
                             class="form-control form-control-sm input-validar"
                             id="txtNombre"
                             name="Nombre"
-                            value={nombreCompleto}
+                            value={pacienteData.nombreCompleto}
                             onChange={handleNameChange}
                           />
                         </div>
@@ -323,7 +295,7 @@ export default function EditarPaciente() {
                             class="form-control form-control-sm input-validar"
                             id="cedula"
                             name="cedula"
-                            value={cedula}
+                            value={pacienteData.cedula}
                             onChange={handleCedulaChange}
                           />
                         </div>
@@ -336,7 +308,7 @@ export default function EditarPaciente() {
                             class="form-control form-control-sm input-validar"
                             id="fechaNacimiento"
                             name="fechaNacimiento"
-                            value={fechaNacimiento}
+                            value={pacienteData.fechaNacimiento}
                             onChange={handleFechaNacimientoChange}
                           />
                         </div>
@@ -347,7 +319,7 @@ export default function EditarPaciente() {
                             class="form-control form-control-sm input-validar"
                             id="Correo"
                             name="Correo"
-                            value={contacto}
+                            value={pacienteData.contacto}
                             onChange={handleContactoChange}
                           />
                         </div>
@@ -358,7 +330,7 @@ export default function EditarPaciente() {
                             class="form-control form-control-sm input-validar"
                             id="edad"
                             name="edad"
-                            value={edad}
+                            value={pacienteData.edad}
                             onChange={handleEdadChange}
                           />
                         </div>
@@ -369,7 +341,7 @@ export default function EditarPaciente() {
                             class="form-control form-control-sm input-validar"
                             id="nacionalidad"
                             name="nacionalidad"
-                            value={nacionalidad}
+                            value={pacienteData.nacionalidad}
                             onChange={handleNacionalidadChange}
                           />
                         </div>
@@ -379,7 +351,7 @@ export default function EditarPaciente() {
                             class="custom-select"
                             id="genero"
                             name="genero"
-                            value={genero}
+                            value={pacienteData.genero}
                             onChange={handleGeneroChange}
                           >
                             <option value="Masculino">Masculino</option>
@@ -394,7 +366,7 @@ export default function EditarPaciente() {
                             class="form-control form-control-sm input-validar"
                             id="direccion"
                             name="direccion"
-                            value={direccion}
+                            value={pacienteData.direccion}
                             onChange={handleDireccionChange}
                           />
                         </div>
@@ -405,7 +377,7 @@ export default function EditarPaciente() {
                             class="form-control form-control-sm input-validar"
                             id="distrito"
                             name="distrito"
-                            value={distritoResidencia}
+                            value={pacienteData.distritoResidencia}
                             onChange={handleDistritoResidenciaChange}
                           />
                         </div>
@@ -414,7 +386,7 @@ export default function EditarPaciente() {
                           <select
                             class="custom-select"
                             id="genero"
-                            value={activo}
+                            value={pacienteData.activo}
                             onChange={handleActivoChange}
                           >
                             <option value="true">Si</option>
@@ -425,7 +397,7 @@ export default function EditarPaciente() {
                       <hr />
                       <Casa
                         onCasaChange={handleCasaChange}
-                        selectedCasa={casa}
+                        selectedCasa={pacienteData.casaId}
                       />
                       <br />
                       <hr />
@@ -467,7 +439,12 @@ export default function EditarPaciente() {
                       />
                       <br />
                       <hr />
-                      {perfilEntradaId !== null}
+                      {pacienteData.perfilEntradaId !== null && (
+                        <PerfilEntrada
+                          perfilEntrada={perfilEntrada}
+                          setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
+                        />
+                      )}
                       <button
                         class="btn btn-success btn-sm"
                         type="button"
