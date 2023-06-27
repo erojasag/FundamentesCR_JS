@@ -6,6 +6,7 @@ export default function ErrorPopup({ message }) {
   const [open, setOpen] = useState(true);
 
   const cancelButtonRef = useRef(null);
+  window.location.reload();
 
   return (
     <Transition.Root show={open} as={Fragment}>

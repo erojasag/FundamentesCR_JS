@@ -13,7 +13,7 @@ export default function PersonaResponsable() {
             <div class="container-fluid">
               <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-second-primary">
-                  <h6 class="m-0 font-weight-bold text-white">Parentezcos</h6>
+                  <h6 class="m-0 font-weight-bold text-white">Encargados</h6>
                 </div>
                 <div class="card-body">
                   <hr />

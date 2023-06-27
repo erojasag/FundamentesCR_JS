@@ -154,7 +154,7 @@ Paciente.addHook('beforeFind', async (options) => {
     {
       model: casas,
       as: 'casa',
-      attributes: ['nombreCasa', 'canton', 'provincia', 'direccion'],
+      attributes: ['casaId', 'nombreCasa', 'canton', 'provincia', 'direccion'],
     },
     {
       model: datoMedico,
