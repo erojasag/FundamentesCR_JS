@@ -71,7 +71,6 @@ export default function Login() {
   };
   return (
     <React.Fragment>
-      {loading && <Loading />}
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-xl-10 col-lg-12 col-md-9">
@@ -119,10 +118,9 @@ export default function Login() {
                             </label>
                           </div>
                         </div>
-
-                        <button className="btn btn-primary btn-user btn-block">
-                          Iniciar
-                        </button>
+                        {loading ? (<Loading />):(
+                        <button className="btn btn-primary btn-user btn-block">Iniciar</button>
+                        )}
                         {errorMessage && <ErrorPopUp message={errorMessage} />}
                       </form>
                       <div className="text-center">
