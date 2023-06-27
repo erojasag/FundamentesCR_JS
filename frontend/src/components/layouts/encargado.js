@@ -1,130 +1,111 @@
 import React, { useState, useEffect } from 'react';
 
 export default function Encargado(props) {
-  const { encargado } = props;
-  const [parentezco, setParentezco] = useState('');
-  const [nombreCompleto, setNombreCompleto] = useState('');
-  const [fechaNacimiento, setFechaNacimiento] = useState('');
-  const [edad, setEdad] = useState('');
-  const [nacionalidad, setNacionalidad] = useState('');
-  const [cedula, setCedula] = useState('');
-  const [contacto, setContacto] = useState('');
-  const [escolaridad, setEscolaridad] = useState('');
-  const [ocupacion, setOcupacion] = useState('');
-  const [condicionLaboral, setCondicionLaboral] = useState('');
-  const [consumoMedicinas, setConsumoMedicinas] = useState('');
-  const [expedienteHNP, setExpedienteHNP] = useState('');
+  const [encargado, setEncargado] = useState({});
 
   useEffect(() => {
-    console.log(encargado);
-    if (encargado !== '') {
-      setParentezco(encargado.parentezco);
-      setNombreCompleto(encargado.nombreCompleto);
-      setFechaNacimiento(encargado.fechaNacimiento);
-      setEdad(encargado.edad);
-      setNacionalidad(encargado.nacionalidad);
-      setCedula(encargado.cedula);
-      setContacto(encargado.contacto);
-      setEscolaridad(encargado.escolaridad);
-      setOcupacion(encargado.ocupacion);
-      setCondicionLaboral(encargado.condicionLaboral);
-      setConsumoMedicinas(encargado.consumoMedicinas);
-      setExpedienteHNP(encargado.expedienteHNP);
+    if (props.encargado !== '') {
+      setEncargado(props.encargado);
     } else {
-      setParentezco();
-      setNombreCompleto();
-      setFechaNacimiento();
-      setNacionalidad();
-      setCedula();
-      setContacto();
-      setEscolaridad();
-      setOcupacion();
-      setCondicionLaboral();
+      setEncargado([null]);
     }
-  }, [encargado]);
+  }, [props.encargado]);
+
   const handleParentezcoChange = (event) => {
-    setParentezco(event.currentTarget.value);
-    props.setUpdatedEncargado({
-      ...props.encargado,
+    const updatedEncargado = {
+      ...encargado,
       parentezco: event.currentTarget.value,
-    });
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
   };
   const handleNombreCompletoEncargadoChange = (event) => {
-    setNombreCompleto(event.currentTarget.value);
-    props.setUpdatedEncargado({
-      ...props.encargado,
+    const updatedEncargado = {
+      ...encargado,
       nombreCompleto: event.currentTarget.value,
-    });
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
   };
   const handleFechaNacimientoEncargadoChange = (event) => {
-    setFechaNacimiento(event.currentTarget.value);
-    props.setUpdatedEncargado({
-      ...props.encargado,
+    const updatedEncargado = {
+      ...encargado,
       fechaNacimiento: event.currentTarget.value,
-    });
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
   };
   const handleEdadEncargadoChange = (event) => {
-    setEdad(event.currentTarget.value);
-    props.setUpdatedEncargado({
-      ...props.encargado,
+    const updatedEncargado = {
+      ...encargado,
       edad: event.currentTarget.value,
-    });
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
   };
   const handleNacionalidadEncargadoChange = (event) => {
-    setNacionalidad(event.currentTarget.value);
-    props.setUpdatedEncargado({
-      ...props.encargado,
+    const updatedEncargado = {
+      ...encargado,
       nacionalidad: event.currentTarget.value,
-    });
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
   };
   const handleCedulaEncargadoChange = (event) => {
-    setCedula(event.currentTarget.value);
-    props.setUpdatedEncargado({
-      ...props.encargado,
+    const updatedEncargado = {
+      ...encargado,
       cedula: event.currentTarget.value,
-    });
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
   };
   const handleContactoEncargadoChange = (event) => {
-    setContacto(event.currentTarget.value);
-    props.setUpdatedEncargado({
-      ...props.encargado,
+    const updatedEncargado = {
+      ...encargado,
       contacto: event.currentTarget.value,
-    });
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
   };
   const handleEscolaridadChange = (event) => {
-    setEscolaridad(event.currentTarget.value);
-    props.setUpdatedEncargado({
-      ...props.encargado,
+    const updatedEncargado = {
+      ...encargado,
       escolaridad: event.currentTarget.value,
-    });
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
   };
   const handleOcupacionChange = (event) => {
-    setOcupacion(event.currentTarget.value);
-    props.setUpdatedEncargado({
-      ...props.encargado,
+    const updatedEncargado = {
+      ...encargado,
       ocupacion: event.currentTarget.value,
-    });
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
   };
   const handleCondicionLaboralEncargadoChange = (event) => {
-    setCondicionLaboral(event.currentTarget.value);
-    props.setUpdatedEncargado({
-      ...props.encargado,
-      condicionLaboralEncargado: event.currentTarget.value,
-    });
+    const updatedEncargado = {
+      ...encargado,
+      condicionLaboral: event.currentTarget.value,
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
   };
   const handleConsumoMedicinasChange = (event) => {
-    setConsumoMedicinas(event.currentTarget.value);
-    props.setUpdatedEncargado({
-      ...props.encargado,
+    const updatedEncargado = {
+      ...encargado,
       consumoMedicinas: event.currentTarget.value,
-    });
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
   };
   const handleExpedienteHNPEncargadoChange = (event) => {
-    setExpedienteHNP(event.currentTarget.value);
-    props.setUpdatedEncargado({
-      ...props.encargado,
+    const updatedEncargado = {
+      ...encargado,
       expedienteHNP: event.currentTarget.value,
-    });
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
   };
 
   return (
@@ -137,13 +118,13 @@ export default function Encargado(props) {
 
       <div class="row">
         <div class="form-group col-sm-6">
-          <label for="txtLugar">Parentezco</label>
+          <label for="txtParentezco">Parentezco</label>
           <input
             type="text"
             class="form-control form-control-sm input-validar"
             id="parentezco"
             name="parentezco"
-            value={parentezco}
+            value={encargado.parentezco}
             onChange={handleParentezcoChange}
           />
         </div>
@@ -154,7 +135,7 @@ export default function Encargado(props) {
             class="form-control form-control-sm input-validar"
             id="nombreCompletoEncargado"
             name="nombreCompletoEncargado"
-            value={nombreCompleto}
+            value={encargado.nombreCompleto}
             onChange={handleNombreCompletoEncargadoChange}
           />
         </div>
@@ -165,7 +146,7 @@ export default function Encargado(props) {
             class="form-control form-control-sm input-validar"
             id="ultimoEmpleo"
             name="ultimoEmpleo"
-            value={fechaNacimiento}
+            value={encargado.fechaNacimiento}
             onChange={handleFechaNacimientoEncargadoChange}
           />
         </div>
@@ -176,7 +157,7 @@ export default function Encargado(props) {
             class="form-control form-control-sm input-validar"
             id="edadEncargado"
             name="edadEncargado"
-            value={edad}
+            value={encargado.edad}
             onChange={handleEdadEncargadoChange}
           />
         </div>
@@ -187,7 +168,7 @@ export default function Encargado(props) {
             class="form-control form-control-sm input-validar"
             id="nacionalidadEncargado"
             name="nacionalidadEncargado"
-            value={nacionalidad}
+            value={encargado.nacionalidad}
             onChange={handleNacionalidadEncargadoChange}
           />
         </div>
@@ -198,7 +179,7 @@ export default function Encargado(props) {
             class="form-control form-control-sm input-validar"
             id="cedulaEncargado"
             name="cedulaEncargado"
-            value={cedula}
+            value={encargado.cedula}
             onChange={handleCedulaEncargadoChange}
           />
         </div>
@@ -209,7 +190,7 @@ export default function Encargado(props) {
             class="form-control form-control-sm input-validar"
             id="contactoEncargado"
             name="contactoEncargado"
-            value={contacto}
+            value={encargado.contacto}
             onChange={handleContactoEncargadoChange}
           />
         </div>
@@ -220,7 +201,7 @@ export default function Encargado(props) {
             class="form-control form-control-sm input-validar"
             id="escolaridad"
             name="escolaridad"
-            value={escolaridad}
+            value={encargado.escolaridad}
             onChange={handleEscolaridadChange}
           />
         </div>
@@ -231,7 +212,7 @@ export default function Encargado(props) {
             class="form-control form-control-sm input-validar"
             id="ocupacion"
             name="ocupacion"
-            value={ocupacion}
+            value={encargado.ocupacion}
             onChange={handleOcupacionChange}
           />
         </div>
@@ -242,7 +223,7 @@ export default function Encargado(props) {
             class="form-control form-control-sm input-validar"
             id="condicionLaboralEncargado"
             name="condicionLaboralEncargado"
-            value={condicionLaboral}
+            value={encargado.condicionLaboral}
             onChange={handleCondicionLaboralEncargadoChange}
           />
         </div>
@@ -253,7 +234,7 @@ export default function Encargado(props) {
             class="form-control form-control-sm input-validar"
             id="consumoMedicinas"
             name="consumoMedicinas"
-            value={consumoMedicinas}
+            value={encargado.consumoMedicinas}
             onChange={handleConsumoMedicinasChange}
           />
         </div>
@@ -264,7 +245,7 @@ export default function Encargado(props) {
             class="form-control form-control-sm input-validar"
             id="expedienteHNPEncargado"
             name="expedienteHNPEncargado"
-            value={expedienteHNP}
+            value={encargado.expedienteHNP}
             onChange={handleExpedienteHNPEncargadoChange}
           />
         </div>
