@@ -11,18 +11,15 @@ export default function Loading() {
     }, 2000);
   }, []);
   return (
-    <div>
+    <div  style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       {loading? 
     <PulseLoader
-    color={'#D002E'}
+    color={'#D0023E'}
     loading={loading}
-    cssOverride={loading}
-    size={100}
-    aria-label="Loading Spinner"
-    data-testid="loader"
-  />:null
+    size={10}
+    
+    />:<div></div>
     }
     </div>
-    
   );
 }
