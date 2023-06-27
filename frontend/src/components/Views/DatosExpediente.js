@@ -2,8 +2,9 @@ import React from 'react';
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
-export default function Index() {
+export default function DatosExpediente() {
   return (
+    
     <React.Fragment>
       <div id="wrapper">
         <SideMenu />

@@ -1,5 +1,5 @@
 const express = require('express');
-const rateLimit = require('express-rate-limit');
+// const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const path = require('path');
 const logger = require('morgan');
@@ -41,15 +41,19 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 //limit requests from same IP
-const limiter = rateLimit({
-  max: 300,
-  windowMs: 60 * 60 * 1000, //1 hour
-  message: 'Too many requests from this IP, please try again in an hour!',
-});
-app.use('/', limiter);
+// const limiter = rateLimit({
+//   max: 300,
+//   windowMs: 60 * 60 * 1000, //1 hour
+//   message: 'Too many requests from this IP, please try again in an hour!',
+// });
+// app.use('/', limiter);
 
 //enable CORS
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5000',
+  })
+);
 
 //data sanitization against XSS
 app.use(xss());

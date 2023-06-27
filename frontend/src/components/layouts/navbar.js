@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
-import SearchBox from './searchBox';
+
 import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
@@ -18,12 +18,12 @@ export default function Navbar() {
     Cookies.remove('jwt');
     Cookies.remove('id');
     Cookies.remove('rol');
+    Cookies.remove('nombre');
     navigate('/');
   };
   return (
     <React.Fragment>
       <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-        <SearchBox />
         <button
           id="sidebarToggleTop"
           class="btn btn-link d-md-none rounded-circle mr-3"

@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function SideMenu() {
+  const [isExpanded, setIsExpanded] = useState(true);
+
+  const handleToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
   return (
     <React.Fragment>
       <ul
-        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        className={`navbar-nav bg-gradient-primary sidebar sidebar-dark accordion ${
+          isExpanded ? '' : 'toggled'
+        }`}
         id="accordionSidebar"
       >
         <a
           class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="index.html"
+          href="/Inicio"
         >
           <div class="sidebar-brand-icon">
             <img
@@ -29,17 +36,16 @@ export default function SideMenu() {
           </a>
         </li>
         <li class="nav-item">
-          <a
+          <div
             class="nav-link collapsed"
-            href="/"
             data-toggle="collapse"
             data-target="#collapseAdministracion"
             aria-expanded="true"
             aria-controls="collapseAdministracion"
           >
             <i class="fas fa-fw fa-cog"></i>
-            <span>Usuario Login</span>
-          </a>
+            <span>Usuarios</span>
+          </div>
           <div
             id="collapseAdministracion"
             class="collapse"
@@ -47,11 +53,8 @@ export default function SideMenu() {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="UsuarioLog">
+              <a class="collapse-item" href="ListaUsuarios">
                 Usuarios
-              </a>
-              <a class="collapse-item" href="EditarUsuarioLog">
-                Editar Usuario
               </a>
             </div>
           </div>
@@ -67,7 +70,7 @@ export default function SideMenu() {
             aria-controls="collapseExpediente"
           >
             <i class="fas fa-fw fa-clipboard-list"></i>
-            <span>Paciente</span>
+            <span>Pacientes</span>
           </a>
           <div
             id="collapseExpediente"
@@ -76,11 +79,8 @@ export default function SideMenu() {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="/Pascientes">
-                Paciente
-              </a>
-              <a class="collapse-item" href="/EditarPasciente">
-                Editar Paciente
+              <a class="collapse-item" href="/pacientes">
+                Ver Pacientes
               </a>
             </div>
           </div>
@@ -105,14 +105,11 @@ export default function SideMenu() {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="DatosExpediente">
-                Datos de Expedientes
+              <a class="collapse-item" href="Expedientes">
+                Ver Expedientes
               </a>
-              <a class="collapse-item" href="Pascientes">
-                Datos de Pacientes
-              </a>
-              <a class="collapse-item" href="PersonaResponsable">
-                Persona Responsable
+              <a class="collapse-item" href="Encargados">
+                Encargados
               </a>
               <a class="collapse-item" href="Convivencia">
                 Convivencia
@@ -155,9 +152,6 @@ export default function SideMenu() {
               <a class="collapse-item" href="/PerfilEntrada">
                 Perfil de Entrada
               </a>
-              <a class="collapse-item" href="/EditarPerfilEntrada">
-                Editar Perfil de Entrada
-              </a>
             </div>
           </div>
         </li>
@@ -183,9 +177,6 @@ export default function SideMenu() {
               <a class="collapse-item" href="/PerfilSalida">
                 Perfil de Salida
               </a>
-              <a class="collapse-item" href="/EditarPerfilSalida">
-                Editar Perfil de Salida
-              </a>
             </div>
           </div>
         </li>
@@ -208,10 +199,10 @@ export default function SideMenu() {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="/EncuestaSatisfaccion">
+              <a class="collapse-item" href="/Encuestas">
                 Encuesta de Satisfacción
               </a>
-              <a class="collapse-item" href="/Encuestas">
+              <a class="collapse-item" href="/EncuestaSatisfaccion">
                 Agregar Encuesta
               </a>
             </div>
@@ -269,7 +260,11 @@ export default function SideMenu() {
         </li>
         <hr class="sidebar-divider" />
         <div class="text-center d-none d-md-inline">
-          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+          <button
+            class="rounded-circle border-0"
+            id="sidebarToggle"
+            onClick={handleToggle}
+          ></button>
         </div>
       </ul>
     </React.Fragment>
