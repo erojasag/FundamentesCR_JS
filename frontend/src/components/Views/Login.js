@@ -117,10 +117,9 @@ export default function Login() {
                               Mantener Sesión
                             </label>
                           </div>
+                          {loading && <Loading />}
                         </div>
-                        {loading ? (<Loading />):(
-                        <button className="btn btn-primary btn-user btn-block">Iniciar</button>
-                        )}
+                        <button className="btn btn-primary btn-user btn-block" onClick={() => setLoading(!loading)}>Iniciar</button>
                         {errorMessage && <ErrorPopUp message={errorMessage} />}
                       </form>
                       <div className="text-center">
