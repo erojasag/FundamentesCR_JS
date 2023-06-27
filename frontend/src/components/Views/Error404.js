@@ -6,8 +6,8 @@ export default function Error404() {
     <React.Fragment>
       <div id="wrapper">
         <div id="content-wrapper" class="d-flex flex-column">
-          <div id="content">
-            <div class="container-fluid">
+          <div id="content" className="flex-grow">
+            <div class="container-fluid flex justify-center items-center">
               <div class="text-center">
                 <main
                   className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8"
@@ -29,7 +29,7 @@ export default function Error404() {
                     <div className="mt-10 flex items-center justify-center gap-x-6">
                       <a
                         href="/Inicio"
-                        className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        className="btn btn-primary rounded-pill px-3.5 py-2.5 text-sm font-weight-bold shadow-sm"
                       >
                         Volver al inicio
                       </a>

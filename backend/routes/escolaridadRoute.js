@@ -13,12 +13,12 @@ const { protect, restrictTo } = require('../controllers/authController');
 
 router
   .route('/')
-  .get(protect, restrictTo('Administrador'), getAllEscolaridades)
-  .post(protect, restrictTo('Administrador'), agregarEscolaridad);
+  .get(protect, restrictTo('Administrador', 'Psicologo'), getAllEscolaridades)
+  .post(protect, restrictTo('Administrador', 'Psicologo'), agregarEscolaridad);
 
 router
   .route('/:id')
-  .get(protect, restrictTo('Administrador'), getEscolaridadById)
-  .patch(protect, restrictTo('Administrador'), updateEscolaridad);
+  .get(protect, restrictTo('Administrador', 'Psicologo'), getEscolaridadById)
+  .patch(protect, restrictTo('Administrador', 'Psicologo'), updateEscolaridad);
 
 module.exports = router;
