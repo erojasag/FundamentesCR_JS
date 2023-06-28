@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Footer from '../layouts/footer';
-import ErrorPopUp from '../layouts/errorPopUp';
+import ErrorPopUp from '../layouts/ErrorMesage';
 import Loading from '../layouts/loading';
 
 export default function Login() {
@@ -120,12 +120,12 @@ export default function Login() {
                           {loading && <Loading />}
                         </div>
                         <button className="btn btn-primary btn-user btn-block" onClick={() => setLoading(!loading)}>Iniciar</button>
-                        {errorMessage && <ErrorPopUp message={errorMessage} />}
                       </form>
                       <div className="text-center">
                         <a className="small" href="OlvideMiContrasena">
                           ¿Olvidó su contraseña?
                         </a>
+                        {errorMessage && <ErrorPopUp message={errorMessage} />}
                       </div>
                     </div>
                   </div>
