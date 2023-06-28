@@ -1,17 +1,25 @@
-import React from 'react';
-import { Spinner } from 'reactstrap';
-import './Loading.css';
+import React, { useState,useEffect } from 'react';
+import PulseLoader from "react-spinners/PulseLoader";
+
 
 export default function Loading() {
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
   return (
-    <div className="divPadre">
-      <div className="divHijo">
-        <Spinner
-          color="primary"
-          size="lg"
-          style={{ width: '5rem', height: '5rem', display: 'block' }}
-        />
-      </div>
+    <div  style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      {loading? 
+    <PulseLoader
+    color={'#D0023E'}
+    loading={loading}
+    size={10}
+    
+    />:<div></div>
+    }
     </div>
   );
 }
