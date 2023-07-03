@@ -47,11 +47,11 @@ const sociodemografico = db.define(
     },
     institucion: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     tipo: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     createdAt: {
       type: DataTypes.DATE,

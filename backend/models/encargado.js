@@ -50,14 +50,14 @@ const encargado = db.define(
       allowNull: false,
     },
     consumoMedicinas: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.BOOLEAN,
       allowNull: false,
     },
     expedienteHNP: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    situacionParti: {
+    situacionParticular: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },

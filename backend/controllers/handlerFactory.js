@@ -33,7 +33,6 @@ const getOne = (Model) =>
 
 const insertOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    console.log(req.body);
     const doc = await Model.create(req.body);
 
     if (!doc) return next(new AppError('No se pudo crear el registro', 500));

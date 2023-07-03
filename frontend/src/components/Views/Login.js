@@ -3,13 +3,13 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Footer from '../layouts/footer';
-import ErrorPopUp from '../layouts/errorPopUp';
 import Loading from '../layouts/loading';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [contrasena, setContrasena] = useState('');
-  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +25,7 @@ export default function Login() {
     event.preventDefault();
     try {
       if (!email || !contrasena) {
-        setErrorMessage('Por favor ingrese un usuario y una contrasena');
+        toast.warn('Ingrese su correo y contraseña para iniciar sesión.');
         return;
       }
       const data = {
@@ -38,35 +38,48 @@ export default function Login() {
         'http://localhost:3000/usuarios/login',
         data
       );
-      Cookies.set('jwt', response.data.token, { expires: 1 });
-      Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
-      Cookies.set('rol', response.data.data.user.rol.nombreRol, {
-        expires: 1,
-      });
+      console.log(response);
+      if (response.status === 200) {
+        Cookies.set('jwt', response.data.token, { expires: 1 });
+        Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
+        Cookies.set('rol', response.data.data.user.rol.nombreRol, {
+          expires: 1,
+        });
 
-      Cookies.set(
-        'nombre',
-        response.data.data.user.nombre + ' ' + response.data.data.user.primerApe
-      );
-      setEmail('');
-      setContrasena('');
-      navigate('/Inicio');
+        Cookies.set(
+          'nombre',
+          response.data.data.user.nombre +
+            ' ' +
+            response.data.data.user.primerApe
+        );
+
+        setEmail('');
+        setContrasena('');
+        navigate('/Inicio');
+      }
     } catch (err) {
-      let errMessage = JSON.parse(err.request.response);
-      errMessage = errMessage.message;
-      if (errMessage === 'Correo o contraseña incorrectos') {
-        setErrorMessage(errMessage);
+      console.log(err.response.data.message);
+      if (err.response.data.message === 'Correo o contraseña incorrectos') {
+        toast.error(
+          'Correo o contraseña incorrectos. Por favor intente de nuevo.'
+        );
+        return;
       }
-      if (errMessage === 'El usuario no existe') {
-        window.location.reload();
-        setErrorMessage(errMessage);
+      if (err.response.data.message === 'El usuario no existe') {
+        toast.error('Este usuario no existe.');
+        return;
       }
-      setErrorMessage(null);
+      if (err.response.status === 401) {
+        toast.warn(
+          'Tu cuenta no se encuentra activa. Por favor revisa tu correo para activarla.'
+        );
+        return;
+      }
       window.location.reload();
     } finally {
       setTimeout(() => {
         setLoading(false);
-      }, 10000);
+      }, 1000);
     }
   };
   return (
@@ -80,6 +93,7 @@ export default function Login() {
                   <div className="col-lg-6 d-none d-lg-block bg-login-image"></div>
                   <div className="col-lg-6">
                     <div className="p-5">
+                      {loading && <Loading />}
                       <div className="text-center">
                         <h1 className="h4 text-gray-900 mb-4">Bienvenido</h1>
                       </div>
@@ -89,7 +103,7 @@ export default function Login() {
                           <input
                             type="email"
                             className="form-control form-control-user"
-                            placeholder="email"
+                            placeholder="Correo"
                             value={email}
                             onChange={handleEmailChange}
                           />
@@ -117,10 +131,13 @@ export default function Login() {
                               Mantener Sesión
                             </label>
                           </div>
-                          {loading && <Loading />}
                         </div>
-                        <button className="btn btn-primary btn-user btn-block" onClick={() => setLoading(!loading)}>Iniciar</button>
-                        {errorMessage && <ErrorPopUp message={errorMessage} />}
+                        <button
+                          className="btn btn-primary btn-user btn-block"
+                          onClick={() => setLoading(!loading)}
+                        >
+                          Iniciar
+                        </button>
                       </form>
                       <div className="text-center">
                         <a className="small" href="OlvideMiContrasena">
@@ -136,6 +153,7 @@ export default function Login() {
           <Footer />
         </div>
       </div>
+      <ToastContainer />
     </React.Fragment>
   );
 }

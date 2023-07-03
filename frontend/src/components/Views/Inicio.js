@@ -2,6 +2,8 @@ import React from 'react';
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
+import CircleChart from '../layouts/circleChartEdad';
+import CircleChartCasas from '../layouts/circleChartCasas';
 
 export default function Index() {
   return (
@@ -106,27 +108,27 @@ export default function Index() {
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-xl-8 col-lg-7">
-                    <div class="card shadow mb-4">
+                <div class="row ">
+                  <div class="col-xl-4 col-lg-6 d-flex align-items-center justify-content-center">
+                    <div class="card shadow mb-4" style={{ height: '500px' }}>
                       <div class="card-header py-3 bg-second-primary">
                         <h6 class="m-0 font-weight-bold text-white">
                           Rangos de edad atendidos
                         </h6>
                       </div>
 
-                      <div class="card-body">
+                      <div class="card-body ">
                         <div
                           class="chart-area"
                           style={{ height: '350px !important' }}
                         >
-                          <canvas id="charVentas"></canvas>
+                          <CircleChart />
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-xl-4 col-lg-5">
-                    <div class="card shadow mb-4">
+                  <div class="col-xl-4 col-lg-6 d-flex align-items-center justify-content-center">
+                    <div class="card shadow mb-4" style={{ height: '500px' }}>
                       <div class="card-header py-3 bg-second-primary">
                         <h6 class="m-0 font-weight-bold text-white">
                           Casa hogar
@@ -136,9 +138,9 @@ export default function Index() {
                       <div class="card-body">
                         <div
                           class="chart-pie"
-                          style={{ height: '350px !important' }}
+                          style={{ height: '350px !important', width: '100%' }}
                         >
-                          <canvas id="charProductos"></canvas>
+                          <CircleChartCasas />
                         </div>
                       </div>
                     </div>

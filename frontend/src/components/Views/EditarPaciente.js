@@ -107,13 +107,6 @@ export default function EditarPaciente() {
     });
   };
 
-  const handleActivoChange = (event) => {
-    setPacienteData({
-      ...pacienteData,
-      activo: event.currentTarget.value,
-    });
-  };
-
   const handleCasaChange = (event) => {
     setPacienteData({
       ...pacienteData,
@@ -140,16 +133,16 @@ export default function EditarPaciente() {
     setEscolaridad(data.escolaridad);
     setPerfilEntrada(data.perfilEntrada);
 
-    // if (data.perfilEntradaId !== null) {
-    //   const responsePerfilEntrada = await axios.get(
-    //     `http://localhost:3000/entrevistasEntrada/${data.perfilEntradaId}`,
-    //     {
-    //       headers,
-    //     }
-    //   );
-    //   const dataPerfilEntrada = responsePerfilEntrada.data.data.data;
-    //   setPerfilEntrada(dataPerfilEntrada);
-    // }
+    if (data.perfilEntradaId !== null) {
+      const responsePerfilEntrada = await axios.get(
+        `http://localhost:3000/entrevistasEntrada/${data.perfilEntradaId}`,
+        {
+          headers,
+        }
+      );
+      const dataPerfilEntrada = responsePerfilEntrada.data.data.data;
+      setPerfilEntrada(dataPerfilEntrada);
+    }
     // if (data.perfilSalidaId !== null) {
     //   const responsePerfilSalida = await axios.get(
     //     `http://localhost:3000/entrevistasSalida/${data.perfilSalidaId}`,
@@ -238,7 +231,6 @@ export default function EditarPaciente() {
       distritoResidencia: pacienteData.distritoResidencia,
       direccion: pacienteData.direccion,
       genero: pacienteData.genero,
-      activo: pacienteData.activo,
       casaId: pacienteData.casaId,
       datosMedicosId: pacienteData.datosMedicosId,
       condicionLaboralId: pacienteData.condicionLaboralId,
@@ -381,18 +373,6 @@ export default function EditarPaciente() {
                             onChange={handleDistritoResidenciaChange}
                           />
                         </div>
-                        <div class="form-group col-sm-6">
-                          <label for="txtActivo">Activo</label>
-                          <select
-                            class="custom-select"
-                            id="genero"
-                            value={pacienteData.activo}
-                            onChange={handleActivoChange}
-                          >
-                            <option value="true">Si</option>
-                            <option value="false">No</option>
-                          </select>
-                        </div>
                       </div>
                       <hr />
                       <Casa
@@ -445,6 +425,8 @@ export default function EditarPaciente() {
                           setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
                         />
                       )}
+                      <br />
+                      <hr />
                       <button
                         class="btn btn-success btn-sm"
                         type="button"

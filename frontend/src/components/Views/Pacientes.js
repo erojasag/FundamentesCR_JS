@@ -145,122 +145,119 @@ export default function Pacientes() {
     };
 
     if (updatedDatosMedicos !== null) {
-      // const responseDatosMedicos = await axios.post(
-      //   `http://localhost:3000/datosMedicos/`,
-      //   updatedDatosMedicos,
-      //   {
-      //     headers,
-      //   }
-      // );
-      // if (responseDatosMedicos.status === 201) {
-      //   setNewPacienteData(responseDatosMedicos.data.data.data);
-      // }
+      const responseDatosMedicos = await axios.post(
+        `http://localhost:3000/datosMedicos/`,
+        updatedDatosMedicos,
+        {
+          headers,
+        }
+      );
+      if (responseDatosMedicos.status === 201) {
+        setNewPacienteData(responseDatosMedicos.data.data.data);
+      }
     }
 
     if (updatedCondicionLaboral !== null) {
-      // const responseCondicionLaboral = await axios.post(
-      //   `http://localhost:3000/condicionLaboral/`,
-      //   updatedCondicionLaboral,
-      //   {
-      //     headers,
-      //   }
-      // );
-      // if (responseCondicionLaboral.status === 201) {
-      //   setNewPacienteData(responseCondicionLaboral.data.data.data);
-      // }
+      const responseCondicionLaboral = await axios.post(
+        `http://localhost:3000/condicionesLaborales/`,
+        updatedCondicionLaboral,
+        {
+          headers,
+        }
+      );
+      if (responseCondicionLaboral.status === 201) {
+        setNewPacienteData(responseCondicionLaboral.data.data.data);
+      }
     }
 
     if (updatedSociodemograficos !== null) {
-      // const responseSociodemograficos = await axios.post(
-      //   `http://localhost:3000/sociodemograficos/`,
-      //   updatedSociodemograficos,
-      //   {
-      //     headers,
-      //   }
-      // );
-      // if (responseSociodemograficos.status === 201) {
-      //   setNewPacienteData(responseSociodemograficos.data.data.data);
-      // }
+      const responseSociodemograficos = await axios.post(
+        `http://localhost:3000/sociodemograficos/`,
+        updatedSociodemograficos,
+        {
+          headers,
+        }
+      );
+      if (responseSociodemograficos.status === 201) {
+        setNewPacienteData(responseSociodemograficos.data.data.data);
+      }
     }
 
     if (updatedEncargado !== null) {
-      // const responseEncargado = await axios.post(
-      //   `http://localhost:3000/encargados/`,
-      //   updatedEncargado,
-      //   {
-      //     headers,
-      //   }
-      // );
-      // if (responseEncargado.status === 201) {
-      //   setNewPacienteData(responseEncargado.data.data.data);
-      // }
+      const responseEncargado = await axios.post(
+        `http://localhost:3000/encargados/`,
+        updatedEncargado,
+        {
+          headers,
+        }
+      );
+      if (responseEncargado.status === 201) {
+        setNewPacienteData(responseEncargado.data.data.data);
+      }
     }
 
     if (updatedDinamicaFamiliar !== null) {
-      // const responseDinamicaFamiliar = await axios.post(
-      //   `http://localhost:3000/dinamicasFamiliares/`,
-      //   updatedDinamicaFamiliar,
-      //   {
-      //     headers,
-      //   }
-      // );
-      // if (responseDinamicaFamiliar.status === 201) {
-      //   setNewPacienteData(responseDinamicaFamiliar.data.data.data);
-      // }
+      const responseDinamicaFamiliar = await axios.post(
+        `http://localhost:3000/dinamicasFamiliares/`,
+        updatedDinamicaFamiliar,
+        {
+          headers,
+        }
+      );
+      if (responseDinamicaFamiliar.status === 201) {
+        setNewPacienteData(responseDinamicaFamiliar.data.data.data);
+      }
     }
 
     if (updatedEscolaridad !== null) {
-      // const responseEscolaridad = await axios.post(
-      //   `http://localhost:3000/escolaridad/`,
-      //   updatedEscolaridad,
-      //   {
-      //     headers,
-      //   }
-      // );
-      // if (responseEscolaridad.status === 201) {
-      //   setNewPacienteData(responseEscolaridad.data.data.data);
-      // }
+      const responseEscolaridad = await axios.post(
+        `http://localhost:3000/escolaridades/`,
+        updatedEscolaridad,
+        {
+          headers,
+        }
+      );
+      if (responseEscolaridad.status === 201) {
+        setNewPacienteData(responseEscolaridad.data.data.data);
+      }
     }
 
-    if (updatedPerfilEntrada !== null) {
-      // const responsePerfilEntrada = await axios.post(
-      //   `http://localhost:3000/entrevistasEntrada/`,
-      //   updatedPerfilEntrada,
-      //   {
-      //     headers,
-      //   }
-      // );
-      // if (responsePerfilEntrada.status === 201) {
-      //   setNewPacienteData(responsePerfilEntrada.data.data.data);
-      // }
-    }
-
-    if (updatedPerfilSalida !== null) {
-      // const responsePerfilSalida = await axios.post(
-      //   `http://localhost:3000/entrevistasSalida/`,
-      //   updatedPerfilSalida,
-      //   {
-      //     headers,
-      //   }
-      // );
-      // if (responsePerfilSalida.status === 201) {
-      //   setNewPacienteData(responsePerfilSalida.data.data.data);
-      // }
-    }
-    const body = {
-      newPacienteData,
-    };
-
-    // const response = await axios.post(
-    //   'http://localhost:3000/pacientes/',
-    //   body,
-    //   {
-    //     headers,
+    // if (updatedPerfilEntrada !== null) {
+    //   const responsePerfilEntrada = await axios.post(
+    //     `http://localhost:3000/entrevistasEntrada/`,
+    //     updatedPerfilEntrada,
+    //     {
+    //       headers,
+    //     }
+    //   );
+    //   if (responsePerfilEntrada.status === 201) {
+    //     setNewPacienteData(responsePerfilEntrada.data.data.data);
     //   }
-    // );
-    // if (response.status === 201) {
-    //   window.location.reload();
     // }
+
+    // if (updatedPerfilSalida !== null) {
+    //   const responsePerfilSalida = await axios.post(
+    //     `http://localhost:3000/entrevistasSalida/`,
+    //     updatedPerfilSalida,
+    //     {
+    //       headers,
+    //     }
+    //   );
+    //   if (responsePerfilSalida.status === 201) {
+    //     setNewPacienteData(responsePerfilSalida.data.data.data);
+    //   }
+    // }
+
+    const response = await axios.post(
+      'http://localhost:3000/pacientes/',
+      newPacienteData,
+      {
+        headers,
+      }
+    );
+    if (response.status === 201) {
+      window.location.reload();
+    }
   };
 
   const fetchData = async () => {
@@ -274,19 +271,38 @@ export default function Pacientes() {
         headers,
       });
       const data = response.data.data.data;
+
       setPacientesData(data);
     } catch (err) {
       console.log(err);
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+      setLoading(false);
     }
   };
   useEffect(() => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const calculateAge = () => {
+      const birthDate = new Date(newPacienteData.fechaNacimiento);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        age--;
+      }
+      setNewPacienteData({
+        ...newPacienteData,
+        edad: age,
+      });
+    };
+
+    calculateAge();
+  }, [newPacienteData.fechaNacimiento]);
   const clearData = () => {
     setNewPacienteData({
       nombreCompleto: '',
@@ -352,7 +368,6 @@ export default function Pacientes() {
         <div id="content-wrapper" className="d-flex flex-column">
           <div id="content">
             <Navbar />
-            {loading && <Loading />}
             <div className="container-fluid">
               <div className="card shadow mb-4">
                 <div className="card-header py-3 bg-second-primary">
@@ -373,6 +388,7 @@ export default function Pacientes() {
                     </div>
                   </div>
                   <hr />
+
                   <div className="row">
                     <div className="col-sm-12">
                       <table
@@ -401,7 +417,7 @@ export default function Pacientes() {
                   </div>
                 </div>
               </div>
-
+              {loading && <Loading />}
               <div
                 className="modal fade"
                 id="usuariosModal"
@@ -535,7 +551,8 @@ export default function Pacientes() {
                                   class="form-control form-control-sm input-validar"
                                   id="edad"
                                   name="edad"
-                                  value={pacientesData.edad}
+                                  disabled
+                                  value={newPacienteData.edad}
                                   onChange={handleEdadChange}
                                 />
                               </div>

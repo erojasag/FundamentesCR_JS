@@ -4,10 +4,25 @@ export default function Encargado(props) {
   const [encargado, setEncargado] = useState({});
 
   useEffect(() => {
-    if (props.encargado !== '') {
+    console.log(props.encargado);
+    if (props.encargado) {
       setEncargado(props.encargado);
     } else {
-      setEncargado([null]);
+      setEncargado({
+        parentezco: '',
+        nombreCompleto: '',
+        fechaNacimiento: '',
+        edad: '',
+        nacionalidad: '',
+        cedula: '',
+        contacto: '',
+        escolaridad: '',
+        ocupacion: '',
+        condicionLaboral: '',
+        consumoMedicinas: '',
+        expedienteHNP: '',
+        situacionParticular: '',
+      });
     }
   }, [props.encargado]);
 
@@ -103,6 +118,14 @@ export default function Encargado(props) {
     const updatedEncargado = {
       ...encargado,
       expedienteHNP: event.currentTarget.value,
+    };
+    setEncargado(updatedEncargado);
+    props.setUpdatedEncargado(updatedEncargado);
+  };
+  const handleSituacionPartiChange = (event) => {
+    const updatedEncargado = {
+      ...encargado,
+      situacionParticular: event.currentTarget.value,
     };
     setEncargado(updatedEncargado);
     props.setUpdatedEncargado(updatedEncargado);
@@ -218,35 +241,57 @@ export default function Encargado(props) {
         </div>
         <div class="form-group col-sm-6">
           <label for="txtCondicionLaboral">Condicion Laboral</label>
-          <input
-            type="text"
-            class="form-control form-control-sm input-validar"
+          <select
+            class="custom-select"
             id="condicionLaboralEncargado"
             name="condicionLaboralEncargado"
             value={encargado.condicionLaboral}
             onChange={handleCondicionLaboralEncargadoChange}
-          />
+          >
+            <option value="null">-No Especifica-</option>
+            <option value="Empleado">Empleado</option>
+            <option value="Independiente">Independiente</option>
+            <option value="Desempleado">Desempleado</option>
+            <option value="Pensionado">Pensionado</option>
+          </select>
         </div>
         <div class="form-group col-sm-6">
           <label for="txtConsumoMedicinas">Consume Medicinas</label>
-          <input
-            type="text"
-            class="form-control form-control-sm input-validar"
+          <select
+            class="custom-select"
             id="consumoMedicinas"
             name="consumoMedicinas"
             value={encargado.consumoMedicinas}
             onChange={handleConsumoMedicinasChange}
-          />
+          >
+            <option value="null">-No Especifica-</option>
+            <option value="true">Si</option>
+            <option value="false">No</option>
+          </select>
         </div>
         <div class="form-group col-sm-6">
           <label for="txtExpedienteHNP">Expediente HNP</label>
+          <select
+            class="custom-select"
+            id="expedienteHNPEncargado"
+            name="expedienteHNPEncargado"
+            value={encargado.expedienteHNP}
+            onChange={handleExpedienteHNPEncargadoChange}
+          >
+            <option value="null">-No Especifica-</option>
+            <option value="true">Si</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="txtExpedienteHNP">Situacion Particular</label>
           <input
             type="text"
             class="form-control form-control-sm input-validar"
             id="expedienteHNPEncargado"
             name="expedienteHNPEncargado"
-            value={encargado.expedienteHNP}
-            onChange={handleExpedienteHNPEncargadoChange}
+            value={encargado.situacionParticular}
+            onChange={handleSituacionPartiChange}
           />
         </div>
       </div>

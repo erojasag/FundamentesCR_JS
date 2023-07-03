@@ -213,6 +213,7 @@ Paciente.addHook('beforeFind', async (options) => {
         'condicionLaboral',
         'consumoMedicinas',
         'expedienteHNP',
+        'situacionParticular',
       ],
     },
     {

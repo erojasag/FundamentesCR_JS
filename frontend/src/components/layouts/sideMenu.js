@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import Cookies from 'js-cookie';
 
 export default function SideMenu() {
   const [isExpanded, setIsExpanded] = useState(true);
+
+  const rol = Cookies.get('rol');
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
@@ -35,30 +38,37 @@ export default function SideMenu() {
             <span>Dashboard</span>
           </a>
         </li>
-        <li class="nav-item">
-          <div
-            class="nav-link collapsed"
-            data-toggle="collapse"
-            data-target="#collapseAdministracion"
-            aria-expanded="true"
-            aria-controls="collapseAdministracion"
-          >
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Usuarios</span>
-          </div>
-          <div
-            id="collapseAdministracion"
-            class="collapse"
-            aria-labelledby="headingTwo"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="ListaUsuarios">
-                Usuarios
-              </a>
-            </div>
-          </div>
-        </li>
+        {rol === 'Administrador' ? (
+          <>
+            <li class="nav-item">
+              <div
+                class="nav-link collapsed"
+                data-toggle="collapse"
+                data-target="#collapseAdministracion"
+                aria-expanded="true"
+                aria-controls="collapseAdministracion"
+              >
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Usuarios</span>
+              </div>
+              <div
+                id="collapseAdministracion"
+                class="collapse"
+                aria-labelledby="headingTwo"
+                data-parent="#accordionSidebar"
+              >
+                <div class="bg-white py-2 collapse-inner rounded">
+                  <a class="collapse-item" href="ListaUsuarios">
+                    Usuarios
+                  </a>
+                  <a class="collapse-item" href="usuariosInactivos">
+                    Usuarios Inactivos
+                  </a>
+                </div>
+              </div>
+            </li>
+          </>
+        ) : null}
 
         <li class="nav-item">
           <a

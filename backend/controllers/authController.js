@@ -30,6 +30,7 @@ const createAndSendToken = (user, statusCode, res) => {
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
   user.contrasena = undefined;
+  user.confirmContrasena = undefined;
   res.cookie('jwt', token, cookieOptions);
 
   res.status(statusCode).json({
@@ -64,6 +65,14 @@ const login = catchAsync(async (req, res, next) => {
   if (!user) return next(new AppError('El usuario no existe', 401));
   if (!user || !(await userModel.checkPassword(contrasena, user.contrasena))) {
     return next(new AppError('Correo o contraseña incorrectos', 401));
+  }
+  if (user.activo === false) {
+    return next(
+      new AppError(
+        'Tu cuenta no se encuentra activa. Por favor revisa tu correo para activarla.',
+        401
+      )
+    );
   }
   user.contrasena = undefined;
   createAndSendToken(user, 200, res);
@@ -233,4 +242,5 @@ module.exports = {
   forgotPassword,
   resetPassword,
   updateMyPassword,
+  createAndSendToken,
 };

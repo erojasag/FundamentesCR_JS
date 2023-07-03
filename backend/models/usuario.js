@@ -40,7 +40,6 @@ const User = db.define(
       validate: {
         passwordsMatch(confirmContrasena) {
           if (this.contrasena !== confirmContrasena) {
-            console.log(confirmContrasena);
             throw new AppError('Las contraseñas no coinciden');
           }
         },
@@ -75,8 +74,12 @@ const User = db.define(
     },
     activo: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      defaultValue: false,
       select: false,
+    },
+    activationToken: {
+      type: DataTypes.UUIDV1,
+      allowNull: true,
     },
   },
   {
@@ -86,12 +89,6 @@ const User = db.define(
     },
   }
 );
-
-User.beforeCreate(async (user) => {
-  const hashPassword = await argon2.hash(user.contrasena);
-  user.contrasena = hashPassword;
-  user.confirmPassword = hashPassword;
-});
 
 User.beforeUpdate(async (user) => {
   const hashPassword = await argon2.hash(user.contrasena);
@@ -114,12 +111,11 @@ User.beforeUpdate(async (user) => {
 User.addHook('beforeFind', async (options) => {
   options.where = {
     ...(options.where || {}),
-    activo: true,
+    // activo: true,
   };
   options.attributes = {
     exclude: [
       'rolId',
-      'activo',
       'contrasenaChangedAt',
       'confirmContrasena',
       'createdAt',

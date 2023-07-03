@@ -22,7 +22,7 @@ const dinamicaFamiliar = db.define(
       allowNull: false,
     },
     acontecimientoRelev: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     createdAt: {

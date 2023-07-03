@@ -25,6 +25,4 @@ router
     desactivarPaciente
   );
 
-
-
 module.exports = router;
