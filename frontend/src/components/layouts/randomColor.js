@@ -4,8 +4,9 @@ const generateBackgroundColors = (length) => {
   return randomColor({
     count: length,
     luminosity: 'random',
+    hue: 'red, purple',
     format: 'rgba',
-    seed: 'randomColor',
+    alpha: 0.5,
   });
 };
 

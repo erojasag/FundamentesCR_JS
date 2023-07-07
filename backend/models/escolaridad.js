@@ -5,7 +5,7 @@ const escolaridad = db.define(
   'escolaridades',
   {
     escolaridadId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },

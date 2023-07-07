@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import SideMenu from '../layouts/sideMenu';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 import Loading from '../layouts/loading';
@@ -107,18 +108,22 @@ export default function ListaUsuarios() {
           headers,
         }
       );
+      console.log(response);
       if (response.status === 204) {
-        window.location.reload();
+        toast.success('Usuario desactivado con éxito');
         setLoading(false);
       }
     } catch (err) {
       if (err.response.data.err.message === 'jwt expired') {
+        toast.error('Su sesión ha expirado, porfavor inicie sesión nuevamente');
         navigate('/');
       }
       if (err.response.status === 403) {
         setIsForbidden(true);
         return;
       }
+    } finally {
+      fetchData();
     }
   };
 
@@ -173,15 +178,14 @@ export default function ListaUsuarios() {
         <td>{user.rol.nombreRol}</td>
         <td>
           <a
-            href={`editarUsuario/${user.usuarioId}`}
+            href={`usuarios/${user.usuarioId}`}
             className="btn btn-primary btn-sm"
-            value={user.usuarioId}
           >
             <i className="fas fa-pencil-alt"></i>
           </a>
           &nbsp; &nbsp;
           <a
-            href="EditarUsuarioLogUsuario"
+            href="desactivarPaciente"
             class="btn btn-danger btn-sm"
             data-toggle="modal"
             data-target="#exampleModal"
@@ -205,7 +209,7 @@ export default function ListaUsuarios() {
             ) : (
               <>
                 <div class="container-fluid">
-                  <div class="card shadow mb-4">
+                  <div class="card shadow mb-4 m-overflow">
                     <div class="card-header py-3 bg-second-primary">
                       <h6 class="m-0 font-weight-bold text-white">
                         Lista de Usuarios
@@ -421,6 +425,7 @@ export default function ListaUsuarios() {
           </div>
           <Footer />
         </div>
+        <ToastContainer />
       </div>
     </React.Fragment>
   );

@@ -3,11 +3,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../layouts/footer';
 import Cookies from 'js-cookie';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Activacion() {
   const { token } = useParams();
   const [data, setData] = useState({});
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
   const handleContrasenaChange = (event) => {
     setData({
@@ -21,6 +28,14 @@ export default function Activacion() {
       ...data,
       confirmContrasena: event.currentTarget.value,
     });
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleShowPassword2 = () => {
+    setShowPassword2(!showPassword2);
   };
 
   const handleSubmit = async (event) => {
@@ -50,8 +65,14 @@ export default function Activacion() {
         response.data.data.user.nombre + ' ' + response.data.data.user.primerApe
       );
       navigate('/Inicio');
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err.response.data.message);
+      if (
+        err.response.data.message ===
+        'Validation error: Las contraseñas no coinciden'
+      ) {
+        toast.error('Las contraseñas no coinciden');
+      }
     }
   };
 
@@ -73,25 +94,47 @@ export default function Activacion() {
                         <p className="mb-4">Ingresa tu nueva contraseña</p>
                       </div>
                       <form className="user">
-                        <div className="form-group">
-                          <input
-                            type="password"
-                            className="form-control form-control-user"
-                            name="password"
-                            placeholder="Contraseña"
-                            value={data.contrasena}
-                            onChange={handleContrasenaChange}
-                          />
+                        <div className="form-group position-relative">
+                          <div className="input-with-icon">
+                            <input
+                              type={showPassword ? 'text' : 'password'}
+                              className="form-control form-control-user"
+                              placeholder="Contraseña"
+                              value={data.contrasena}
+                              onChange={handleContrasenaChange}
+                            />
+                            <button
+                              type="button"
+                              className="btn btn-link password-toggle"
+                              onClick={toggleShowPassword}
+                            >
+                              <FontAwesomeIcon
+                                icon={showPassword ? faEyeSlash : faEye}
+                                className="password-icon"
+                              />
+                            </button>
+                          </div>
                         </div>
-                        <div className="form-group">
-                          <input
-                            type="password"
-                            className="form-control form-control-user"
-                            name="password"
-                            placeholder="Confirme su contraseña"
-                            value={data.confirmContrasena}
-                            onChange={handleConfirmContrasenaChange}
-                          />
+                        <div className="form-group position-relative">
+                          <div className="input-with-icon">
+                            <input
+                              type={showPassword2 ? 'text' : 'password'}
+                              className="form-control form-control-user"
+                              placeholder="Contraseña"
+                              value={data.confirmContrasena}
+                              onChange={handleConfirmContrasenaChange}
+                            />
+                            <button
+                              type="button"
+                              className="btn btn-link password-toggle"
+                              onClick={toggleShowPassword2}
+                            >
+                              <FontAwesomeIcon
+                                icon={showPassword2 ? faEyeSlash : faEye}
+                                className="password-icon"
+                              />
+                            </button>
+                          </div>
                         </div>
                         <button
                           type="submit"
@@ -109,6 +152,7 @@ export default function Activacion() {
           </div>
           <Footer />
         </div>
+        <ToastContainer />
       </div>
     </React.Fragment>
   );

@@ -12,6 +12,7 @@ import Encargado from '../layouts/encargado';
 import DinamicaFamiliar from '../layouts/dinamicaFamiliar';
 import Escolaridad from '../layouts/escolaridad';
 import Loading from '../layouts/loading';
+import { Link } from 'react-router-dom';
 // import PerfilEntrada from '../layouts/perfilEntrada';
 
 export default function Pacientes() {
@@ -340,7 +341,7 @@ export default function Pacientes() {
         <td>{paciente.nacionalidad}</td>
         <td>
           <a
-            href={`pacientes/${paciente.pacienteId}`}
+            href={`/${paciente.pacienteId}`}
             className="btn btn-primary btn-sm"
           >
             <i className="fas fa-pencil-alt"></i>
@@ -369,7 +370,7 @@ export default function Pacientes() {
           <div id="content">
             <Navbar />
             <div className="container-fluid">
-              <div className="card shadow mb-4">
+              <div className="card shadow mb-4 m-overflow">
                 <div className="card-header py-3 bg-second-primary">
                   <h6 className="m-0 font-weight-bold text-white">
                     Lista de Pacientes
@@ -486,7 +487,7 @@ export default function Pacientes() {
                         aria-label="Close"
                         onClick={clearData}
                       >
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">x</span>
                       </button>
                     </div>
                     <div class="modal-body">
@@ -503,7 +504,7 @@ export default function Pacientes() {
                                   class="form-control form-control-sm input-validar"
                                   id="txtNombreCompleto"
                                   name="nombreCompleto"
-                                  value={pacientesData.nombreCompleto}
+                                  value={newPacienteData.nombreCompleto}
                                   onChange={handleNameChange}
                                 />
                               </div>
@@ -516,7 +517,7 @@ export default function Pacientes() {
                                   class="form-control form-control-sm input-validar"
                                   id="fechaNacimiento"
                                   name="fechaNacimiento"
-                                  value={pacientesData.fechaNacimiento}
+                                  value={newPacienteData.fechaNacimiento}
                                   onChange={handleFechaNacimientoChange}
                                 />
                               </div>
@@ -529,7 +530,7 @@ export default function Pacientes() {
                                   class="form-control form-control-sm input-validar"
                                   id="contacto"
                                   name="contacto"
-                                  value={pacientesData.contacto}
+                                  value={newPacienteData.contacto}
                                   onChange={handleContactoChange}
                                 />
                               </div>
@@ -540,7 +541,7 @@ export default function Pacientes() {
                                   class="form-control form-control-sm input-validar"
                                   id="cedula"
                                   name="cedula"
-                                  value={pacientesData.cedula}
+                                  value={newPacienteData.cedula}
                                   onChange={handleCedulaChange}
                                 />
                               </div>
@@ -565,7 +566,7 @@ export default function Pacientes() {
                                   class="form-control form-control-sm input-validar"
                                   id="nacionalidad"
                                   name="nacionalidad"
-                                  value={pacientesData.nacionalidad}
+                                  value={newPacienteData.nacionalidad}
                                   onChange={handleNacionalidadChange}
                                 />
                               </div>
@@ -576,7 +577,7 @@ export default function Pacientes() {
                                   class="form-control form-control-sm input-validar"
                                   id="distritoResidencia"
                                   name="distritoResidencia"
-                                  value={pacientesData.distritoResidencia}
+                                  value={newPacienteData.distritoResidencia}
                                   onChange={handleDistritoResidenciaChange}
                                 />
                               </div>
@@ -588,7 +589,7 @@ export default function Pacientes() {
                                  input-validar"
                                   id="direccion"
                                   name="direccion"
-                                  value={pacientesData.direccion}
+                                  value={newPacienteData.direccion}
                                   onChange={handleDireccionChange}
                                 />
                               </div>
@@ -598,7 +599,7 @@ export default function Pacientes() {
                                   class="custom-select"
                                   id="genero"
                                   name="genero"
-                                  value={pacientesData.genero}
+                                  value={newPacienteData.genero}
                                   onChange={handleGeneroChange}
                                 >
                                   <option value="Prefiere no comentar">
@@ -616,7 +617,7 @@ export default function Pacientes() {
                         <br />
                         <Casa
                           onCasaChange={handleCasaChange}
-                          selectedCasa={pacientesData.casa}
+                          selectedCasa={newPacienteData.casa}
                         />
                         <hr />
                         <br />

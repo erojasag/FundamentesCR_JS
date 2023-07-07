@@ -5,7 +5,7 @@ const sociodemografico = db.define(
   'sociodemograficos',
   {
     sociodemograficosId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import Cookies from 'js-cookie';
 
 export default function SideMenu() {
@@ -19,7 +20,7 @@ export default function SideMenu() {
       >
         <a
           class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="/Inicio"
+          href="/inicio"
         >
           <div class="sidebar-brand-icon">
             <img
@@ -33,7 +34,7 @@ export default function SideMenu() {
 
         <hr class="sidebar-divider my-0" />
         <li class="nav-item">
-          <a class="nav-link" href="Inicio">
+          <a class="nav-link" href="inicio">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>
@@ -48,7 +49,7 @@ export default function SideMenu() {
                 aria-expanded="true"
                 aria-controls="collapseAdministracion"
               >
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-fw fa-user"></i>
                 <span>Usuarios</span>
               </div>
               <div
@@ -58,7 +59,7 @@ export default function SideMenu() {
                 data-parent="#accordionSidebar"
               >
                 <div class="bg-white py-2 collapse-inner rounded">
-                  <a class="collapse-item" href="ListaUsuarios">
+                  <a class="collapse-item" href="usuarios">
                     Usuarios
                   </a>
                   <a class="collapse-item" href="usuariosInactivos">
@@ -75,15 +76,15 @@ export default function SideMenu() {
             class="nav-link collapsed"
             href="/"
             data-toggle="collapse"
-            data-target="#collapseExpediente"
+            data-target="#collapsePacientes"
             aria-expanded="true"
-            aria-controls="collapseExpediente"
+            aria-controls="collapsePacientes"
           >
-            <i class="fas fa-fw fa-clipboard-list"></i>
+            <i class="fas fa-fw fa-hospital-user"></i>
             <span>Pacientes</span>
           </a>
           <div
-            id="collapseExpediente"
+            id="collapsePacientes"
             class="collapse"
             aria-labelledby="headingTwo"
             data-parent="#accordionSidebar"
@@ -91,101 +92,6 @@ export default function SideMenu() {
             <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item" href="/pacientes">
                 Ver Pacientes
-              </a>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="/"
-            data-toggle="collapse"
-            data-target="#collapseInventario"
-            aria-expanded="true"
-            aria-controls="collapseInventario"
-          >
-            <i class="fas fa-fw fa-clipboard-list"></i>
-            <span>Expedientes</span>
-          </a>
-          <div
-            id="collapseInventario"
-            class="collapse"
-            aria-labelledby="headingInventario"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="Expedientes">
-                Ver Expedientes
-              </a>
-              <a class="collapse-item" href="Encargados">
-                Encargados
-              </a>
-              <a class="collapse-item" href="Convivencia">
-                Convivencia
-              </a>
-              <a class="collapse-item" href="DatosSocioEconomicos">
-                Datos SocioEconomicos
-              </a>
-              <a class="collapse-item" href="FactorPsicosocial">
-                Factor Psicosocial
-              </a>
-              <a class="collapse-item" href="CalificacionRiesgo">
-                Calificación Riesgo
-              </a>
-              <a class="collapse-item" href="EstadoExpediente">
-                Estado del Expediente
-              </a>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="/"
-            data-toggle="collapse"
-            data-target="#collapseEntrada"
-            aria-expanded="true"
-            aria-controls="collapseEntrada"
-          >
-            <i class="fas fa-fw fa-clipboard-list"></i>
-            <span>Perfil de Entrada</span>
-          </a>
-          <div
-            id="collapseEntrada"
-            class="collapse"
-            aria-labelledby="headingEntrada"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="/PerfilEntrada">
-                Perfil de Entrada
-              </a>
-            </div>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="/"
-            data-toggle="collapse"
-            data-target="#collapseSalida"
-            aria-expanded="true"
-            aria-controls="collapseSalida"
-          >
-            <i class="fas fa-fw fa-clipboard-list"></i>
-            <span>Perfil de Salida</span>
-          </a>
-          <div
-            id="collapseSalida"
-            class="collapse"
-            aria-labelledby="headingSalida"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="/PerfilSalida">
-                Perfil de Salida
               </a>
             </div>
           </div>
@@ -199,8 +105,8 @@ export default function SideMenu() {
             aria-expanded="true"
             aria-controls="collapseEncuesta"
           >
-            <i class="fas fa-fw fa-clipboard-list"></i>
-            <span>Grado de Satisfacción</span>
+            <i class="fas fa-fw fa-square-poll-vertical"></i>
+            <span>Encuestas</span>
           </a>
           <div
             id="collapseEncuesta"
@@ -209,65 +115,40 @@ export default function SideMenu() {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="/Encuestas">
-                Encuesta de Satisfacción
-              </a>
-              <a class="collapse-item" href="/EncuestaSatisfaccion">
-                Agregar Encuesta
+              <a class="collapse-item" href="/encuestas">
+                Ver Encuestas
               </a>
             </div>
           </div>
         </li>
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="/"
-            data-toggle="collapse"
-            data-target="#collapseReportes"
-            aria-expanded="true"
-            aria-controls="collapseReportes"
-          >
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Consulta de Estado</span>
-          </a>
-          <div
-            id="collapseReportes"
-            class="collapse"
-            aria-labelledby="headingInventario"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="ReporteExpediente">
-                Datos Expedientes
-              </a>
-            </div>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="/"
-            data-toggle="collapse"
-            data-target="#collapseAcciones"
-            aria-expanded="true"
-            aria-controls="collapseAcciones"
-          >
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Consulta de Bitácora</span>
-          </a>
-          <div
-            id="collapseAcciones"
-            class="collapse"
-            aria-labelledby="headingAcciones"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="Acciones">
-                Reporte de Acciones
-              </a>
-            </div>
-          </div>
-        </li>
+        {rol === 'Administrador' ? (
+          <>
+            <li class="nav-item">
+              <div
+                class="nav-link collapsed"
+                data-toggle="collapse"
+                data-target="#collapseCasas"
+                aria-expanded="true"
+                aria-controls="collapseCasas"
+              >
+                <i class="fas fa-fw fa-house"></i>
+                <span>Casas</span>
+              </div>
+              <div
+                id="collapseCasas"
+                class="collapse"
+                aria-labelledby="headingTwo"
+                data-parent="#accordionSidebar"
+              >
+                <div class="bg-white py-2 collapse-inner rounded">
+                  <a class="collapse-item" href="/casas">
+                    Ver Casas
+                  </a>
+                </div>
+              </div>
+            </li>
+          </>
+        ) : null}
         <hr class="sidebar-divider" />
         <div class="text-center d-none d-md-inline">
           <button

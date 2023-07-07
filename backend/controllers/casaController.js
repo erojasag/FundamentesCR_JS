@@ -12,7 +12,7 @@ const agregarCasa = insertOne(casasModel);
 const updateCasa = updateOne(casasModel);
 
 const getStatsCasa = catchAsync(async (req, res, next) => {
-  const pacientesPorCasa = await db.query('Exec GetStatsCasas');
+  const pacientesPorCasa = await db.query('CALL GetStatsCasas()');
 
   res.status(200).json({
     status: 'success',

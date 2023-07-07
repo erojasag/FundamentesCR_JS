@@ -9,7 +9,7 @@ const User = db.define(
   'usuarios',
   {
     usuarioId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
@@ -78,7 +78,8 @@ const User = db.define(
       select: false,
     },
     activationToken: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
       allowNull: true,
     },
   },

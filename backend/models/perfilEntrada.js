@@ -10,7 +10,7 @@ const perfilEntrada = db.define(
   'perfilesEntrada',
   {
     perfilEntradaId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },

@@ -36,7 +36,7 @@ export default function Casa({ onCasaChange, selectedCasa }) {
             value={selectedCasa}
             onChange={onCasaChange}
           >
-            {selectedCasa === null && (
+            {!selectedCasa && (
               <option value="null">-No especifica-</option>
             )}
             {casaData.map((casa) => (

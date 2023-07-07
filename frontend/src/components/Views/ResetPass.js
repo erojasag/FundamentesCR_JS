@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Footer from '../layouts/footer';
-import ErrorPopUp from '../layouts/errorPopUp';
+import { ToastContainer, toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import Cookies from 'js-cookie';
 
 export default function ResetPass() {
   const { token } = useParams();
   const [contrasena, setPassword] = useState('');
   const [confirmContrasena, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const navigate = useNavigate();
+
   const handlePasswordChange = (event) => {
     setPassword(event.currentTarget.value);
   };
@@ -16,7 +23,14 @@ export default function ResetPass() {
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.currentTarget.value);
   };
-  const navigate = useNavigate();
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleShowPassword2 = () => {
+    setShowPassword2(!showPassword2);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,15 +41,41 @@ export default function ResetPass() {
       };
       const route = `http://localhost:3000/usuarios/reiniciarContrasena/${token}`;
       const response = await axios.patch(route, data);
-      console.log(response);
+
+      if (response.status !== 200) {
+        const message = `An error has occured: ${response.statusText}`;
+        return;
+      }
 
       setPassword('');
       setConfirmPassword('');
-      navigate('/');
+      if (response.status === 200) {
+        Cookies.set('jwt', response.data.token, { expires: 1 });
+        Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
+        Cookies.set('rol', response.data.data.user.rol.nombreRol, {
+          expires: 1,
+        });
+
+        Cookies.set(
+          'nombre',
+          response.data.data.user.nombre +
+            ' ' +
+            response.data.data.user.primerApe
+        );
+
+        setConfirmPassword('');
+        setPassword('');
+        navigate('/Inicio');
+      }
+
+      navigate('/inicio');
     } catch (err) {
-      let errMessage = err.response.data.message;
-      if (errMessage === 'Las contraseñas no coinciden') {
-        setErrorMessage(errMessage);
+      console.log(err.response.data.message);
+      if (err.response.data.message) {
+        toast.error(
+          'Las contrasenas no son iguales. Por favor intente de nuevo.'
+        );
+        return;
       }
     }
   };
@@ -61,23 +101,46 @@ export default function ResetPass() {
                       </div>
                       <form className="user" onSubmit={handleSubmit}>
                         <div className="form-group">
-                          <input
-                            type="password"
-                            className="form-control form-control-user"
-                            name="Contraseña"
-                            placeholder="Ingrese su contraseña"
-                            value={contrasena}
-                            onChange={handlePasswordChange}
-                          />
+                          <div className="input-with-icon">
+                            <input
+                              type={showPassword ? 'text' : 'password'}
+                              className="form-control form-control-user"
+                              placeholder="Contraseña"
+                              value={contrasena}
+                              onChange={handlePasswordChange}
+                            />
+                            <button
+                              type="button"
+                              className="btn btn-link password-toggle"
+                              onClick={toggleShowPassword}
+                            >
+                              <FontAwesomeIcon
+                                icon={showPassword ? faEyeSlash : faEye}
+                                className="password-icon"
+                              />
+                            </button>
+                          </div>
                           <br />
-                          <input
-                            type="password"
-                            className="form-control form-control-user"
-                            name="ConfirmaContraseña"
-                            placeholder="Confirme su contraseña"
-                            value={confirmContrasena}
-                            onChange={handleConfirmPasswordChange}
-                          />
+                          <div className="input-with-icon">
+                            <input
+                              type={showPassword2 ? 'text' : 'password'}
+                              className="form-control form-control-user"
+                              placeholder="
+                              Confirma tu Contraseña"
+                              value={confirmContrasena}
+                              onChange={handleConfirmPasswordChange}
+                            />
+                            <button
+                              type="button"
+                              className="btn btn-link password-toggle"
+                              onClick={toggleShowPassword2}
+                            >
+                              <FontAwesomeIcon
+                                icon={showPassword2 ? faEyeSlash : faEye}
+                                className="password-icon"
+                              />
+                            </button>
+                          </div>
                         </div>
                         <button
                           type="submit"
@@ -86,12 +149,12 @@ export default function ResetPass() {
                           Ingresar
                         </button>
                       </form>
-                      {errorMessage && <ErrorPopUp message={errorMessage} />}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <ToastContainer />
           </div>
           <Footer />
         </div>

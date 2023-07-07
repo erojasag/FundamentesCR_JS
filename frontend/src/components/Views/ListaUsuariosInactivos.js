@@ -158,7 +158,7 @@ export default function ListaUsuariosInactivos() {
           <div id="content">
             <Navbar />
             <div class="container-fluid">
-              <div class="card shadow mb-4">
+              <div class="card shadow mb-4 m-overflow">
                 <div class="card-header py-3 bg-second-primary">
                   <h6 class="m-0 font-weight-bold text-white">
                     Usuarios Inactivos
@@ -237,7 +237,6 @@ export default function ListaUsuariosInactivos() {
                   </div>
                 </div>
               </div>
-              {loading && <Loading />}
             </div>
           </div>
           <Footer />

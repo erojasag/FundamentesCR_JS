@@ -16,6 +16,7 @@ import PerfilEntrada from '../layouts/perfilEntrada';
 
 export default function EditarPaciente() {
   const { id } = useParams();
+
   const navigate = useNavigate();
   const [pacienteData, setPacienteData] = useState({});
   //datos medicos
@@ -124,6 +125,7 @@ export default function EditarPaciente() {
       headers,
     });
     const data = response.data.data.data;
+    console.log(data);
     setPacienteData(data);
     setDatosMedicos(data.datosMedicos);
     setCondicionLaboral(data.condicionLaboral);
@@ -159,6 +161,27 @@ export default function EditarPaciente() {
     fetchPaciente();
   }, []);
 
+  useEffect(() => {
+    const calculateAge = () => {
+      const birthDate = new Date(pacienteData.fechaNacimiento);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        age--;
+      }
+      setPacienteData({
+        ...pacienteData,
+        edad: age,
+      });
+    };
+
+    calculateAge();
+  }, [pacienteData.fechaNacimiento]);
+
   const handleGuardarCambios = async (event) => {
     event.preventDefault();
     const headers = {
@@ -166,7 +189,17 @@ export default function EditarPaciente() {
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
     if (updatedDatosMedicos !== null) {
-      console.log(updatedDatosMedicos);
+      if (pacienteData.datosMedicosId === null) {
+        const response = await axios.post(
+          `http://localhost:3000/datosMedicos/`,
+          updatedDatosMedicos,
+          {
+            headers,
+          }
+        );
+        pacienteData.datosMedicosId = response.data.data.data.datosMedicosId;
+      }
+
       await axios.patch(
         `http://localhost:3000/datosMedicos/${pacienteData.datosMedicosId}`,
         updatedDatosMedicos,
@@ -176,6 +209,18 @@ export default function EditarPaciente() {
       );
     }
     if (updatedCondicionLaboral !== null) {
+      if (pacienteData.condicionLaboralId === null) {
+        const response = await axios.post(
+          `http://localhost:3000/condicionesLaborales/`,
+          updatedCondicionLaboral,
+          {
+            headers,
+          }
+        );
+        pacienteData.condicionLaboralId =
+          response.data.data.data.condicionLaboralId;
+      }
+
       await axios.patch(
         `http://localhost:3000/condicionesLaborales/${pacienteData.condicionLaboralId}`,
         updatedCondicionLaboral,
@@ -185,6 +230,18 @@ export default function EditarPaciente() {
       );
     }
     if (updatedSociodemograficos !== null) {
+      if (pacienteData.sociodemograficosId === null) {
+        const response = await axios.post(
+          `http://localhost:3000/sociodemograficos/`,
+          updatedSociodemograficos,
+          {
+            headers,
+          }
+        );
+        pacienteData.sociodemograficosId =
+          response.data.data.data.sociodemograficosId;
+      }
+
       await axios.patch(
         `http://localhost:3000/sociodemograficos/${pacienteData.sociodemograficosId}`,
         updatedSociodemograficos,
@@ -194,6 +251,17 @@ export default function EditarPaciente() {
       );
     }
     if (updatedEncargado !== null) {
+      if (pacienteData.encargadoId === null) {
+        const response = await axios.post(
+          `http://localhost:3000/encargados/`,
+          updatedEncargado,
+          {
+            headers,
+          }
+        );
+        pacienteData.encargadoId = response.data.data.data.encargadoId;
+      }
+
       await axios.patch(
         `http://localhost:3000/encargados/${pacienteData.encargadoId}`,
         updatedEncargado,
@@ -203,6 +271,18 @@ export default function EditarPaciente() {
       );
     }
     if (updatedDinamicaFamiliar !== null) {
+      if (pacienteData.dinamicaFamiliarId === null) {
+        const response = await axios.post(
+          `http://localhost:3000/dinamicasFamiliares/`,
+          updatedDinamicaFamiliar,
+          {
+            headers,
+          }
+        );
+        pacienteData.dinamicaFamiliarId =
+          response.data.data.data.dinamicaFamiliarId;
+      }
+
       await axios.patch(
         `http://localhost:3000/dinamicasFamiliares/${pacienteData.dinamicaFamiliarId}`,
         updatedDinamicaFamiliar,
@@ -212,6 +292,16 @@ export default function EditarPaciente() {
       );
     }
     if (updatedEscolaridad !== null) {
+      if (pacienteData.escolaridadId === null) {
+        const response = await axios.post(
+          `http://localhost:3000/escolaridades/`,
+          updatedEscolaridad,
+          {
+            headers,
+          }
+        );
+        pacienteData.escolaridadId = response.data.data.data.escolaridadId;
+      }
       await axios.patch(
         `http://localhost:3000/escolaridades/${pacienteData.escolaridadId}`,
         updatedEscolaridad,
@@ -260,9 +350,7 @@ export default function EditarPaciente() {
           <div class="container-fluid">
             <div class="card shadow mb-4">
               <div class="card-header py-3 bg-second-primary">
-                <h6 class="m-0 font-weight-bold text-white">
-                  Editar Expediente
-                </h6>
+                <h6 class="m-0 font-weight-bold text-white">Editar Paciente</h6>
               </div>
               <div class="card-body">
                 <div class="row">
@@ -324,6 +412,7 @@ export default function EditarPaciente() {
                             name="edad"
                             value={pacienteData.edad}
                             onChange={handleEdadChange}
+                            disabled
                           />
                         </div>
                         <div class="form-group col-sm-6">
@@ -337,23 +426,10 @@ export default function EditarPaciente() {
                             onChange={handleNacionalidadChange}
                           />
                         </div>
-                        <div class="form-group col-sm-6">
-                          <label for="txtGenero">Genero</label>
-                          <select
-                            class="custom-select"
-                            id="genero"
-                            name="genero"
-                            value={pacienteData.genero}
-                            onChange={handleGeneroChange}
-                          >
-                            <option value="Masculino">Masculino</option>
-                            <option value="Femenino">Femenino</option>
-                            <option value="No-Binario">No-Binario</option>
-                          </select>
-                        </div>
+
                         <div class="form-group col-sm-6">
                           <label for="txtDireccion">Direccion</label>
-                          <input
+                          <textarea
                             type="text"
                             class="form-control form-control-sm input-validar"
                             id="direccion"
@@ -372,6 +448,21 @@ export default function EditarPaciente() {
                             value={pacienteData.distritoResidencia}
                             onChange={handleDistritoResidenciaChange}
                           />
+                        </div>
+                        <div class="form-group col-sm-6">
+                          <label for="txtGenero">Genero</label>
+                          <select
+                            class="custom-select"
+                            id="genero"
+                            name="genero"
+                            value={pacienteData.genero}
+                            onChange={handleGeneroChange}
+                          >
+                            <option selected>Seleccione una opción</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="No-Binario">No-Binario</option>
+                          </select>
                         </div>
                       </div>
                       <hr />
@@ -419,7 +510,12 @@ export default function EditarPaciente() {
                       />
                       <br />
                       <hr />
-                      {pacienteData.perfilEntradaId !== null && (
+                      {pacienteData.perfilEntradaId === null ? (
+                        <PerfilEntrada
+                          perfilEntrada={perfilEntrada}
+                          setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
+                        />
+                      ) : (
                         <PerfilEntrada
                           perfilEntrada={perfilEntrada}
                           setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}

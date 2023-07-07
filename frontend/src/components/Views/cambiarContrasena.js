@@ -70,6 +70,7 @@ export default function CambiarContrasena() {
         data,
         { headers }
       );
+      console.log(response);
       if (response.status === 200) {
         setCurrentContrasena('');
         setContrasena('');
@@ -84,11 +85,9 @@ export default function CambiarContrasena() {
           draggable: true,
           progress: undefined,
         });
+        Cookies.set('jwt', response.data.token, { expires: 1 });
       }
-
-      navigate('/Login');
     } catch (err) {
-      console.log(err.response.status);
       if (err.response.status === 401) {
         toast.error('La contraseña actual es incorrecta', {
           position: 'top-right',
@@ -99,9 +98,6 @@ export default function CambiarContrasena() {
           draggable: true,
           progress: undefined,
         });
-        setCurrentContrasena('');
-        setContrasena('');
-        setConfirmContrasena('');
       }
       if (err.response.status === 403) {
         toast.success(

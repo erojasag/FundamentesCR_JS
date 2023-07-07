@@ -6,6 +6,7 @@ import Footer from '../layouts/footer';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import Loading from '../layouts/loading';
+import { ToastContainer, toast } from 'react-toastify';
 import Error403 from './Error403';
 export default function EditarUsuarioLog() {
   const { id } = useParams();
@@ -92,11 +93,23 @@ export default function EditarUsuarioLog() {
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
 
-    await axios.patch(`http://localhost:3000/usuarios/${id}`, userData, {
-      headers,
-    });
-    navigate('/ListaUsuarios');
-    window.location.reload();
+    const response = await axios.patch(
+      `http://localhost:3000/usuarios/${id}`,
+      userData,
+      {
+        headers,
+      }
+    );
+    
+
+    if (response.status === 204) {
+      toast.success('Usuario editado correctamente');
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        navigate('/usuarios');
+      }, 2000);
+    }
   };
   return (
     <React.Fragment>
@@ -105,7 +118,7 @@ export default function EditarUsuarioLog() {
         <div id="content-wrapper" class="d-flex flex-column">
           <div id="content">
             <Navbar />
-            {!Cookies.get('rol') === 'Administrador' ? (
+            {Cookies.get('rol') === 'Administrador' ? (
               <>
                 <div class="container-fluid">
                   <div class="card shadow mb-4">
@@ -195,7 +208,7 @@ export default function EditarUsuarioLog() {
                               class="btn btn-danger btn-sm"
                               type="button"
                               id="btnVolver"
-                              href="/ListaUsuarios"
+                              href="/usuarios"
                             >
                               Cancelar
                             </a>
@@ -211,6 +224,7 @@ export default function EditarUsuarioLog() {
               <Error403 />
             )}
           </div>
+          <ToastContainer />
           <Footer />
         </div>
       </div>

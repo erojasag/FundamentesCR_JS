@@ -26,6 +26,27 @@ export default function Encargado(props) {
     }
   }, [props.encargado]);
 
+  useEffect(() => {
+    const calculateAge = () => {
+      const birthDate = new Date(encargado.fechaNacimiento);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        age--;
+      }
+      setEncargado({
+        ...encargado,
+        edad: age,
+      });
+    };
+
+    calculateAge();
+  }, [encargado.fechaNacimiento]);
+
   const handleParentezcoChange = (event) => {
     const updatedEncargado = {
       ...encargado,
@@ -182,6 +203,7 @@ export default function Encargado(props) {
             name="edadEncargado"
             value={encargado.edad}
             onChange={handleEdadEncargadoChange}
+            disabled
           />
         </div>
         <div class="form-group col-sm-6">

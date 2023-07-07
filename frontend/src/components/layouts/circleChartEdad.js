@@ -10,23 +10,26 @@ const CircleChart = () => {
   const [chartLabels, setChartLabels] = useState([]);
 
   const fetchData = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
-    const response = await axios.get(
-      `http://localhost:3000/stats/pacientesPorEdad`,
-      { headers }
-    );
-    const edades = response.data.data.data;
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+      const response = await axios.get(
+        `http://localhost:3000/stats/pacientesPorEdad`,
+        { headers }
+      );
+      const edades = response.data.data.data;
+      console.log(edades);
 
-    const chartData = edades[0].map((item) => item.count); // Extract the 'count' values
-    const chartLabels = edades[0].map((item) => `Edad: ${item.edad}`); // Create labels using 'edad'
+      const chartData = edades.map((item) => `${item.count}`); // Extract the 'count' values
+      const chartLabels = edades.map((item) => `Edad: ${item.edad}`); // Create labels using 'edad'
 
-    console.log(chartLabels, chartData);
-
-    setChartLabels(chartLabels);
-    setChartData(chartData);
+      setChartLabels(chartLabels);
+      setChartData(chartData);
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     fetchData();
@@ -40,31 +43,48 @@ const CircleChart = () => {
         borderWidth: 2,
       },
     },
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: {
+          boxWidth: 10,
+          padding: 15,
+        },
+      },
+    },
   };
-
   const data = {
     labels: chartLabels,
     datasets: [
       {
         data: chartData,
         backgroundColor: generateBackgroundColors(chartData.length),
-        hoverOffset: 4,
+        hoverOffset: 25,
       },
     ],
   };
 
   return (
-    <div
-      style={{
-        width: '300px',
-        height: '300px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Doughnut data={data} options={options} />
-    </div>
+    <React.Fragment>
+      <div
+        className="container-fluid"
+        style={{ width: '100%', height: '100%', position: 'relative' }}
+      >
+        <div style={{ paddingBottom: '100%', position: 'relative' }}>
+          <div
+            style={{
+              position: 'absolute',
+              top: '0',
+              bottom: '0',
+              left: '0',
+              right: '0',
+            }}
+          >
+            <Doughnut data={data} options={options} />
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 

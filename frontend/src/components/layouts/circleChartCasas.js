@@ -19,8 +19,8 @@ const CircleChartCasas = () => {
     });
     const casas = response.data.data.data;
 
-    const chartData = casas[0].map((item) => item.patientCount); // Extract the 'count' values
-    const chartLabels = casas[0].map((item) => `${item.nombreCasa}`); // Create labels using 'edad'
+    const chartData = casas.map((item) => item.patientCount); // Extract the 'count' values
+    const chartLabels = casas.map((item) => `${item.nombreCasa}`); // Create labels using 'edad'
 
     setChartLabels(chartLabels);
     setChartData(chartData);
@@ -37,6 +37,15 @@ const CircleChartCasas = () => {
         borderWidth: 2,
       },
     },
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: {
+          boxWidth: 10,
+          padding: 15,
+        },
+      },
+    },
   };
 
   const data = {
@@ -45,23 +54,32 @@ const CircleChartCasas = () => {
       {
         data: chartData,
         backgroundColor: generateBackgroundColors(chartData.length),
-        hoverOffset: 4,
+        hoverOffset: 25,
       },
     ],
   };
 
   return (
-    <div
-      style={{
-        width: '300px',
-        height: '300px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Doughnut data={data} options={options} />
-    </div>
+    <React.Fragment>
+      <div
+        className="container-fluid"
+        style={{ width: '100%', height: '100%', position: 'relative' }}
+      >
+        <div style={{ paddingBottom: '100%', position: 'relative' }}>
+          <div
+            style={{
+              position: 'absolute',
+              top: '0',
+              bottom: '0',
+              left: '0',
+              right: '0',
+            }}
+          >
+            <Doughnut data={data} options={options} />
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 

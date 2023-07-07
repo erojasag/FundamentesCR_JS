@@ -4,6 +4,7 @@ import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 import CircleChart from '../layouts/circleChartEdad';
 import CircleChartCasas from '../layouts/circleChartCasas';
+import Stats from '../layouts/stats';
 
 export default function Index() {
   return (
@@ -11,141 +12,77 @@ export default function Index() {
       <div id="page-top">
         <div id="wrapper">
           <SideMenu />
-          <div id="content-wrapper" class="d-flex flex-column">
+          <div id="content-wrapper" className="d-flex flex-column">
             <div id="content">
               <Navbar />
-              <div class="container-fluid">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                  <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                </div>
-                <div class="row">
-                  <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                      <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                          <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                              Total de Casos
-                            </div>
-                            <div
-                              class="h5 mb-0 font-weight-bold text-gray-800"
-                              id="totalVenta"
-                            >
-                              300
-                            </div>
-                          </div>
-                          <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-success shadow h-100 py-2">
-                      <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                          <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                              Total de Ingresados
-                            </div>
-                            <div
-                              class="h5 mb-0 font-weight-bold text-gray-800"
-                              id="totalIngresos"
-                            >
-                              40
-                            </div>
-                          </div>
-                          <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-info shadow h-100 py-2">
-                      <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                          <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                              Total de Procesos
-                            </div>
-                            <div
-                              class="h5 mb-0 font-weight-bold text-gray-800"
-                              id="totalProductos"
-                            >
-                              50
-                            </div>
-                          </div>
-                          <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-warning shadow h-100 py-2">
-                      <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                          <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                              Total de Salidas
-                            </div>
-                            <div
-                              class="h5 mb-0 font-weight-bold text-gray-800"
-                              id="totalCategorias"
-                            >
-                              180
-                            </div>
-                          </div>
-                          <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row ">
-                  <div class="col-xl-4 col-lg-6 d-flex align-items-center justify-content-center">
-                    <div class="card shadow mb-4" style={{ height: '500px' }}>
-                      <div class="card-header py-3 bg-second-primary">
-                        <h6 class="m-0 font-weight-bold text-white">
-                          Rangos de edad atendidos
-                        </h6>
-                      </div>
+              <Stats />
 
-                      <div class="card-body ">
-                        <div
-                          class="chart-area"
-                          style={{ height: '350px !important' }}
-                        >
-                          <CircleChart />
-                        </div>
-                      </div>
+              <div className="container-fluid row row-cols-1 row-cols-md-2 row-cols-lg-4">
+                <div className="col ">
+                  <div className="card shadow mb-4 h-100">
+                    <div className="card-header py-3 bg-second-primary">
+                      <h6 className="m-0 font-weight-bold text-white">
+                        Rangos de edad atendidos
+                      </h6>
                     </div>
-                  </div>
-                  <div class="col-xl-4 col-lg-6 d-flex align-items-center justify-content-center">
-                    <div class="card shadow mb-4" style={{ height: '500px' }}>
-                      <div class="card-header py-3 bg-second-primary">
-                        <h6 class="m-0 font-weight-bold text-white">
-                          Casa hogar
-                        </h6>
-                      </div>
-
-                      <div class="card-body">
-                        <div
-                          class="chart-pie"
-                          style={{ height: '350px !important', width: '100%' }}
-                        >
-                          <CircleChartCasas />
-                        </div>
+                    <div className="card-body align-items-center justify-content-center">
+                      <div className="chart-area" style={{ height: '350px' }}>
+                        <CircleChart />
                       </div>
                     </div>
                   </div>
                 </div>
+                <div className="col">
+                  <div className="card shadow mb-4 h-100">
+                    <div className="card-header py-3 bg-second-primary">
+                      <h6 className="m-0 font-weight-bold text-white">
+                        Casas Escucharte Total de pacientes por casa
+                      </h6>
+                    </div>
+                    <div className="card-body align-items-center justify-content-center">
+                      <div
+                        className="chart-area"
+                        style={{ height: '350px', width: '100%' }}
+                      >
+                        <CircleChartCasas />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* <div className="col">
+                  <div className="card shadow mb-4 h-100">
+                    <div className="card-header py-3 bg-second-primary">
+                      <h6 className="m-0 font-weight-bold text-white">
+                        Total de procesos
+                      </h6>
+                    </div>
+                    <div className="card-body align-items-center justify-content-center">
+                      <div
+                        className="chart-area"
+                        style={{ height: '350px', width: '100%' }}
+                      >
+                        <CircleChartCasas />
+                      </div>
+                    </div>
+                  </div>
+                </div> */}
+                {/* <div className="col">
+                  <div className="card shadow mb-4 h-100">
+                    <div className="card-header py-3 bg-second-primary">
+                      <h6 className="m-0 font-weight-bold text-white">
+                        Total de salidas
+                      </h6>
+                    </div>
+                    <div className="card-body align-items-center justify-content-center">
+                      <div
+                        className="chart-area"
+                        style={{ height: '350px', width: '100%' }}
+                      >
+                        <CircleChartCasas />
+                      </div>
+                    </div>
+                  </div>
+                </div> */}
               </div>
             </div>
             <Footer />

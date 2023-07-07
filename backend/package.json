@@ -20,6 +20,7 @@
       "jsonwebtoken": "^9.0.0",
       "morgan": "~1.9.1",
       "mssql": "^9.1.1",
+      "mysql2": "^3.4.4",
       "nodemailer": "^6.9.2",
       "sequelize": "^6.31.1",
       "tedious": "^16.1.0",

@@ -33,7 +33,7 @@ const desactivarPaciente = catchAsync(async (req, res, next) => {
 });
 
 const getPacientesPorEdad = catchAsync(async (req, res, next) => {
-  const ageRanges = await db.query('Exec GetAgeRangesWithCounts');
+  const ageRanges = await db.query('CALL GetAgeRangesWithCounts()');
   res.status(200).json({
     status: 'success',
     data: {

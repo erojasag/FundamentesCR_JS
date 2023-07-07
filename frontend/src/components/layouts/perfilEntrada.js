@@ -26,6 +26,15 @@ export default function PerfilEntrada(props) {
   useEffect(() => {
     if (props.perfilEntrada.perfilEntradaId) {
       getDatosPerfilEntrada(perfilEntrada.perfilEntradaId);
+    } else {
+      setPerfilEntrada({
+        doctorId: '',
+        aspectoComunitarioId: '',
+        aspectoClinicoId: '',
+        aspectoPsicoeducativoId: '',
+        aspectoDesarrolloId: '',
+      });
+      console.log(perfilEntrada);
     }
   }, []);
 

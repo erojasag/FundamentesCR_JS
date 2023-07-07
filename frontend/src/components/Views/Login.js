@@ -6,10 +6,15 @@ import Footer from '../layouts/footer';
 import Loading from '../layouts/loading';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [contrasena, setContrasena] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -19,6 +24,10 @@ export default function Login() {
 
   const handlePasswordChange = (event) => {
     setContrasena(event.currentTarget.value);
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (event) => {
@@ -38,7 +47,6 @@ export default function Login() {
         'http://localhost:3000/usuarios/login',
         data
       );
-      console.log(response);
       if (response.status === 200) {
         Cookies.set('jwt', response.data.token, { expires: 1 });
         Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
@@ -58,7 +66,6 @@ export default function Login() {
         navigate('/Inicio');
       }
     } catch (err) {
-      console.log(err.response.data.message);
       if (err.response.data.message === 'Correo o contraseña incorrectos') {
         toast.error(
           'Correo o contraseña incorrectos. Por favor intente de nuevo.'
@@ -72,6 +79,14 @@ export default function Login() {
       if (err.response.status === 401) {
         toast.warn(
           'Tu cuenta no se encuentra activa. Por favor revisa tu correo para activarla.'
+        );
+        return;
+      }
+      if (
+        err.response.data.message === 'pchstr must contain a $ as first char'
+      ) {
+        toast.warn(
+          'Tu cuenta no se encuentra activa. Por favor revisa tu correo para activarla o bien reinicia tu contrasena dandole al boton, olvide mi contrasena.'
         );
         return;
       }
@@ -108,14 +123,26 @@ export default function Login() {
                             onChange={handleEmailChange}
                           />
                         </div>
-                        <div className="form-group">
-                          <input
-                            type="password"
-                            className="form-control form-control-user"
-                            placeholder="Contraseña"
-                            value={contrasena}
-                            onChange={handlePasswordChange}
-                          />
+                        <div className="form-group position-relative">
+                          <div className="input-with-icon">
+                            <input
+                              type={showPassword ? 'text' : 'password'}
+                              className="form-control form-control-user"
+                              placeholder="Contraseña"
+                              value={contrasena}
+                              onChange={handlePasswordChange}
+                            />
+                            <button
+                              type="button"
+                              className="btn btn-link password-toggle"
+                              onClick={toggleShowPassword}
+                            >
+                              <FontAwesomeIcon
+                                icon={showPassword ? faEyeSlash : faEye}
+                                className="password-icon"
+                              />
+                            </button>
+                          </div>
                         </div>
                         <div className="form-group">
                           <div className="custom-control custom-checkbox small">

@@ -2,10 +2,10 @@ const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 
 const encargado = db.define(
-  'Encargados',
+  'encargados',
   {
     encargadoId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },

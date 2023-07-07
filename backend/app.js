@@ -24,6 +24,7 @@ const escolaridadRouter = require('./routes/escolaridadRoute');
 const dinamicaFamiliarRouter = require('./routes/dinamicaFamiliarRoute');
 const socioDemograficoRouter = require('./routes/sociodemograficoRoute');
 const statsRouter = require('./routes/statsRoute');
+const encuestaSatisfaccionRouter = require('./routes/encuestasRoute');
 
 const ErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
@@ -89,6 +90,7 @@ app.use('/escolaridades', escolaridadRouter);
 app.use('/dinamicasFamiliares', dinamicaFamiliarRouter);
 app.use('/socioDemograficos', socioDemograficoRouter);
 app.use('/stats', statsRouter);
+app.use('/encuestasSatisfaccion', encuestaSatisfaccionRouter);
 //404 handler
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

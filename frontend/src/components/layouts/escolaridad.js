@@ -340,7 +340,7 @@ export default function Escolaridad(props) {
             value={escolaridad.reinsercion}
             onChange={handleReinsercionChange}
           >
-            <option value="null">Si</option>
+            <option value="null">-No Especifica-</option>
             <option value="true">Si</option>
             <option value="false">No</option>
           </select>
