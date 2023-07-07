@@ -6,6 +6,9 @@ const {
   deleteMe,
   updateMe,
   deactivateUser,
+  updateUserById,
+  activateUser,
+  getDeactivatedUsers,
 } = require('../controllers/usuarioController');
 
 const {
@@ -25,18 +28,31 @@ router
   .post('/login', login)
   .post('/olvidarContrasena', forgotPassword)
   .patch('/reiniciarContrasena/:token', resetPassword)
-  .patch('/actualizarMiContrasena', protect, updateMyPassword)
+  .patch(
+    '/actualizarMiContrasena',
+    protect,
+    restrictTo('Administrador', 'Psicologo'),
+    updateMyPassword
+  )
   .patch('/actualizarMiPerfil', protect, updateMe)
-  .delete('/desactivarMiCuenta', protect, deleteMe);
+  .delete('/desactivarMiCuenta', protect, deleteMe)
+  .patch('/activarUsuario/:token', activateUser)
+  .get(
+    '/usuariosInactivos',
+    protect,
+    restrictTo('Administrador'),
+    getDeactivatedUsers
+  );
 
 router
   .route('/')
   .get(protect, restrictTo('Administrador'), getAllUsers)
-  .post(protect, restrictTo('Administrador'), createUser);
+  .post(createUser);
 
 router
   .route('/:id')
-  .get(protect, restrictTo('Administrador'), getUserById)
-  .delete(protect, restrictTo('Administrador'), deactivateUser);
+  .get(protect, restrictTo('Administrador', 'Psicologo'), getUserById)
+  .delete(protect, restrictTo('Administrador'), deactivateUser)
+  .patch(protect, restrictTo('Administrador'), updateUserById);
 
 module.exports = router;

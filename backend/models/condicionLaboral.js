@@ -2,10 +2,10 @@ const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 
 const condicionLaboral = db.define(
-  'CondicionesLaborales',
+  'condicionesLaborales',
   {
     condicionLaboralId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },

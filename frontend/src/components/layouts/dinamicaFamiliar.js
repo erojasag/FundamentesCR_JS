@@ -4,10 +4,15 @@ export default function DinamicaFamiliar(props) {
   const [dinamicaFamiliar, setDinamicaFamiliar] = useState({});
 
   useEffect(() => {
-    if (props.dinamicaFamiliar !== '') {
+    if (props.dinamicaFamiliar) {
       setDinamicaFamiliar(props.dinamicaFamiliar);
     } else {
-      setDinamicaFamiliar([null]);
+      setDinamicaFamiliar({
+        privLibertad: null,
+        violenciaMujer: null,
+        violenciaFami: null,
+        acontecimientoRelev: '',
+      });
     }
   }, [props.dinamicaFamiliar]);
 
@@ -65,31 +70,38 @@ export default function DinamicaFamiliar(props) {
             value={dinamicaFamiliar.privLibertad}
             onChange={handlePrivLibertadChange}
           >
-            <option value="Si">Si</option>
-            <option value="No">No</option>
+            <option value="null">-No Especifica-</option>
+            <option value="true">Si</option>
+            <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
           <label for="txtViolenciaMujer">Violencia contra mujeres?</label>
-          <input
-            type="text"
-            class="form-control form-control-sm input-validar"
+          <select
+            class="custom-select"
             id="violenciaMujer"
             name="violenciaMujer"
             value={dinamicaFamiliar.violenciaMujer}
             onChange={handleViolenciaMujerChange}
-          />
+          >
+            <option value="null">-No Especifica-</option>
+            <option value="true">Si</option>
+            <option value="false">No</option>
+          </select>
         </div>
         <div class="form-group col-sm-6">
           <label for="txtViolenciaFamiliar">Violencia Familiar</label>
-          <input
-            type="text"
-            class="form-control form-control-sm input-validar"
+          <select
+            class="custom-select"
             id="violenciaFami"
             name="violenciaFami"
             value={dinamicaFamiliar.violenciaFami}
             onChange={handleViolenciaFamiChange}
-          />
+          >
+            <option value="null">-No Especifica-</option>
+            <option value="true">Si</option>
+            <option value="false">No</option>
+          </select>
         </div>
         <div class="form-group col-sm-6">
           <label for="txtAcontecimientoRelev">Acontecimientos Relevantes</label>
