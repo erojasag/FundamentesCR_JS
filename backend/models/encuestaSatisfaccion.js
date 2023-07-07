@@ -1,40 +1,36 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 
-const datosMedicos = db.define(
-  'datosMedicos',
+const encuestaSatisfaccion = db.define(
+  'encuestasSatisfaccion',
   {
-    datosMedicosId: {
+    encuestaSatisfaccionId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
-    alergias: {
+    nombreCompleto: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    edad: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    cedula: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    calificacion: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    recomendacion: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    consumo: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-    },
-    embarazo: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-    },
-    hijoshijas: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-    },
-    expedienteHNP: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-    },
-    situacionParticular: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    observaciones: {
-      type: DataTypes.STRING(100),
+    comentarios: {
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     createdAt: {
@@ -49,10 +45,10 @@ const datosMedicos = db.define(
   },
   {
     name: {
-      singular: 'datoMedico',
-      plural: 'datosMedicos',
+      singular: 'encuestaSatisfaccion',
+      plural: 'encuestasSatisfaccion',
     },
   }
 );
 
-module.exports = datosMedicos;
+module.exports = encuestaSatisfaccion;

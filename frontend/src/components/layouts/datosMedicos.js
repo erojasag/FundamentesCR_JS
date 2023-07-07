@@ -88,8 +88,8 @@ export default function DatosMedicos(props) {
             onChange={handleAlergiasChange}
           >
             <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
-            <option value="false">No</option>
+            <option value={'true' || 1}>Si</option>
+            <option value={'false' || 0}>No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
@@ -102,8 +102,8 @@ export default function DatosMedicos(props) {
             onChange={handleConsumoChange}
           >
             <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
-            <option value="false">No</option>
+            <option value={'true' || 1}>Si</option>
+            <option value={'false' || 0}>No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
@@ -116,8 +116,8 @@ export default function DatosMedicos(props) {
             onChange={handleEmbarazoChange}
           >
             <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
-            <option value="false">No</option>
+            <option value={'true' || 1}>Si</option>
+            <option value={'false' || 0}>No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
@@ -130,8 +130,8 @@ export default function DatosMedicos(props) {
             onChange={handleHijoshijasChange}
           >
             <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
-            <option value="false">No</option>
+            <option value={'true' || 1}>Si</option>
+            <option value={'false' || 0}>No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
@@ -144,8 +144,8 @@ export default function DatosMedicos(props) {
             onChange={handleExpedienteHNPChange}
           >
             <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
-            <option value="false">No</option>
+            <option value={'true' || 1}>Si</option>
+            <option value={'false' || 0}>No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">

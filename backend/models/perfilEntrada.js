@@ -10,7 +10,7 @@ const perfilEntrada = db.define(
   'perfilesEntrada',
   {
     perfilEntradaId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
@@ -94,28 +94,28 @@ perfilEntrada.addHook('beforeFind', async (options) => {
       model: aspectosComunitarios,
       as: 'aspectoComunitario',
       attributes: {
-        exclude: ['aspectoComunitarioId', 'createdAt', 'updatedAt'],
+        exclude: ['createdAt', 'updatedAt'],
       },
     },
     {
       model: aspectosClinicos,
       as: 'aspectoClinico',
       attributes: {
-        exclude: ['aspectoClinicoId', 'createdAt', 'updatedAt'],
+        exclude: ['createdAt', 'updatedAt'],
       },
     },
     {
       model: aspectosPsicoEducativos,
       as: 'aspectoPsicoEducativo',
       attributes: {
-        exclude: ['aspectoPsicoEducativoId', 'createdAt', 'updatedAt'],
+        exclude: ['createdAt', 'updatedAt'],
       },
     },
     {
       model: aspectosDesarrolloTalleres,
       as: 'aspectoDesarrolloTaller',
       attributes: {
-        exclude: ['aspectoDesarrolloTallerId', 'createdAt', 'updatedAt'],
+        exclude: ['createdAt', 'updatedAt'],
       },
     },
   ];

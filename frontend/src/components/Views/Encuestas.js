@@ -1,9 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default function Encuestas() {
+  const [encuestas, setEncuestas] = useState([]);
+  const [selectedEncuesta, setSelectedEncuesta] = useState(null);
+
+  const fetchDataEncuestas = async () => {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${Cookies.get('jwt')}`,
+    };
+
+    const response = await axios.get(
+      'http://localhost:3000/encuestasSatisfaccion/',
+      {
+        headers,
+      }
+    );
+
+    console.log(response.data.data.data);
+    setEncuestas(response.data.data.data);
+  };
+
+  useEffect(() => {
+    fetchDataEncuestas();
+  }, []);
+
+  const getEncuestas = () => {
+    return encuestas.map((encuesta) => (
+      <tr key={encuesta.encuestaSatisfaccionId}>
+        <td>{encuesta.nombreCompleto}</td>
+        <td>{encuesta.edad}</td>
+        <td>{encuesta.cedula}</td>
+        <td>{encuesta.calificacion}</td>
+        <td>{encuesta.recomendacion ? 'Si' : 'No'}</td>
+        <td>{encuesta.comentarios}</td>
+        <td>
+          <a
+            href={`editarEncuesta/${encuesta.encuestaSatisfaccionId}`}
+            className="btn btn-primary btn-sm"
+          >
+            <i className="fas fa-pencil-alt"></i>
+          </a>
+          &nbsp; &nbsp;
+          <button
+            href="eliminarPaciente"
+            className="btn btn-danger btn-sm"
+            data-toggle="modal"
+            data-target="#usuariosModal"
+            value={encuesta.encuestaSatisfaccionId}
+            onClick={() => setSelectedEncuesta(encuesta.encuestaSatisfaccionId)}
+          >
+            <i className="fas fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+    ));
+  };
   return (
     <React.Fragment>
       <div id="wrapper">
@@ -15,13 +72,13 @@ export default function Encuestas() {
               <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-second-primary">
                   <h6 class="m-0 font-weight-bold text-white">
-                    Lista de Grados de Satisfacción
+                    Lista de Encuestas de Satisfacción
                   </h6>
                 </div>
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
-                      <a class="btn btn-success" href="Encuestas">
+                      <a class="btn btn-success" href="agregarEncuesta">
                         <i class="fas fa-user-plus"></i> Agregar Encuesta
                       </a>
                     </div>
@@ -37,39 +94,16 @@ export default function Encuestas() {
                       >
                         <thead>
                           <tr>
-                            <th>Id</th>
                             <th>Nombre Completo</th>
-                            <th>Telefono</th>
+                            <th>Edad</th>
                             <th>Cedula</th>
-                            <th>Edad Actual</th>
+                            <th>Calificacion</th>
+                            <th>Recomendacion</th>
+                            <th>Comentarios</th>
                             <th>Acciones</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>Tiger Nixon</td>
-                            <td>12211221</td>
-                            <td>123456789</td>
-                            <td>19</td>
-                            <td>
-                              <a
-                                href="EditarEncuesta"
-                                class="btn btn-primary btn-sm"
-                              >
-                                <i class="fas fa-pencil-alt"></i>
-                              </a>
-                              <a
-                                href="EditarEncuesta"
-                                class="btn btn-danger btn-sm"
-                                data-toggle="modal"
-                                data-target="#encuestaModal"
-                              >
-                                <i class="fas fa-trash-alt"></i>
-                              </a>
-                            </td>
-                          </tr>
-                        </tbody>
+                        <tbody>{getEncuestas()}</tbody>
                       </table>
                     </div>
                   </div>

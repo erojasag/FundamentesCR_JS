@@ -5,7 +5,7 @@ const dinamicaFamiliar = db.define(
   'dinamicasFamiliares',
   {
     dinamicaFamiliarId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
@@ -22,7 +22,7 @@ const dinamicaFamiliar = db.define(
       allowNull: false,
     },
     acontecimientoRelev: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     createdAt: {
