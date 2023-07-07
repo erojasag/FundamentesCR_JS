@@ -9,12 +9,13 @@ const dinamicaFamiliar = require('./dinamicaFamiliar');
 const perfilEntrada = require('./perfilEntrada');
 const perfilSalida = require('./perfilSalida');
 const escolaridad = require('./escolaridad');
+const encuestaSatisfaccion = require('./encuestaSatisfaccion');
 
 const Paciente = db.define(
   'pacientes',
   {
     pacienteId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
@@ -72,58 +73,65 @@ const Paciente = db.define(
       },
     },
     datosMedicosId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       references: {
         model: datoMedico,
         key: 'datosMedicosId',
       },
     },
     condicionLaboralId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       references: {
         model: condicionLaboral,
         key: 'condicionLaboralId',
       },
     },
     sociodemograficosId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       references: {
         model: sociodemograficos,
         key: 'sociodemograficosId',
       },
     },
     encargadoId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       references: {
         model: encargado,
         key: 'encargadoId',
       },
     },
     dinamicaFamiliarId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       references: {
         model: dinamicaFamiliar,
         key: 'dinamicaFamiliarId',
       },
     },
     perfilEntradaId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       references: {
         model: perfilEntrada,
         key: 'perfilEntradaId',
       },
       perfilSalidaId: {
-        type: DataTypes.UUIDV1,
+        type: DataTypes.UUID,
         references: {
           model: perfilSalida,
           key: 'perfilSalidaId',
         },
       },
       escolaridadId: {
-        type: DataTypes.UUIDV1,
+        type: DataTypes.UUID,
         references: {
           model: escolaridad,
           key: 'escolaridadId',
+        },
+      },
+      encuestaSatisfaccionId: {
+        type: DataTypes.UUID,
+        references: {
+          model: encuestaSatisfaccion,
+          key: 'encuestaSatisfaccionId',
         },
       },
       createdAt: {
@@ -213,6 +221,7 @@ Paciente.addHook('beforeFind', async (options) => {
         'condicionLaboral',
         'consumoMedicinas',
         'expedienteHNP',
+        'situacionParticular',
       ],
     },
     {
@@ -265,6 +274,10 @@ Paciente.addHook('beforeFind', async (options) => {
         'reinsercion',
       ],
     },
+    {
+      model: encuestaSatisfaccion,
+      as: 'encuestaSatisfaccion',
+    },
   ];
 });
 
@@ -311,6 +324,11 @@ Paciente.belongsTo(perfilSalida, {
 Paciente.belongsTo(escolaridad, {
   foreignKey: 'escolaridadId',
   as: 'escolaridad',
+});
+
+Paciente.belongsTo(encuestaSatisfaccion, {
+  foreignKey: 'encuestaSatisfaccionId',
+  as: 'encuestaSatisfaccion',
 });
 
 module.exports = Paciente;

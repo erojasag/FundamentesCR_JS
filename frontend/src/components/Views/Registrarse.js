@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../layouts/footer';
 import Cookies from 'js-cookie';
-import ErrorPopup from '../layouts/errorPopUp';
 
 export default function Registrarse() {
   const [nombre, setName] = useState('');
@@ -185,7 +184,6 @@ export default function Registrarse() {
                           Cancelar
                         </a>
                       </form>
-                      {errorMessage && <ErrorPopup message={errorMessage} />}
                       <hr />
                       <div class="text-center"></div>
                     </div>

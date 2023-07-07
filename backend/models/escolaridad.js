@@ -5,7 +5,7 @@ const escolaridad = db.define(
   'escolaridades',
   {
     escolaridadId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
@@ -37,13 +37,16 @@ const escolaridad = db.define(
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
+    tipoAdecuacion: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
     ultimoAnoAprobado: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
     fechaSalida: {
       type: DataTypes.DATEONLY,
-      allowNull: false,
     },
     motivoSalida: {
       type: DataTypes.STRING(100),

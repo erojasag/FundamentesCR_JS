@@ -1,27 +1,33 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import Footer from '../layouts/footer';
-import { ToastContainer, toast } from 'react-toastify';
+import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function ResetPass() {
+export default function Activacion() {
   const { token } = useParams();
-  const [contrasena, setPassword] = useState('');
-  const [confirmContrasena, setConfirmPassword] = useState('');
+  const [data, setData] = useState({});
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
-  const navigate = useNavigate();
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.currentTarget.value);
+  const handleContrasenaChange = (event) => {
+    setData({
+      ...data,
+      contrasena: event.currentTarget.value,
+    });
   };
 
-  const handleConfirmPasswordChange = (event) => {
-    setConfirmPassword(event.currentTarget.value);
+  const handleConfirmContrasenaChange = (event) => {
+    setData({
+      ...data,
+      confirmContrasena: event.currentTarget.value,
+    });
   };
 
   const toggleShowPassword = () => {
@@ -35,47 +41,37 @@ export default function ResetPass() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const data = {
-        contrasena,
-        confirmContrasena,
+      const body = {
+        contrasena: data.contrasena,
+        confirmContrasena: data.confirmContrasena,
       };
-      const route = `http://localhost:3000/usuarios/reiniciarContrasena/${token}`;
-      const response = await axios.patch(route, data);
+      const response = await axios.patch(
+        `http://localhost:3000/usuarios/activarUsuario/${token}`,
+        body
+      );
 
       if (response.status !== 200) {
         const message = `An error has occured: ${response.statusText}`;
+        window.alert(message);
         return;
       }
-
-      setPassword('');
-      setConfirmPassword('');
-      if (response.status === 200) {
-        Cookies.set('jwt', response.data.token, { expires: 1 });
-        Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
-        Cookies.set('rol', response.data.data.user.rol.nombreRol, {
-          expires: 1,
-        });
-
-        Cookies.set(
-          'nombre',
-          response.data.data.user.nombre +
-            ' ' +
-            response.data.data.user.primerApe
-        );
-
-        setConfirmPassword('');
-        setPassword('');
-        navigate('/Inicio');
-      }
-
-      navigate('/inicio');
+      Cookies.set('jwt', response.data.token);
+      Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
+      Cookies.set('rol', response.data.data.user.rol.nombreRol, {
+        expires: 1,
+      });
+      Cookies.set(
+        'nombre',
+        response.data.data.user.nombre + ' ' + response.data.data.user.primerApe
+      );
+      navigate('/Inicio');
     } catch (err) {
       console.log(err.response.data.message);
-      if (err.response.data.message) {
-        toast.error(
-          'Las contrasenas no son iguales. Por favor intente de nuevo.'
-        );
-        return;
+      if (
+        err.response.data.message ===
+        'Validation error: Las contraseñas no coinciden'
+      ) {
+        toast.error('Las contraseñas no coinciden');
       }
     }
   };
@@ -93,21 +89,19 @@ export default function ResetPass() {
                     <div className="p-5">
                       <div className="text-center">
                         <h1 className="h4 text-gray-900 mb-2">
-                          Resetea tu contraseña
+                          Activa tu cuenta
                         </h1>
-                        <p className="mb-4">
-                          Ingrese su contraseña y su confirmacion de contraseña
-                        </p>
+                        <p className="mb-4">Ingresa tu nueva contraseña</p>
                       </div>
-                      <form className="user" onSubmit={handleSubmit}>
-                        <div className="form-group">
+                      <form className="user">
+                        <div className="form-group position-relative">
                           <div className="input-with-icon">
                             <input
                               type={showPassword ? 'text' : 'password'}
                               className="form-control form-control-user"
                               placeholder="Contraseña"
-                              value={contrasena}
-                              onChange={handlePasswordChange}
+                              value={data.contrasena}
+                              onChange={handleContrasenaChange}
                             />
                             <button
                               type="button"
@@ -120,15 +114,15 @@ export default function ResetPass() {
                               />
                             </button>
                           </div>
-                          <br />
+                        </div>
+                        <div className="form-group position-relative">
                           <div className="input-with-icon">
                             <input
                               type={showPassword2 ? 'text' : 'password'}
                               className="form-control form-control-user"
-                              placeholder="
-                              Confirma tu Contraseña"
-                              value={confirmContrasena}
-                              onChange={handleConfirmPasswordChange}
+                              placeholder="Contraseña"
+                              value={data.confirmContrasena}
+                              onChange={handleConfirmContrasenaChange}
                             />
                             <button
                               type="button"
@@ -145,8 +139,9 @@ export default function ResetPass() {
                         <button
                           type="submit"
                           className="btn btn-primary btn-user btn-block"
+                          onClick={handleSubmit}
                         >
-                          Ingresar
+                          Activar cuenta
                         </button>
                       </form>
                     </div>
@@ -154,10 +149,10 @@ export default function ResetPass() {
                 </div>
               </div>
             </div>
-            <ToastContainer />
           </div>
           <Footer />
         </div>
+        <ToastContainer />
       </div>
     </React.Fragment>
   );

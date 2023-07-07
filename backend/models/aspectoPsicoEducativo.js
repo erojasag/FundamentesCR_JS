@@ -5,7 +5,7 @@ const aspectosPsicoeducativos = db.define(
   'aspectosPsicoeducativos',
   {
     aspectoPsicoEducativoId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },

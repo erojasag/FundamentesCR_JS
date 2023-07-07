@@ -107,6 +107,8 @@ export default function Sociodemograficos(props) {
     props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
 
+  
+
   return (
     <React.Fragment>
       <div class="form-group row justify-content-center">
