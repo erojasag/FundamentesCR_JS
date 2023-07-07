@@ -18,4 +18,6 @@ router
   .get(protect, restrictTo('Administrador', 'Psicologo'), getCasaById)
   .patch(protect, restrictTo('Administrador', 'Psicologo'), updateCasa);
 
+
+
 module.exports = router;

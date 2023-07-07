@@ -33,7 +33,6 @@ const getOne = (Model) =>
 
 const insertOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    console.log(req.body);
     const doc = await Model.create(req.body);
 
     if (!doc) return next(new AppError('No se pudo crear el registro', 500));
@@ -48,6 +47,7 @@ const insertOne = (Model) =>
 
 const updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
+    console.log(req.params.id, req.body);
     let doc = await Model.findByPk(req.params.id);
     doc = await doc.update(req.body);
 

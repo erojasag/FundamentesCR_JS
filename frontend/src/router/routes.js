@@ -1,19 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
 import Login from '../components/Views/Login';
+import Activacion from '../components/Views/activacion';
 import ListaUsuarios from '../components/Views/ListaUsuarios';
 import EditarUsuarioLog from '../components/Views/EditarUsuarioLog';
-import DatosExpediente from '../components/Views/DatosExpediente';
 import PersonaResponsable from '../components/Views/PersonaResponsable';
 import EditarDatosExpediente from '../components/Views/EditarDatosExpediente';
 import EditarParentezco from '../components/Views/EditarParentezco';
-import Convivencia from '../components/Views/Convivencia';
-import EditarConvivencia from '../components/Views/EditarConvivencia';
-import DatosSocioEconomicos from '../components/Views/DatosSocioEconomicos';
 import EditarDatosSE from '../components/Views/EditarDatosSE';
 import FactorPsicosocial from '../components/Views/FactorPsicosocial';
 import EditarFactor from '../components/Views/EditarFactor';
-import CalificacionRiesgo from '../components/Views/CalificacionRiesgo';
-import EditarCalificacionRiesgo from '../components/Views/EditarCalificacionRiesgo';
 import EstadoExpendiente from '../components/Views/EstadoExpediente';
 import EditarEstadoExp from '../components/Views/EditarEstadoExp';
 import ReporteExpediente from '../components/Views/ReporteExpediente';
@@ -27,67 +22,59 @@ import EditarPerfilEntrada from '../components/Views/EditarPerfilEntrada';
 import PerfilSalida from '../components/Views/PerfilSalida';
 import EditarPerfilSalida from '../components/Views/EditarPerfilSalida';
 import Encuestas from '../components/Views/Encuestas';
-import EncuestaSatisfaccion from '../components/Views/EncuestaSatisfaccion';
+import AgregarEncuesta from '../components/Views/agregarEncuesta';
 import ResetPass from '../components/Views/ResetPass';
 import Index from '../components/Views/Inicio';
 import Perfil from '../components/Views/Perfil';
 import CambiarContrasena from '../components/Views/cambiarContrasena';
 import ForgotPass from '../components/Views/ForgotPass';
+import ListaUsuariosInactivos from '../components/Views/ListaUsuariosInactivos';
+import Error403 from '../components/Views/Error403';
 
 function Router() {
   return (
     <Routes>
       <Route index element={<Login />} />
       <Route path="pacientes/" element={<Pacientes />} />
-      <Route path="pacientes/:id" element={<EditarPaciente />} />
+      <Route path="/:id" element={<EditarPaciente />} />
+      <Route path="/inicio" element={<Index />} />
+      <Route path="/registrarse" element={<Registrarse />} />
+      <Route path="/olvideMiContrasena" element={<ForgotPass />} />
+      <Route path="/activarCuenta/:token" element={<Activacion />} />
+      <Route path="/perfilEntrada" element={<PerfilEntrada />} />
+      <Route path="/editarPerfilEntrada" element={<EditarPerfilEntrada />} />
+      <Route path="/perfilSalida" element={<PerfilSalida />} />
+      <Route path="/editarPerfilSalida" element={<EditarPerfilSalida />} />
+      <Route path="/encuestas/" element={<Encuestas />} />
+      <Route path="/agregarEncuesta" element={<AgregarEncuesta />} />
+      <Route path="/usuarios/" element={<ListaUsuarios />} />
+      <Route path="/usuarios/:id" element={<EditarUsuarioLog />} />
+      <Route path="/usuariosInactivos" element={<ListaUsuariosInactivos />} />
 
-      <Route path="/Inicio" element={<Index />} />
-      <Route path="/Registrarse" element={<Registrarse />} />
-      <Route path="/OlvideMiContrasena" element={<ForgotPass />} />
-
-      <Route path="/PerfilEntrada" element={<PerfilEntrada />} />
-      <Route path="/EditarPerfilEntrada" element={<EditarPerfilEntrada />} />
-      <Route path="/PerfilSalida" element={<PerfilSalida />} />
-      <Route path="/EditarPerfilSalida" element={<EditarPerfilSalida />} />
-      <Route path="/Encuestas/" element={<Encuestas />} />
-      <Route path="/EncuestaSatisfaccion" element={<EncuestaSatisfaccion />} />
-      <Route path="/ListaUsuarios" element={<ListaUsuarios />} />
+      <Route path="/encargados" element={<PersonaResponsable />} />
       <Route
-        path="ListaUsuarios/editarUsuario/:id"
-        element={<EditarUsuarioLog />}
-      />
-      <Route path="/Expedientes" element={<DatosExpediente />} />
-      <Route path="/Encargados" element={<PersonaResponsable />} />
-      <Route
-        path="/Expedientes/EditarExpediente"
+        path="/expedientes/editarExpediente"
         element={<EditarDatosExpediente />}
       />
-      <Route path="/EditarParentezco" element={<EditarParentezco />} />
-      <Route path="/Convivencia" element={<Convivencia />} />
-      <Route path="/EditarConvivencia" element={<EditarConvivencia />} />
-      <Route path="/DatosSocioEconomicos" element={<DatosSocioEconomicos />} />
-      <Route path="/EditarDatosSE" element={<EditarDatosSE />} />
-      <Route path="/FactorPsicosocial" element={<FactorPsicosocial />} />
-      <Route path="/EditarFactor" element={<EditarFactor />} />
-      <Route path="/CalificacionRiesgo" element={<CalificacionRiesgo />} />
+      <Route path="/editarParentezco" element={<EditarParentezco />} />
+      <Route path="/editarDatosSE" element={<EditarDatosSE />} />
+      <Route path="/factorPsicosocial" element={<FactorPsicosocial />} />
+      <Route path="/editarFactor" element={<EditarFactor />} />
       <Route
-        path="/EditarCalificacionRiesgo"
-        element={<EditarCalificacionRiesgo />}
-      />
-      <Route
-        path="/Expedientes/EstadoExpediente"
+        path="/expedientes/estadoExpediente"
         element={<EstadoExpendiente />}
       />
-      <Route path="/EditarEstadoExp" element={<EditarEstadoExp />} />
-      <Route path="/ReporteExpediente" element={<ReporteExpediente />} />
-      <Route path="/Acciones" element={<Acciones />} />
-      <Route path="/Error404" element={<Error404 />} />
+      <Route path="/editarEstadoExp" element={<EditarEstadoExp />} />
+      <Route path="/reporteExpediente" element={<ReporteExpediente />} />
+      <Route path="/acciones" element={<Acciones />} />
+      <Route path="/error404" element={<Error404 />} />
+      <Route path="/error403" element={<Error403 />} />
       <Route
         path="/usuarios/reiniciarContrasena/:token"
         element={<ResetPass />}
       />
-      <Route path="/Perfil" element={<Perfil />} />
-      <Route path="/CambiarMiContrasena" element={<CambiarContrasena />} />
+      <Route path="/perfil" element={<Perfil />} />
+      <Route path="/cambiarMiContrasena" element={<CambiarContrasena />} />
     </Routes>
   );
 }

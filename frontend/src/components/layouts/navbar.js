@@ -8,9 +8,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const token = Cookies.get('jwt');
-  if (!token) {
-    window.location.href = '/';
-  }
+  
   const nombre = Cookies.get('nombre');
 
   const handleLogout = () => {
@@ -57,7 +55,7 @@ export default function Navbar() {
               class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
               aria-labelledby="userDropdown"
             >
-              <a class="dropdown-item" href="perfil.html">
+              <a class="dropdown-item" href="perfil">
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                 Perfil
               </a>

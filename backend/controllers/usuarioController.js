@@ -2,8 +2,10 @@ const userModel = require('../models/usuario');
 
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-
-const { getOne, getAll } = require('./handlerFactory');
+const randomPass = require('../utils/randomPass');
+const sendEmail = require('../utils/email');
+const { createAndSendToken } = require('./authController');
+const { getOne } = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -16,34 +18,155 @@ const filterObj = (obj, ...allowedFields) => {
 
 //ONLY FOR ADMINS
 const createUser = catchAsync(async (req, res, next) => {
-  if (req.body.rolId !== 'Administrador' && req.body.rolId !== 'Psicologo')
+  console.log(req.body);
+  if (
+    req.body.rol.nombreRol !== 'Administrador' &&
+    req.body.rol.nombreRol !== 'Psicologo'
+  )
     return next(new AppError('El rol que intenta asignar no existe', 404));
 
-  if (req.body.rolId === 'Administrador') {
+  if (req.body.rol.nombreRol === 'Administrador') {
     req.body.rolId = process.env.DEFAULT_ROLE_ADMIN;
-  } else if (req.body.rolId === 'Psicologo') {
+  } else if (req.body.rol.nombreRol === 'Psicologo') {
     req.body.rolId = process.env.DEFAULT_ROLE;
   }
 
-  console.log(req.body.rolId);
-
+  // const { unhashedPassword, password } = await randomPass();
+  const password = await randomPass();
+  if (req.body.contrasena === '' || req.body.confirmContrasena === '') {
+    req.body.contrasena = password;
+    req.body.confirmContrasena = password;
+  }
   const doc = await userModel.create(req.body);
-
+  const message = `Bienvenido a fundamentes ${req.body.nombre} ${req.body.primerApe}!.
+         Username: ${req.body.email}
+         Password: ${password}
+         Porfavor activa tu cuenta ingresando al siguiente link: http://localhost:5000/activarCuenta/${doc.dataValues.activationToken}`;
   if (!doc) return next(new AppError('No se pudo crear el registro', 500));
 
-  res.status(201).json({
+  try {
+    await sendEmail({
+      email: req.body.email,
+      subject: 'Activacion de cuenta.',
+      message,
+    });
+
+    res.status(201).json({
+      status: 'success',
+      message: 'Token enviado a su correo',
+    });
+  } catch (err) {
+    doc.contrasenaResetToken = null;
+    doc.contrasenaResetExpires = null;
+    await doc.save();
+
+    return next(
+      new AppError(
+        'Hubo un error al enviar el correo, por favor intente de nuevo',
+        500
+      )
+    );
+  }
+});
+
+const activateUser = catchAsync(async (req, res, next) => {
+  const { token } = req.params;
+
+  const user = await userModel.findOne({
+    where: {
+      activo: false,
+      activationToken: token,
+    },
+  });
+  if (user) {
+    if (!req.body.contrasena || !req.body.confirmContrasena)
+      return next(
+        new AppError(
+          'Por favor ingrese su nueva contraseña y confirmación de contraseña',
+          400
+        )
+      );
+
+    user.activo = true;
+    user.activationToken = null;
+    user.contrasena = req.body.contrasena;
+    user.confirmContrasena = req.body.confirmContrasena;
+    await user.save();
+    createAndSendToken(user, 200, res);
+  }
+
+  const deactivatedUser = await userModel.findOne({
+    where: {
+      usuarioId: token,
+    },
+  });
+  if (deactivatedUser) {
+    deactivatedUser.activo = true;
+    const pass = await randomPass();
+    deactivatedUser.contrasena = pass;
+    deactivatedUser.confirmContrasena = pass;
+    await deactivatedUser.save();
+    createAndSendToken(deactivatedUser, 200, res);
+  }
+
+  if (!user && !deactivatedUser)
+    return next(new AppError('Token inválido', 400));
+});
+
+//ONLY FOR ADMINS
+const getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await userModel.findAll({
+    where: {
+      activo: true,
+    },
+  });
+
+  if (!users) return next(new AppError('No se encontraron registros', 404));
+
+  res.status(200).json({
     status: 'success',
+    results: users.length,
     data: {
-      data: null,
+      users,
     },
   });
 });
 
 //ONLY FOR ADMINS
-const getAllUsers = getAll(userModel);
-
-//ONLY FOR ADMINS
 const getUserById = getOne(userModel);
+
+const updateUserById = catchAsync(async (req, res, next) => {
+  if (req.body.password || req.body.confirmPassword)
+    return next(
+      new AppError('Esta ruta no es para actualizar la contraseña', 400)
+    );
+
+  if (req.body.rol.nombreRol === 'Administrador') {
+    req.body.rolId = process.env.DEFAULT_ROLE_ADMIN;
+  } else if (req.body.rol.nombreRol === 'Psicologo') {
+    req.body.rolId = process.env.DEFAULT_ROLE;
+  }
+
+  const filteredBody = filterObj(
+    req.body,
+    'nombre',
+    'primerApe',
+    'segundoApe',
+    'email',
+    'rolId'
+  );
+
+  await userModel.update(filteredBody, {
+    where: {
+      usuarioId: req.body.usuarioId,
+    },
+  });
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
 
 const updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.confirmPassword)
@@ -51,6 +174,12 @@ const updateMe = catchAsync(async (req, res, next) => {
       new AppError('Esta ruta no es para actualizar la contraseña', 400)
     );
 
+  console.log(req.body);
+  if(req.body.nombre === '' || req.body.primerApe === '' || req.body.segundoApe === '' || req.body.email === ''){
+    return next(
+      new AppError('Por favor ingrese todos los campos', 400)
+    );
+  }
   const filteredBody = filterObj(
     req.body,
     'nombre',
@@ -61,7 +190,7 @@ const updateMe = catchAsync(async (req, res, next) => {
 
   const updateUser = await userModel.update(filteredBody, {
     where: {
-      IdUser: req.user.usuarioId,
+      usuarioId: req.user.usuarioId,
     },
     attributes: {
       exclude: ['updatedAt'],
@@ -127,11 +256,32 @@ const deactivateUser = catchAsync(async (req, res, next) => {
   });
 });
 
+const getDeactivatedUsers = catchAsync(async (req, res, next) => {
+  const users = await userModel.findAll({
+    where: {
+      activo: false,
+    },
+  });
+
+  if (!users) return next(new AppError('No se encontraron registros', 404));
+
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      users,
+    },
+  });
+});
+
 module.exports = {
   createUser,
   getAllUsers,
   getUserById,
   updateMe,
   deleteMe,
+  getDeactivatedUsers,
   deactivateUser,
+  updateUserById,
+  activateUser,
 };

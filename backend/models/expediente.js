@@ -7,7 +7,7 @@ const expediente = db.define(
   'expedientes',
   {
     expedienteId: {
-      type: DataTypes.UUIDV1,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
