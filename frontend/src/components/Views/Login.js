@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Footer from '../layouts/footer';
+
 import Loading from '../layouts/loading';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -170,6 +171,7 @@ export default function Login() {
                         <a className="small" href="OlvideMiContrasena">
                           ¿Olvidó su contraseña?
                         </a>
+                        {errorMessage && <ErrorPopUp message={errorMessage} />}
                       </div>
                     </div>
                   </div>
