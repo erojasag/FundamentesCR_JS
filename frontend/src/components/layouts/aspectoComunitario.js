@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+
 
 export default function AspectoComunitario(props) {
   const [aspectoComunitario, setAspectoComunitario] = useState({});

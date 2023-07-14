@@ -48,6 +48,7 @@ export default function Login() {
         'http://localhost:3000/usuarios/login',
         data
       );
+      console.log(response);
       if (response.status === 200) {
         Cookies.set('jwt', response.data.token, { expires: 1 });
         Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
@@ -171,7 +172,6 @@ export default function Login() {
                         <a className="small" href="OlvideMiContrasena">
                           ¿Olvidó su contraseña?
                         </a>
-                        {errorMessage && <ErrorPopUp message={errorMessage} />}
                       </div>
                     </div>
                   </div>
