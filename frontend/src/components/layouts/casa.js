@@ -24,7 +24,7 @@ export default function Casa({ onCasaChange, selectedCasa }) {
     <React.Fragment>
       <div class="form-group row justify-content-center">
         <label for="txtDistrito" className="col-form-label-lg">
-          Casa Escucharte
+          Casa EscuchArte
         </label>
       </div>
       <div className="row justify-content-center">
