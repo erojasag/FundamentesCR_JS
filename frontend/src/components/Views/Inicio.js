@@ -17,7 +17,7 @@ export default function Index() {
               <Navbar />
               <Stats />
 
-              <div className="container-fluid row row-cols-1 row-cols-md-2 row-cols-lg-4">
+              <div className="container-fluid row row-cols-1 row-cols-md-2 row-cols-lg-4 d-flex justify-content-center align-items-center">
                 <div className="col ">
                   <div className="card shadow mb-4 h-100">
                     <div className="card-header py-3 bg-second-primary">
@@ -65,8 +65,8 @@ export default function Index() {
                       </div>
                     </div>
                   </div>
-                </div> */}
-                {/* <div className="col">
+                </div>
+                <div className="col">
                   <div className="card shadow mb-4 h-100">
                     <div className="card-header py-3 bg-second-primary">
                       <h6 className="m-0 font-weight-bold text-white">

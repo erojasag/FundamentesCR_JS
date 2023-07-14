@@ -81,7 +81,7 @@ export default function SideMenu() {
             aria-controls="collapsePacientes"
           >
             <i class="fas fa-fw fa-hospital-user"></i>
-            <span>Pacientes</span>
+            <span>Beneficiarios</span>
           </a>
           <div
             id="collapsePacientes"
@@ -91,7 +91,7 @@ export default function SideMenu() {
           >
             <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item" href="/pacientes">
-                Ver Pacientes
+                Ver Beneficiarios
               </a>
             </div>
           </div>
