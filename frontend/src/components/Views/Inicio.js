@@ -36,7 +36,7 @@ export default function Index() {
                   <div className="card shadow mb-4 h-100">
                     <div className="card-header py-3 bg-second-primary">
                       <h6 className="m-0 font-weight-bold text-white">
-                        Casas Escucharte Total de pacientes por casa
+                      Número total de usuarios por casa
                       </h6>
                     </div>
                     <div className="card-body align-items-center justify-content-center">

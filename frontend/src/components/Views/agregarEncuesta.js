@@ -137,7 +137,7 @@ export default function AgregarEncuesta() {
               <section class="row">
                 <div class="col-md-12">
                   <h1 class="text-center">
-                    Formulario de Encuesta de Satisfacción
+                    Encuesta de Satisfacción
                   </h1>
                   <p class="text-center">Fundación Fundamentes</p>
                 </div>

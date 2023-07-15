@@ -491,8 +491,8 @@ export default function Pacientes() {
                       </button>
                     </div>
                     <div class="modal-body">
-                      <form>
-                        <div class="row">
+                      <form class="mx-auto">
+                        <div class="row justify-content-center">
                           <div class="col-sm-8">
                             <div class="form-row ">
                               <div class="form-group col-sm-6">
@@ -608,6 +608,7 @@ export default function Pacientes() {
                                   <option value="Masculino">Masculino</option>
                                   <option value="Femenino">Femenino</option>
                                   <option value="No-Binario">No-Binario</option>
+                                  <option value="Tansgenero">Transgénero</option>
                                 </select>
                               </div>
                             </div>

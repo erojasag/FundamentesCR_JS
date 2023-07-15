@@ -173,7 +173,7 @@ export default function Perfil() {
                         </div>
                         <div className="card-body text-center">
                           <div className="form-row">
-                            <div className="form-group col-sm-10">
+                            <div className="form-group col-sm-10 mx-auto">
                               <img
                                 id="imgFoto"
                                 src="https://images.unsplash.com/photo-1519648023493-d82b5f8d7b8a?w=300"
@@ -184,7 +184,7 @@ export default function Perfil() {
                             </div>
                           </div>
                           <div className="form-row">
-                            <div className="form-group col-sm-10">
+                            <div className="form-group col-sm-10 mx-auto">
                               <label htmlFor="txtNombre">Nombre</label>
                               <input
                                 type="text"
@@ -197,7 +197,7 @@ export default function Perfil() {
                             </div>
                           </div>
                           <div className="form-row">
-                            <div className="form-group col-sm-10">
+                            <div className="form-group col-sm-10 mx-auto">
                               <label htmlFor="txtPrimerApellido">
                                 Primer Apellido
                               </label>
@@ -212,7 +212,7 @@ export default function Perfil() {
                             </div>
                           </div>
                           <div className="form-row">
-                            <div className="form-group col-sm-10">
+                            <div className="form-group col-sm-10 mx-auto">
                               <label htmlFor="txtSegundoApellido">
                                 Segundo Apellido
                               </label>
@@ -227,7 +227,7 @@ export default function Perfil() {
                             </div>
                           </div>
                           <div className="form-row">
-                            <div className="form-group col-sm-10">
+                            <div className="form-group col-sm-10 mx-auto">
                               <label htmlFor="txtCorreo">Correo</label>
                               <input
                                 type="email"
@@ -240,7 +240,7 @@ export default function Perfil() {
                             </div>
                           </div>
                           <div className="form-row">
-                            <div className="form-group col-sm-10">
+                            <div className="form-group col-sm-10 mx-auto">
                               <label htmlFor="txtRol">Rol</label>
                               <input
                                 type="text"
@@ -254,7 +254,7 @@ export default function Perfil() {
                           </div>
                           <hr />
                           <div className="row">
-                            <div className="col-sm-10">
+                            <div className="col-sm-10 mx-auto">
                               <button
                                 type="button"
                                 className="btn btn-success btn-sm btn-block"
