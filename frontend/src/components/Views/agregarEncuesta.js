@@ -63,6 +63,13 @@ export default function AgregarEncuesta() {
       calificacion: parseInt(value),
     }));
   };
+  const handleExperienciaChange = (event) => {
+    const { value } = event.currentTarget;
+    setDataEncuesta((prevDataEncuesta) => ({
+      ...prevDataEncuesta,
+      experiencia: value,
+    }));
+  };
 
   const handleRecomendacionChange = (event) => {
     const { value } = event.currentTarget;
@@ -224,90 +231,175 @@ export default function AgregarEncuesta() {
                   </div>
                 </section>
 
-                <section class="row">
-                  <div class="col-md-12">
-                    <section class="row">
-                      <div class="col-md-8">
-                        <p>
-                          ¿Cómo calificaría su experiencia respecto a los
-                          servicios que ha recibido a través de la fundación?
-                        </p>
-                      </div>
-                    </section>
+                <section className="row">
+      <div className="col-md-12">
+        <section className="row">
+          <div className="col-md-8">
+            <p>
+              ¿Cómo calificaría su experiencia respecto a los servicios que ha recibido a través de la fundación?
+            </p>
+          </div>
+        </section>
 
-                    <div class="wrapper">
-                      <div class="encuesta">
-                        <div class="rating">
-                          <input
-                            type="radio"
-                            id="rating5"
-                            name="calificacion"
-                            value={1}
-                            onChange={handleCalificacionChange}
-                          />
-                          <label
-                            for="rating5"
-                            title="Muy Malo"
-                            class="fa-regular fa-face-frown fa-3x"
-                            style={{ color: 'red' }}
-                          ></label>
-                          <input
-                            type="radio"
-                            id="rating4"
-                            name="calificacion"
-                            value={2}
-                            onChange={handleCalificacionChange}
-                          />
-                          <label
-                            for="rating4"
-                            title="Malo"
-                            class="fa-regular fa-face-frown-open fa-3x"
-                            style={{ color: ' orange' }}
-                          ></label>
-                          <input
-                            type="radio"
-                            id="rating3"
-                            name="calificacion"
-                            value={3}
-                            onChange={handleCalificacionChange}
-                          />
-                          <label
-                            for="rating3"
-                            title="Regular"
-                            class="fa-regular fa-face-meh fa-3x"
-                            style={{ color: 'rgb(226, 226, 20)' }}
-                          ></label>
-                          <input
-                            type="radio"
-                            id="rating2"
-                            name="calificacion"
-                            value={4}
-                            onChange={handleCalificacionChange}
-                          />
-                          <label
-                            for="rating2"
-                            title="Bueno"
-                            class="fa-sharp fa-regular fa-face-smile fa-3x"
-                            style={{ color: 'limegreen' }}
-                          ></label>
-                          <input
-                            type="radio"
-                            id="rating1"
-                            name="calificacion"
-                            value={5}
-                            onChange={handleCalificacionChange}
-                          />
-                          <label
-                            for="rating1"
-                            title="Muy Bueno"
-                            class="fa-regular fa-face-laugh-beam fa-3x"
-                            style={{ color: 'green' }}
-                          ></label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
+        <div className="wrapper">
+          <div className="encuesta">
+            <div className="rating">
+              <input
+                type="radio"
+                id="rating5"
+                name="calificacion"
+                value={1}
+                onChange={handleCalificacionChange}
+              />
+              <label
+                htmlFor="rating5"
+                title="Muy Malo"
+                className="fa-regular fa-face-frown fa-3x"
+                style={{ color: 'red' }}
+              ></label>
+              <input
+                type="radio"
+                id="rating4"
+                name="calificacion"
+                value={2}
+                onChange={handleCalificacionChange}
+              />
+              <label
+                htmlFor="rating4"
+                title="Malo"
+                className="fa-regular fa-face-frown-open fa-3x"
+                style={{ color: 'orange' }}
+              ></label>
+              <input
+                type="radio"
+                id="rating3"
+                name="calificacion"
+                value={3}
+                onChange={handleCalificacionChange}
+              />
+              <label
+                htmlFor="rating3"
+                title="Regular"
+                className="fa-regular fa-face-meh fa-3x"
+                style={{ color: 'rgb(226, 226, 20)' }}
+              ></label>
+              <input
+                type="radio"
+                id="rating2"
+                name="calificacion"
+                value={4}
+                onChange={handleCalificacionChange}
+              />
+              <label
+                htmlFor="rating2"
+                title="Bueno"
+                className="fa-sharp fa-regular fa-face-smile fa-3x"
+                style={{ color: 'limegreen' }}
+              ></label>
+              <input
+                type="radio"
+                id="rating1"
+                name="calificacion"
+                value={5}
+                onChange={handleCalificacionChange}
+              />
+              <label
+                htmlFor="rating1"
+                title="Muy Bueno"
+                className="fa-regular fa-face-laugh-beam fa-3x"
+                style={{ color: 'green' }}
+              ></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <br />
+
+    <section className="row">
+      <div className="col-md-12">
+        <section className="row">
+          <div className="col-md-8">
+            <p>
+              ¿Cómo calificaría su experiencia respecto a los talleres educativos y creativos que ha recibido a través de la fundación?
+            </p>
+          </div>
+        </section>
+
+        <div className="wrapper">
+          <div className="encuesta">
+            <div className="rating">
+              <input
+                type="radio"
+                id="rating10"
+                name="experiencia"
+                value={1}
+                onChange={handleExperienciaChange}
+              />
+              <label
+                htmlFor="rating10"
+                title="Muy Malo"
+                className="fa-regular fa-face-frown fa-3x"
+                style={{ color: 'red' }}
+              ></label>
+              <input
+                type="radio"
+                id="rating9"
+                name="experiencia"
+                value={2}
+                onChange={handleExperienciaChange}
+              />
+              <label
+                htmlFor="rating9"
+                title="Malo"
+                className="fa-regular fa-face-frown-open fa-3x"
+                style={{ color: 'orange' }}
+              ></label>
+              <input
+                type="radio"
+                id="rating8"
+                name="experiencia"
+                value={3}
+                onChange={handleExperienciaChange}
+              />
+              <label
+                htmlFor="rating8"
+                title="Regular"
+                className="fa-regular fa-face-meh fa-3x"
+                style={{ color: 'rgb(226, 226, 20)' }}
+              ></label>
+              <input
+                type="radio"
+                id="rating7"
+                name="experiencia"
+                value={4}
+                onChange={handleExperienciaChange}
+              />
+              <label
+                htmlFor="rating7"
+                title="Bueno"
+                className="fa-sharp fa-regular fa-face-smile fa-3x"
+                style={{ color: 'limegreen' }}
+              ></label>
+              <input
+                type="radio"
+                id="rating6"
+                name="experiencia"
+                value={5}
+                onChange={handleExperienciaChange}
+              />
+              <label
+                htmlFor="rating6"
+                title="Muy Bueno"
+                className="fa-regular fa-face-laugh-beam fa-3x"
+                style={{ color: 'green' }}
+              ></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
                 <br />
 
