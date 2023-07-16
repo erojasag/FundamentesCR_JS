@@ -27,6 +27,15 @@ export default function Sociodemograficos(props) {
     setSociodemograficos(updatedSociodemograficos);
     props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
+const handleDatosInteresChange = (event) => {
+  const updatedSociodemograficos = {
+    ...sociodemograficos,
+    DatosInteres: event.currentTarget.value,
+  };
+  setSociodemograficos(updatedSociodemograficos);
+  props.setUpdatedSociodemograficos(updatedSociodemograficos);
+};
+
   const handleCantidadFamiliasChange = (event) => {
     const updatedSociodemograficos = {
       ...sociodemograficos,
@@ -120,14 +129,22 @@ export default function Sociodemograficos(props) {
       <div class="row">
         <div class="form-group col-sm-6">
           <label for="txtTipoVivienda">Tipo de Vivienda</label>
-          <input
+          <select
             type="text"
             class="form-control form-control-sm input-validar"
             id="tipoVivienda"
             name="tipoVivienda"
             value={sociodemograficos.tipoVivienda}
             onChange={handleTipoViviendaChange}
-          />
+          >
+          <option value="Prefiere no comentar">
+          -No especifica-
+          </option>
+          <option value="Propia">Propia</option>
+          <option value="Alquila">Alquila</option>
+          <option value="Prestada">Prestada</option>
+          <option value="Rancho">Rancho</option>
+        </select>
         </div>
         <div class="form-group col-sm-6">
           <label for="txtHabitantesHogar">
@@ -260,6 +277,19 @@ export default function Sociodemograficos(props) {
               </div>
             </>
           ) : null}
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="txtHabitantesHogar">
+            Otros datos de interes (Opcional)
+          </label>
+          <input
+            type="text"
+            class="form-control form-control-sm input-validar"
+            id="habitantesHogar"
+            name="habitantesHogar"
+            value={sociodemograficos.habitantesHogar}
+            onChange={handleDatosInteresChange}
+          />
         </div>
       </div>
     </React.Fragment>
