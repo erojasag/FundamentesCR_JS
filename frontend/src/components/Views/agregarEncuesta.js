@@ -28,7 +28,7 @@ export default function AgregarEncuesta() {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
-    const response = await axios.get(`http://localhost:3000/pacientes/`, {
+    const response = await axios.get(`https://fundamentes-dev-7bd493ab77ac.herokuapp.com/pacientes/`, {
       headers,
     });
     const pacientes = response.data.data.data;
@@ -93,7 +93,7 @@ export default function AgregarEncuesta() {
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
     const response = await axios.post(
-      `http://localhost:3000/encuestasSatisfaccion/`,
+      `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/encuestasSatisfaccion/`,
       dataEncuesta,
       {
         headers,
@@ -103,7 +103,7 @@ export default function AgregarEncuesta() {
 
     if (response.status === 201) {
       const responsePaciente = await axios.patch(
-        `http://localhost:3000/pacientes/${dataEncuesta.pacienteId}`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/pacientes/${dataEncuesta.pacienteId}`,
         {
           encuestaSatisfaccionId:
             response.data.data.data.encuestaSatisfaccionId,

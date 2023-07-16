@@ -15,19 +15,19 @@ export default function Stats() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
-      const totalCasas = await axios.get('http://localhost:3000/casas', {
+      const totalCasas = await axios.get('https://fundamentes-dev-7bd493ab77ac.herokuapp.com/casas', {
         headers,
       });
       const totalPacientes = await axios.get(
-        'http://localhost:3000/pacientes',
+        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/pacientes',
         { headers }
       );
       const totalEncuestas = await axios.get(
-        'http://localhost:3000/encuestasSatisfaccion',
+        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/encuestasSatisfaccion',
         { headers }
       );
       const totalSalidas = await axios.get(
-        'http://localhost:3000/entrevistasSalida/',
+        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/entrevistasSalida/',
         {
           headers,
         }

@@ -45,7 +45,7 @@ export default function Login() {
 
       setLoading(true);
       const response = await axios.post(
-        'http://localhost:3000/usuarios/login',
+        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/login',
         data
       );
       console.log(response);

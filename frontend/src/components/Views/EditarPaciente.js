@@ -121,7 +121,7 @@ export default function EditarPaciente() {
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
 
-    const response = await axios.get(`http://localhost:3000/pacientes/${id}`, {
+    const response = await axios.get(`https://fundamentes-dev-7bd493ab77ac.herokuapp.com/pacientes/${id}`, {
       headers,
     });
     const data = response.data.data.data;
@@ -137,7 +137,7 @@ export default function EditarPaciente() {
 
     if (data.perfilEntradaId !== null) {
       const responsePerfilEntrada = await axios.get(
-        `http://localhost:3000/entrevistasEntrada/${data.perfilEntradaId}`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/entrevistasEntrada/${data.perfilEntradaId}`,
         {
           headers,
         }
@@ -147,7 +147,7 @@ export default function EditarPaciente() {
     }
     // if (data.perfilSalidaId !== null) {
     //   const responsePerfilSalida = await axios.get(
-    //     `http://localhost:3000/entrevistasSalida/${data.perfilSalidaId}`,
+    //     `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/entrevistasSalida/${data.perfilSalidaId}`,
     //     {
     //       headers,
     //     }
@@ -191,7 +191,7 @@ export default function EditarPaciente() {
     if (updatedDatosMedicos !== null) {
       if (pacienteData.datosMedicosId === null) {
         const response = await axios.post(
-          `http://localhost:3000/datosMedicos/`,
+          `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/datosMedicos/`,
           updatedDatosMedicos,
           {
             headers,
@@ -201,7 +201,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `http://localhost:3000/datosMedicos/${pacienteData.datosMedicosId}`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/datosMedicos/${pacienteData.datosMedicosId}`,
         updatedDatosMedicos,
         {
           headers,
@@ -211,7 +211,7 @@ export default function EditarPaciente() {
     if (updatedCondicionLaboral !== null) {
       if (pacienteData.condicionLaboralId === null) {
         const response = await axios.post(
-          `http://localhost:3000/condicionesLaborales/`,
+          `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/condicionesLaborales/`,
           updatedCondicionLaboral,
           {
             headers,
@@ -222,7 +222,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `http://localhost:3000/condicionesLaborales/${pacienteData.condicionLaboralId}`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/condicionesLaborales/${pacienteData.condicionLaboralId}`,
         updatedCondicionLaboral,
         {
           headers,
@@ -232,7 +232,7 @@ export default function EditarPaciente() {
     if (updatedSociodemograficos !== null) {
       if (pacienteData.sociodemograficosId === null) {
         const response = await axios.post(
-          `http://localhost:3000/sociodemograficos/`,
+          `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/sociodemograficos/`,
           updatedSociodemograficos,
           {
             headers,
@@ -243,7 +243,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `http://localhost:3000/sociodemograficos/${pacienteData.sociodemograficosId}`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/sociodemograficos/${pacienteData.sociodemograficosId}`,
         updatedSociodemograficos,
         {
           headers,
@@ -253,7 +253,7 @@ export default function EditarPaciente() {
     if (updatedEncargado !== null) {
       if (pacienteData.encargadoId === null) {
         const response = await axios.post(
-          `http://localhost:3000/encargados/`,
+          `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/encargados/`,
           updatedEncargado,
           {
             headers,
@@ -263,7 +263,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `http://localhost:3000/encargados/${pacienteData.encargadoId}`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/encargados/${pacienteData.encargadoId}`,
         updatedEncargado,
         {
           headers,
@@ -273,7 +273,7 @@ export default function EditarPaciente() {
     if (updatedDinamicaFamiliar !== null) {
       if (pacienteData.dinamicaFamiliarId === null) {
         const response = await axios.post(
-          `http://localhost:3000/dinamicasFamiliares/`,
+          `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/dinamicasFamiliares/`,
           updatedDinamicaFamiliar,
           {
             headers,
@@ -284,7 +284,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `http://localhost:3000/dinamicasFamiliares/${pacienteData.dinamicaFamiliarId}`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/dinamicasFamiliares/${pacienteData.dinamicaFamiliarId}`,
         updatedDinamicaFamiliar,
         {
           headers,
@@ -294,7 +294,7 @@ export default function EditarPaciente() {
     if (updatedEscolaridad !== null) {
       if (pacienteData.escolaridadId === null) {
         const response = await axios.post(
-          `http://localhost:3000/escolaridades/`,
+          `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/escolaridades/`,
           updatedEscolaridad,
           {
             headers,
@@ -303,7 +303,7 @@ export default function EditarPaciente() {
         pacienteData.escolaridadId = response.data.data.data.escolaridadId;
       }
       await axios.patch(
-        `http://localhost:3000/escolaridades/${pacienteData.escolaridadId}`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/escolaridades/${pacienteData.escolaridadId}`,
         updatedEscolaridad,
         {
           headers,
@@ -332,7 +332,7 @@ export default function EditarPaciente() {
       perfilSalidaId: pacienteData.perfilSalidaId,
     };
     await axios.patch(
-      `http://localhost:3000/pacientes/${pacienteData.pacienteId}`,
+      `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/pacientes/${pacienteData.pacienteId}`,
       body,
       {
         headers,
