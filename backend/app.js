@@ -53,7 +53,7 @@ if (process.env.NODE_ENV === 'development') {
 //enable CORS
 app.use(
   cors({
-    origin: 'http://localhost:5000',
+    origin: 'https://stalwart-starlight-18573b.netlify.app',
   })
 );
 
