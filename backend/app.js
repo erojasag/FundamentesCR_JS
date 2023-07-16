@@ -51,11 +51,7 @@ if (process.env.NODE_ENV === 'development') {
 // app.use('/', limiter);
 
 //enable CORS
-app.use(
-  cors({
-    origin: 'https://stalwart-starlight-18573b.netlify.app',
-  })
-);
+app.use(cors());
 
 //data sanitization against XSS
 app.use(xss());
