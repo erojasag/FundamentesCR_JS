@@ -93,7 +93,9 @@ app.use('/stats', statsRouter);
 app.use('/encuestasSatisfaccion', encuestaSatisfaccionRouter);
 //404 handler
 app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  next(
+    new AppError(`This is the staging ${req.originalUrl} on this server!`, 404)
+  );
 });
 
 app.use(ErrorHandler);

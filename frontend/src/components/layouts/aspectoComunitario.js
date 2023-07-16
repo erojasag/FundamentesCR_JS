@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-
 export default function AspectoComunitario(props) {
   const [aspectoComunitario, setAspectoComunitario] = useState({});
 
@@ -11,7 +10,6 @@ export default function AspectoComunitario(props) {
       setAspectoComunitario([null]);
     }
   }, [props.aspectoComunitario]);
-
 
   const handleAltaVulnerabilidadViolencia = (event) => {
     const updatedAspectoComunitario = {
@@ -129,7 +127,6 @@ export default function AspectoComunitario(props) {
     setAspectoComunitario(updatedAspectoComunitario);
     props.setUpdatedAspectoComunitario(updatedAspectoComunitario);
   };
-
 
   return (
     <React.Fragment>
