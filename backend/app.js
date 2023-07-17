@@ -53,7 +53,7 @@ if (process.env.NODE_ENV === 'development') {
 //enable CORS
 app.use(
   cors({
-    origin: 'https://fundamentes-dev.netlify.app',
+    origin: 'https://fundamentes-dev-7bd493ab77ac.herokuapp.com',
   })
 );
 
