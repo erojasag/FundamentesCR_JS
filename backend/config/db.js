@@ -17,7 +17,7 @@ const db = new Sequelize(
       host: process.env.DB_URL,
       port: process.env.DB_PORT,
       ssl: {
-        rejectUnauthorized: true,
+        rejectUnauthorized: false,
       },
     },
     logging: false,

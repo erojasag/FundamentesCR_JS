@@ -203,6 +203,7 @@ Paciente.addHook('beforeFind', async (options) => {
         'recibeSubsidio',
         'institucion',
         'tipo',
+        'datosInteres',
       ],
     },
     {
