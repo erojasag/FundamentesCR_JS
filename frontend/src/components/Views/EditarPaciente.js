@@ -13,10 +13,12 @@ import Encargado from '../layouts/encargado';
 import DinamicaFamiliar from '../layouts/dinamicaFamiliar';
 import Escolaridad from '../layouts/escolaridad';
 import PerfilEntrada from '../layouts/perfilEntrada';
+import PerfilSalida from '../layouts/perfilSalida';
 
 export default function EditarPaciente() {
   const { id } = useParams();
-
+  const [agregaPerfilEntrada, setAgregaPerfilEntrada] = useState(false);
+  const [agregaPerfilSalida, setAgregaPerfilSalida] = useState(false);
   const navigate = useNavigate();
   const [pacienteData, setPacienteData] = useState({});
   //datos medicos
@@ -144,6 +146,7 @@ export default function EditarPaciente() {
       );
       const dataPerfilEntrada = responsePerfilEntrada.data.data.data;
       setPerfilEntrada(dataPerfilEntrada);
+      setAgregaPerfilEntrada(true);
     }
     // if (data.perfilSalidaId !== null) {
     //   const responsePerfilSalida = await axios.get(
@@ -350,7 +353,9 @@ export default function EditarPaciente() {
           <div class="container-fluid">
             <div class="card shadow mb-4">
               <div class="card-header py-3 bg-second-primary">
-                <h6 class="m-0 font-weight-bold text-white">Editar Paciente</h6>
+                <h6 class="m-0 font-weight-bold text-white">
+                  Editar Beneficiario
+                </h6>
               </div>
               <div class="card-body">
                 <div class="row">
@@ -510,16 +515,76 @@ export default function EditarPaciente() {
                       />
                       <br />
                       <hr />
-                      {pacienteData.perfilEntradaId === null ? (
-                        <PerfilEntrada
-                          perfilEntrada={perfilEntrada}
-                          setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
-                        />
-                      ) : (
-                        <PerfilEntrada
-                          perfilEntrada={perfilEntrada}
-                          setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
-                        />
+                      {!agregaPerfilEntrada && (
+                        <div class="row col-sm-6">
+                          <button
+                            class="btn btn-success btn-sm"
+                            type="button"
+                            id="btnGuardarCambios"
+                            onClick={() => setAgregaPerfilEntrada(true)}
+                          >
+                            Anadir Perfil de Entrada
+                          </button>
+                        </div>
+                      )}
+                      {agregaPerfilEntrada && (
+                        <>
+                          <PerfilEntrada
+                            perfilEntrada={perfilEntrada}
+                            setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
+                          />
+                          <div class="row col-sm-6">
+                            <button
+                              class="btn btn-danger btn-sm"
+                              type="button"
+                              id="btnGuardarCambios"
+                              onClick={() => setAgregaPerfilEntrada(false)}
+                            >
+                              Cancelar
+                            </button>
+                          </div>
+                        </>
+                      )}
+                      <hr />
+                      {!agregaPerfilSalida && (
+                        <div class="row col-sm-6">
+                          <button
+                            class="btn btn-success btn-sm"
+                            type="button"
+                            id="btnGuardarCambios"
+                            onClick={() => setAgregaPerfilSalida(true)}
+                          >
+                            Anadir Perfil de Salida
+                          </button>
+                        </div>
+                      )}
+                      {agregaPerfilSalida && (
+                        <>
+                          <div class="form-group row justify-content-center">
+                            <label
+                              for="txtDistrito"
+                              className="col-form-label-lg"
+                            >
+                              Perfil de Salida
+                            </label>
+                          </div>
+
+                          <PerfilSalida
+                            perfilEntrada={perfilSalida}
+                            setUpdatedPerfilEntrada={setUpdatedPerfilSalida}
+                          />
+
+                          <div class="row col-sm-6">
+                            <button
+                              class="btn btn-danger btn-sm"
+                              type="button"
+                              id="btnGuardarCambios"
+                              onClick={() => setAgregaPerfilSalida(false)}
+                            >
+                              Cancelar
+                            </button>
+                          </div>
+                        </>
                       )}
                       <br />
                       <hr />

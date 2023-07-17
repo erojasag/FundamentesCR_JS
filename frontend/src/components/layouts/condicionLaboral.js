@@ -49,7 +49,7 @@ export default function CondicionLaboral(props) {
     <React.Fragment>
       <div class="form-group row justify-content-center">
         <label for="txtDistrito" className="col-form-label-lg">
-          Condiciones Laborales
+          Condiciones Laborales - Encargado
         </label>
       </div>
 

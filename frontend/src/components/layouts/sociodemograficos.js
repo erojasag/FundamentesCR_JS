@@ -27,14 +27,14 @@ export default function Sociodemograficos(props) {
     setSociodemograficos(updatedSociodemograficos);
     props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
-const handleDatosInteresChange = (event) => {
-  const updatedSociodemograficos = {
-    ...sociodemograficos,
-    DatosInteres: event.currentTarget.value,
+  const handleDatosInteresChange = (event) => {
+    const updatedSociodemograficos = {
+      ...sociodemograficos,
+      datosInteres: event.currentTarget.value,
+    };
+    setSociodemograficos(updatedSociodemograficos);
+    props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
-  setSociodemograficos(updatedSociodemograficos);
-  props.setUpdatedSociodemograficos(updatedSociodemograficos);
-};
 
   const handleCantidadFamiliasChange = (event) => {
     const updatedSociodemograficos = {
@@ -116,8 +116,6 @@ const handleDatosInteresChange = (event) => {
     props.setUpdatedSociodemograficos(updatedSociodemograficos);
   };
 
-  
-
   return (
     <React.Fragment>
       <div class="form-group row justify-content-center">
@@ -137,14 +135,12 @@ const handleDatosInteresChange = (event) => {
             value={sociodemograficos.tipoVivienda}
             onChange={handleTipoViviendaChange}
           >
-          <option value="Prefiere no comentar">
-          -No especifica-
-          </option>
-          <option value="Propia">Propia</option>
-          <option value="Alquila">Alquila</option>
-          <option value="Prestada">Prestada</option>
-          <option value="Rancho">Rancho</option>
-        </select>
+            <option value="Prefiere no comentar">-No especifica-</option>
+            <option value="Propia">Propia</option>
+            <option value="Alquila">Alquila</option>
+            <option value="Prestada">Prestada</option>
+            <option value="Rancho">Rancho</option>
+          </select>
         </div>
         <div class="form-group col-sm-6">
           <label for="txtHabitantesHogar">
@@ -285,9 +281,9 @@ const handleDatosInteresChange = (event) => {
           <input
             type="text"
             class="form-control form-control-sm input-validar"
-            id="habitantesHogar"
-            name="habitantesHogar"
-            value={sociodemograficos.habitantesHogar}
+            id="datosInteres"
+            name="datosInteres"
+            value={sociodemograficos.datosInteres}
             onChange={handleDatosInteresChange}
           />
         </div>

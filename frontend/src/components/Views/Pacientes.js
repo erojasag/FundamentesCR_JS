@@ -13,6 +13,7 @@ import DinamicaFamiliar from '../layouts/dinamicaFamiliar';
 import Escolaridad from '../layouts/escolaridad';
 import Loading from '../layouts/loading';
 import { Link } from 'react-router-dom';
+import PerfilEntrada from '../layouts/perfilEntrada';
 // import PerfilEntrada from '../layouts/perfilEntrada';
 
 export default function Pacientes() {
@@ -153,8 +154,10 @@ export default function Pacientes() {
           headers,
         }
       );
+
       if (responseDatosMedicos.status === 201) {
-        setNewPacienteData(responseDatosMedicos.data.data.data);
+        newPacienteData.datosMedicosId =
+          responseDatosMedicos.data.data.data.datosMedicosId;
       }
     }
 
@@ -167,7 +170,8 @@ export default function Pacientes() {
         }
       );
       if (responseCondicionLaboral.status === 201) {
-        setNewPacienteData(responseCondicionLaboral.data.data.data);
+        newPacienteData.condicionLaboralId =
+          responseCondicionLaboral.data.data.data.condicionLaboralId;
       }
     }
 
@@ -179,8 +183,10 @@ export default function Pacientes() {
           headers,
         }
       );
+
       if (responseSociodemograficos.status === 201) {
-        setNewPacienteData(responseSociodemograficos.data.data.data);
+        newPacienteData.sociodemograficosId =
+          responseSociodemograficos.data.data.data.sociodemograficosId;
       }
     }
 
@@ -193,7 +199,8 @@ export default function Pacientes() {
         }
       );
       if (responseEncargado.status === 201) {
-        setNewPacienteData(responseEncargado.data.data.data);
+        newPacienteData.encargadoId =
+          responseEncargado.data.data.data.encargadoId;
       }
     }
 
@@ -206,7 +213,8 @@ export default function Pacientes() {
         }
       );
       if (responseDinamicaFamiliar.status === 201) {
-        setNewPacienteData(responseDinamicaFamiliar.data.data.data);
+        newPacienteData.dinamicaFamiliarId =
+          responseDinamicaFamiliar.data.data.data.dinamicaFamiliarId;
       }
     }
 
@@ -219,7 +227,8 @@ export default function Pacientes() {
         }
       );
       if (responseEscolaridad.status === 201) {
-        setNewPacienteData(responseEscolaridad.data.data.data);
+        newPacienteData.escolaridadId =
+          responseEscolaridad.data.data.data.escolaridadId;
       }
     }
 
@@ -249,6 +258,7 @@ export default function Pacientes() {
     //   }
     // }
 
+    console.log(newPacienteData);
     const response = await axios.post(
       'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/pacientes/',
       newPacienteData,
@@ -373,7 +383,7 @@ export default function Pacientes() {
               <div className="card shadow mb-4 m-overflow">
                 <div className="card-header py-3 bg-second-primary">
                   <h6 className="m-0 font-weight-bold text-white">
-                    Lista de Pacientes
+                    Lista de Beneficiarios
                   </h6>
                 </div>
                 <div className="card-body">
@@ -384,7 +394,7 @@ export default function Pacientes() {
                         data-toggle="modal"
                         data-target="#modalData"
                       >
-                        <i class="fas fa-user-plus"></i> Nuevo Paciente
+                        <i class="fas fa-user-plus"></i> Nuevo Beneficiario
                       </button>
                     </div>
                   </div>
@@ -608,7 +618,9 @@ export default function Pacientes() {
                                   <option value="Masculino">Masculino</option>
                                   <option value="Femenino">Femenino</option>
                                   <option value="No-Binario">No-Binario</option>
-                                  <option value="Tansgenero">Transgénero</option>
+                                  <option value="Tansgenero">
+                                    Transgénero
+                                  </option>
                                 </select>
                               </div>
                             </div>
@@ -664,7 +676,7 @@ export default function Pacientes() {
                         />
                         <hr />
                         <br />
-                        {/* <PerfilEntrada /> */}
+                        <PerfilEntrada />
                       </form>
                       <div class="modal-footer">
                         <button
