@@ -51,11 +51,7 @@ if (process.env.NODE_ENV === 'development') {
 // app.use('/', limiter);
 
 //enable CORS
-app.use(
-  cors({
-    origin: 'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/',
-  })
-);
+app.use(cors());
 
 //data sanitization against XSS
 app.use(xss());
