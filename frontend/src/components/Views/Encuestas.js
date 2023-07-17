@@ -16,7 +16,7 @@ export default function Encuestas() {
     };
 
     const response = await axios.get(
-      'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/encuestasSatisfaccion/',
+      'https://fundamentes-dev-bf6998eb4614.herokuapp.com/encuestasSatisfaccion/',
       {
         headers,
       }

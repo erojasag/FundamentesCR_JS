@@ -62,7 +62,7 @@ export default function Perfil() {
       };
 
       const response = await axios.get(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/${Cookies.get('id')}`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/${Cookies.get('id')}`,
         {
           headers,
         }
@@ -111,7 +111,7 @@ export default function Perfil() {
       }
 
       const response = await axios.patch(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/actualizarMiPerfil`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/actualizarMiPerfil`,
         userData,
         { headers }
       );

@@ -58,7 +58,7 @@ export default function ListaUsuariosInactivos() {
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
     const response = await axios.get(
-      'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/usuariosInactivos/',
+      'https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/usuariosInactivos/',
       {
         headers,
       }
@@ -88,7 +88,7 @@ export default function ListaUsuariosInactivos() {
     };
 
     const response = await axios.patch(
-      `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/activarUsuario/${usuarioId}`,
+      `https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/activarUsuario/${usuarioId}`,
       {
         headers,
       }
@@ -116,7 +116,7 @@ export default function ListaUsuariosInactivos() {
       contrasena: '',
       confirmContrasena: '',
     };
-    const response = await axios.post('https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/', body, {
+    const response = await axios.post('https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/', body, {
       headers,
     });
     if (response.status === 201) {

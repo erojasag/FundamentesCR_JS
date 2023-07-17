@@ -15,19 +15,19 @@ export default function Stats() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
-      const totalCasas = await axios.get('https://fundamentes-dev-7bd493ab77ac.herokuapp.com/casas', {
+      const totalCasas = await axios.get('https://fundamentes-dev-bf6998eb4614.herokuapp.com/casas', {
         headers,
       });
       const totalPacientes = await axios.get(
-        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/pacientes',
+        'https://fundamentes-dev-bf6998eb4614.herokuapp.com/pacientes',
         { headers }
       );
       const totalEncuestas = await axios.get(
-        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/encuestasSatisfaccion',
+        'https://fundamentes-dev-bf6998eb4614.herokuapp.com/encuestasSatisfaccion',
         { headers }
       );
       const totalSalidas = await axios.get(
-        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/entrevistasSalida/',
+        'https://fundamentes-dev-bf6998eb4614.herokuapp.com/entrevistasSalida/',
         {
           headers,
         }

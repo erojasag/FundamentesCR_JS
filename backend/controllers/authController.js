@@ -143,7 +143,7 @@ const forgotPassword = catchAsync(async (req, res, next) => {
 
   await user.save();
 
-  const resetURL = `${req.protocol}://localhost:5000/usuarios/reiniciarContrasena/${resetToken}`;
+  const resetURL = `${req.protocol}://fundamentes-dev.netlify.app/usuarios/reiniciarContrasena/${resetToken}`;
 
   const message = `Olvidó su contraseña? Ingrese su nueva contraseña y confirmación de contraseña a: ${resetURL}\nSi no olvidó su contraseña, por favor ignore este correo`;
 

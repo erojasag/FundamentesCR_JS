@@ -51,7 +51,11 @@ if (process.env.NODE_ENV === 'development') {
 // app.use('/', limiter);
 
 //enable CORS
-app.use(cors());
+app.use(
+  cors({
+    origin: 'https://fundamentes-dev.netlify.app',
+  })
+);
 
 //data sanitization against XSS
 app.use(xss());

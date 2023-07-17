@@ -123,7 +123,7 @@ export default function EditarPaciente() {
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
 
-    const response = await axios.get(`https://fundamentes-dev-7bd493ab77ac.herokuapp.com/pacientes/${id}`, {
+    const response = await axios.get(`https://fundamentes-dev-bf6998eb4614.herokuapp.com/pacientes/${id}`, {
       headers,
     });
     const data = response.data.data.data;
@@ -139,7 +139,7 @@ export default function EditarPaciente() {
 
     if (data.perfilEntradaId !== null) {
       const responsePerfilEntrada = await axios.get(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/entrevistasEntrada/${data.perfilEntradaId}`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/entrevistasEntrada/${data.perfilEntradaId}`,
         {
           headers,
         }
@@ -150,7 +150,7 @@ export default function EditarPaciente() {
     }
     // if (data.perfilSalidaId !== null) {
     //   const responsePerfilSalida = await axios.get(
-    //     `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/entrevistasSalida/${data.perfilSalidaId}`,
+    //     `https://fundamentes-dev-bf6998eb4614.herokuapp.com/entrevistasSalida/${data.perfilSalidaId}`,
     //     {
     //       headers,
     //     }
@@ -194,7 +194,7 @@ export default function EditarPaciente() {
     if (updatedDatosMedicos !== null) {
       if (pacienteData.datosMedicosId === null) {
         const response = await axios.post(
-          `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/datosMedicos/`,
+          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/datosMedicos/`,
           updatedDatosMedicos,
           {
             headers,
@@ -204,7 +204,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/datosMedicos/${pacienteData.datosMedicosId}`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/datosMedicos/${pacienteData.datosMedicosId}`,
         updatedDatosMedicos,
         {
           headers,
@@ -214,7 +214,7 @@ export default function EditarPaciente() {
     if (updatedCondicionLaboral !== null) {
       if (pacienteData.condicionLaboralId === null) {
         const response = await axios.post(
-          `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/condicionesLaborales/`,
+          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/condicionesLaborales/`,
           updatedCondicionLaboral,
           {
             headers,
@@ -225,7 +225,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/condicionesLaborales/${pacienteData.condicionLaboralId}`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/condicionesLaborales/${pacienteData.condicionLaboralId}`,
         updatedCondicionLaboral,
         {
           headers,
@@ -235,7 +235,7 @@ export default function EditarPaciente() {
     if (updatedSociodemograficos !== null) {
       if (pacienteData.sociodemograficosId === null) {
         const response = await axios.post(
-          `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/sociodemograficos/`,
+          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/sociodemograficos/`,
           updatedSociodemograficos,
           {
             headers,
@@ -246,7 +246,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/sociodemograficos/${pacienteData.sociodemograficosId}`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/sociodemograficos/${pacienteData.sociodemograficosId}`,
         updatedSociodemograficos,
         {
           headers,
@@ -256,7 +256,7 @@ export default function EditarPaciente() {
     if (updatedEncargado !== null) {
       if (pacienteData.encargadoId === null) {
         const response = await axios.post(
-          `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/encargados/`,
+          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/encargados/`,
           updatedEncargado,
           {
             headers,
@@ -266,7 +266,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/encargados/${pacienteData.encargadoId}`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/encargados/${pacienteData.encargadoId}`,
         updatedEncargado,
         {
           headers,
@@ -276,7 +276,7 @@ export default function EditarPaciente() {
     if (updatedDinamicaFamiliar !== null) {
       if (pacienteData.dinamicaFamiliarId === null) {
         const response = await axios.post(
-          `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/dinamicasFamiliares/`,
+          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/dinamicasFamiliares/`,
           updatedDinamicaFamiliar,
           {
             headers,
@@ -287,7 +287,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/dinamicasFamiliares/${pacienteData.dinamicaFamiliarId}`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/dinamicasFamiliares/${pacienteData.dinamicaFamiliarId}`,
         updatedDinamicaFamiliar,
         {
           headers,
@@ -297,7 +297,7 @@ export default function EditarPaciente() {
     if (updatedEscolaridad !== null) {
       if (pacienteData.escolaridadId === null) {
         const response = await axios.post(
-          `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/escolaridades/`,
+          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/escolaridades/`,
           updatedEscolaridad,
           {
             headers,
@@ -306,7 +306,7 @@ export default function EditarPaciente() {
         pacienteData.escolaridadId = response.data.data.data.escolaridadId;
       }
       await axios.patch(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/escolaridades/${pacienteData.escolaridadId}`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/escolaridades/${pacienteData.escolaridadId}`,
         updatedEscolaridad,
         {
           headers,
@@ -335,7 +335,7 @@ export default function EditarPaciente() {
       perfilSalidaId: pacienteData.perfilSalidaId,
     };
     await axios.patch(
-      `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/pacientes/${pacienteData.pacienteId}`,
+      `https://fundamentes-dev-bf6998eb4614.herokuapp.com/pacientes/${pacienteData.pacienteId}`,
       body,
       {
         headers,
