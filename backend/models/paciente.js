@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const casas = require('./casa');
+const Casas = require('./casa');
 const db = require('../config/db');
 const datoMedico = require('./datoMedico');
 const condicionLaboral = require('./condicionLaboral');
@@ -68,7 +68,7 @@ const Paciente = db.define(
     casaId: {
       type: DataTypes.UUIDV1,
       references: {
-        model: casas,
+        model: Casas,
         key: 'casaId',
       },
     },
@@ -160,7 +160,7 @@ Paciente.addHook('beforeFind', async (options) => {
   };
   options.include = [
     {
-      model: casas,
+      model: Casas,
       as: 'casa',
       attributes: ['casaId', 'nombreCasa', 'canton', 'provincia', 'direccion'],
     },
@@ -282,7 +282,7 @@ Paciente.addHook('beforeFind', async (options) => {
   ];
 });
 
-Paciente.belongsTo(casas, {
+Paciente.belongsTo(Casas, {
   foreignKey: 'casaId',
   as: 'casa',
 });

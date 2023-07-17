@@ -15,7 +15,7 @@ export default function PerfilEntrada() {
     };
     const fetchData = async () => {
       const response = await axios(
-        'http://localhost:3000/entrevistasEntrada/',
+        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/entrevistasEntrada/',
         {
           headers: headers,
         }
