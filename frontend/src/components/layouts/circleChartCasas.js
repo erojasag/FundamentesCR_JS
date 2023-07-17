@@ -14,7 +14,7 @@ const CircleChartCasas = () => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
-    const response = await axios.get(`http://localhost:3000/stats/statsCasas`, {
+    const response = await axios.get(`https://fundamentes-dev-7bd493ab77ac.herokuapp.com/stats/statsCasas`, {
       headers,
     });
     const casas = response.data.data.data;
