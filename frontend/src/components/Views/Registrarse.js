@@ -46,7 +46,7 @@ export default function Registrarse() {
         confirmContrasena,
       };
       const response = await axios.post(
-        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/registrarse',
+        'http://localhost:3000/usuarios/registrarse',
         data
       );
       if (response.status !== 201) {

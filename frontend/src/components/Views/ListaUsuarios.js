@@ -59,7 +59,7 @@ export default function ListaUsuarios() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
-      const response = await axios.get('https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/', {
+      const response = await axios.get('http://localhost:3000/usuarios/', {
         headers,
       });
       if (response.status !== 200) {
@@ -103,7 +103,7 @@ export default function ListaUsuarios() {
       };
 
       const response = await axios.delete(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/${usuarioId}`,
+        `http://localhost:3000/usuarios/${usuarioId}`,
         {
           headers,
         }
@@ -146,7 +146,7 @@ export default function ListaUsuarios() {
         confirmContrasena: '',
       };
       const response = await axios.post(
-        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/',
+        'http://localhost:3000/usuarios/',
         body,
         {
           headers,
