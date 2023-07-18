@@ -13,6 +13,7 @@ import DinamicaFamiliar from '../layouts/dinamicaFamiliar';
 import Escolaridad from '../layouts/escolaridad';
 import Loading from '../layouts/loading';
 import { Link } from 'react-router-dom';
+import PerfilEntrada from '../layouts/perfilEntrada';
 // import PerfilEntrada from '../layouts/perfilEntrada';
 
 export default function Pacientes() {
@@ -130,7 +131,7 @@ export default function Pacientes() {
     };
 
     const response = await axios.delete(
-      `http://localhost:3000/pacientes/${pacienteId}`,
+      `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/pacientes/${pacienteId}`,
       {
         headers,
       }
@@ -147,85 +148,93 @@ export default function Pacientes() {
 
     if (updatedDatosMedicos !== null) {
       const responseDatosMedicos = await axios.post(
-        `http://localhost:3000/datosMedicos/`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/datosMedicos/`,
         updatedDatosMedicos,
         {
           headers,
         }
       );
+
       if (responseDatosMedicos.status === 201) {
-        setNewPacienteData(responseDatosMedicos.data.data.data);
+        newPacienteData.datosMedicosId =
+          responseDatosMedicos.data.data.data.datosMedicosId;
       }
     }
 
     if (updatedCondicionLaboral !== null) {
       const responseCondicionLaboral = await axios.post(
-        `http://localhost:3000/condicionesLaborales/`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/condicionesLaborales/`,
         updatedCondicionLaboral,
         {
           headers,
         }
       );
       if (responseCondicionLaboral.status === 201) {
-        setNewPacienteData(responseCondicionLaboral.data.data.data);
+        newPacienteData.condicionLaboralId =
+          responseCondicionLaboral.data.data.data.condicionLaboralId;
       }
     }
 
     if (updatedSociodemograficos !== null) {
       const responseSociodemograficos = await axios.post(
-        `http://localhost:3000/sociodemograficos/`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/sociodemograficos/`,
         updatedSociodemograficos,
         {
           headers,
         }
       );
+
       if (responseSociodemograficos.status === 201) {
-        setNewPacienteData(responseSociodemograficos.data.data.data);
+        newPacienteData.sociodemograficosId =
+          responseSociodemograficos.data.data.data.sociodemograficosId;
       }
     }
 
     if (updatedEncargado !== null) {
       const responseEncargado = await axios.post(
-        `http://localhost:3000/encargados/`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/encargados/`,
         updatedEncargado,
         {
           headers,
         }
       );
       if (responseEncargado.status === 201) {
-        setNewPacienteData(responseEncargado.data.data.data);
+        newPacienteData.encargadoId =
+          responseEncargado.data.data.data.encargadoId;
       }
     }
 
     if (updatedDinamicaFamiliar !== null) {
       const responseDinamicaFamiliar = await axios.post(
-        `http://localhost:3000/dinamicasFamiliares/`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/dinamicasFamiliares/`,
         updatedDinamicaFamiliar,
         {
           headers,
         }
       );
       if (responseDinamicaFamiliar.status === 201) {
-        setNewPacienteData(responseDinamicaFamiliar.data.data.data);
+        newPacienteData.dinamicaFamiliarId =
+          responseDinamicaFamiliar.data.data.data.dinamicaFamiliarId;
       }
     }
 
     if (updatedEscolaridad !== null) {
       const responseEscolaridad = await axios.post(
-        `http://localhost:3000/escolaridades/`,
+        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/escolaridades/`,
         updatedEscolaridad,
         {
           headers,
         }
       );
       if (responseEscolaridad.status === 201) {
-        setNewPacienteData(responseEscolaridad.data.data.data);
+        newPacienteData.escolaridadId =
+          responseEscolaridad.data.data.data.escolaridadId;
       }
     }
 
     // if (updatedPerfilEntrada !== null) {
     //   const responsePerfilEntrada = await axios.post(
-    //     `http://localhost:3000/entrevistasEntrada/`,
+    //     `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/entrevistasEntrada/`,
     //     updatedPerfilEntrada,
     //     {
     //       headers,
@@ -238,7 +247,7 @@ export default function Pacientes() {
 
     // if (updatedPerfilSalida !== null) {
     //   const responsePerfilSalida = await axios.post(
-    //     `http://localhost:3000/entrevistasSalida/`,
+    //     `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/entrevistasSalida/`,
     //     updatedPerfilSalida,
     //     {
     //       headers,
@@ -249,8 +258,9 @@ export default function Pacientes() {
     //   }
     // }
 
+    console.log(newPacienteData);
     const response = await axios.post(
-      'http://localhost:3000/pacientes/',
+      'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/pacientes/',
       newPacienteData,
       {
         headers,
@@ -268,7 +278,7 @@ export default function Pacientes() {
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
       setLoading(true);
-      const response = await axios.get('http://localhost:3000/pacientes', {
+      const response = await axios.get('https://fundamentes-dev-7bd493ab77ac.herokuapp.com/pacientes', {
         headers,
       });
       const data = response.data.data.data;
@@ -373,7 +383,7 @@ export default function Pacientes() {
               <div className="card shadow mb-4 m-overflow">
                 <div className="card-header py-3 bg-second-primary">
                   <h6 className="m-0 font-weight-bold text-white">
-                    Lista de Pacientes
+                    Lista de Beneficiarios
                   </h6>
                 </div>
                 <div className="card-body">
@@ -384,7 +394,7 @@ export default function Pacientes() {
                         data-toggle="modal"
                         data-target="#modalData"
                       >
-                        <i class="fas fa-user-plus"></i> Nuevo Paciente
+                        <i class="fas fa-user-plus"></i> Nuevo Beneficiario
                       </button>
                     </div>
                   </div>
@@ -491,8 +501,8 @@ export default function Pacientes() {
                       </button>
                     </div>
                     <div class="modal-body">
-                      <form>
-                        <div class="row">
+                      <form class="mx-auto">
+                        <div class="row justify-content-center">
                           <div class="col-sm-8">
                             <div class="form-row ">
                               <div class="form-group col-sm-6">
@@ -608,6 +618,9 @@ export default function Pacientes() {
                                   <option value="Masculino">Masculino</option>
                                   <option value="Femenino">Femenino</option>
                                   <option value="No-Binario">No-Binario</option>
+                                  <option value="Tansgenero">
+                                    Transgénero
+                                  </option>
                                 </select>
                               </div>
                             </div>
@@ -663,7 +676,7 @@ export default function Pacientes() {
                         />
                         <hr />
                         <br />
-                        {/* <PerfilEntrada /> */}
+                        <PerfilEntrada />
                       </form>
                       <div class="modal-footer">
                         <button

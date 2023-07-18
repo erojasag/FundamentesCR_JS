@@ -273,6 +273,7 @@ export default function Encargado(props) {
             <option value="null">-No Especifica-</option>
             <option value="Empleado">Empleado</option>
             <option value="Independiente">Independiente</option>
+            <option value="Informal">Informal</option>
             <option value="Desempleado">Desempleado</option>
             <option value="Pensionado">Pensionado</option>
           </select>
