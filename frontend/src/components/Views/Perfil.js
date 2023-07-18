@@ -62,7 +62,7 @@ export default function Perfil() {
       };
 
       const response = await axios.get(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/${Cookies.get('id')}`,
+        `http://localhost:3000/usuarios/${Cookies.get('id')}`,
         {
           headers,
         }
@@ -111,7 +111,7 @@ export default function Perfil() {
       }
 
       const response = await axios.patch(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/actualizarMiPerfil`,
+        `http://localhost:3000/usuarios/actualizarMiPerfil`,
         userData,
         { headers }
       );

@@ -4,6 +4,7 @@ import AspectoComunitario from './aspectoComunitario';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import AspectoClinico from './aspectoClinico';
+import AspectoPsicoeducativo from './aspectoPsicoeducativo';
 
 export default function PerfilEntrada(props) {
   const navigate = useNavigate();
@@ -37,6 +38,8 @@ export default function PerfilEntrada(props) {
         headers,
       }
     );
+
+    console.log(response);
     setPerfilEntrada(response.data.data.data);
     setAspectoComunitario(response.data.data.data.aspectoComunitario);
     setAspectoClinico(response.data.data.data.aspectoClinico);
@@ -76,6 +79,10 @@ export default function PerfilEntrada(props) {
       <AspectoClinico
         aspectoClinico={aspectoClinico}
         setUpdatedAspectoClinico={setUpdatedAspectoClinico}
+      />
+      <AspectoPsicoeducativo
+        aspectoPsicoeducativo={aspectoPsicoeducativo}
+        setUpdatedAspectoPsicoeducativo={setUpdatedAspectoPsicoeducativo}
       />
     </React.Fragment>
   );
