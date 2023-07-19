@@ -131,7 +131,7 @@ export default function Pacientes() {
     };
 
     const response = await axios.delete(
-      `https://fundamentes-dev-bf6998eb4614.herokuapp.com/pacientes/${pacienteId}`,
+      `${process.env.REACT_APP_BACKEND_API}pacientes/${pacienteId}`,
       {
         headers,
       }
@@ -148,7 +148,7 @@ export default function Pacientes() {
 
     if (updatedDatosMedicos !== null) {
       const responseDatosMedicos = await axios.post(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/datosMedicos/`,
+        `${process.env.REACT_APP_BACKEND_API}datosMedicos/`,
         updatedDatosMedicos,
         {
           headers,
@@ -163,7 +163,7 @@ export default function Pacientes() {
 
     if (updatedCondicionLaboral !== null) {
       const responseCondicionLaboral = await axios.post(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/condicionesLaborales/`,
+        `${process.env.REACT_APP_BACKEND_API}condicionesLaborales/`,
         updatedCondicionLaboral,
         {
           headers,
@@ -177,7 +177,7 @@ export default function Pacientes() {
 
     if (updatedSociodemograficos !== null) {
       const responseSociodemograficos = await axios.post(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/sociodemograficos/`,
+        `${process.env.REACT_APP_BACKEND_API}sociodemograficos/`,
         updatedSociodemograficos,
         {
           headers,
@@ -192,7 +192,7 @@ export default function Pacientes() {
 
     if (updatedEncargado !== null) {
       const responseEncargado = await axios.post(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/encargados/`,
+        `${process.env.REACT_APP_BACKEND_API}encargados/`,
         updatedEncargado,
         {
           headers,
@@ -206,7 +206,7 @@ export default function Pacientes() {
 
     if (updatedDinamicaFamiliar !== null) {
       const responseDinamicaFamiliar = await axios.post(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/dinamicasFamiliares/`,
+        `${process.env.REACT_APP_BACKEND_API}dinamicasFamiliares/`,
         updatedDinamicaFamiliar,
         {
           headers,
@@ -220,7 +220,7 @@ export default function Pacientes() {
 
     if (updatedEscolaridad !== null) {
       const responseEscolaridad = await axios.post(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/escolaridades/`,
+        `${process.env.REACT_APP_BACKEND_API}escolaridades/`,
         updatedEscolaridad,
         {
           headers,
@@ -234,7 +234,7 @@ export default function Pacientes() {
 
     // if (updatedPerfilEntrada !== null) {
     //   const responsePerfilEntrada = await axios.post(
-    //     `https://fundamentes-dev-bf6998eb4614.herokuapp.com/entrevistasEntrada/`,
+    //     `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/`,
     //     updatedPerfilEntrada,
     //     {
     //       headers,
@@ -247,7 +247,7 @@ export default function Pacientes() {
 
     // if (updatedPerfilSalida !== null) {
     //   const responsePerfilSalida = await axios.post(
-    //     `https://fundamentes-dev-bf6998eb4614.herokuapp.com/entrevistasSalida/`,
+    //     `${process.env.REACT_APP_BACKEND_API}entrevistasSalida/`,
     //     updatedPerfilSalida,
     //     {
     //       headers,
@@ -260,7 +260,7 @@ export default function Pacientes() {
 
     console.log(newPacienteData);
     const response = await axios.post(
-      'https://fundamentes-dev-bf6998eb4614.herokuapp.com/pacientes/',
+      `${process.env.REACT_APP_BACKEND_API}pacientes/`,
       newPacienteData,
       {
         headers,
@@ -278,9 +278,12 @@ export default function Pacientes() {
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
       setLoading(true);
-      const response = await axios.get('https://fundamentes-dev-bf6998eb4614.herokuapp.com/pacientes', {
-        headers,
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}pacientes`,
+        {
+          headers,
+        }
+      );
       const data = response.data.data.data;
 
       setPacientesData(data);

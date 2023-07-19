@@ -35,7 +35,7 @@ export default function EditarUsuarioLog() {
         };
 
         const response = await axios.get(
-          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/${id}`,
+          `${process.env.REACT_APP_BACKEND_API}usuarios/${id}`,
           {
             headers,
           }
@@ -94,7 +94,7 @@ export default function EditarUsuarioLog() {
     };
 
     const response = await axios.patch(
-      `https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/${id}`,
+      `${process.env.REACT_APP_BACKEND_API}usuarios/${id}`,
       userData,
       {
         headers,

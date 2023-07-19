@@ -10,7 +10,7 @@ export default function Casa({ onCasaChange, selectedCasa }) {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
-    const response = await axios.get('https://fundamentes-dev-bf6998eb4614.herokuapp.com/casas/', {
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}casas/`, {
       headers,
     });
     setCasaData(response.data.data.data);

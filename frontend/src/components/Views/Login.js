@@ -42,14 +42,12 @@ export default function Login() {
         email,
         contrasena,
       };
-
       setLoading(true);
       const response = await axios.post(
-        'https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/login',
+        `${process.env.REACT_APP_BACKEND_API}usuarios/login`,
 
         data
       );
-      console.log(response);
       if (response.status === 200) {
         Cookies.set('jwt', response.data.token, { expires: 1 });
         Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });

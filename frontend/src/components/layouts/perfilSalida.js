@@ -31,7 +31,7 @@ export default function PerfilSalida(props) {
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
     const response = await axios.get(
-      `http://localhost:3000/entrevistasEntrada/${props.perfilSalida.perfilSalidaIds}`,
+      `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/${props.perfilSalida.perfilSalidaIds}`,
       {
         headers,
       }

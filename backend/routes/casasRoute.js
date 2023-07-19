@@ -4,6 +4,8 @@ const {
   getCasaById,
   agregarCasa,
   updateCasa,
+  desactivarCasa,
+  activarCasa,
 } = require('../controllers/casaController');
 const { restrictTo, protect } = require('../controllers/authController');
 
@@ -16,8 +18,14 @@ router
 router
   .route('/:id')
   .get(protect, restrictTo('Administrador', 'Psicologo'), getCasaById)
-  .patch(protect, restrictTo('Administrador', 'Psicologo'), updateCasa);
+  .patch(protect, restrictTo('Administrador', 'Psicologo'), updateCasa)
+  .delete(protect, restrictTo('Administrador', 'Psicologo'), desactivarCasa);
 
-
+router.get(
+  '/activarCasa/:id',
+  protect,
+  restrictTo('Administrador', 'Psicologo'),
+  activarCasa
+);
 
 module.exports = router;

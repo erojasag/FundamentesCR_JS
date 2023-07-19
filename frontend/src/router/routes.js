@@ -17,10 +17,6 @@ import Error404 from '../components/Views/Error404';
 import Registrarse from '../components/Views/Registrarse';
 import Pacientes from '../components/Views/Pacientes';
 import EditarPaciente from '../components/Views/EditarPaciente';
-import PerfilEntrada from '../components/Views/PerfilEntrada';
-import EditarPerfilEntrada from '../components/Views/EditarPerfilEntrada';
-import PerfilSalida from '../components/Views/PerfilSalida';
-import EditarPerfilSalida from '../components/Views/EditarPerfilSalida';
 import Encuestas from '../components/Views/Encuestas';
 import AgregarEncuesta from '../components/Views/agregarEncuesta';
 import ResetPass from '../components/Views/ResetPass';
@@ -29,7 +25,10 @@ import Perfil from '../components/Views/Perfil';
 import CambiarContrasena from '../components/Views/cambiarContrasena';
 import ForgotPass from '../components/Views/ForgotPass';
 import ListaUsuariosInactivos from '../components/Views/ListaUsuariosInactivos';
+import ListaCasas from '../components/Views/ListaCasas';
+import EditarCasa from '../components/Views/EditarCasa';
 import Error403 from '../components/Views/Error403';
+import ListaCasasInactivas from '../components/Views/ListaCasasInactivas';
 
 function Router() {
   return (
@@ -41,16 +40,14 @@ function Router() {
       <Route path="/registrarse" element={<Registrarse />} />
       <Route path="/olvideMiContrasena" element={<ForgotPass />} />
       <Route path="/activarCuenta/:token" element={<Activacion />} />
-      <Route path="/perfilEntrada" element={<PerfilEntrada />} />
-      <Route path="/editarPerfilEntrada" element={<EditarPerfilEntrada />} />
-      <Route path="/perfilSalida" element={<PerfilSalida />} />
-      <Route path="/editarPerfilSalida" element={<EditarPerfilSalida />} />
       <Route path="/encuestas/" element={<Encuestas />} />
       <Route path="/agregarEncuesta" element={<AgregarEncuesta />} />
       <Route path="/usuarios/" element={<ListaUsuarios />} />
       <Route path="/usuarios/:id" element={<EditarUsuarioLog />} />
       <Route path="/usuariosInactivos" element={<ListaUsuariosInactivos />} />
-
+      <Route path="/listaCasas" element={<ListaCasas />} />
+      <Route path="/listaCasasInactivas" element={<ListaCasasInactivas />} />
+      <Route path="/casas/:id" element={<EditarCasa />} />
       <Route path="/encargados" element={<PersonaResponsable />} />
       <Route
         path="/expedientes/editarExpediente"

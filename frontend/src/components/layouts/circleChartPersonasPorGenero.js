@@ -16,7 +16,7 @@ const CircleChartPersonasPorGenero = () => {
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
       const response = await axios.get(
-        `http://localhost:3000/stats/pacientesPorGenero`,
+        `${process.env.REACT_APP_BACKEND_API}stats/pacientesPorGenero`,
         { headers }
       );
       const personasPorGenero = response.data.data.data;
