@@ -50,7 +50,6 @@ export default function PerfilSalida(props) {
       });
     } else {
       getDatosPerfilEntrada(perfilSalida.perfilSalidaId);
-      console.log(perfilSalida);
     }
   }, []);
 

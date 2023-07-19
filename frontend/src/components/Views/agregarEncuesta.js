@@ -102,7 +102,7 @@ export default function AgregarEncuesta() {
         headers,
       }
     );
-    console.log(response.data.data.data.encuestaSatisfaccionId);
+
 
     if (response.status === 201) {
       const responsePaciente = await axios.patch(
@@ -115,7 +115,6 @@ export default function AgregarEncuesta() {
           headers,
         }
       );
-      console.log(responsePaciente);
       if (responsePaciente.status === 201) {
         toast.success('Encuesta guardada con éxito');
         setTimeout(() => {

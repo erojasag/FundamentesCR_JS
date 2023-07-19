@@ -77,7 +77,6 @@ export default function ListaCasasInactivas() {
           headers,
         }
       );
-      console.log(response);
       if (response.status === 204) {
         setLoading(false);
         window.location.reload();

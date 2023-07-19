@@ -70,7 +70,6 @@ export default function ResetPass() {
 
       navigate('/inicio');
     } catch (err) {
-      console.log(err.response.data.message);
       if (err.response.data.message) {
         toast.error(
           'Las contrasenas no son iguales. Por favor intente de nuevo.'

@@ -20,7 +20,6 @@ const CircleChartPersonasPorAnoEscolar = () => {
         { headers }
       );
       const personasPorGenero = response.data.data.data;
-      console.log(personasPorGenero);
 
       const chartData = personasPorGenero.map(
         (item) => `${item.cantidad_ninos_x_ano_escolar}`

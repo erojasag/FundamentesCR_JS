@@ -83,7 +83,6 @@ export default function ListaUsuarios() {
       setUserData(response.data.data.users);
       setLoading(false);
     } catch (err) {
-      console.log();
       if (err.response.data.err.message === 'jwt expired') {
         navigate('/');
       }
@@ -111,7 +110,6 @@ export default function ListaUsuarios() {
           headers,
         }
       );
-      console.log(response);
       if (response.status === 204) {
         toast.success('Usuario desactivado con éxito');
         setLoading(false);
@@ -411,7 +409,7 @@ export default function ListaUsuarios() {
                             Cancel
                           </button>
                           <button
-                            class="btn btn-primary btn-sm"
+                            class="btn btn-success btn-sm"
                             type="button"
                             id="btnGuardar"
                             onClick={createUser}

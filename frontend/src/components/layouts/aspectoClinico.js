@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 export default function AspectoClinico(props) {
   const [aspectoClinico, setAspectoClinico] = useState({});
 
-  console.log(props);
-
   useEffect(() => {
     if (props.aspectoClinico.lenght === 0) {
       setAspectoClinico({

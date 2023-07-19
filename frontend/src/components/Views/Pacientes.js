@@ -688,7 +688,7 @@ export default function Pacientes() {
                           Cancel
                         </button>
                         <button
-                          class="btn btn-primary btn-sm"
+                          class="btn btn-success btn-sm"
                           type="button"
                           id="btnGuardar"
                           onClick={createPaciente}
