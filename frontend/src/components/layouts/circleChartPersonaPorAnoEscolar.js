@@ -5,24 +5,35 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import generateBackgroundColors from './randomColor';
 
-const CircleChartCasas = () => {
+const CircleChartPersonasPorAnoEscolar = () => {
   const [chartData, setChartData] = useState([]);
   const [chartLabels, setChartLabels] = useState([]);
 
   const fetchData = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
-    const response = await axios.get(`http://localhost:3000/stats/casas`, {
-      headers,
-    });
-    const casas = response.data.data.data;
-    const chartData = casas.map((item) => item.patientCount); // Extract the 'count' values
-    const chartLabels = casas.map((item) => `${item.nombreCasa}`); // Create labels using 'edad'
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+      const response = await axios.get(
+        `http://localhost:3000/stats/pacientesPorAnoEscolar`,
+        { headers }
+      );
+      const personasPorGenero = response.data.data.data;
+      console.log(personasPorGenero);
 
-    setChartLabels(chartLabels);
-    setChartData(chartData);
+      const chartData = personasPorGenero.map(
+        (item) => `${item.cantidad_ninos_x_ano_escolar}`
+      ); // Extract the 'count' values
+      const chartLabels = personasPorGenero.map(
+        (item) => `${item.anoEscolar}: ${item.cantidad_ninos_x_ano_escolar}`
+      ); // Create labels using 'edad'
+
+      setChartLabels(chartLabels);
+      setChartData(chartData);
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     fetchData();
@@ -46,7 +57,6 @@ const CircleChartCasas = () => {
       },
     },
   };
-
   const data = {
     labels: chartLabels,
     datasets: [
@@ -82,4 +92,4 @@ const CircleChartCasas = () => {
   );
 };
 
-export default CircleChartCasas;
+export default CircleChartPersonasPorAnoEscolar;

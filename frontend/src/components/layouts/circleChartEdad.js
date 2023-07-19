@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import generateBackgroundColors from './randomColor';
 
-const CircleChart = () => {
+const CircleChartEdad = () => {
   const [chartData, setChartData] = useState([]);
   const [chartLabels, setChartLabels] = useState([]);
 
@@ -88,4 +88,4 @@ const CircleChart = () => {
   );
 };
 
-export default CircleChart;
+export default CircleChartEdad;
