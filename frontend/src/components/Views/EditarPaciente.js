@@ -515,7 +515,7 @@ export default function EditarPaciente() {
                       />
                       <br />
                       <hr />
-                      {!agregaPerfilEntrada && (
+                      {!agregaPerfilEntrada ? (
                         <div class="row col-sm-6">
                           <button
                             class="btn btn-success btn-sm"
@@ -526,23 +526,13 @@ export default function EditarPaciente() {
                             Anadir Perfil de Entrada
                           </button>
                         </div>
-                      )}
-                      {agregaPerfilEntrada && (
+                      ) : (
                         <>
                           <PerfilEntrada
                             perfilEntrada={perfilEntrada}
                             setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
                           />
-                          <div class="row col-sm-6">
-                            <button
-                              class="btn btn-danger btn-sm"
-                              type="button"
-                              id="btnGuardarCambios"
-                              onClick={() => setAgregaPerfilEntrada(false)}
-                            >
-                              Cancelar
-                            </button>
-                          </div>
+                          
                         </>
                       )}
                       <hr />

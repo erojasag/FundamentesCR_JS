@@ -60,6 +60,7 @@ export default function ListaUsuarios() {
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
       const response = await axios.get('https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/', {
+
         headers,
       });
       if (response.status !== 200) {
