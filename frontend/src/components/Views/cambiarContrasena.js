@@ -66,7 +66,7 @@ export default function CambiarContrasena() {
         confirmContrasena,
       };
       const response = await axios.patch(
-        `http://localhost:3000/usuarios/actualizarMiContrasena/`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/actualizarMiContrasena/`,
         data,
         { headers }
       );

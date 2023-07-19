@@ -41,7 +41,7 @@ const createUser = catchAsync(async (req, res, next) => {
   const message = `Bienvenido a fundamentes ${req.body.nombre} ${req.body.primerApe}!.
          Username: ${req.body.email}
          Password: ${password}
-         Porfavor activa tu cuenta ingresando al siguiente link: http://localhost:5000/activarCuenta/${doc.dataValues.activationToken}`;
+         Porfavor activa tu cuenta ingresando al siguiente link: https://fundamentes-dev.netlify.app/activarCuenta/${doc.dataValues.activationToken}`;
   if (!doc) return next(new AppError('No se pudo crear el registro', 500));
 
   try {
@@ -175,10 +175,13 @@ const updateMe = catchAsync(async (req, res, next) => {
     );
 
   console.log(req.body);
-  if(req.body.nombre === '' || req.body.primerApe === '' || req.body.segundoApe === '' || req.body.email === ''){
-    return next(
-      new AppError('Por favor ingrese todos los campos', 400)
-    );
+  if (
+    req.body.nombre === '' ||
+    req.body.primerApe === '' ||
+    req.body.segundoApe === '' ||
+    req.body.email === ''
+  ) {
+    return next(new AppError('Por favor ingrese todos los campos', 400));
   }
   const filteredBody = filterObj(
     req.body,

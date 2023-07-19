@@ -46,7 +46,7 @@ export default function Activacion() {
         confirmContrasena: data.confirmContrasena,
       };
       const response = await axios.patch(
-        `http://localhost:3000/usuarios/activarUsuario/${token}`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/activarUsuario/${token}`,
         body
       );
 

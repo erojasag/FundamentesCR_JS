@@ -17,7 +17,7 @@ export default function ForgotPass() {
         email,
       };
       const response = await axios.post(
-        'http://localhost:3000/usuarios/olvidarContrasena',
+        'https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/olvidarContrasena',
         data
       );
       console.log(response);
