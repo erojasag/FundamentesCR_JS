@@ -34,7 +34,7 @@ function Router() {
   return (
     <Routes>
       <Route index element={<Login />} />
-      <Route path="pacientes/" element={<Pacientes />} />
+      <Route path="/pacientes/" element={<Pacientes />} />
       <Route path="/:id" element={<EditarPaciente />} />
       <Route path="/inicio" element={<Index />} />
       <Route path="/registrarse" element={<Registrarse />} />

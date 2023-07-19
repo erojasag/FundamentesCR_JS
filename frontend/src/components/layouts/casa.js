@@ -10,10 +10,13 @@ export default function Casa({ onCasaChange, selectedCasa }) {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
-    const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}casas/`, {
-      headers,
-    });
-    setCasaData(response.data.data.data);
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND_API}casas/`,
+      {
+        headers,
+      }
+    );
+    setCasaData(response.data.data.casas);
   }
 
   useEffect(() => {
@@ -36,9 +39,7 @@ export default function Casa({ onCasaChange, selectedCasa }) {
             value={selectedCasa}
             onChange={onCasaChange}
           >
-            {!selectedCasa && (
-              <option value="null">-No especifica-</option>
-            )}
+            {!selectedCasa && <option value="null">-No especifica-</option>}
             {casaData.map((casa) => (
               <option value={casa.casaId} key={casa.casaId}>
                 {casa.nombreCasa} - {casa.canton}
