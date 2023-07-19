@@ -16,13 +16,15 @@ const CircleChartPersonasPorGenero = () => {
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
       const response = await axios.get(
-        `http://localhost:3000/stats/pacientesPorGenero`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/stats/pacientesPorGenero`,
         { headers }
       );
       const personasPorGenero = response.data.data.data;
       console.log(personasPorGenero);
 
-      const chartData = personasPorGenero.map((item) => `${item.cantidad_personas_x_generos}`); // Extract the 'count' values
+      const chartData = personasPorGenero.map(
+        (item) => `${item.cantidad_personas_x_generos}`
+      ); // Extract the 'count' values
       const chartLabels = personasPorGenero.map(
         (item) => `${item.genero}: ${item.cantidad_personas_x_generos}`
       ); // Create labels using 'edad'

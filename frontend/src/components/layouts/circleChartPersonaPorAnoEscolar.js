@@ -16,7 +16,7 @@ const CircleChartPersonasPorAnoEscolar = () => {
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
       const response = await axios.get(
-        `http://localhost:3000/stats/pacientesPorAnoEscolar`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/stats/pacientesPorAnoEscolar`,
         { headers }
       );
       const personasPorGenero = response.data.data.data;
