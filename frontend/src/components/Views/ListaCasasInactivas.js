@@ -3,146 +3,133 @@ import { useNavigate } from 'react-router-dom';
 import SideMenu from '../layouts/sideMenu';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 import Loading from '../layouts/loading';
+import Error403 from './Error403';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
-export default function ListaUsuariosInactivos() {
-  const [userData, setUserData] = useState([]);
-  const [newUser, setNewUser] = useState({});
-  const [selectedUserId, setSelectedUserId] = useState(null);
+export default function ListaCasasInactivas() {
+  const [casasData, setCasasData] = useState([]);
+  const [newCasa, setNewCasa] = useState({});
   const [loading, setLoading] = useState(false);
+  const [selectedCasaId, setSelectedCasaId] = useState(null);
+  const [isForbidden, setIsForbidden] = useState(false);
   const navigate = useNavigate();
-  const handleNameChange = (event) => {
-    setNewUser({
-      ...newUser,
-      nombre: event.currentTarget.value,
-    });
-  };
-  const handleFirstLastNameChange = (event) => {
-    setNewUser({
-      ...newUser,
-      primerApe: event.currentTarget.value,
-    });
-  };
-  const handleSecondLastNameChange = (event) => {
-    setNewUser({
-      ...newUser,
-      segundoApe: event.currentTarget.value,
-    });
-  };
-  const handleEmailChange = (event) => {
-    setNewUser({
-      ...newUser,
-      email: event.currentTarget.value,
-    });
-  };
-
-  const handleRolChange = (event) => {
-    setNewUser({
-      ...newUser,
-      rol: {
-        // Add the rol object if it doesn't exist
-        ...newUser.rol,
-        nombreRol: event.currentTarget.value,
-      },
-    });
-  };
 
   const fetchData = async () => {
-    setLoading(true);
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
-    const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_API}usuarios/?q=false`,
-      {
-        headers,
+    try {
+      setLoading(true);
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}casas/?q=false`,
+        {
+          headers,
+        }
+      );
+
+      if (response.status !== 200) {
+        const message = `An error has occured: ${response.statusText}`;
+        window.alert(message);
+        return;
       }
-    );
-    if (response.status !== 200) {
-      const message = `An error has occured: ${response.statusText}`;
-      window.alert(message);
-      return;
-    }
 
-    if (response.status === 401) {
-      navigate('/Login');
-    }
+      if (response.status === 401) {
+        navigate('/Login');
+      }
 
-    setUserData(response.data.data.users);
-    setLoading(false);
+      if (response.status === 403) {
+        setIsForbidden(true);
+        return;
+      }
+      setCasasData(response.data.data.casas);
+      setLoading(false);
+    } catch (err) {
+      if (err.response.data.err.message === 'jwt expired') {
+        navigate('/');
+      }
+      if (err.response.status === 403) {
+        setIsForbidden(true);
+        return;
+      }
+    }
   };
   useEffect(() => {
     fetchData();
   }, []);
 
-  const activateUser = async (usuarioId) => {
-    setLoading(true);
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
+  const activateCasa = async (casaId) => {
+    try {
+      setLoading(true);
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
 
-    const response = await axios.patch(
-      `${process.env.REACT_APP_BACKEND_API}usuarios/activarUsuario/${usuarioId}`,
-      {
-        headers,
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}casas/activarCasa/${casaId}`,
+        {
+          headers,
+        }
+      );
+      console.log(response);
+      if (response.status === 204) {
+        setLoading(false);
+        window.location.reload();
       }
-    );
-    if (response.status === 200) {
-      setLoading(false);
-      window.location.reload();
+    } catch (err) {
+      console.log(err);
     }
   };
 
-  const createUser = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
-
-    const body = {
-      nombre: newUser.nombre,
-      primerApe: newUser.primerApe,
-      segundoApe: newUser.segundoApe,
-      email: newUser.email,
-      rol: {
-        nombreRol: newUser.rol.nombreRol,
-      },
-      contrasena: '',
-      confirmContrasena: '',
-    };
-    const response = await axios.post(
-      `${process.env.REACT_APP_BACKEND_API}usuarios/`,
-      body,
-      {
-        headers,
-      }
-    );
-    if (response.status === 201) {
-      window.location.reload();
-    }
+  const handleNombreCasaChange = (event) => {
+    setNewCasa({
+      ...newCasa,
+      nombreCasa: event.currentTarget.value,
+    });
   };
 
-  const getUsuarios = () => {
-    return userData.map((user) => (
-      <tr key={user.usuarioId}>
-        <td>{user.nombre} </td>
-        <td>{user.primerApe + ' ' + user.segundoApe}</td>
-        <td>{user.email}</td>
-        <td>{user.rol.nombreRol}</td>
-        <td>{user.activo ? '' : 'No'}</td>
+  const handleCantonChange = (event) => {
+    setNewCasa({
+      ...newCasa,
+      canton: event.currentTarget.value,
+    });
+  };
+
+  const handleProvinciaChange = (event) => {
+    setNewCasa({
+      ...newCasa,
+      provincia: event.currentTarget.value,
+    });
+  };
+
+  const handleDireccionChange = (event) => {
+    setNewCasa({
+      ...newCasa,
+      direccion: event.currentTarget.value,
+    });
+  };
+
+  const getCasas = () => {
+    return casasData.map((casa) => (
+      <tr key={casa.casaId}>
+        <td>{casa.nombreCasa} </td>
+        <td>{casa.canton}</td>
+        <td>{casa.provincia}</td>
+        <td>{casa.direccion}</td>
+        <td>{casa.activo ? '' : 'No'}</td>
         <td>
           <a
             href="EditarUsuarioLogUsuario"
             class="btn btn-success btn-sm"
             data-toggle="modal"
             data-target="#exampleModal"
-            onClick={() => setSelectedUserId(user.usuarioId)}
+            onClick={() => setSelectedCasaId(casa.casaId)}
           >
             <FontAwesomeIcon
               icon={faCheck}
@@ -165,7 +152,7 @@ export default function ListaUsuariosInactivos() {
               <div class="card shadow mb-4 m-overflow">
                 <div class="card-header py-3 bg-second-primary">
                   <h6 class="m-0 font-weight-bold text-white">
-                    Usuarios Inactivos
+                    Casas Inactivas
                   </h6>
                 </div>
                 <div class="card-body">
@@ -182,14 +169,14 @@ export default function ListaUsuariosInactivos() {
                         <thead>
                           <tr key={4}>
                             <th>Nombre</th>
-                            <th>Apellidos</th>
-                            <th>Correo</th>
-                            <th>Tipo de Usuario</th>
+                            <th>Canton</th>
+                            <th>Provincia</th>
+                            <th>Direccion</th>
                             <th>Activo</th>
                             <th>Accion</th>
                           </tr>
                         </thead>
-                        <tbody>{getUsuarios()}</tbody>
+                        <tbody>{getCasas()}</tbody>
                       </table>
                     </div>
                   </div>
@@ -233,7 +220,7 @@ export default function ListaUsuariosInactivos() {
                         type="button"
                         class="btn btn-success"
                         data-dismiss="modal"
-                        onClick={() => activateUser(selectedUserId)}
+                        onClick={() => activateCasa(selectedCasaId)}
                       >
                         &nbsp;Activar&nbsp;
                       </button>

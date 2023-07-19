@@ -33,7 +33,7 @@ export default function PerfilEntrada(props) {
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
     const response = await axios.get(
-      `http://localhost:3000/entrevistasEntrada/${props.perfilEntrada.perfilEntradaId}`,
+      `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/${props.perfilEntrada.perfilEntradaId}`,
       {
         headers,
       }

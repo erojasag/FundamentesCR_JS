@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../layouts/footer';
@@ -46,7 +46,7 @@ export default function Activacion() {
         confirmContrasena: data.confirmContrasena,
       };
       const response = await axios.patch(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/activarUsuario/${token}`,
+        `${process.env.REACT_APP_BACKEND_API}usuarios/activarUsuario/${token}`,
         body
       );
 
