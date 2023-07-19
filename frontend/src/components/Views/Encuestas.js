@@ -22,7 +22,6 @@ export default function Encuestas() {
       }
     );
 
-    console.log(response.data.data.data);
     setEncuestas(response.data.data.data);
   };
 

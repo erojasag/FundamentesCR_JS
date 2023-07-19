@@ -20,7 +20,6 @@ const CircleChartEdad = () => {
         { headers }
       );
       const edades = response.data.data.data;
-      console.log(edades);
 
       const chartData = edades.map((item) => `${item.count}`); // Extract the 'count' values
       const chartLabels = edades.map((item) => `Edad: ${item.edad}`); // Create labels using 'edad'

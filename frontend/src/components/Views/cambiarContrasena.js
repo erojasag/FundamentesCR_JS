@@ -70,7 +70,6 @@ export default function CambiarContrasena() {
         data,
         { headers }
       );
-      console.log(response);
       if (response.status === 200) {
         setCurrentContrasena('');
         setContrasena('');

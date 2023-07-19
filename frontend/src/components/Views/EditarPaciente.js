@@ -127,7 +127,6 @@ export default function EditarPaciente() {
       headers,
     });
     const data = response.data.data.data;
-    console.log(data);
     setPacienteData(data);
     setDatosMedicos(data.datosMedicos);
     setCondicionLaboral(data.condicionLaboral);

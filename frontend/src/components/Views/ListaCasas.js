@@ -30,7 +30,6 @@ export default function ListaCasas() {
           headers,
         }
       );
-      console.log(response);
       if (response.status !== 200) {
         const message = `An error has occured: ${response.statusText}`;
         window.alert(message);
@@ -48,7 +47,6 @@ export default function ListaCasas() {
       setCasasData(response.data.data.casas);
       setLoading(false);
     } catch (err) {
-      console.log();
       if (err.response.data.err.message === 'jwt expired') {
         navigate('/');
       }
@@ -141,7 +139,6 @@ export default function ListaCasas() {
           headers,
         }
       );
-      console.log(response);
       if (response.status === 204) {
         toast.success('Casa desactivada con éxito');
         setLoading(false);

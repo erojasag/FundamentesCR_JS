@@ -20,7 +20,7 @@ const CircleChartPersonasPorGenero = () => {
         { headers }
       );
       const personasPorGenero = response.data.data.data;
-      console.log(personasPorGenero);
+
 
       const chartData = personasPorGenero.map((item) => `${item.cantidad_personas_x_generos}`); // Extract the 'count' values
       const chartLabels = personasPorGenero.map(

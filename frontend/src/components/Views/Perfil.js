@@ -116,8 +116,6 @@ export default function Perfil() {
         { headers }
       );
 
-      console.log(response);
-
       if (response.status === 200) {
         Cookies.set('nombre', userData.nombre + ' ' + userData.primerApe);
         toast.success('Datos Actualizados con éxito', {

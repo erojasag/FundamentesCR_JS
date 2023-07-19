@@ -20,7 +20,6 @@ export default function ForgotPass() {
         `${process.env.REACT_APP_BACKEND_API}usuarios/olvidarContrasena`,
         data
       );
-      console.log(response);
 
       if (response.status !== 200) {
         const message = `An error has occured: ${response.statusText}`;
