@@ -141,8 +141,11 @@ export default function SideMenu() {
                 data-parent="#accordionSidebar"
               >
                 <div class="bg-white py-2 collapse-inner rounded">
-                  <a class="collapse-item" href="/casas">
+                  <a class="collapse-item" href="/listaCasas">
                     Ver Casas
+                  </a>
+                  <a class="collapse-item" href="/listaCasasInactivas">
+                    Ver Casas Inactivas
                   </a>
                 </div>
               </div>

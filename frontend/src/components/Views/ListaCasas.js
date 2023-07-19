@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SideMenu from '../layouts/sideMenu';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -9,48 +9,13 @@ import Footer from '../layouts/footer';
 import Loading from '../layouts/loading';
 import Error403 from './Error403';
 
-export default function ListaUsuarios() {
-  const [userData, setUserData] = useState([]);
-  const [newUser, setNewUser] = useState({});
-  const [selectedUserId, setSelectedUserId] = useState(null);
+export default function ListaCasas() {
+  const [casasData, setCasasData] = useState([]);
+  const [newCasa, setNewCasa] = useState({});
   const [loading, setLoading] = useState(false);
+  const [selectedCasaId, setSelectedCasaId] = useState(null);
   const [isForbidden, setIsForbidden] = useState(false);
   const navigate = useNavigate();
-  const handleNameChange = (event) => {
-    setNewUser({
-      ...newUser,
-      nombre: event.currentTarget.value,
-    });
-  };
-  const handleFirstLastNameChange = (event) => {
-    setNewUser({
-      ...newUser,
-      primerApe: event.currentTarget.value,
-    });
-  };
-  const handleSecondLastNameChange = (event) => {
-    setNewUser({
-      ...newUser,
-      segundoApe: event.currentTarget.value,
-    });
-  };
-  const handleEmailChange = (event) => {
-    setNewUser({
-      ...newUser,
-      email: event.currentTarget.value,
-    });
-  };
-
-  const handleRolChange = (event) => {
-    setNewUser({
-      ...newUser,
-      rol: {
-        // Add the rol object if it doesn't exist
-        ...newUser.rol,
-        nombreRol: event.currentTarget.value,
-      },
-    });
-  };
 
   const fetchData = async () => {
     try {
@@ -60,11 +25,12 @@ export default function ListaUsuarios() {
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_API}usuarios/`,
+        `${process.env.REACT_APP_BACKEND_API}casas/?q=true`,
         {
           headers,
         }
       );
+      console.log(response);
       if (response.status !== 200) {
         const message = `An error has occured: ${response.statusText}`;
         window.alert(message);
@@ -79,8 +45,7 @@ export default function ListaUsuarios() {
         setIsForbidden(true);
         return;
       }
-
-      setUserData(response.data.data.users);
+      setCasasData(response.data.data.casas);
       setLoading(false);
     } catch (err) {
       console.log();
@@ -97,40 +62,7 @@ export default function ListaUsuarios() {
     fetchData();
   }, []);
 
-  const deactivateUser = async (usuarioId) => {
-    try {
-      setLoading(true);
-      const headers = {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Cookies.get('jwt')}`,
-      };
-
-      const response = await axios.delete(
-        `${process.env.REACT_APP_BACKEND_API}usuarios/${usuarioId}`,
-        {
-          headers,
-        }
-      );
-      console.log(response);
-      if (response.status === 204) {
-        toast.success('Usuario desactivado con éxito');
-        setLoading(false);
-      }
-    } catch (err) {
-      if (err.response.data.err.message === 'jwt expired') {
-        toast.error('Su sesión ha expirado, porfavor inicie sesión nuevamente');
-        navigate('/');
-      }
-      if (err.response.status === 403) {
-        setIsForbidden(true);
-        return;
-      }
-    } finally {
-      fetchData();
-    }
-  };
-
-  const createUser = async () => {
+  const createCasa = async () => {
     try {
       const headers = {
         'Content-Type': 'application/json',
@@ -138,18 +70,13 @@ export default function ListaUsuarios() {
       };
 
       const body = {
-        nombre: newUser.nombre,
-        primerApe: newUser.primerApe,
-        segundoApe: newUser.segundoApe,
-        email: newUser.email,
-        rol: {
-          nombreRol: newUser.rol.nombreRol,
-        },
-        contrasena: '',
-        confirmContrasena: '',
+        nombreCasa: newCasa.nombreCasa,
+        canton: newCasa.canton,
+        provincia: newCasa.provincia,
+        direccion: newCasa.direccion,
       };
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_API}usuarios/`,
+        `${process.env.REACT_APP_BACKEND_API}casas/`,
         body,
         {
           headers,
@@ -172,27 +99,85 @@ export default function ListaUsuarios() {
     }
   };
 
-  const getUsuarios = () => {
-    return userData.map((user) => (
-      <tr key={user.usuarioId}>
-        <td>{user.nombre} </td>
-        <td>{user.primerApe + ' ' + user.segundoApe}</td>
-        <td>{user.email}</td>
-        <td>{user.rol.nombreRol}</td>
+  const handleNombreCasaChange = (event) => {
+    setNewCasa({
+      ...newCasa,
+      nombreCasa: event.currentTarget.value,
+    });
+  };
+
+  const handleCantonChange = (event) => {
+    setNewCasa({
+      ...newCasa,
+      canton: event.currentTarget.value,
+    });
+  };
+
+  const handleProvinciaChange = (event) => {
+    setNewCasa({
+      ...newCasa,
+      provincia: event.currentTarget.value,
+    });
+  };
+
+  const handleDireccionChange = (event) => {
+    setNewCasa({
+      ...newCasa,
+      direccion: event.currentTarget.value,
+    });
+  };
+
+  const deactivateCasa = async (casaId) => {
+    try {
+      setLoading(true);
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BACKEND_API}casas/${casaId}`,
+        {
+          headers,
+        }
+      );
+      console.log(response);
+      if (response.status === 204) {
+        toast.success('Casa desactivada con éxito');
+        setLoading(false);
+        window.location.reload();
+      }
+    } catch (err) {
+      if (err.response.data.err.message === 'jwt expired') {
+        toast.error('Su sesión ha expirado, porfavor inicie sesión nuevamente');
+        navigate('/');
+      }
+      if (err.response.status === 403) {
+        setIsForbidden(true);
+        return;
+      }
+    } finally {
+      fetchData();
+    }
+  };
+  const getCasas = () => {
+    return casasData.map((casa) => (
+      <tr key={casa.casaId}>
+        <td>{casa.nombreCasa} </td>
+        <td>{casa.canton}</td>
+        <td>{casa.provincia}</td>
+        <td>{casa.direccion}</td>
         <td>
-          <a
-            href={`usuarios/${user.usuarioId}`}
-            className="btn btn-primary btn-sm"
-          >
+          <a href={`casas/${casa.casaId}`} className="btn btn-primary btn-sm">
             <i className="fas fa-pencil-alt"></i>
           </a>
           &nbsp; &nbsp;
           <a
-            href="desactivarPaciente"
+            href="desactivarCasa"
             class="btn btn-danger btn-sm"
             data-toggle="modal"
             data-target="#exampleModal"
-            onClick={() => setSelectedUserId(user.usuarioId)}
+            onClick={() => setSelectedCasaId(casa.casaId)}
           >
             <i class="fas fa-trash-alt"></i>
           </a>
@@ -215,7 +200,7 @@ export default function ListaUsuarios() {
                   <div class="card shadow mb-4 m-overflow">
                     <div class="card-header py-3 bg-second-primary">
                       <h6 class="m-0 font-weight-bold text-white">
-                        Lista de Usuarios
+                        Lista de Casas EscuchArte
                       </h6>
                     </div>
                     <div class="card-body">
@@ -226,7 +211,7 @@ export default function ListaUsuarios() {
                             data-toggle="modal"
                             data-target="#modalData"
                           >
-                            <i class="fas fa-user-plus"></i> Nuevo Usuario
+                            <i class="fas fa-user-plus"></i> Nueva Casa
                           </button>
                         </div>
                       </div>
@@ -242,13 +227,13 @@ export default function ListaUsuarios() {
                             <thead>
                               <tr key={4}>
                                 <th>Nombre</th>
-                                <th>Apellidos</th>
-                                <th>Correo</th>
-                                <th>Tipo de Usuario</th>
+                                <th>Canton</th>
+                                <th>Provincia</th>
+                                <th>Direccion</th>
                                 <th>Accion</th>
                               </tr>
                             </thead>
-                            <tbody>{getUsuarios()}</tbody>
+                            <tbody>{getCasas()}</tbody>
                           </table>
                         </div>
                       </div>
@@ -266,7 +251,7 @@ export default function ListaUsuarios() {
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalLabel">
-                            Desactivar Usuario
+                            Desactivar Casa
                           </h5>
                           <button
                             type="button"
@@ -278,7 +263,7 @@ export default function ListaUsuarios() {
                           </button>
                         </div>
                         <div class="modal-body">
-                          <p>¿Seguro que desea desactivar el usuario?</p>
+                          <p>¿Seguro que desea desactivar esta casa?</p>
                         </div>
                         <div class="modal-footer">
                           <button
@@ -292,7 +277,7 @@ export default function ListaUsuarios() {
                             type="button"
                             class="btn btn-danger"
                             data-dismiss="modal"
-                            onClick={() => deactivateUser(selectedUserId)}
+                            onClick={() => deactivateCasa(selectedCasaId)}
                           >
                             Desactivar
                           </button>
@@ -313,7 +298,7 @@ export default function ListaUsuarios() {
                     <div class="modal-dialog modal-lg" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h6>Añadir Usuario</h6>
+                          <h6>Añadir Casa</h6>
                           <button
                             class="close"
                             type="button"
@@ -330,72 +315,63 @@ export default function ListaUsuarios() {
                               <div class="col-sm-8">
                                 <div class="form-row">
                                   <div class="form-group col-sm-6">
-                                    <label for="txtNombre">Nombre</label>
+                                    <label for="txtnombreCasa">Nombre</label>
                                     <input
                                       type="text"
                                       class="form-control form-control-sm input-validar"
-                                      id="txtNombre"
-                                      name="Nombre"
-                                      value={userData.nombre}
-                                      onChange={handleNameChange}
+                                      id="nombreCasa"
+                                      name="nombreCasa"
+                                      value={newCasa.nombreCasa}
+                                      onChange={handleNombreCasaChange}
                                     />
                                   </div>
                                   <div class="form-group col-sm-6">
-                                    <label for="txtPrimerApe">
-                                      Primer Apellido
-                                    </label>
+                                    <label for="txtcanton">Canton</label>
                                     <input
                                       type="text"
                                       class="form-control form-control-sm input-validar"
-                                      id="primerApe"
-                                      name="primerApe"
-                                      value={userData.primerApe}
-                                      onChange={handleFirstLastNameChange}
+                                      id="canton"
+                                      name="canton"
+                                      value={newCasa.canton}
+                                      onChange={handleCantonChange}
                                     />
                                   </div>
                                   <div class="form-group col-sm-6">
-                                    <label for="txtSegundoApe">
-                                      Segundo Apellido
-                                    </label>
-                                    <input
-                                      type="text"
-                                      class="form-control form-control-sm input-validar"
-                                      id="segundoApe"
-                                      name="segundoApe"
-                                      value={userData.segundoApe}
-                                      onChange={handleSecondLastNameChange}
-                                    />
-                                  </div>
-                                  <div class="form-group col-sm-6">
-                                    <label for="txtCorreo">Correo</label>
-                                    <input
-                                      type="email"
-                                      class="form-control form-control-sm input-validar"
-                                      id="email"
-                                      name="email"
-                                      value={userData.email}
-                                      onChange={handleEmailChange}
-                                    />
-                                  </div>
-                                  <div class="form-group col-sm-6">
-                                    <label for="txtRol">Tipo Usuario</label>
+                                    <label for="txtprovincia">Provincia</label>
                                     <select
                                       class="custom-select"
-                                      id="rolId"
-                                      name="rolId"
-                                      value={userData.rolId}
-                                      onChange={handleRolChange}
+                                      id="provincia"
+                                      name="provincia"
+                                      value={newCasa.provincia}
+                                      onChange={handleProvinciaChange}
                                     >
-                                      <option value="">
-                                        -No seleccionado-
+                                      <option selected>
+                                        Seleccione una provincia
                                       </option>
-                                      <option value="Psicologo">
-                                        Psicologo
+                                      <option value="San Jose">San Jose</option>
+                                      <option value="Cartago">Cartago</option>
+                                      <option value="Heredia">Heredia</option>
+                                      <option value="Alajuela">Alajuela</option>
+                                      <option value="Limon">Limon</option>
+                                      <option value="Guanacaste">
+                                        Guanacaste
                                       </option>
-                                      <option value="Administrador">
-                                        Administrador
+                                      <option value="Puntarenas">
+                                        Puntarenas
                                       </option>
                                     </select>
+                                  </div>
+
+                                  <div class="form-group col-sm-6">
+                                    <label for="txtDireccion">Direccion</label>
+                                    <input
+                                      type="text"
+                                      class="form-control form-control-sm input-validar"
+                                      id="direccion"
+                                      name="direccion"
+                                      value={newCasa.direccion}
+                                      onChange={handleDireccionChange}
+                                    />
                                   </div>
                                 </div>
                               </div>
@@ -411,10 +387,10 @@ export default function ListaUsuarios() {
                             Cancel
                           </button>
                           <button
-                            class="btn btn-primary btn-sm"
+                            class="btn btn-success btn-sm"
                             type="button"
                             id="btnGuardar"
-                            onClick={createUser}
+                            onClick={createCasa}
                           >
                             Guardar
                           </button>

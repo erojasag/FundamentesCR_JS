@@ -123,7 +123,7 @@ export default function EditarPaciente() {
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
 
-    const response = await axios.get(`https://fundamentes-dev-bf6998eb4614.herokuapp.com/pacientes/${id}`, {
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}pacientes/${id}`, {
       headers,
     });
     const data = response.data.data.data;
@@ -139,7 +139,7 @@ export default function EditarPaciente() {
 
     if (data.perfilEntradaId !== null) {
       const responsePerfilEntrada = await axios.get(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/entrevistasEntrada/${data.perfilEntradaId}`,
+        `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/${data.perfilEntradaId}`,
         {
           headers,
         }
@@ -150,7 +150,7 @@ export default function EditarPaciente() {
     }
     // if (data.perfilSalidaId !== null) {
     //   const responsePerfilSalida = await axios.get(
-    //     `https://fundamentes-dev-bf6998eb4614.herokuapp.com/entrevistasSalida/${data.perfilSalidaId}`,
+    //     `${process.env.REACT_APP_BACKEND_API}entrevistasSalida/${data.perfilSalidaId}`,
     //     {
     //       headers,
     //     }
@@ -194,7 +194,7 @@ export default function EditarPaciente() {
     if (updatedDatosMedicos !== null) {
       if (pacienteData.datosMedicosId === null) {
         const response = await axios.post(
-          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/datosMedicos/`,
+          `${process.env.REACT_APP_BACKEND_API}datosMedicos/`,
           updatedDatosMedicos,
           {
             headers,
@@ -204,7 +204,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/datosMedicos/${pacienteData.datosMedicosId}`,
+        `${process.env.REACT_APP_BACKEND_API}datosMedicos/${pacienteData.datosMedicosId}`,
         updatedDatosMedicos,
         {
           headers,
@@ -214,7 +214,7 @@ export default function EditarPaciente() {
     if (updatedCondicionLaboral !== null) {
       if (pacienteData.condicionLaboralId === null) {
         const response = await axios.post(
-          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/condicionesLaborales/`,
+          `${process.env.REACT_APP_BACKEND_API}condicionesLaborales/`,
           updatedCondicionLaboral,
           {
             headers,
@@ -225,7 +225,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/condicionesLaborales/${pacienteData.condicionLaboralId}`,
+        `${process.env.REACT_APP_BACKEND_API}condicionesLaborales/${pacienteData.condicionLaboralId}`,
         updatedCondicionLaboral,
         {
           headers,
@@ -235,7 +235,7 @@ export default function EditarPaciente() {
     if (updatedSociodemograficos !== null) {
       if (pacienteData.sociodemograficosId === null) {
         const response = await axios.post(
-          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/sociodemograficos/`,
+          `${process.env.REACT_APP_BACKEND_API}sociodemograficos/`,
           updatedSociodemograficos,
           {
             headers,
@@ -246,7 +246,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/sociodemograficos/${pacienteData.sociodemograficosId}`,
+        `${process.env.REACT_APP_BACKEND_API}sociodemograficos/${pacienteData.sociodemograficosId}`,
         updatedSociodemograficos,
         {
           headers,
@@ -256,7 +256,7 @@ export default function EditarPaciente() {
     if (updatedEncargado !== null) {
       if (pacienteData.encargadoId === null) {
         const response = await axios.post(
-          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/encargados/`,
+          `${process.env.REACT_APP_BACKEND_API}encargados/`,
           updatedEncargado,
           {
             headers,
@@ -266,7 +266,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/encargados/${pacienteData.encargadoId}`,
+        `${process.env.REACT_APP_BACKEND_API}encargados/${pacienteData.encargadoId}`,
         updatedEncargado,
         {
           headers,
@@ -276,7 +276,7 @@ export default function EditarPaciente() {
     if (updatedDinamicaFamiliar !== null) {
       if (pacienteData.dinamicaFamiliarId === null) {
         const response = await axios.post(
-          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/dinamicasFamiliares/`,
+          `${process.env.REACT_APP_BACKEND_API}dinamicasFamiliares/`,
           updatedDinamicaFamiliar,
           {
             headers,
@@ -287,7 +287,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/dinamicasFamiliares/${pacienteData.dinamicaFamiliarId}`,
+        `${process.env.REACT_APP_BACKEND_API}dinamicasFamiliares/${pacienteData.dinamicaFamiliarId}`,
         updatedDinamicaFamiliar,
         {
           headers,
@@ -297,7 +297,7 @@ export default function EditarPaciente() {
     if (updatedEscolaridad !== null) {
       if (pacienteData.escolaridadId === null) {
         const response = await axios.post(
-          `https://fundamentes-dev-bf6998eb4614.herokuapp.com/escolaridades/`,
+          `${process.env.REACT_APP_BACKEND_API}escolaridades/`,
           updatedEscolaridad,
           {
             headers,
@@ -306,7 +306,7 @@ export default function EditarPaciente() {
         pacienteData.escolaridadId = response.data.data.data.escolaridadId;
       }
       await axios.patch(
-        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/escolaridades/${pacienteData.escolaridadId}`,
+        `${process.env.REACT_APP_BACKEND_API}escolaridades/${pacienteData.escolaridadId}`,
         updatedEscolaridad,
         {
           headers,
@@ -335,7 +335,7 @@ export default function EditarPaciente() {
       perfilSalidaId: pacienteData.perfilSalidaId,
     };
     await axios.patch(
-      `https://fundamentes-dev-bf6998eb4614.herokuapp.com/pacientes/${pacienteData.pacienteId}`,
+      `${process.env.REACT_APP_BACKEND_API}pacientes/${pacienteData.pacienteId}`,
       body,
       {
         headers,

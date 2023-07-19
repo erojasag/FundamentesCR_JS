@@ -14,7 +14,7 @@ const CircleChartCasas = () => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
-    const response = await axios.get(`http://localhost:3000/stats/casas`, {
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}stats/casas`, {
       headers,
     });
     const casas = response.data.data.data;
