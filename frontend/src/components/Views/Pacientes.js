@@ -12,7 +12,7 @@ import Encargado from '../layouts/encargado';
 import DinamicaFamiliar from '../layouts/dinamicaFamiliar';
 import Escolaridad from '../layouts/escolaridad';
 import Loading from '../layouts/loading';
-import { Link } from 'react-router-dom';
+
 import PerfilEntrada from '../layouts/perfilEntrada';
 // import PerfilEntrada from '../layouts/perfilEntrada';
 
@@ -124,6 +124,30 @@ export default function Pacientes() {
       casaId: event.currentTarget.value,
     });
   };
+
+  const fetchData = async () => {
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+      setLoading(true);
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}pacientes`,
+        {
+          headers,
+        }
+      );
+      setPacientesData(response.data.data.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   const deactivateUser = async (pacienteId) => {
     const headers = {
       'Content-Type': 'application/json',
@@ -258,7 +282,6 @@ export default function Pacientes() {
     //   }
     // }
 
-    console.log(newPacienteData);
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_API}pacientes/`,
       newPacienteData,
@@ -270,32 +293,6 @@ export default function Pacientes() {
       window.location.reload();
     }
   };
-
-  const fetchData = async () => {
-    try {
-      const headers = {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Cookies.get('jwt')}`,
-      };
-      setLoading(true);
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_API}pacientes`,
-        {
-          headers,
-        }
-      );
-      const data = response.data.data.data;
-
-      setPacientesData(data);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const calculateAge = () => {
