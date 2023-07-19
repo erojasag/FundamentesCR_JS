@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 export default function AspectoComunitario(props) {
   const [aspectoComunitario, setAspectoComunitario] = useState({});
 
-  console.log(props);
-
   useEffect(() => {
     if (props.aspectoComunitario.lenght === 0) {
       setAspectoComunitario({

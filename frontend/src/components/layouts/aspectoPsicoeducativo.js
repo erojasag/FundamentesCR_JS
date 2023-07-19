@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 export default function AspectoPsicoeducativo(props) {
   const [aspectoPsicoeducativo, setAspectoPsicoeducativo] = useState({});
 
-  console.log(props);
-
   useEffect(() => {
     if (props.aspectoPsicoeducativo) {
       setAspectoPsicoeducativo(props.aspectoPsicoeducativo);

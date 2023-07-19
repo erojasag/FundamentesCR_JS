@@ -53,7 +53,6 @@ export default function EditarPaciente() {
       }
     );
     const data = response.data.data.data;
-    console.log(data);
     setCasaData(data);
   }
 

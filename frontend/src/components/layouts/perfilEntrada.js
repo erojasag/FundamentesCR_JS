@@ -38,8 +38,6 @@ export default function PerfilEntrada(props) {
         headers,
       }
     );
-
-    console.log(response);
     setPerfilEntrada(response.data.data.data);
     setAspectoComunitario(response.data.data.data.aspectoComunitario);
     setAspectoClinico(response.data.data.data.aspectoClinico);
@@ -60,7 +58,6 @@ export default function PerfilEntrada(props) {
       });
     } else {
       getDatosPerfilEntrada(props.perfilEntrada);
-      console.log(perfilEntrada);
     }
   }, []);
 

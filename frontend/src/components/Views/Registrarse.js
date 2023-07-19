@@ -74,7 +74,6 @@ export default function Registrarse() {
     } catch (err) {
       let errMessage = JSON.parse(err.request.response);
       errMessage = errMessage.err.errors[0].message;
-      console.log(errMessage);
       if (errMessage === 'Las contraseñas no coinciden') {
         setErrorMessage(errMessage);
         return;
