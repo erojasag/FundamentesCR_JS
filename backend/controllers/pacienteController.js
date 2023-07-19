@@ -1,5 +1,4 @@
 const pacientesModel = require('../models/paciente');
-const db = require('../config/db');
 const catchAsync = require('../utils/catchAsync');
 // const AppError = require('../utils/appError');
 
@@ -32,20 +31,10 @@ const desactivarPaciente = catchAsync(async (req, res, next) => {
   });
 });
 
-const getPacientesPorEdad = catchAsync(async (req, res, next) => {
-  const ageRanges = await db.query('CALL GetAgeRangesWithCounts()');
-  res.status(200).json({
-    status: 'success',
-    data: {
-      data: ageRanges,
-    },
-  });
-});
 module.exports = {
   getAllPacientes,
   getPaciente,
   agregarPaciente,
   updatePaciente,
   desactivarPaciente,
-  getPacientesPorEdad,
 };
