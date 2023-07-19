@@ -46,7 +46,7 @@ export default function Registrarse() {
         confirmContrasena,
       };
       const response = await axios.post(
-        'https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/registrarse',
+        `${process.env.REACT_APP_BACKEND_API}usuarios/registrarse`,
         data
       );
       if (response.status !== 201) {
