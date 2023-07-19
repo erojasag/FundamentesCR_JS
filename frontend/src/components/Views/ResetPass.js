@@ -39,7 +39,7 @@ export default function ResetPass() {
         contrasena,
         confirmContrasena,
       };
-      const route = `http://localhost:3000/usuarios/reiniciarContrasena/${token}`;
+      const route = `https://fundamentes-dev-bf6998eb4614.herokuapp.com/usuarios/reiniciarContrasena/${token}`;
       const response = await axios.patch(route, data);
 
       if (response.status !== 200) {

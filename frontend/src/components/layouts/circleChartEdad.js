@@ -16,7 +16,7 @@ const CircleChartEdad = () => {
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
       const response = await axios.get(
-        `http://localhost:3000/stats/pacientesPorEdad`,
+        `https://fundamentes-dev-bf6998eb4614.herokuapp.com/stats/pacientesPorEdad`,
         { headers }
       );
       const edades = response.data.data.data;
