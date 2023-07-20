@@ -22,7 +22,9 @@ const CircleChartPersonasPorGenero = () => {
       const personasPorGenero = response.data.data.data;
 
 
-      const chartData = personasPorGenero.map((item) => `${item.cantidad_personas_x_generos}`); // Extract the 'count' values
+      const chartData = personasPorGenero.map(
+        (item) => `${item.cantidad_personas_x_generos}`
+      ); // Extract the 'count' values
       const chartLabels = personasPorGenero.map(
         (item) => `${item.genero}: ${item.cantidad_personas_x_generos}`
       ); // Create labels using 'edad'
