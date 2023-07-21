@@ -26,7 +26,7 @@ function Router() {
     <Routes>
       <Route index path="/" element={<Login />} />
       <Route exact path="/pacientes/" element={<Pacientes />} />
-      <Route exact path="pacientes/:id" element={<EditarPaciente />} />
+      <Route exact path="/:id" element={<EditarPaciente />} />
       <Route exact path="/inicio" element={<Index />} />
       <Route exact path="/registrarse" element={<Registrarse />} />
       <Route exact path="/olvideMiContrasena" element={<ForgotPass />} />
