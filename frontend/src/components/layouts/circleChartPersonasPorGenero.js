@@ -3,7 +3,7 @@ import Chart from 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import Error403 from './Error403';
+import Error403 from '../Views/Error403';
 import generateBackgroundColors from './randomColor';
 
 const CircleChartPersonasPorGenero = () => {
