@@ -373,7 +373,7 @@ export default function Pacientes() {
           </a>
           &nbsp; &nbsp;
           <a
-            href="eliminarPaciente"
+            
             className="btn btn-danger btn-sm"
             data-toggle="modal"
             data-target="#usuariosModal"
