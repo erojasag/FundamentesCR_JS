@@ -19,11 +19,9 @@ const deleteEncuestaSatisfaccion = deleteOne(EncuestaSatisfaccion);
 
 const getEncuestaSatisfaccionByPaciente = async (req, res, next) => {
   try {
-    const encuestaSatisfaccion = await EncuestaSatisfaccion.findAll({
-      where: {
-        pacienteId: req.params.id,
-      },
-    });
+    const encuestaSatisfaccion = await EncuestaSatisfaccion.findByPk(
+      req.params.id
+    );
 
     if (!encuestaSatisfaccion) {
       return res.status(404).json({

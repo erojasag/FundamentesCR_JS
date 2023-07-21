@@ -19,7 +19,6 @@
       "http-errors": "~1.6.3",
       "jsonwebtoken": "^9.0.0",
       "morgan": "~1.9.1",
-      "mssql": "^9.1.1",
       "mysql2": "^3.4.4",
       "nodemailer": "^6.9.2",
       "nodemon": "^3.0.1",

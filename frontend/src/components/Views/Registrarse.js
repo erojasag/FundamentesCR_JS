@@ -46,7 +46,7 @@ export default function Registrarse() {
         confirmContrasena,
       };
       const response = await axios.post(
-        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/registrarse',
+        `${process.env.REACT_APP_BACKEND_API}usuarios/registrarse`,
         data
       );
       if (response.status !== 201) {
@@ -74,7 +74,6 @@ export default function Registrarse() {
     } catch (err) {
       let errMessage = JSON.parse(err.request.response);
       errMessage = errMessage.err.errors[0].message;
-      console.log(errMessage);
       if (errMessage === 'Las contraseñas no coinciden') {
         setErrorMessage(errMessage);
         return;

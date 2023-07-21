@@ -8,7 +8,6 @@ const {
   deactivateUser,
   updateUserById,
   activateUser,
-  getDeactivatedUsers,
 } = require('../controllers/usuarioController');
 
 const {
@@ -36,13 +35,7 @@ router
   )
   .patch('/actualizarMiPerfil', protect, updateMe)
   .delete('/desactivarMiCuenta', protect, deleteMe)
-  .patch('/activarUsuario/:token', activateUser)
-  .get(
-    '/usuariosInactivos',
-    protect,
-    restrictTo('Administrador'),
-    getDeactivatedUsers
-  );
+  .patch('/activarUsuario/:token', activateUser);
 
 router
   .route('/')

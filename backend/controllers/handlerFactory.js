@@ -47,7 +47,6 @@ const insertOne = (Model) =>
 
 const updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    console.log(req.params.id, req.body);
     let doc = await Model.findByPk(req.params.id);
     doc = await doc.update(req.body);
 

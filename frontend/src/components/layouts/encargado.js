@@ -4,7 +4,6 @@ export default function Encargado(props) {
   const [encargado, setEncargado] = useState({});
 
   useEffect(() => {
-    console.log(props.encargado);
     if (props.encargado) {
       setEncargado(props.encargado);
     } else {

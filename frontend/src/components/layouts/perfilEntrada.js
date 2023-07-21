@@ -4,6 +4,7 @@ import AspectoComunitario from './aspectoComunitario';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import AspectoClinico from './aspectoClinico';
+import AspectoPsicoeducativo from './aspectoPsicoeducativo';
 
 export default function PerfilEntrada(props) {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export default function PerfilEntrada(props) {
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
     const response = await axios.get(
-      `http://localhost:3000/entrevistasEntrada/${props.perfilEntrada.perfilEntradaId}`,
+      `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/${props.perfilEntrada.perfilEntradaId}`,
       {
         headers,
       }
@@ -57,7 +58,6 @@ export default function PerfilEntrada(props) {
       });
     } else {
       getDatosPerfilEntrada(props.perfilEntrada);
-      console.log(perfilEntrada);
     }
   }, []);
 
@@ -76,6 +76,10 @@ export default function PerfilEntrada(props) {
       <AspectoClinico
         aspectoClinico={aspectoClinico}
         setUpdatedAspectoClinico={setUpdatedAspectoClinico}
+      />
+      <AspectoPsicoeducativo
+        aspectoPsicoeducativo={aspectoPsicoeducativo}
+        setUpdatedAspectoPsicoeducativo={setUpdatedAspectoPsicoeducativo}
       />
     </React.Fragment>
   );
