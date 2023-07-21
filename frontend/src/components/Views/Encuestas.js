@@ -83,7 +83,7 @@ export default function Encuestas() {
             ) : (
               <>
                 <div class="container-fluid">
-                  <div class="card shadow mb-4">
+                  <div class="card shadow mb-4 m-overflow">
                     <div class="card-header py-3 bg-second-primary">
                       <h6 class="m-0 font-weight-bold text-white">
                         Lista de Encuestas de Satisfacción
