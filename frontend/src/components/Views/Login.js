@@ -72,7 +72,18 @@ export default function Login() {
 
         setEmail('');
         setContrasena('');
-        navigate('/inicio');
+        toast.success('Inicio de sesión exitoso. \n Bienvenid@ 👋🏽', {
+          position: 'top-right',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          navigate('/inicio');
+        }, 2000);
       }
     } catch (err) {
       if (err.response.data.message === 'Correo o contraseña incorrectos') {
