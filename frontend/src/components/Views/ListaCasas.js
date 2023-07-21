@@ -52,6 +52,10 @@ export default function ListaCasas() {
         setIsForbidden(true);
         return;
       }
+
+      if (Cookies.get('rol') === 'Psicologo') {
+        setIsForbidden(true);
+      }
       setCasasData(response.data.data.casas);
       setLoading(false);
     } catch (err) {

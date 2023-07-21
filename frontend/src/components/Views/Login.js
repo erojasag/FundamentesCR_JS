@@ -64,7 +64,7 @@ export default function Login() {
 
         setEmail('');
         setContrasena('');
-        navigate('/Inicio');
+        navigate('/inicio');
       }
     } catch (err) {
       if (err.response.data.message === 'Correo o contraseña incorrectos') {

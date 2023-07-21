@@ -55,6 +55,9 @@ export default function ListaCasasInactivas() {
         setIsForbidden(true);
         return;
       }
+      if (Cookies.get('rol') === 'Psicologo') {
+        setIsForbidden(true);
+      }
       setCasasData(response.data.data.casas);
       setLoading(false);
     } catch (err) {
@@ -155,102 +158,108 @@ export default function ListaCasasInactivas() {
         <div id="content-wrapper" class="d-flex flex-column">
           <div id="content">
             <Navbar />
-            <div class="container-fluid">
-              <div class="card shadow mb-4 m-overflow">
-                <div class="card-header py-3 bg-second-primary">
-                  <h6 class="m-0 font-weight-bold text-white">
-                    Casas Inactivas
-                  </h6>
-                </div>
-                <div class="card-body">
-                  <div class="row"></div>
-                  <br />
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <table
-                        class="table table-bordered"
-                        id="tbdata"
-                        cellspacing="0"
-                        style={{ width: '100%' }}
-                      >
-                        <thead>
-                          <tr key={4}>
-                            <th>Nombre</th>
-                            <th>Canton</th>
-                            <th>Provincia</th>
-                            <th>Direccion</th>
-                            <th>Activo</th>
-                            <th>Accion</th>
-                          </tr>
-                        </thead>
-                        <tbody>{getCasas()}</tbody>
-                      </table>
+            {isForbidden ? (
+              <Error403 />
+            ) : (
+              <>
+                <div class="container-fluid">
+                  <div class="card shadow mb-4 m-overflow">
+                    <div class="card-header py-3 bg-second-primary">
+                      <h6 class="m-0 font-weight-bold text-white">
+                        Casas Inactivas
+                      </h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="row"></div>
+                      <br />
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <table
+                            class="table table-bordered"
+                            id="tbdata"
+                            cellspacing="0"
+                            style={{ width: '100%' }}
+                          >
+                            <thead>
+                              <tr key={4}>
+                                <th>Nombre</th>
+                                <th>Canton</th>
+                                <th>Provincia</th>
+                                <th>Direccion</th>
+                                <th>Activo</th>
+                                <th>Accion</th>
+                              </tr>
+                            </thead>
+                            <tbody>{getCasas()}</tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <Pagination className="custom-pagination">
+                        {Array.from({
+                          length: Math.ceil(casasData.length / usersPerPage),
+                        }).map((_, index) => (
+                          <Pagination.Item
+                            key={index + 1}
+                            onClick={() => paginate(index + 1)}
+                            className="first-letter:capitalize"
+                          >
+                            {index + 1}
+                          </Pagination.Item>
+                        ))}
+                      </Pagination>
+                    </div>
+                  </div>
+                  {loading && <Loading />}
+                  <div
+                    class="modal fade"
+                    id="exampleModal"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">
+                            Activar Usuario
+                          </h5>
+                          <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>¿Seguro que desea reactivar el usuario?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-primary"
+                            data-dismiss="modal"
+                          >
+                            Cancelar
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-success"
+                            data-dismiss="modal"
+                            onClick={() => activateCasa(selectedCasaId)}
+                          >
+                            &nbsp;Activar&nbsp;
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="d-flex justify-content-center">
-                  <Pagination className="custom-pagination">
-                    {Array.from({
-                      length: Math.ceil(casasData.length / usersPerPage),
-                    }).map((_, index) => (
-                      <Pagination.Item
-                        key={index + 1}
-                        onClick={() => paginate(index + 1)}
-                        className="first-letter:capitalize"
-                      >
-                        {index + 1}
-                      </Pagination.Item>
-                    ))}
-                  </Pagination>
-                </div>
-              </div>
-              {loading && <Loading />}
-              <div
-                class="modal fade"
-                id="exampleModal"
-                tabindex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">
-                        Activar Usuario
-                      </h5>
-                      <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <p>¿Seguro que desea reactivar el usuario?</p>
-                    </div>
-                    <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal"
-                      >
-                        Cancelar
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-success"
-                        data-dismiss="modal"
-                        onClick={() => activateCasa(selectedCasaId)}
-                      >
-                        &nbsp;Activar&nbsp;
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
           <Footer />
         </div>
