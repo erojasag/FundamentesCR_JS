@@ -71,7 +71,6 @@ const CircleChartEdad = () => {
 
   return (
     <React.Fragment>
-      <Navbar />
       {isForbidden ? (
         <Error403 />
       ) : (
