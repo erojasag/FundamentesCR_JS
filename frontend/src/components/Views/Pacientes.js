@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import SideMenu from '../layouts/sideMenu';
@@ -12,11 +13,12 @@ import Encargado from '../layouts/encargado';
 import DinamicaFamiliar from '../layouts/dinamicaFamiliar';
 import Escolaridad from '../layouts/escolaridad';
 import Loading from '../layouts/loading';
-
+import { Pagination } from 'react-bootstrap';
 import PerfilEntrada from '../layouts/perfilEntrada';
 // import PerfilEntrada from '../layouts/perfilEntrada';
 
 export default function Pacientes() {
+  const navigate = useNavigate();
   const [pacientesData, setPacientesData] = useState([]);
 
   const [newPacienteData, setNewPacienteData] = useState({});
@@ -140,7 +142,9 @@ export default function Pacientes() {
       );
       setPacientesData(response.data.data.data);
     } catch (err) {
-      console.log(err);
+      if (err.response.data.message === 'jwt expired') {
+        navigate('/');
+      }
     } finally {
       setLoading(false);
     }
@@ -337,8 +341,19 @@ export default function Pacientes() {
     });
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(10);
+
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentPacientes = pacientesData.slice(
+    indexOfFirstUser,
+    indexOfLastUser
+  );
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const getPacientes = () => {
-    return pacientesData.map((paciente) => (
+    return currentPacientes.map((paciente) => (
       <tr key={paciente.pacienteId}>
         <td>{paciente.nombreCompleto}</td>
         <td>{paciente.cedula}</td>
@@ -425,6 +440,23 @@ export default function Pacientes() {
                         <tbody>{getPacientes()}</tbody>
                       </table>
                     </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <Pagination className="custom-pagination">
+                      {Array.from({
+                        length: Math.ceil(pacientesData.length / usersPerPage),
+                      }).map((_, index) => (
+                        <Pagination.Item
+                          key={index + 1}
+                          onClick={() => paginate(index + 1)}
+                          className={
+                            index + 1 === currentPage ? 'hide-current' : ''
+                          }
+                        >
+                          {index + 1}
+                        </Pagination.Item>
+                      ))}
+                    </Pagination>
                   </div>
                 </div>
               </div>

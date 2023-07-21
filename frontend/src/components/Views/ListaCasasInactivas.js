@@ -10,6 +10,7 @@ import Loading from '../layouts/loading';
 import Error403 from './Error403';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { Pagination } from 'react-bootstrap';
 
 export default function ListaCasasInactivas() {
   const [casasData, setCasasData] = useState([]);
@@ -18,6 +19,13 @@ export default function ListaCasasInactivas() {
   const [selectedCasaId, setSelectedCasaId] = useState(null);
   const [isForbidden, setIsForbidden] = useState(false);
   const navigate = useNavigate();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(5);
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentCasa = casasData.slice(indexOfFirstUser, indexOfLastUser);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const fetchData = async () => {
     try {
@@ -179,6 +187,21 @@ export default function ListaCasasInactivas() {
                       </table>
                     </div>
                   </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <Pagination className="custom-pagination">
+                    {Array.from({
+                      length: Math.ceil(casasData.length / usersPerPage),
+                    }).map((_, index) => (
+                      <Pagination.Item
+                        key={index + 1}
+                        onClick={() => paginate(index + 1)}
+                        className="first-letter:capitalize"
+                      >
+                        {index + 1}
+                      </Pagination.Item>
+                    ))}
+                  </Pagination>
                 </div>
               </div>
               {loading && <Loading />}

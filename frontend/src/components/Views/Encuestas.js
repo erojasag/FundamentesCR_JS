@@ -4,25 +4,36 @@ import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
+import { Pagination } from 'react-bootstrap';
 export default function Encuestas() {
   const [encuestas, setEncuestas] = useState([]);
   const [selectedEncuesta, setSelectedEncuesta] = useState(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(5);
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentEncuesta = encuestas.slice(indexOfFirstUser, indexOfLastUser);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const fetchDataEncuestas = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
 
-    const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_API}encuestasSatisfaccion/`,
-      {
-        headers,
-      }
-    );
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}encuestasSatisfaccion/`,
+        {
+          headers,
+        }
+      );
 
-    setEncuestas(response.data.data.data);
+      setEncuestas(response.data.data.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -36,6 +47,9 @@ export default function Encuestas() {
         <td>{encuesta.edad}</td>
         <td>{encuesta.cedula}</td>
         <td>{encuesta.calificacion}</td>
+        <td>{encuesta.calificacionTallerEducativo}</td>
+        <td>{encuesta.calificacionTallerCreativo}</td>
+        <td>{encuesta.calificacionTallerClinico}</td>
         <td>{encuesta.recomendacion ? 'Si' : 'No'}</td>
         <td>{encuesta.comentarios}</td>
         <td>
@@ -46,16 +60,6 @@ export default function Encuestas() {
             <i className="fas fa-pencil-alt"></i>
           </a>
           &nbsp; &nbsp;
-          <button
-            href="eliminarPaciente"
-            className="btn btn-danger btn-sm"
-            data-toggle="modal"
-            data-target="#usuariosModal"
-            value={encuesta.encuestaSatisfaccionId}
-            onClick={() => setSelectedEncuesta(encuesta.encuestaSatisfaccionId)}
-          >
-            <i className="fas fa-trash-alt"></i>
-          </button>
         </td>
       </tr>
     ));
@@ -84,7 +88,7 @@ export default function Encuestas() {
                   </div>
                   <hr />
                   <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 wrap-text">
                       <table
                         class="table table-bordered"
                         id="tbdata"
@@ -97,6 +101,9 @@ export default function Encuestas() {
                             <th>Edad</th>
                             <th>Cedula</th>
                             <th>Calificacion</th>
+                            <th>Calificacion T. Educativo</th>
+                            <th>Calificacion T. Creativo</th>
+                            <th>Calificacion T. Clinico</th>
                             <th>Recomendacion</th>
                             <th>Comentarios</th>
                             <th>Acciones</th>
@@ -107,6 +114,21 @@ export default function Encuestas() {
                     </div>
                   </div>
                 </div>
+                <div class="d-flex justify-content-center">
+                  <Pagination className="custom-pagination">
+                    {Array.from({
+                      length: Math.ceil(encuestas.length / usersPerPage),
+                    }).map((_, index) => (
+                      <Pagination.Item
+                        key={index + 1}
+                        onClick={() => paginate(index + 1)}
+                        className="first-letter:capitalize"
+                      >
+                        {index + 1}
+                      </Pagination.Item>
+                    ))}
+                  </Pagination>
+                </div>
               </div>
             </div>
 
@@ -116,48 +138,7 @@ export default function Encuestas() {
               tabindex="-1"
               aria-labelledby="encuestaModalLabel"
               aria-hidden="true"
-            >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5
-                      class="modal-title"
-                      id="encuestaModalLabel"
-                      data-dismiss="modal"
-                    >
-                      Eliminar
-                    </h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <p>¿Seguro que desea eliminar el contenido?</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      data-dismiss="modal"
-                    >
-                      Cerrar
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      data-dismiss="modal"
-                    >
-                      Eliminar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ></div>
           </div>
 
           <Footer />
