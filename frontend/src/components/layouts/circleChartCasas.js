@@ -3,26 +3,37 @@ import Chart from 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import generateBackgroundColors from './randomColor';
 
 const CircleChartCasas = () => {
   const [chartData, setChartData] = useState([]);
   const [chartLabels, setChartLabels] = useState([]);
+  const navigate = useNavigate();
 
   const fetchData = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
-    const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}stats/casas`, {
-      headers,
-    });
-    const casas = response.data.data.data;
-    const chartData = casas.map((item) => item.patientCount); // Extract the 'count' values
-    const chartLabels = casas.map((item) => `${item.nombreCasa}`); // Create labels using 'edad'
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}stats/casas`,
+        {
+          headers,
+        }
+      );
+      const casas = response.data.data.data;
+      const chartData = casas.map((item) => item.patientCount); // Extract the 'count' values
+      const chartLabels = casas.map((item) => `${item.nombreCasa}`); // Create labels using 'edad'
 
-    setChartLabels(chartLabels);
-    setChartData(chartData);
+      setChartLabels(chartLabels);
+      setChartData(chartData);
+    } catch (err) {
+      if (err.response.data.err.message === 'jwt expired') {
+        navigate('/');
+      }
+    }
   };
   useEffect(() => {
     fetchData();

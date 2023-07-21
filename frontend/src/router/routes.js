@@ -29,6 +29,7 @@ import ListaCasas from '../components/Views/ListaCasas';
 import EditarCasa from '../components/Views/EditarCasa';
 import Error403 from '../components/Views/Error403';
 import ListaCasasInactivas from '../components/Views/ListaCasasInactivas';
+import EditarEncuesta from '../components/Views/editarEncuesta';
 
 function Router() {
   return (
@@ -42,6 +43,7 @@ function Router() {
       <Route path="/activarCuenta/:token" element={<Activacion />} />
       <Route path="/encuestas/" element={<Encuestas />} />
       <Route path="/agregarEncuesta" element={<AgregarEncuesta />} />
+      <Route path="/editarEncuesta/:id" element={<EditarEncuesta />} />
       <Route path="/usuarios/" element={<ListaUsuarios />} />
       <Route path="/usuarios/:id" element={<EditarUsuarioLog />} />
       <Route path="/usuariosInactivos" element={<ListaUsuariosInactivos />} />

@@ -8,6 +8,7 @@ import Footer from '../layouts/footer';
 import Loading from '../layouts/loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { Pagination } from 'react-bootstrap';
 
 export default function ListaUsuariosInactivos() {
   const [userData, setUserData] = useState([]);
@@ -15,6 +16,10 @@ export default function ListaUsuariosInactivos() {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(5);
+
   const handleNameChange = (event) => {
     setNewUser({
       ...newUser,
@@ -50,6 +55,11 @@ export default function ListaUsuariosInactivos() {
       },
     });
   };
+
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = userData.slice(indexOfFirstUser, indexOfLastUser);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const fetchData = async () => {
     setLoading(true);
@@ -192,6 +202,23 @@ export default function ListaUsuariosInactivos() {
                         <tbody>{getUsuarios()}</tbody>
                       </table>
                     </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <Pagination className="custom-pagination">
+                      {Array.from({
+                        length: Math.ceil(userData.length / usersPerPage),
+                      }).map((_, index) => (
+                        <Pagination.Item
+                          key={index + 1}
+                          onClick={() => paginate(index + 1)}
+                          className={
+                            index + 1 === currentPage ? 'hide-current' : ''
+                          }
+                        >
+                          {index + 1}
+                        </Pagination.Item>
+                      ))}
+                    </Pagination>
                   </div>
                 </div>
               </div>

@@ -3,6 +3,8 @@ const express = require('express');
 const {
   getAllEncuestaSatisfaccion,
   insertEncuestaSatisfaccion,
+  getEncuestaSatisfaccionByPaciente,
+  updateEncuestaSatisfaccion,
 } = require('../controllers/encuestaSatisfaccionController');
 
 const { protect, restrictTo } = require('../controllers/authController');
@@ -21,5 +23,10 @@ router
     restrictTo('Administrador', 'Psicologo'),
     insertEncuestaSatisfaccion
   );
+
+router
+  .route('/:id')
+  .get(protect, restrictTo('Administrador'), getEncuestaSatisfaccionByPaciente)
+  .patch(protect, restrictTo('Administrador'), updateEncuestaSatisfaccion);
 
 module.exports = router;

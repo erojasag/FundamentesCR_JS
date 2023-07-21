@@ -25,6 +25,18 @@ const encuestaSatisfaccion = db.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    calificacionTallerEducativo: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    calificacionTallerCreativo: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    calificacionTallerClinico: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     recomendacion: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

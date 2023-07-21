@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../../App.css';
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
@@ -10,37 +10,35 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-export default function AgregarEncuesta() {
+export default function EditarEncuesta() {
+  const { id } = useParams();
+
   const navigate = useNavigate();
-  const [data, setData] = useState([{}]);
-  const [dataEncuesta, setDataEncuesta] = useState({
-    pacienteId: '',
-    nombreCompleto: '',
-    edad: '',
-    cedula: '',
-    calificacion: 0,
-    calificacionTallerEducativo: 0,
-    calificacionTallerCreativo: 0,
-    calificacionTallerClinico: 0,
-    recomendacion: null,
-    comentarios: '',
-  });
+
+  const [dataEncuesta, setDataEncuesta] = useState({});
 
   const fetchPacientes = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
-    const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_API}pacientes/`,
-      {
-        headers,
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}encuestasSatisfaccion/${id}`,
+        {
+          headers,
+        }
+      );
+      const encuesta = response.data.data.encuestaSatisfaccion;
+      setDataEncuesta(encuesta);
+    } catch (err) {
+      if (err.response.data.message === 'jwt expired') {
+        toast.warn('Sesion Expirada por favor inicie sesion nuevamente');
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
       }
-    );
-    const pacientes = response.data.data.data;
-    pacientes.map((paciente) => {
-      setData(pacientes);
-    });
+    }
   };
 
   useEffect(() => {
@@ -48,18 +46,10 @@ export default function AgregarEncuesta() {
   }, []);
 
   const handleNombreChange = (event) => {
-    const selectedNombreCompleto = event.currentTarget.value;
-    const selectedPaciente = data.find(
-      (paciente) => paciente.nombreCompleto === selectedNombreCompleto
-    );
-
-    setDataEncuesta((prevDataEncuesta) => ({
-      ...prevDataEncuesta,
-      pacienteId: selectedPaciente.pacienteId,
-      nombreCompleto: selectedNombreCompleto,
-      edad: selectedPaciente.edad,
-      cedula: selectedPaciente.cedula,
-    }));
+    setDataEncuesta({
+      ...dataEncuesta,
+      nombreCompleto: event.currentTarget.value,
+    });
   };
 
   const handleCalificacionChange = (event) => {
@@ -115,71 +105,29 @@ export default function AgregarEncuesta() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
-
-      const consultaPaciente = await axios.get(
-        `${process.env.REACT_APP_BACKEND_API}pacientes/${dataEncuesta.pacienteId}`,
+      const response = await axios.patch(
+        `${process.env.REACT_APP_BACKEND_API}encuestasSatisfaccion/${id}`,
+        dataEncuesta,
         {
           headers,
         }
       );
 
-      console.log(consultaPaciente.data.data.data.encuestaSatisfaccionId);
-
-      if (!consultaPaciente.data.data.data.encuestaSatisfaccionId) {
-        const response = await axios.post(
-          `${process.env.REACT_APP_BACKEND_API}encuestasSatisfaccion/`,
-          dataEncuesta,
-          {
-            headers,
-          }
-        );
-
-        if (response.status === 201) {
-          const responsePaciente = await axios.patch(
-            `${process.env.REACT_APP_BACKEND_API}pacientes/${dataEncuesta.pacienteId}`,
-            {
-              encuestaSatisfaccionId:
-                response.data.data.data.encuestaSatisfaccionId,
-            },
-            {
-              headers,
-            }
-          );
-          if (responsePaciente.status === 201) {
-            toast.success('Encuesta guardada con éxito');
-            setTimeout(() => {
-              navigate('/encuestas');
-            }, 2000);
-          }
-        }
-      } else {
-        toast.warn(
-          'Este paciente ya tiene una encuesta de satisfacción, por favor edite la encuesta existente'
-        );
+      if (response.status === 201) {
+        toast.success('Encuesta editada con éxito');
+        setTimeout(() => {
+          navigate('/encuestas');
+        }, 2000);
       }
     } catch (err) {
+      console.log(err);
       if (err.response.data.err.errors[0].type === 'notNull Violation') {
-        toast.warn('Porfavor llene todos los campos');
-      } else if (err.response.status === 500) {
-        toast.warn('Porfavor seleccione un usuario');
-      } else if (err.response.data.message === 'jwt expired') {
-        toast.warn('Sesion Expirada por favor inicie sesion nuevamente');
+        toast.warn('Por favor llene todos los campos');
         setTimeout(() => {
-          navigate('/');
+          window.location.reload();
         }, 2000);
       }
     }
-  };
-
-  const handleFormClean = () => {
-    setDataEncuesta({
-      nombreCompleto: '',
-      edad: '',
-      cedula: '',
-      calificacion: '',
-      recomendacion: '',
-      comentarios: '',
-    });
   };
 
   return (
@@ -207,35 +155,22 @@ export default function AgregarEncuesta() {
                 <section class="row">
                   <section class="col-md-12">
                     <section class="row">
-                      <div class="col-md-8">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label for="nombreCompleto">Nombre Completo:</label>
-                          <div class="form-group col-sm-6">
-                            <select
-                              class="custom-select"
-                              id="paciente"
-                              name="paciente"
-                              value={dataEncuesta.nombreCompleto}
-                              onChange={handleNombreChange}
-                            >
-                              {!dataEncuesta.nombreCompleto && (
-                                <option value="null">-No especifica-</option>
-                              )}
-                              {data.map((paciente) => (
-                                <option
-                                  value={paciente.nombreCompleto}
-                                  onChange={handleNombreChange}
-                                  key={paciente.pacienteId}
-                                >
-                                  {paciente.nombreCompleto}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
+                          <input
+                            type="text"
+                            class="form-control input-validar"
+                            id="txtNombreCompleto"
+                            name="nombreCompleto"
+                            disabled
+                            value={dataEncuesta.nombreCompleto}
+                            onChange={handleNombreChange}
+                          />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form_group">
+                      <div class="col-md-2">
+                        <div class="form-group">
                           <label for="edadEncuestado">Edad:</label>
                           <input
                             type="number"
@@ -248,9 +183,7 @@ export default function AgregarEncuesta() {
                           />
                         </div>
                       </div>
-                    </section>
-                    <section class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-2">
                         <div class="form-group">
                           <label for="idIdentificacion">Cedula:</label>
                           <input
@@ -297,6 +230,7 @@ export default function AgregarEncuesta() {
                             id="rating1"
                             name="calificacion"
                             value={1}
+                            checked={dataEncuesta.calificacion === 1}
                             onChange={handleCalificacionChange}
                           />
                           <label
@@ -310,6 +244,7 @@ export default function AgregarEncuesta() {
                             id="rating2"
                             name="calificacion"
                             value={2}
+                            checked={dataEncuesta.calificacion === 2}
                             onChange={handleCalificacionChange}
                           />
                           <label
@@ -323,6 +258,7 @@ export default function AgregarEncuesta() {
                             id="rating3"
                             name="calificacion"
                             value={3}
+                            checked={dataEncuesta.calificacion === 3}
                             onChange={handleCalificacionChange}
                           />
                           <label
@@ -336,6 +272,7 @@ export default function AgregarEncuesta() {
                             id="rating4"
                             name="calificacion"
                             value={4}
+                            checked={dataEncuesta.calificacion === 4}
                             onChange={handleCalificacionChange}
                           />
                           <label
@@ -349,6 +286,7 @@ export default function AgregarEncuesta() {
                             id="rating5"
                             name="calificacion"
                             value={5}
+                            checked={dataEncuesta.calificacion === 5}
                             onChange={handleCalificacionChange}
                           />
                           <label
@@ -376,6 +314,7 @@ export default function AgregarEncuesta() {
                         </p>
                       </div>
                     </section>
+
                     <div className="wrapper">
                       <div className="encuesta">
                         <div className="rating">
@@ -384,6 +323,9 @@ export default function AgregarEncuesta() {
                             id="rating6"
                             name="calificacionTallerEducativo"
                             value={1}
+                            checked={
+                              dataEncuesta.calificacionTallerEducativo === 1
+                            }
                             onChange={handleCalificacionTallerEducativo}
                           />
                           <label
@@ -397,6 +339,9 @@ export default function AgregarEncuesta() {
                             id="rating7"
                             name="calificacionTallerEducativo"
                             value={2}
+                            checked={
+                              dataEncuesta.calificacionTallerEducativo === 2
+                            }
                             onChange={handleCalificacionTallerEducativo}
                           />
                           <label
@@ -410,6 +355,9 @@ export default function AgregarEncuesta() {
                             id="rating8"
                             name="calificacionTallerEducativo"
                             value={3}
+                            checked={
+                              dataEncuesta.calificacionTallerEducativo === 3
+                            }
                             onChange={handleCalificacionTallerEducativo}
                           />
                           <label
@@ -423,6 +371,9 @@ export default function AgregarEncuesta() {
                             id="rating9"
                             name="calificacionTallerEducativo"
                             value={4}
+                            checked={
+                              dataEncuesta.calificacionTallerEducativo === 4
+                            }
                             onChange={handleCalificacionTallerEducativo}
                           />
                           <label
@@ -436,6 +387,9 @@ export default function AgregarEncuesta() {
                             id="rating10"
                             name="calificacionTallerEducativo"
                             value={5}
+                            checked={
+                              dataEncuesta.calificacionTallerEducativo === 5
+                            }
                             onChange={handleCalificacionTallerEducativo}
                           />
                           <label
@@ -468,8 +422,11 @@ export default function AgregarEncuesta() {
                           <input
                             type="radio"
                             id="rating11"
-                            name="CalificacionTallerCreativo"
+                            name="calificacionTallerCreativo"
                             value={1}
+                            checked={
+                              dataEncuesta.calificacionTallerCreativo === 1
+                            }
                             onChange={handleCalificacionTallerCreativo}
                           />
                           <label
@@ -481,8 +438,11 @@ export default function AgregarEncuesta() {
                           <input
                             type="radio"
                             id="rating12"
-                            name="CalificacionTallerCreativo"
+                            name="calificacionTallerCreativo"
                             value={2}
+                            checked={
+                              dataEncuesta.calificacionTallerCreativo === 2
+                            }
                             onChange={handleCalificacionTallerCreativo}
                           />
                           <label
@@ -494,8 +454,11 @@ export default function AgregarEncuesta() {
                           <input
                             type="radio"
                             id="rating13"
-                            name="CalificacionTallerCreativo"
+                            name="calificacionTallerCreativo"
                             value={3}
+                            checked={
+                              dataEncuesta.calificacionTallerCreativo === 3
+                            }
                             onChange={handleCalificacionTallerCreativo}
                           />
                           <label
@@ -507,8 +470,11 @@ export default function AgregarEncuesta() {
                           <input
                             type="radio"
                             id="rating14"
-                            name="CalificacionTallerCreativo"
+                            name="calificacionTallerCreativo"
                             value={4}
+                            checked={
+                              dataEncuesta.calificacionTallerCreativo === 4
+                            }
                             onChange={handleCalificacionTallerCreativo}
                           />
                           <label
@@ -520,8 +486,11 @@ export default function AgregarEncuesta() {
                           <input
                             type="radio"
                             id="rating15"
-                            name="CalificacionTallerCreativo"
+                            name="calificacionTallerCreativo"
                             value={5}
+                            checked={
+                              dataEncuesta.calificacionTallerCreativo === 5
+                            }
                             onChange={handleCalificacionTallerCreativo}
                           />
                           <label
@@ -556,8 +525,11 @@ export default function AgregarEncuesta() {
                           <input
                             type="radio"
                             id="rating16"
-                            name="CalificacionTallerClinico"
+                            name="calificacionTallerClinico"
                             value={1}
+                            checked={
+                              dataEncuesta.calificacionTallerClinico === 1
+                            }
                             onChange={handleCalificacionTallerClinico}
                           />
                           <label
@@ -569,8 +541,11 @@ export default function AgregarEncuesta() {
                           <input
                             type="radio"
                             id="rating17"
-                            name="CalificacionTallerClinico"
+                            name="calificacionTallerClinico"
                             value={2}
+                            checked={
+                              dataEncuesta.calificacionTallerClinico === 2
+                            }
                             onChange={handleCalificacionTallerClinico}
                           />
                           <label
@@ -582,8 +557,11 @@ export default function AgregarEncuesta() {
                           <input
                             type="radio"
                             id="rating18"
-                            name="CalificacionTallerClinico"
+                            name="calificacionTallerClinico"
                             value={3}
+                            checked={
+                              dataEncuesta.calificacionTallerClinico === 3
+                            }
                             onChange={handleCalificacionTallerClinico}
                           />
                           <label
@@ -595,8 +573,11 @@ export default function AgregarEncuesta() {
                           <input
                             type="radio"
                             id="rating19"
-                            name="CalificacionTallerClinico"
+                            name="calificacionTallerClinico"
                             value={4}
+                            checked={
+                              dataEncuesta.calificacionTallerClinico === 4
+                            }
                             onChange={handleCalificacionTallerClinico}
                           />
                           <label
@@ -608,8 +589,11 @@ export default function AgregarEncuesta() {
                           <input
                             type="radio"
                             id="rating20"
-                            name="CalificacionTallerClinico"
+                            name="calificacionTallerClinico"
                             value={5}
+                            checked={
+                              dataEncuesta.calificacionTallerClinico === 5
+                            }
                             onChange={handleCalificacionTallerClinico}
                           />
                           <label
@@ -683,15 +667,6 @@ export default function AgregarEncuesta() {
                     onClick={handleSubmit}
                   >
                     Guardar Encuesta
-                  </button>
-                  &nbsp; &nbsp;
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    id="clearForm"
-                    onClick={handleFormClean}
-                  >
-                    Limpiar formulario
                   </button>
                   &nbsp; &nbsp;
                   <a

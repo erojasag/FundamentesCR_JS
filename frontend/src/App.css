@@ -254,6 +254,26 @@ button {
   border-radius: 0;
 }
 
+.custom-pagination .page-item .page-link {
+  color: #fff; /* Set your desired text color */
+  background-color: #0056b3; /* Set your desired background color */
+  border-color: #0056b3; /* Set your desired border color */
+}
+
+.custom-pagination .page-item .page-link:hover {
+  background-color: #007bff; /* Set your desired hover background color */
+  border-color: #007bff; /* Set your desired hover border color */
+}
+
+.custom-pagination .page-item.active .page-link {
+  background-color: #0056b3; /* Set your desired active background color */
+  border-color: #0056b3; /* Set your desired active border color */
+}
+
+.hide-current .sr-only {
+  color: transparent;
+}
+
 button:focus:not(:focus-visible) {
   outline: 0;
 }
@@ -11877,6 +11897,11 @@ html[data-theme='light'] .popup-arrow > svg {
   cursor: pointer;
 }
 
+.wrap-text {
+  word-wrap: break-word;
+}
+
 .password-icon {
   font-size: 1rem;
+  color: #0056b3;
 }
