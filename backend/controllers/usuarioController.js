@@ -18,7 +18,6 @@ const filterObj = (obj, ...allowedFields) => {
 
 //ONLY FOR ADMINS
 const createUser = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   if (
     req.body.rol.nombreRol !== 'Administrador' &&
     req.body.rol.nombreRol !== 'Psicologo'
@@ -41,7 +40,7 @@ const createUser = catchAsync(async (req, res, next) => {
   const message = `Bienvenido a fundamentes ${req.body.nombre} ${req.body.primerApe}!.
          Username: ${req.body.email}
          Password: ${password}
-         Porfavor activa tu cuenta ingresando al siguiente link: http://localhost:5000/activarCuenta/${doc.dataValues.activationToken}`;
+         Porfavor activa tu cuenta ingresando al siguiente link: https://fundamentes-dev.netlify.app/activarCuenta/${doc.dataValues.activationToken}`;
   if (!doc) return next(new AppError('No se pudo crear el registro', 500));
 
   try {
@@ -115,9 +114,15 @@ const activateUser = catchAsync(async (req, res, next) => {
 
 //ONLY FOR ADMINS
 const getAllUsers = catchAsync(async (req, res, next) => {
+  let search = null;
+  if (req.query.q === 'false') {
+    search = false;
+  } else {
+    search = true;
+  }
   const users = await userModel.findAll({
     where: {
-      activo: true,
+      activo: search,
     },
   });
 
@@ -173,12 +178,13 @@ const updateMe = catchAsync(async (req, res, next) => {
     return next(
       new AppError('Esta ruta no es para actualizar la contraseña', 400)
     );
-
-  console.log(req.body);
-  if(req.body.nombre === '' || req.body.primerApe === '' || req.body.segundoApe === '' || req.body.email === ''){
-    return next(
-      new AppError('Por favor ingrese todos los campos', 400)
-    );
+  if (
+    req.body.nombre === '' ||
+    req.body.primerApe === '' ||
+    req.body.segundoApe === '' ||
+    req.body.email === ''
+  ) {
+    return next(new AppError('Por favor ingrese todos los campos', 400));
   }
   const filteredBody = filterObj(
     req.body,
@@ -236,7 +242,6 @@ const deleteMe = catchAsync(async (req, res, next) => {
 });
 
 const deactivateUser = catchAsync(async (req, res, next) => {
-  console.log(req.params);
   if (
     !(await userModel.update(
       { activo: false },
@@ -256,23 +261,6 @@ const deactivateUser = catchAsync(async (req, res, next) => {
   });
 });
 
-const getDeactivatedUsers = catchAsync(async (req, res, next) => {
-  const users = await userModel.findAll({
-    where: {
-      activo: false,
-    },
-  });
-
-  if (!users) return next(new AppError('No se encontraron registros', 404));
-
-  res.status(200).json({
-    status: 'success',
-    results: users.length,
-    data: {
-      users,
-    },
-  });
-});
 
 module.exports = {
   createUser,
@@ -280,7 +268,6 @@ module.exports = {
   getUserById,
   updateMe,
   deleteMe,
-  getDeactivatedUsers,
   deactivateUser,
   updateUserById,
   activateUser,

@@ -13,10 +13,12 @@ import Encargado from '../layouts/encargado';
 import DinamicaFamiliar from '../layouts/dinamicaFamiliar';
 import Escolaridad from '../layouts/escolaridad';
 import PerfilEntrada from '../layouts/perfilEntrada';
+import PerfilSalida from '../layouts/perfilSalida';
 
 export default function EditarPaciente() {
   const { id } = useParams();
-
+  const [agregaPerfilEntrada, setAgregaPerfilEntrada] = useState(false);
+  const [agregaPerfilSalida, setAgregaPerfilSalida] = useState(false);
   const navigate = useNavigate();
   const [pacienteData, setPacienteData] = useState({});
   //datos medicos
@@ -121,11 +123,13 @@ export default function EditarPaciente() {
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
 
-    const response = await axios.get(`http://localhost:3000/pacientes/${id}`, {
-      headers,
-    });
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND_API}pacientes/${id}`,
+      {
+        headers,
+      }
+    );
     const data = response.data.data.data;
-    console.log(data);
     setPacienteData(data);
     setDatosMedicos(data.datosMedicos);
     setCondicionLaboral(data.condicionLaboral);
@@ -137,17 +141,18 @@ export default function EditarPaciente() {
 
     if (data.perfilEntradaId !== null) {
       const responsePerfilEntrada = await axios.get(
-        `http://localhost:3000/entrevistasEntrada/${data.perfilEntradaId}`,
+        `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/${data.perfilEntradaId}`,
         {
           headers,
         }
       );
       const dataPerfilEntrada = responsePerfilEntrada.data.data.data;
       setPerfilEntrada(dataPerfilEntrada);
+      setAgregaPerfilEntrada(true);
     }
     // if (data.perfilSalidaId !== null) {
     //   const responsePerfilSalida = await axios.get(
-    //     `http://localhost:3000/entrevistasSalida/${data.perfilSalidaId}`,
+    //     `${process.env.REACT_APP_BACKEND_API}entrevistasSalida/${data.perfilSalidaId}`,
     //     {
     //       headers,
     //     }
@@ -191,7 +196,7 @@ export default function EditarPaciente() {
     if (updatedDatosMedicos !== null) {
       if (pacienteData.datosMedicosId === null) {
         const response = await axios.post(
-          `http://localhost:3000/datosMedicos/`,
+          `${process.env.REACT_APP_BACKEND_API}datosMedicos/`,
           updatedDatosMedicos,
           {
             headers,
@@ -201,7 +206,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `http://localhost:3000/datosMedicos/${pacienteData.datosMedicosId}`,
+        `${process.env.REACT_APP_BACKEND_API}datosMedicos/${pacienteData.datosMedicosId}`,
         updatedDatosMedicos,
         {
           headers,
@@ -211,7 +216,7 @@ export default function EditarPaciente() {
     if (updatedCondicionLaboral !== null) {
       if (pacienteData.condicionLaboralId === null) {
         const response = await axios.post(
-          `http://localhost:3000/condicionesLaborales/`,
+          `${process.env.REACT_APP_BACKEND_API}condicionesLaborales/`,
           updatedCondicionLaboral,
           {
             headers,
@@ -222,7 +227,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `http://localhost:3000/condicionesLaborales/${pacienteData.condicionLaboralId}`,
+        `${process.env.REACT_APP_BACKEND_API}condicionesLaborales/${pacienteData.condicionLaboralId}`,
         updatedCondicionLaboral,
         {
           headers,
@@ -232,7 +237,7 @@ export default function EditarPaciente() {
     if (updatedSociodemograficos !== null) {
       if (pacienteData.sociodemograficosId === null) {
         const response = await axios.post(
-          `http://localhost:3000/sociodemograficos/`,
+          `${process.env.REACT_APP_BACKEND_API}sociodemograficos/`,
           updatedSociodemograficos,
           {
             headers,
@@ -243,7 +248,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `http://localhost:3000/sociodemograficos/${pacienteData.sociodemograficosId}`,
+        `${process.env.REACT_APP_BACKEND_API}sociodemograficos/${pacienteData.sociodemograficosId}`,
         updatedSociodemograficos,
         {
           headers,
@@ -253,7 +258,7 @@ export default function EditarPaciente() {
     if (updatedEncargado !== null) {
       if (pacienteData.encargadoId === null) {
         const response = await axios.post(
-          `http://localhost:3000/encargados/`,
+          `${process.env.REACT_APP_BACKEND_API}encargados/`,
           updatedEncargado,
           {
             headers,
@@ -263,7 +268,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `http://localhost:3000/encargados/${pacienteData.encargadoId}`,
+        `${process.env.REACT_APP_BACKEND_API}encargados/${pacienteData.encargadoId}`,
         updatedEncargado,
         {
           headers,
@@ -273,7 +278,7 @@ export default function EditarPaciente() {
     if (updatedDinamicaFamiliar !== null) {
       if (pacienteData.dinamicaFamiliarId === null) {
         const response = await axios.post(
-          `http://localhost:3000/dinamicasFamiliares/`,
+          `${process.env.REACT_APP_BACKEND_API}dinamicasFamiliares/`,
           updatedDinamicaFamiliar,
           {
             headers,
@@ -284,7 +289,7 @@ export default function EditarPaciente() {
       }
 
       await axios.patch(
-        `http://localhost:3000/dinamicasFamiliares/${pacienteData.dinamicaFamiliarId}`,
+        `${process.env.REACT_APP_BACKEND_API}dinamicasFamiliares/${pacienteData.dinamicaFamiliarId}`,
         updatedDinamicaFamiliar,
         {
           headers,
@@ -294,7 +299,7 @@ export default function EditarPaciente() {
     if (updatedEscolaridad !== null) {
       if (pacienteData.escolaridadId === null) {
         const response = await axios.post(
-          `http://localhost:3000/escolaridades/`,
+          `${process.env.REACT_APP_BACKEND_API}escolaridades/`,
           updatedEscolaridad,
           {
             headers,
@@ -303,7 +308,7 @@ export default function EditarPaciente() {
         pacienteData.escolaridadId = response.data.data.data.escolaridadId;
       }
       await axios.patch(
-        `http://localhost:3000/escolaridades/${pacienteData.escolaridadId}`,
+        `${process.env.REACT_APP_BACKEND_API}escolaridades/${pacienteData.escolaridadId}`,
         updatedEscolaridad,
         {
           headers,
@@ -332,7 +337,7 @@ export default function EditarPaciente() {
       perfilSalidaId: pacienteData.perfilSalidaId,
     };
     await axios.patch(
-      `http://localhost:3000/pacientes/${pacienteData.pacienteId}`,
+      `${process.env.REACT_APP_BACKEND_API}pacientes/${pacienteData.pacienteId}`,
       body,
       {
         headers,
@@ -350,7 +355,9 @@ export default function EditarPaciente() {
           <div class="container-fluid">
             <div class="card shadow mb-4">
               <div class="card-header py-3 bg-second-primary">
-                <h6 class="m-0 font-weight-bold text-white">Editar Paciente</h6>
+                <h6 class="m-0 font-weight-bold text-white">
+                  Editar Beneficiario
+                </h6>
               </div>
               <div class="card-body">
                 <div class="row">
@@ -510,16 +517,65 @@ export default function EditarPaciente() {
                       />
                       <br />
                       <hr />
-                      {pacienteData.perfilEntradaId === null ? (
-                        <PerfilEntrada
-                          perfilEntrada={perfilEntrada}
-                          setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
-                        />
+                      {!agregaPerfilEntrada ? (
+                        <div class="row col-sm-6">
+                          <button
+                            class="btn btn-success btn-sm"
+                            type="button"
+                            id="btnGuardarCambios"
+                            onClick={() => setAgregaPerfilEntrada(true)}
+                          >
+                            Anadir Perfil de Entrada
+                          </button>
+                        </div>
                       ) : (
-                        <PerfilEntrada
-                          perfilEntrada={perfilEntrada}
-                          setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
-                        />
+                        <>
+                          <PerfilEntrada
+                            perfilEntrada={perfilEntrada}
+                            setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
+                          />
+                        </>
+                      )}
+                      <hr />
+                      {!agregaPerfilSalida && (
+                        <div class="row col-sm-6">
+                          <button
+                            class="btn btn-success btn-sm"
+                            type="button"
+                            id="btnGuardarCambios"
+                            onClick={() => setAgregaPerfilSalida(true)}
+                          >
+                            Anadir Perfil de Salida
+                          </button>
+                        </div>
+                      )}
+                      {agregaPerfilSalida && (
+                        <>
+                          <div class="form-group row justify-content-center">
+                            <label
+                              for="txtDistrito"
+                              className="col-form-label-lg"
+                            >
+                              Perfil de Salida
+                            </label>
+                          </div>
+
+                          <PerfilSalida
+                            perfilEntrada={perfilSalida}
+                            setUpdatedPerfilEntrada={setUpdatedPerfilSalida}
+                          />
+
+                          <div class="row col-sm-6">
+                            <button
+                              class="btn btn-danger btn-sm"
+                              type="button"
+                              id="btnGuardarCambios"
+                              onClick={() => setAgregaPerfilSalida(false)}
+                            >
+                              Cancelar
+                            </button>
+                          </div>
+                        </>
                       )}
                       <br />
                       <hr />

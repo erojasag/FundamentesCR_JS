@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
 
 export default function AspectoComunitario(props) {
   const [aspectoComunitario, setAspectoComunitario] = useState({});
 
   useEffect(() => {
-    if (props.aspectoComunitario !== '') {
-      setAspectoComunitario(props.aspectoComunitario);
+    if (props.aspectoComunitario.lenght === 0) {
+      setAspectoComunitario({
+        altaVulnerabilidadViolencia: null,
+        puntajeAltaVulnerabilidadViolencia: 0,
+        observacionesAltaVulnerabilidadViolencia: '',
+        reflexionEntorno: null,
+        puntajeReflexionEntorno: 0,
+        observacionesReflexionEntorno: '',
+        formasRelacionarse: null,
+        puntajeFormasRelacionarse: 0,
+        observacionesFormasRelacionarse: '',
+        cuestionamientoNormas: null,
+        puntajeCuestionamientoNormas: 0,
+        observacionesCuestionamientoNormas: '',
+        puntajeTotal: 0,
+        prioridad: '',
+      });
     } else {
-      setAspectoComunitario([null]);
+      setAspectoComunitario(props.aspectoComunitario);
     }
   }, [props.aspectoComunitario]);
-
 
   const handleAltaVulnerabilidadViolencia = (event) => {
     const updatedAspectoComunitario = {
@@ -122,6 +134,15 @@ export default function AspectoComunitario(props) {
     props.setUpdatedAspectoComunitario(updatedAspectoComunitario);
   };
 
+  const handlePrioridadChange = (event) => {
+    const updatedAspectoComunitario = {
+      ...aspectoComunitario,
+      prioridad: event.currentTarget.value,
+    };
+    setAspectoComunitario(updatedAspectoComunitario);
+    props.setUpdatedAspectoComunitario(updatedAspectoComunitario);
+  };
+
   const handlePuntajeTotal = (event) => {
     const updatedAspectoComunitario = {
       ...aspectoComunitario,
@@ -130,7 +151,6 @@ export default function AspectoComunitario(props) {
     setAspectoComunitario(updatedAspectoComunitario);
     props.setUpdatedAspectoComunitario(updatedAspectoComunitario);
   };
-
 
   return (
     <React.Fragment>
@@ -142,14 +162,14 @@ export default function AspectoComunitario(props) {
 
       <div class="row">
         <div class="form-group col-sm-6">
-          <label for="txtTrabajaActualmente">
+          <label for="txtaltaVulnerabilidadViolencia">
             Alta Vulnerabilidad de violencia
           </label>
           <select
             class="custom-select"
-            id="trabajaActualmente"
-            name="trabajaActualmente"
-            value={aspectoComunitario}
+            id="altaVulnerabilidadViolencia"
+            name="altaVulnerabilidadViolencia"
+            value={aspectoComunitario.altaVulnerabilidadViolencia}
             onChange={handleAltaVulnerabilidadViolencia}
           >
             <option value="null">-No especifica-</option>
@@ -158,36 +178,40 @@ export default function AspectoComunitario(props) {
           </select>
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtLugar">Puntaje</label>
+          <label for="txtpuntajeAltaVulnerabilidadViolencia">
+            Puntaje de alta Vulnerabilidad de Violencia
+          </label>
           <input
             type="text"
             class="form-control form-control-sm input-validar"
-            id="lugar"
-            name="lugar"
-            value={aspectoComunitario}
+            id="puntajeAltaVulnerabilidadViolencia"
+            name="puntajeAltaVulnerabilidadViolencia"
+            value={aspectoComunitario.puntajeAltaVulnerabilidadViolencia}
             onChange={handlePuntajeAltaVulnerabilidadViolencia}
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtLugar">Observaciones</label>
+          <label for="txtobservacionesAltaVulnerabilidadViolencia">
+            Observaciones
+          </label>
           <input
             type="text"
             class="form-control form-control-sm input-validar"
-            id="lugar"
-            name="lugar"
-            value={aspectoComunitario}
+            id="observacionesAltaVulnerabilidadViolencia"
+            name="observacionesAltaVulnerabilidadViolencia"
+            value={aspectoComunitario.observacionesAltaVulnerabilidadViolencia}
             onChange={handleObservacionesAltaVulnerabilidadViolencia}
           />
         </div>
         <hr />
         <br />
         <div class="form-group col-sm-6">
-          <label for="txtTrabajaActualmente">Reflexion de Entorno</label>
+          <label for="txtreflexionEntorno">Reflexion de Entorno</label>
           <select
             class="custom-select"
-            id="trabajaActualmente"
-            name="trabajaActualmente"
-            value={aspectoComunitario}
+            id="reflexionEntorno"
+            name="reflexionEntorno"
+            value={aspectoComunitario.reflexionEntorno}
             onChange={handleReflexionEntorno}
           >
             <option value="null">-No especifica-</option>
@@ -196,26 +220,28 @@ export default function AspectoComunitario(props) {
           </select>
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtLugar">Puntaje Reflexion de Entorno</label>
-          <input
-            type="text"
-            class="form-control form-control-sm input-validar"
-            id="lugar"
-            name="lugar"
-            value={aspectoComunitario}
-            onChange={handlePuntajeReflexionEntorno}
-          />
-        </div>
-        <div class="form-group col-sm-6">
-          <label for="txtFormasRelacionarse">
-            Observaciones Reflexion de Entorno
+          <label for="txtpuntajeReflexionEntorno">
+            Puntaje Reflexion de Entorno
           </label>
           <input
             type="text"
             class="form-control form-control-sm input-validar"
-            id="lugar"
-            name="lugar"
-            value={aspectoComunitario}
+            id="puntajeReflexionEntorno"
+            name="puntajeReflexionEntorno"
+            value={aspectoComunitario.puntajeReflexionEntorno}
+            onChange={handlePuntajeReflexionEntorno}
+          />
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="txtobservacionesReflexionEntorno">
+            Observaciones Reflexion de Entorno
+          </label>
+          <textarea
+            type="text"
+            class="form-control form-control-sm input-validar"
+            id="observacionesReflexionEntorno"
+            name="observacionesReflexionEntorno"
+            value={aspectoComunitario.observacionesReflexionEntorno}
             onChange={handleObservacionesReflexionEntorno}
           />
         </div>
@@ -225,7 +251,7 @@ export default function AspectoComunitario(props) {
             class="custom-select"
             id="formasRelacionarse"
             name="formasRelacionarse"
-            value={aspectoComunitario}
+            value={aspectoComunitario.formasRelacionarse}
             onChange={handleFormasRelacionarse}
           >
             <option value="null">-No especifica-</option>
@@ -242,7 +268,7 @@ export default function AspectoComunitario(props) {
             class="form-control form-control-sm input-validar"
             id="formasRelacionarse"
             name="formasRelacionarse"
-            value={aspectoComunitario}
+            value={aspectoComunitario.puntajeFormasRelacionarse}
             onChange={handlePuntajeFormasRelacionarse}
           />
         </div>
@@ -250,27 +276,79 @@ export default function AspectoComunitario(props) {
           <label for="txtObservacionesFormasRelacionarse">
             Observaciones Forma de Relacionarse
           </label>
-          <input
+          <textarea
             type="text"
             class="form-control form-control-sm input-validar"
             id="observacionesFormasRelacionarse"
             name="observacionesFormasRelacionarse"
-            value={aspectoComunitario}
+            value={aspectoComunitario.observacionesFormasRelacionarse}
             onChange={handleObservacionesFormasRelacionarse}
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtFormasRelacionarse">Cuestionamiento Normas</label>
+          <label for="txtcuestionamientoNormas">Cuestionamiento Normas</label>
           <select
             class="custom-select"
-            id="formasRelacionarse"
-            name="formasRelacionarse"
-            value={aspectoComunitario}
-            onChange={handleFormasRelacionarse}
+            id="cuestionamientoNormas"
+            name="cuestionamientoNormas"
+            value={aspectoComunitario.cuestionamientoNormas}
+            onChange={handleCuestionamientoNormas}
           >
             <option value="null">-No especifica-</option>
             <option value="true">Si</option>
             <option value="false">No</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="txtpuntajeCuestionamientoNormas">
+            Puntaje Cuestionamiento de Normas
+          </label>
+          <input
+            type="text"
+            class="form-control form-control-sm input-validar"
+            id="puntajeCuestionamientoNormas"
+            name="puntajeCuestionamientoNormas"
+            value={aspectoComunitario.puntajeCuestionamientoNormas}
+            onChange={handlePuntajeCuestionamientoNormas}
+          />
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="txtobservacionesReflexionEntorno">
+            Observaciones Cuestionamiento de Normas
+          </label>
+          <textarea
+            type="text"
+            class="form-control form-control-sm input-validar"
+            id="observacionesReflexionEntorno"
+            name="observacionesReflexionEntorno"
+            value={aspectoComunitario.observacionesCuestionamientoNormas}
+            onChange={handleObservacionesCuestionamientoNormas}
+          />
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="txtpuntajeCuestionamientoNormas">Puntaje Total</label>
+          <input
+            type="text"
+            class="form-control form-control-sm input-validar"
+            id="puntajeCuestionamientoNormas"
+            name="puntajeCuestionamientoNormas"
+            value={aspectoComunitario.puntajeTotal}
+            onChange={handlePuntajeTotal}
+          />
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="txtcuestionamientoNormas">Prioridad</label>
+          <select
+            class="custom-select"
+            id="cuestionamientoNormas"
+            name="cuestionamientoNormas"
+            value={aspectoComunitario.prioridad}
+            onChange={handlePrioridadChange}
+          >
+            <option value="null">-No especifica-</option>
+            <option value="Baja">Baja</option>
+            <option value="Media">Media</option>
+            <option value="Alta">Alta</option>
           </select>
         </div>
       </div>

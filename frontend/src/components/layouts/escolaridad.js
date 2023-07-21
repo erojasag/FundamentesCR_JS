@@ -183,6 +183,12 @@ export default function Escolaridad(props) {
             <option value="Educacion Diversificada Privada">
               Educacion Diversificada Privada
             </option>
+            <option value="Educacion Superior Privada">
+              Educacion Tecnica Publica
+            </option>
+            <option value="Educacion Superior Privada">
+              CINDEA
+            </option>
             <option value="Educacion Superior Publica">
               Educacion Superior Publica
             </option>

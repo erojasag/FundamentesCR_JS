@@ -35,7 +35,7 @@ export default function EditarUsuarioLog() {
         };
 
         const response = await axios.get(
-          `http://localhost:3000/usuarios/${id}`,
+          `${process.env.REACT_APP_BACKEND_API}usuarios/${id}`,
           {
             headers,
           }
@@ -94,16 +94,23 @@ export default function EditarUsuarioLog() {
     };
 
     const response = await axios.patch(
-      `http://localhost:3000/usuarios/${id}`,
+      `${process.env.REACT_APP_BACKEND_API}usuarios/${id}`,
       userData,
       {
         headers,
       }
     );
-    
 
     if (response.status === 204) {
-      toast.success('Usuario editado correctamente');
+      toast.success('Usuario editado correctamente', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       setLoading(true);
       setTimeout(() => {
         setLoading(false);

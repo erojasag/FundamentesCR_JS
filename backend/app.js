@@ -1,5 +1,5 @@
 const express = require('express');
-// const rateLimit = require('express-rate-limit');
+const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const path = require('path');
 const logger = require('morgan');
@@ -42,20 +42,16 @@ if (process.env.NODE_ENV === 'development') {
   app.use(logger('dev'));
 }
 
-//limit requests from same IP
-// const limiter = rateLimit({
-//   max: 300,
-//   windowMs: 60 * 60 * 1000, //1 hour
-//   message: 'Too many requests from this IP, please try again in an hour!',
-// });
-// app.use('/', limiter);
+// limit requests from same IP
+const limiter = rateLimit({
+  max: 3000,
+  windowMs: 60 * 60 * 1000, //1 hour
+  message: 'Too many requests from this IP, please try again in an hour!',
+});
+app.use('/', limiter);
 
 //enable CORS
-app.use(
-  cors({
-    origin: 'http://localhost:5000',
-  })
-);
+app.use(cors());
 
 //data sanitization against XSS
 app.use(xss());
@@ -93,7 +89,9 @@ app.use('/stats', statsRouter);
 app.use('/encuestasSatisfaccion', encuestaSatisfaccionRouter);
 //404 handler
 app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  next(
+    new AppError(`This is the staging ${req.originalUrl} on this server!`, 404)
+  );
 });
 
 app.use(ErrorHandler);

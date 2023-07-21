@@ -35,17 +35,25 @@ export default function Login() {
     event.preventDefault();
     try {
       if (!email || !contrasena) {
-        toast.warn('Ingrese su correo y contraseña para iniciar sesión.');
+        toast.warn('Ingrese su correo y contraseña para iniciar sesión.', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         return;
       }
       const data = {
         email,
         contrasena,
       };
-
       setLoading(true);
       const response = await axios.post(
-        'http://localhost:3000/usuarios/login',
+        `${process.env.REACT_APP_BACKEND_API}usuarios/login`,
+
         data
       );
       if (response.status === 200) {
@@ -64,22 +72,59 @@ export default function Login() {
 
         setEmail('');
         setContrasena('');
-        navigate('/Inicio');
+        toast.success('Inicio de sesión exitoso. \n Bienvenid@ 👋🏽', {
+          position: 'top-right',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          navigate('/inicio');
+        }, 2000);
       }
     } catch (err) {
       if (err.response.data.message === 'Correo o contraseña incorrectos') {
         toast.error(
-          'Correo o contraseña incorrectos. Por favor intente de nuevo.'
+          'Correo o contraseña incorrectos. Por favor intente de nuevo.',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
         );
         return;
       }
       if (err.response.data.message === 'El usuario no existe') {
-        toast.error('Este usuario no existe.');
+        toast.error('Este usuario no existe.', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         return;
       }
       if (err.response.status === 401) {
         toast.warn(
-          'Tu cuenta no se encuentra activa. Por favor revisa tu correo para activarla.'
+          'Tu cuenta no se encuentra activa. Por favor revisa tu correo para activarla.',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
         );
         return;
       }
@@ -87,7 +132,16 @@ export default function Login() {
         err.response.data.message === 'pchstr must contain a $ as first char'
       ) {
         toast.warn(
-          'Tu cuenta no se encuentra activa. Por favor revisa tu correo para activarla o bien reinicia tu contrasena dandole al boton, olvide mi contrasena.'
+          'Tu cuenta no se encuentra activa. Por favor revisa tu correo para activarla o bien reinicia tu contrasena dandole al boton, olvide mi contrasena.',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
         );
         return;
       }
@@ -171,7 +225,6 @@ export default function Login() {
                         <a className="small" href="OlvideMiContrasena">
                           ¿Olvidó su contraseña?
                         </a>
-                        {errorMessage && <ErrorPopUp message={errorMessage} />}
                       </div>
                     </div>
                   </div>

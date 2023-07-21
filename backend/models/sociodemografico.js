@@ -53,6 +53,10 @@ const sociodemografico = db.define(
       type: DataTypes.STRING(100),
       allowNull: true,
     },
+    datosInteres: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,

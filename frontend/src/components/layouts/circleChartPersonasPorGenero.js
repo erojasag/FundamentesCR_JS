@@ -4,16 +4,12 @@ import { Doughnut } from 'react-chartjs-2';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import Error403 from '../Views/Error403';
-import { useNavigate } from 'react-router-dom';
 import generateBackgroundColors from './randomColor';
 
-const CircleChartCasas = () => {
+const CircleChartPersonasPorGenero = () => {
   const [chartData, setChartData] = useState([]);
   const [chartLabels, setChartLabels] = useState([]);
-  const navigate = useNavigate();
-
   const [isForbidden, setIsForbidden] = useState(false);
-
   const fetchData = async () => {
     try {
       const headers = {
@@ -21,21 +17,21 @@ const CircleChartCasas = () => {
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_API}stats/casas`,
-        {
-          headers,
-        }
+        `${process.env.REACT_APP_BACKEND_API}stats/pacientesPorGenero`,
+        { headers }
       );
-      const casas = response.data.data.data;
-      const chartData = casas.map((item) => item.patientCount); // Extract the 'count' values
-      const chartLabels = casas.map((item) => `${item.nombreCasa}`); // Create labels using 'edad'
+      const personasPorGenero = response.data.data.data;
+
+      const chartData = personasPorGenero.map(
+        (item) => `${item.cantidad_personas_x_generos}`
+      ); // Extract the 'count' values
+      const chartLabels = personasPorGenero.map(
+        (item) => `${item.genero}: ${item.cantidad_personas_x_generos}`
+      ); // Create labels using 'edad'
 
       setChartLabels(chartLabels);
       setChartData(chartData);
     } catch (err) {
-      if (err.response.data.err.message === 'jwt expired') {
-        navigate('/');
-      }
       if (err.response.status === 403) {
         setIsForbidden(true);
         return;
@@ -64,7 +60,6 @@ const CircleChartCasas = () => {
       },
     },
   };
-
   const data = {
     labels: chartLabels,
     datasets: [
@@ -82,7 +77,6 @@ const CircleChartCasas = () => {
         <Error403 />
       ) : (
         <>
-          {' '}
           <div
             className="container-fluid"
             style={{ width: '100%', height: '100%', position: 'relative' }}
@@ -107,4 +101,4 @@ const CircleChartCasas = () => {
   );
 };
 
-export default CircleChartCasas;
+export default CircleChartPersonasPorGenero;

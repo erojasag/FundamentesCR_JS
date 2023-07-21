@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { toast } from 'react-toastify';
 import Error401 from '../Views/Error401';
 
 export default function Stats() {
@@ -16,19 +15,22 @@ export default function Stats() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
-      const totalCasas = await axios.get('http://localhost:3000/casas', {
-        headers,
-      });
+      const totalCasas = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}casas`,
+        {
+          headers,
+        }
+      );
       const totalPacientes = await axios.get(
-        'http://localhost:3000/pacientes',
+        `${process.env.REACT_APP_BACKEND_API}pacientes`,
         { headers }
       );
       const totalEncuestas = await axios.get(
-        'http://localhost:3000/encuestasSatisfaccion',
+        `${process.env.REACT_APP_BACKEND_API}encuestasSatisfaccion`,
         { headers }
       );
       const totalSalidas = await axios.get(
-        'http://localhost:3000/entrevistasSalida/',
+        `${process.env.REACT_APP_BACKEND_API}entrevistasSalida`,
         {
           headers,
         }
