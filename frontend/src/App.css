@@ -7360,6 +7360,14 @@ button.bg-dark:focus {
   flex-direction: column-reverse !important;
 }
 
+.flex-container {
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+  height: 100vh; /* Set the height of the container to the viewport height */
+  background-color: #fdfdfe;
+}
+
 .flex-wrap {
   flex-wrap: wrap !important;
 }

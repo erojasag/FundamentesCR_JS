@@ -88,7 +88,6 @@ export default function ListaUsuarios() {
       setUserData(response.data.data.users);
       setLoading(false);
     } catch (err) {
-      console.log(err);
       if (
         err.response.data.message === 'jwt expired' ||
         err.response.status === 500

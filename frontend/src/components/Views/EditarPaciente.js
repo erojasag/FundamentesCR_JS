@@ -123,9 +123,12 @@ export default function EditarPaciente() {
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
 
-    const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}pacientes/${id}`, {
-      headers,
-    });
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND_API}pacientes/${id}`,
+      {
+        headers,
+      }
+    );
     const data = response.data.data.data;
     setPacienteData(data);
     setDatosMedicos(data.datosMedicos);
@@ -531,7 +534,6 @@ export default function EditarPaciente() {
                             perfilEntrada={perfilEntrada}
                             setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
                           />
-                          
                         </>
                       )}
                       <hr />
