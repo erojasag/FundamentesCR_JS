@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import generateBackgroundColors from './randomColor';
 import Navbar from '../layouts/navbar';
-import Error403 from './Error403';
+import Error403 from '../Views/Error403';
 
 const CircleChartEdad = () => {
   const [chartData, setChartData] = useState([]);
