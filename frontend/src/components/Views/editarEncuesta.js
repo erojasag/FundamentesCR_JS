@@ -33,7 +33,15 @@ export default function EditarEncuesta() {
       setDataEncuesta(encuesta);
     } catch (err) {
       if (err.response.data.message === 'jwt expired') {
-        toast.warn('Sesion Expirada por favor inicie sesion nuevamente');
+        toast.warn('Sesion Expirada por favor inicie sesion nuevamente',{
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         setTimeout(() => {
           navigate('/');
         }, 2000);
@@ -114,15 +122,30 @@ export default function EditarEncuesta() {
       );
 
       if (response.status === 201) {
-        toast.success('Encuesta editada con éxito');
+        toast.success('Encuesta editada con éxito',{
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         setTimeout(() => {
           navigate('/encuestas');
         }, 2000);
       }
     } catch (err) {
-      console.log(err);
       if (err.response.data.err.errors[0].type === 'notNull Violation') {
-        toast.warn('Por favor llene todos los campos');
+        toast.warn('Por favor llene todos los campos',{
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         setTimeout(() => {
           window.location.reload();
         }, 2000);

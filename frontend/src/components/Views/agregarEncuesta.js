@@ -123,8 +123,6 @@ export default function AgregarEncuesta() {
         }
       );
 
-      console.log(consultaPaciente.data.data.data.encuestaSatisfaccionId);
-
       if (!consultaPaciente.data.data.data.encuestaSatisfaccionId) {
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_API}encuestasSatisfaccion/`,
@@ -146,7 +144,15 @@ export default function AgregarEncuesta() {
             }
           );
           if (responsePaciente.status === 201) {
-            toast.success('Encuesta guardada con éxito');
+            toast.success('Encuesta guardada con éxito',{
+              position: 'top-right',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
             setTimeout(() => {
               navigate('/encuestas');
             }, 2000);
@@ -154,16 +160,49 @@ export default function AgregarEncuesta() {
         }
       } else {
         toast.warn(
-          'Este paciente ya tiene una encuesta de satisfacción, por favor edite la encuesta existente'
+          'Este paciente ya tiene una encuesta de satisfacción, por favor edite la encuesta existente',{
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
         );
+        navigate('/encuestas');
       }
     } catch (err) {
       if (err.response.data.err.errors[0].type === 'notNull Violation') {
-        toast.warn('Porfavor llene todos los campos');
+        toast.warn('Porfavor llene todos los campos',{
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } else if (err.response.status === 500) {
-        toast.warn('Porfavor seleccione un usuario');
+        toast.warn('Porfavor seleccione un usuario',{
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } else if (err.response.data.message === 'jwt expired') {
-        toast.warn('Sesion Expirada por favor inicie sesion nuevamente');
+        toast.warn('Sesion Expirada por favor inicie sesion nuevamente',{
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         setTimeout(() => {
           navigate('/');
         }, 2000);

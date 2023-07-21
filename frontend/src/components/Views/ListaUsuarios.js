@@ -119,13 +119,34 @@ export default function ListaUsuarios() {
         }
       );
       if (response.status === 204) {
-        toast.success('Usuario desactivado con éxito');
+        toast.success('Usuario desactivado con éxito', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         setLoading(false);
       }
     } catch (err) {
       if (err.response.data.err.message === 'jwt expired') {
-        toast.error('Su sesión ha expirado, porfavor inicie sesión nuevamente');
-        navigate('/');
+        toast.error(
+          'Su sesión ha expirado, porfavor inicie sesión nuevamente',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
       }
       if (err.response.status === 403) {
         setIsForbidden(true);
