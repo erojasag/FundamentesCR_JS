@@ -366,7 +366,7 @@ export default function Pacientes() {
         <td>{paciente.nacionalidad}</td>
         <td>
           <a
-            href={`pacientes/${paciente.pacienteId}`}
+            href={`/${paciente.pacienteId}`}
             className="btn btn-primary btn-sm"
           >
             <i className="fas fa-pencil-alt"></i>
