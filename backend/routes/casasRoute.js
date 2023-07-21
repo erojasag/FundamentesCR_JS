@@ -14,17 +14,17 @@ const router = express.Router();
 router
   .route('/')
   .get(protect, restrictTo('Administrador', 'Psicologo'), getAllCasas)
-  .post(protect, restrictTo('Administrador', 'Psicologo'), agregarCasa);
+  .post(protect, restrictTo('Administrador'), agregarCasa);
 router
   .route('/:id')
   .get(protect, restrictTo('Administrador', 'Psicologo'), getCasaById)
-  .patch(protect, restrictTo('Administrador', 'Psicologo'), updateCasa)
-  .delete(protect, restrictTo('Administrador', 'Psicologo'), desactivarCasa);
+  .patch(protect, restrictTo('Administrador'), updateCasa)
+  .delete(protect, restrictTo('Administrador'), desactivarCasa);
 
 router.get(
   '/activarCasa/:id',
   protect,
-  restrictTo('Administrador', 'Psicologo'),
+  restrictTo('Administrador'),
   activarCasa
 );
 

@@ -26,7 +26,15 @@ router
 
 router
   .route('/:id')
-  .get(protect, restrictTo('Administrador'), getEncuestaSatisfaccionByPaciente)
-  .patch(protect, restrictTo('Administrador'), updateEncuestaSatisfaccion);
+  .get(
+    protect,
+    restrictTo('Administrador', 'Psicologo'),
+    getEncuestaSatisfaccionByPaciente
+  )
+  .patch(
+    protect,
+    restrictTo('Administrador', 'Psicologo'),
+    updateEncuestaSatisfaccion
+  );
 
 module.exports = router;
