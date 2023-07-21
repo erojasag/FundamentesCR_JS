@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SideMenu from '../layouts/sideMenu';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -8,6 +8,7 @@ import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 import Loading from '../layouts/loading';
 import Error403 from './Error403';
+import { Pagination } from 'react-bootstrap';
 
 export default function ListaUsuarios() {
   const [userData, setUserData] = useState([]);
@@ -15,6 +16,10 @@ export default function ListaUsuarios() {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isForbidden, setIsForbidden] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(5);
+
   const navigate = useNavigate();
   const handleNameChange = (event) => {
     setNewUser({
@@ -83,7 +88,11 @@ export default function ListaUsuarios() {
       setUserData(response.data.data.users);
       setLoading(false);
     } catch (err) {
-      if (err.response.data.err.message === 'jwt expired') {
+      console.log(err);
+      if (
+        err.response.data.message === 'jwt expired' ||
+        err.response.status === 500
+      ) {
         navigate('/');
       }
       if (err.response.status === 403) {
@@ -170,8 +179,13 @@ export default function ListaUsuarios() {
     }
   };
 
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = userData.slice(indexOfFirstUser, indexOfLastUser);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const getUsuarios = () => {
-    return userData.map((user) => (
+    return currentUsers.map((user) => (
       <tr key={user.usuarioId}>
         <td>{user.nombre} </td>
         <td>{user.primerApe + ' ' + user.segundoApe}</td>
@@ -249,6 +263,21 @@ export default function ListaUsuarios() {
                             <tbody>{getUsuarios()}</tbody>
                           </table>
                         </div>
+                      </div>
+                      <div class="d-flex justify-content-center">
+                        <Pagination className="custom-pagination">
+                          {Array.from({
+                            length: Math.ceil(userData.length / usersPerPage),
+                          }).map((_, index) => (
+                            <Pagination.Item
+                              key={index + 1}
+                              onClick={() => paginate(index + 1)}
+                              className="first-letter:capitalize"
+                            >
+                              {index + 1}
+                            </Pagination.Item>
+                          ))}
+                        </Pagination>
                       </div>
                     </div>
                   </div>
