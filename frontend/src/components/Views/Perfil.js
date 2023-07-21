@@ -130,8 +130,6 @@ export default function Perfil() {
         window.location.reload();
       }
     } catch (err) {
-      console.log(err);
-
       if (err.response.status === 401) {
         toast.error('Error al actualizar los datos', {
           position: 'top-right',
@@ -145,7 +143,18 @@ export default function Perfil() {
       }
 
       if (err.response.data.err.message === 'jwt expired') {
-        navigate('/');
+        toast.error('Tu sesion a expirado, por favor inicia sesion de nuevo!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
       }
     }
   };

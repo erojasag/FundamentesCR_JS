@@ -3,11 +3,14 @@ import Chart from 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import Error403 from './Error403';
 import generateBackgroundColors from './randomColor';
 
 const CircleChartPersonasPorAnoEscolar = () => {
   const [chartData, setChartData] = useState([]);
   const [chartLabels, setChartLabels] = useState([]);
+
+  const [isForbidden, setIsForbidden] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -31,7 +34,10 @@ const CircleChartPersonasPorAnoEscolar = () => {
       setChartLabels(chartLabels);
       setChartData(chartData);
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 403) {
+        setIsForbidden(true);
+        return;
+      }
     }
   };
   useEffect(() => {
@@ -69,24 +75,30 @@ const CircleChartPersonasPorAnoEscolar = () => {
 
   return (
     <React.Fragment>
-      <div
-        className="container-fluid"
-        style={{ width: '100%', height: '100%', position: 'relative' }}
-      >
-        <div style={{ paddingBottom: '100%', position: 'relative' }}>
+      {isForbidden ? (
+        <Error403 />
+      ) : (
+        <>
           <div
-            style={{
-              position: 'absolute',
-              top: '0',
-              bottom: '0',
-              left: '0',
-              right: '0',
-            }}
+            className="container-fluid"
+            style={{ width: '100%', height: '100%', position: 'relative' }}
           >
-            <Doughnut data={data} options={options} />
+            <div style={{ paddingBottom: '100%', position: 'relative' }}>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '0',
+                  bottom: '0',
+                  left: '0',
+                  right: '0',
+                }}
+              >
+                <Doughnut data={data} options={options} />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </React.Fragment>
   );
 };

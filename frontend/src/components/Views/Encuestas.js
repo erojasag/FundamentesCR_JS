@@ -5,9 +5,13 @@ import Footer from '../layouts/footer';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Pagination } from 'react-bootstrap';
+import Error403 from './Error403';
+
 export default function Encuestas() {
   const [encuestas, setEncuestas] = useState([]);
   const [selectedEncuesta, setSelectedEncuesta] = useState(null);
+
+  const [isForbidden, setIsForbidden] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(5);
@@ -32,7 +36,10 @@ export default function Encuestas() {
 
       setEncuestas(response.data.data.data);
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 403) {
+        setIsForbidden(true);
+        return;
+      }
     }
   };
 
@@ -71,76 +78,81 @@ export default function Encuestas() {
         <div id="content-wrapper" class="d-flex flex-column">
           <div id="content">
             <Navbar />
-            <div class="container-fluid">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3 bg-second-primary">
-                  <h6 class="m-0 font-weight-bold text-white">
-                    Lista de Encuestas de Satisfacción
-                  </h6>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <a class="btn btn-success" href="agregarEncuesta">
-                        <i class="fas fa-user-plus"></i> Agregar Encuesta
-                      </a>
+            {isForbidden ? (
+              <Error403 />
+            ) : (
+              <>
+                <div class="container-fluid">
+                  <div class="card shadow mb-4">
+                    <div class="card-header py-3 bg-second-primary">
+                      <h6 class="m-0 font-weight-bold text-white">
+                        Lista de Encuestas de Satisfacción
+                      </h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <a class="btn btn-success" href="agregarEncuesta">
+                            <i class="fas fa-user-plus"></i> Agregar Encuesta
+                          </a>
+                        </div>
+                      </div>
+                      <hr />
+                      <div class="row">
+                        <div class="col-sm-12 wrap-text">
+                          <table
+                            class="table table-bordered"
+                            id="tbdata"
+                            cellspacing="0"
+                            style={{ width: '100%' }}
+                          >
+                            <thead>
+                              <tr>
+                                <th>Nombre Completo</th>
+                                <th>Edad</th>
+                                <th>Cedula</th>
+                                <th>Calificacion</th>
+                                <th>Calificacion T. Educativo</th>
+                                <th>Calificacion T. Creativo</th>
+                                <th>Calificacion T. Clinico</th>
+                                <th>Recomendacion</th>
+                                <th>Comentarios</th>
+                                <th>Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>{getEncuestas()}</tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <Pagination className="custom-pagination">
+                        {Array.from({
+                          length: Math.ceil(encuestas.length / usersPerPage),
+                        }).map((_, index) => (
+                          <Pagination.Item
+                            key={index + 1}
+                            onClick={() => paginate(index + 1)}
+                            className="first-letter:capitalize"
+                          >
+                            {index + 1}
+                          </Pagination.Item>
+                        ))}
+                      </Pagination>
                     </div>
                   </div>
-                  <hr />
-                  <div class="row">
-                    <div class="col-sm-12 wrap-text">
-                      <table
-                        class="table table-bordered"
-                        id="tbdata"
-                        cellspacing="0"
-                        style={{ width: '100%' }}
-                      >
-                        <thead>
-                          <tr>
-                            <th>Nombre Completo</th>
-                            <th>Edad</th>
-                            <th>Cedula</th>
-                            <th>Calificacion</th>
-                            <th>Calificacion T. Educativo</th>
-                            <th>Calificacion T. Creativo</th>
-                            <th>Calificacion T. Clinico</th>
-                            <th>Recomendacion</th>
-                            <th>Comentarios</th>
-                            <th>Acciones</th>
-                          </tr>
-                        </thead>
-                        <tbody>{getEncuestas()}</tbody>
-                      </table>
-                    </div>
-                  </div>
                 </div>
-                <div class="d-flex justify-content-center">
-                  <Pagination className="custom-pagination">
-                    {Array.from({
-                      length: Math.ceil(encuestas.length / usersPerPage),
-                    }).map((_, index) => (
-                      <Pagination.Item
-                        key={index + 1}
-                        onClick={() => paginate(index + 1)}
-                        className="first-letter:capitalize"
-                      >
-                        {index + 1}
-                      </Pagination.Item>
-                    ))}
-                  </Pagination>
-                </div>
-              </div>
-            </div>
 
-            <div
-              class="modal fade"
-              id="encuestaModal"
-              tabindex="-1"
-              aria-labelledby="encuestaModalLabel"
-              aria-hidden="true"
-            ></div>
+                <div
+                  class="modal fade"
+                  id="encuestaModal"
+                  tabindex="-1"
+                  aria-labelledby="encuestaModalLabel"
+                  aria-hidden="true"
+                ></div>
+              </>
+            )}
           </div>
-
           <Footer />
         </div>
       </div>

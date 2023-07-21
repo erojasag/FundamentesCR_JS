@@ -72,7 +72,16 @@ export default function ResetPass() {
     } catch (err) {
       if (err.response.data.message) {
         toast.error(
-          'Las contrasenas no son iguales. Por favor intente de nuevo.'
+          'Las contrasenas no son iguales. Por favor intente de nuevo.',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
         );
         return;
       }
