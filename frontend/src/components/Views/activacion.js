@@ -66,12 +66,19 @@ export default function Activacion() {
       );
       navigate('/Inicio');
     } catch (err) {
-      console.log(err.response.data.message);
       if (
         err.response.data.message ===
         'Validation error: Las contraseñas no coinciden'
       ) {
-        toast.error('Las contraseñas no coinciden');
+        toast.error('Las contraseñas no coinciden', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
     }
   };

@@ -93,7 +93,10 @@ export default function ListaCasasInactivas() {
         window.location.reload();
       }
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 403) {
+        setIsForbidden(true);
+        return;
+      }
     }
   };
 

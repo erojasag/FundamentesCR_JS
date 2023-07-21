@@ -100,10 +100,17 @@ export default function EditarUsuarioLog() {
         headers,
       }
     );
-    
 
     if (response.status === 204) {
-      toast.success('Usuario editado correctamente');
+      toast.success('Usuario editado correctamente', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
