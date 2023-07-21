@@ -220,7 +220,6 @@ export default function ListaUsuarios() {
           </a>
           &nbsp; &nbsp;
           <a
-            href="desactivarPaciente"
             class="btn btn-danger btn-sm"
             data-toggle="modal"
             data-target="#exampleModal"
