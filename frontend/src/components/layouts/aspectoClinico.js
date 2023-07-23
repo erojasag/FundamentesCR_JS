@@ -364,6 +364,42 @@ export default function AspectoClinico(props) {
     props.setUpdatedAspectoClinico(updatedAspectoClinico);
   };
 
+  useEffect(() => {
+    const calculateTotalPuntaje = () => {
+      const sumOfPuntajes =
+        parseInt(aspectoClinico.puntajeIdeacion) +
+        parseInt(aspectoClinico.puntajePersonaSignificativa) +
+        parseInt(aspectoClinico.puntajeViolenciaIntrafamiliar) +
+        parseInt(aspectoClinico.puntajeViolenciaSexual) +
+        parseInt(aspectoClinico.puntajeViolenciaPsicologica) +
+        parseInt(aspectoClinico.puntajeViolenciaFisicaFamiliar) +
+        parseInt(aspectoClinico.puntajePersonasPrivadasLibertad) +
+        parseInt(aspectoClinico.puntajeConsumoDrogasFamilia) +
+        parseInt(aspectoClinico.puntajeAbandonoFamiliar) +
+        parseInt(aspectoClinico.puntajeRelacionEmocionesCuerpo) +
+        parseInt(aspectoClinico.puntajeResponsabilidadCuidadores);
+
+      setAspectoClinico({
+        ...aspectoClinico,
+        puntajeTotal: sumOfPuntajes,
+      });
+    };
+
+    calculateTotalPuntaje();
+  }, [
+    aspectoClinico.puntajeIdeacion,
+    aspectoClinico.puntajePersonaSignificativa,
+    aspectoClinico.puntajeViolenciaIntrafamiliar,
+    aspectoClinico.puntajeViolenciaSexual,
+    aspectoClinico.puntajeViolenciaPsicologica,
+    aspectoClinico.puntajeViolenciaFisicaFamiliar,
+    aspectoClinico.puntajePersonasPrivadasLibertad,
+    aspectoClinico.puntajeConsumoDrogasFamilia,
+    aspectoClinico.puntajeAbandonoFamiliar,
+    aspectoClinico.puntajeRelacionEmocionesCuerpo,
+    aspectoClinico.puntajeResponsabilidadCuidadores,
+  ]);
+
   return (
     <React.Fragment>
       <div class="form-group row justify-content-center">
