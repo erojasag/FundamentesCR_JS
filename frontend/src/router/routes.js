@@ -26,7 +26,7 @@ function Router() {
     <Routes>
       <Route index path="/" element={<Login />} />
       <Route exact path="/pacientes/" element={<Pacientes />} />
-      <Route exact path="/:id" element={<EditarPaciente />} />
+      <Route exact path="pacientes/:id" element={<EditarPaciente />} />
       <Route exact path="/inicio" element={<Index />} />
       <Route exact path="/registrarse" element={<Registrarse />} />
       <Route exact path="/olvideMiContrasena" element={<ForgotPass />} />
@@ -36,6 +36,7 @@ function Router() {
       <Route exact path="/editarEncuesta/:id" element={<EditarEncuesta />} />
       <Route exact path="/usuarios/" element={<ListaUsuarios />} />
       <Route exact path="/usuarios/:id" element={<EditarUsuarioLog />} />
+
       <Route
         exact
         path="/usuariosInactivos"

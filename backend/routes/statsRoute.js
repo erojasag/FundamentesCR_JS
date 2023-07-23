@@ -6,6 +6,7 @@ const {
   getStatsCasa,
   getPacientesPorGenero,
   getPacientesPorAnoEscolar,
+  GetPacientesWithEscolaridad,
 } = require('../controllers/statsController');
 
 const router = express.Router();
@@ -32,6 +33,14 @@ router
     protect,
     restrictTo('Administrador', 'Psicologo'),
     getPacientesPorAnoEscolar
+  );
+
+router
+  .route('/GetPacientesWithEscolaridad')
+  .get(
+    protect,
+    restrictTo('Administrador', 'Psicologo'),
+    GetPacientesWithEscolaridad
   );
 
 module.exports = router;
