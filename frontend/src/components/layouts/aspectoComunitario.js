@@ -152,6 +152,27 @@ export default function AspectoComunitario(props) {
     props.setUpdatedAspectoComunitario(updatedAspectoComunitario);
   };
 
+  useEffect(() => {
+    const calculateTotalPuntaje = () => {
+      const sumOfPuntajes =
+        parseInt(aspectoComunitario.puntajeAltaVulnerabilidadViolencia || 0) +
+        parseInt(aspectoComunitario.puntajeReflexionEntorno || 0) +
+        parseInt(aspectoComunitario.puntajeFormasRelacionarse || 0) +
+        parseInt(aspectoComunitario.puntajeCuestionamientoNormas || 0);
+      setAspectoComunitario({
+        ...aspectoComunitario,
+        puntajeTotal: sumOfPuntajes,
+      });
+    };
+
+    calculateTotalPuntaje();
+  }, [
+    aspectoComunitario.puntajeAltaVulnerabilidadViolencia +
+      aspectoComunitario.puntajeReflexionEntorno +
+      aspectoComunitario.puntajeFormasRelacionarse +
+      aspectoComunitario.puntajeCuestionamientoNormas,
+  ]);
+
   return (
     <React.Fragment>
       <div class="form-group row justify-content-center">

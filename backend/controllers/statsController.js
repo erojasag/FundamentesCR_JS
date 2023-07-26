@@ -1,5 +1,3 @@
-const fs = require('fs');
-const PDFDocument = require('pdfkit');
 const catchAsync = require('../utils/catchAsync');
 const db = require('../config/db');
 
@@ -49,23 +47,8 @@ const getPacientesPorAnoEscolar = catchAsync(async (req, res, next) => {
   });
 });
 
-const GetPacientesWithEscolaridad = catchAsync(async (req, res) => {
-  const doc = new PDFDocument();
-
+const getPacientesWithEscolaridad = catchAsync(async (req, res) => {
   const report = await db.query('Call GetPacientesWithEscolaridad();');
-
-  doc.pipe(fs.createWriteStream('output.pdf'));
-
-  report.forEach((paciente) => {
-    doc.fontSize(25).text(`${paciente.Nombre}`, 100, 100);
-  });
-  doc.image('E:/FundamentesCR_JS/backend/public/images/fundamentes-logo.png', {
-    fit: [250, 300],
-    align: 'center',
-    valign: 'center',
-  });
-
-  doc.end();
 
   res.status(200).json({
     status: 'success',
@@ -81,5 +64,5 @@ module.exports = {
   getStatsCasa,
   getPacientesPorGenero,
   getPacientesPorAnoEscolar,
-  GetPacientesWithEscolaridad,
+  getPacientesWithEscolaridad,
 };

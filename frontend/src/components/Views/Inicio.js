@@ -9,7 +9,6 @@ import CircleChartPersonasPorGenero from '../layouts/circleChartPersonasPorGener
 import CircleChartPersonasPorAnoEscolar from '../layouts/circleChartPersonaPorAnoEscolar';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-
 export default function Index() {
   const [jsonData, setJsonData] = useState(null);
 

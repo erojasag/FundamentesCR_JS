@@ -4,7 +4,6 @@ export default function AspectoPsicoeducativo(props) {
   const [aspectoPsicoeducativo, setAspectoPsicoeducativo] = useState({});
 
   useEffect(() => {
-    
     if (props.aspectoPsicoeducativo) {
       setAspectoPsicoeducativo(props.aspectoPsicoeducativo);
     } else {
@@ -204,6 +203,31 @@ export default function AspectoPsicoeducativo(props) {
     props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
 
+  useEffect(() => {
+    const calculateTotalPuntaje = () => {
+      const sumOfPuntajes =
+        parseInt(aspectoPsicoeducativo.puntajePermanencia || 0) +
+        parseInt(aspectoPsicoeducativo.puntajeRezago || 0) +
+        parseInt(aspectoPsicoeducativo.puntajeExclusion || 0) +
+        parseInt(aspectoPsicoeducativo.puntajeDificultades || 0) +
+        parseInt(aspectoPsicoeducativo.puntajeApoyo || 0) +
+        parseInt(aspectoPsicoeducativo.puntajeViolencia || 0);
+      setAspectoPsicoeducativo({
+        ...aspectoPsicoeducativo,
+        puntajeTotal: sumOfPuntajes,
+      });
+    };
+
+    calculateTotalPuntaje();
+  }, [
+    aspectoPsicoeducativo.puntajePermanencia,
+    aspectoPsicoeducativo.puntajeRezago,
+    aspectoPsicoeducativo.puntajeExclusion,
+    aspectoPsicoeducativo.puntajeDificultades,
+    aspectoPsicoeducativo.puntajeApoyo,
+    aspectoPsicoeducativo.puntajeViolencia,
+  ]);
+
   return (
     <React.Fragment>
       <div class="form-group row justify-content-center">
@@ -319,7 +343,7 @@ export default function AspectoPsicoeducativo(props) {
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtPuntajeExclusion">Puntaje Rezago Educativo</label>
+          <label for="txtPuntajeExclusion">Puntaje Exclusion Educativa</label>
           <input
             type="number"
             class="form-control form-control-sm input-validar"

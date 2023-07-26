@@ -7,7 +7,9 @@ import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 import Casa from '../layouts/casa';
 import DatosMedicos from '../layouts/datosMedicos';
+import Loading from '../layouts/loading';
 import axios from 'axios';
+
 import CondicionLaboral from '../layouts/condicionLaboral';
 import Sociodemograficos from '../layouts/sociodemograficos';
 import Encargado from '../layouts/encargado';
@@ -54,6 +56,8 @@ export default function EditarPaciente() {
   //datos perfilSalida
   const [perfilSalida, setPerfilSalida] = useState('');
   const [updatedPerfilSalida, setUpdatedPerfilSalida] = useState({});
+
+  const [loading, setLoading] = useState(false);
 
   const handleNameChange = (event) => {
     setPacienteData({
@@ -168,9 +172,7 @@ export default function EditarPaciente() {
         setPerfilSalida(null);
       }
     } catch (err) {
-      console.log(err);
-      toast.error('No se pudo cargar el paciente');
-      navigate('/');
+      return;
     }
   }
 
@@ -328,7 +330,7 @@ export default function EditarPaciente() {
           }
         );
       }
-      console.log(Object.keys(updatedPerfilEntrada).length);
+
       if (pacienteData.perfilEntradaId !== null) {
         if (
           Object.values(updatedPerfilEntrada.aspectoComunitario).length !== 0
@@ -341,6 +343,7 @@ export default function EditarPaciente() {
             }
           );
         }
+
         if (Object.values(updatedPerfilEntrada.aspectoClinico).length !== 0) {
           await axios.patch(
             `${process.env.REACT_APP_BACKEND_API}aspectosClinicos/${pacienteData.perfilEntrada.aspectoClinicoId}`,
@@ -375,52 +378,52 @@ export default function EditarPaciente() {
         }
       }
 
-      if (Object.keys(updatedPerfilEntrada).length !== 0) {
-        const responseAspectosClinicos = await axios.post(
-          `${process.env.REACT_APP_BACKEND_API}aspectosClinicos/`,
-          updatedPerfilEntrada.aspectoClinico,
-          { headers }
-        );
-        const responseAspectosComunitarios = await axios.post(
-          `${process.env.REACT_APP_BACKEND_API}aspectosComunitarios/`,
-          updatedPerfilEntrada.aspectoComunitario,
-          { headers }
-        );
-        const responseAspectosPsicoeducativos = await axios.post(
-          `${process.env.REACT_APP_BACKEND_API}aspectosPsicoEducativos/`,
-          updatedPerfilEntrada.aspectoPsicoeducativo,
-          { headers }
-        );
-        const responseAspectosDesarrolloTalleres = await axios.post(
-          `${process.env.REACT_APP_BACKEND_API}aspectosDesarrolloTaller/`,
-          updatedPerfilEntrada.aspectoDesarrolloTalleres,
-          { headers }
-        );
-        const responsePerfilEntrada = await axios.post(
-          `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/`,
-          {
-            doctorId: Cookies.get('id'),
-            aspectoComunitarioId:
-              responseAspectosComunitarios.data.data.data.aspectoComunitarioId,
-            aspectoClinicoId:
-              responseAspectosClinicos.data.data.data.aspectoClinicoId,
-            aspectoPsicoeducativoId:
-              responseAspectosPsicoeducativos.data.data.data
-                .aspectoPsicoEducativoId,
-            aspectoDesarrolloTallerId:
-              responseAspectosDesarrolloTalleres.data.data.data
-                .aspectoDesarrolloTallerId,
-          },
-          { headers }
-        );
-        if (responsePerfilEntrada.status === 201) {
-          pacienteData.perfilEntradaId =
-            responsePerfilEntrada.data.data.data.perfilEntradaId;
-        }
-      }
-      console.log(pacienteData);
+      // if (Object.keys(updatedPerfilEntrada).length !== 0) {
+      //   if(Object.keys(updatedPerfilEntrada.aspectoComunitario).length !== 0){
+      //     const responseAspectosClinicos = await axios.post(
+      //       `${process.env.REACT_APP_BACKEND_API}aspectosClinicos/`,
+      //       updatedPerfilEntrada.aspectoClinico,
+      //       { headers }
+      //     );
+      //   const responseAspectosComunitarios = await axios.post(
+      //     `${process.env.REACT_APP_BACKEND_API}aspectosComunitarios/`,
+      //     updatedPerfilEntrada.aspectoComunitario,
+      //     { headers }
+      //   );
+      //   const responseAspectosPsicoeducativos = await axios.post(
+      //     `${process.env.REACT_APP_BACKEND_API}aspectosPsicoEducativos/`,
+      //     updatedPerfilEntrada.aspectoPsicoeducativo,
+      //     { headers }
+      //   );
+      //   const responseAspectosDesarrolloTalleres = await axios.post(
+      //     `${process.env.REACT_APP_BACKEND_API}aspectosDesarrolloTaller/`,
+      //     updatedPerfilEntrada.aspectoDesarrolloTalleres,
+      //     { headers }
+      //   );
+      //   const responsePerfilEntrada = await axios.post(
+      //     `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/`,
+      //     {
+      //       doctorId: Cookies.get('id'),
+      //       aspectoComunitarioId:
+      //         responseAspectosComunitarios.data.data.data.aspectoComunitarioId,
+      //       aspectoClinicoId:
+      //         responseAspectosClinicos.data.data.data.aspectoClinicoId,
+      //       aspectoPsicoeducativoId:
+      //         responseAspectosPsicoeducativos.data.data.data
+      //           .aspectoPsicoEducativoId,
+      //       aspectoDesarrolloTallerId:
+      //         responseAspectosDesarrolloTalleres.data.data.data
+      //           .aspectoDesarrolloTallerId,
+      //     },
+      //     { headers }
+      //   );
+      //   if (responsePerfilEntrada.status === 201) {
+      //     pacienteData.perfilEntradaId =
+      //       responsePerfilEntrada.data.data.data.perfilEntradaId;
+      //   }
+      // }
+
       if (pacienteData.perfilSalidaId !== null) {
-        console.log(pacienteData.perfilSalidaId);
         if (
           Object.values(updatedPerfilSalida.aspectoComunitario).length !== 0
         ) {
@@ -530,16 +533,27 @@ export default function EditarPaciente() {
         perfilEntradaId: pacienteData.perfilEntradaId,
         perfilSalidaId: pacienteData.perfilSalidaId,
       };
-      await axios.patch(
+      const responsePaciente = await axios.patch(
         `${process.env.REACT_APP_BACKEND_API}pacientes/${pacienteData.pacienteId}`,
         body,
         {
           headers,
         }
       );
-      navigate('/pacientes');
+
+      if (responsePaciente.status === 201) {
+        setLoading(true);
+        toast.success('Paciente actualizado con exito');
+        setTimeout(() => {
+          navigate('/pacientes');
+        }, 2000);
+      }
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 500) {
+        toast.error(
+          'Error al actualizar el paciente,\n verifique que todos los campos esten correctos'
+        );
+      }
     }
   };
 
@@ -802,6 +816,7 @@ export default function EditarPaciente() {
                 </div>
               </div>
             </div>
+            {loading && <Loading />}
           </div>
           <ToastContainer />
         </div>
