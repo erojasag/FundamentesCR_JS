@@ -367,17 +367,17 @@ export default function AspectoClinico(props) {
   useEffect(() => {
     const calculateTotalPuntaje = () => {
       const sumOfPuntajes =
-        parseInt(aspectoClinico.puntajeIdeacion) +
-        parseInt(aspectoClinico.puntajePersonaSignificativa) +
-        parseInt(aspectoClinico.puntajeViolenciaIntrafamiliar) +
-        parseInt(aspectoClinico.puntajeViolenciaSexual) +
-        parseInt(aspectoClinico.puntajeViolenciaPsicologica) +
-        parseInt(aspectoClinico.puntajeViolenciaFisicaFamiliar) +
-        parseInt(aspectoClinico.puntajePersonasPrivadasLibertad) +
-        parseInt(aspectoClinico.puntajeConsumoDrogasFamilia) +
-        parseInt(aspectoClinico.puntajeAbandonoFamiliar) +
-        parseInt(aspectoClinico.puntajeRelacionEmocionesCuerpo) +
-        parseInt(aspectoClinico.puntajeResponsabilidadCuidadores);
+        parseInt(aspectoClinico.puntajeIdeacion || 0) +
+        parseInt(aspectoClinico.puntajePersonaSignificativa || 0) +
+        parseInt(aspectoClinico.puntajeViolenciaIntrafamiliar || 0) +
+        parseInt(aspectoClinico.puntajeViolenciaSexual || 0) +
+        parseInt(aspectoClinico.puntajeViolenciaPsicologica || 0) +
+        parseInt(aspectoClinico.puntajeViolenciaFisicaFamiliar || 0) +
+        parseInt(aspectoClinico.puntajePersonasPrivadasLibertad || 0) +
+        parseInt(aspectoClinico.puntajeConsumoDrogasFamilia || 0) +
+        parseInt(aspectoClinico.puntajeAbandonoFamiliar || 0) +
+        parseInt(aspectoClinico.puntajeRelacionEmocionesCuerpo || 0) +
+        parseInt(aspectoClinico.puntajeResponsabilidadCuidadores || 0);
 
       setAspectoClinico({
         ...aspectoClinico,

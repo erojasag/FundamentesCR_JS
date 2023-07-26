@@ -116,7 +116,7 @@ export default function CambiarContrasena() {
         });
       }
       if (err.response.status === 403) {
-        toast.success(
+        toast.error(
           'Su sesion a expirado,\n Porfavor inicie sesion de nuevo',
           {
             position: 'top-right',
@@ -128,7 +128,7 @@ export default function CambiarContrasena() {
             progress: undefined,
           }
         );
-        navigate('/Login');
+        navigate('/');
       }
     }
   }

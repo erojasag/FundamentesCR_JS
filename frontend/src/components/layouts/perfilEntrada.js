@@ -73,7 +73,6 @@ export default function PerfilEntrada(props) {
   // Call the submit function from props (provided by the parent component)
 
   useEffect(() => {
-    
     if (props.perfilEntrada === '') {
       setPerfilEntrada({
         doctorId: null,

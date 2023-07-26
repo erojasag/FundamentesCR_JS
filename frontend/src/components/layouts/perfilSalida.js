@@ -4,7 +4,6 @@ import AspectoComunitario from './aspectoComunitario';
 import AspectoClinico from './aspectoClinico';
 import AspectoDesarrolloTalleres from './aspectoDesarrolloTalleres';
 import AspectoPsicoeducativo from './aspectoPsicoeducativo';
-
 import Cookies from 'js-cookie';
 import axios from 'axios';
 

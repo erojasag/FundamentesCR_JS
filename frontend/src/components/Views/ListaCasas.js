@@ -152,8 +152,7 @@ export default function ListaCasas() {
         }
       );
       if (response.status === 204) {
-        toast.success('Casa desactivada con éxito',
-        {
+        toast.success('Casa desactivada con éxito', {
           position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
@@ -167,16 +166,18 @@ export default function ListaCasas() {
       }
     } catch (err) {
       if (err.response.data.err.message === 'jwt expired') {
-        toast.error('Su sesión ha expirado, porfavor inicie sesión nuevamente',
-        {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error(
+          'Su sesión ha expirado, porfavor inicie sesión nuevamente',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
         navigate('/');
       }
       if (err.response.status === 403) {

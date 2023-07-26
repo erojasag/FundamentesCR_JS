@@ -1,22 +1,33 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
 
 export default function Casa({ onCasaChange, selectedCasa }) {
   const [casaData, setCasaData] = useState([]);
-
+  const navigate = useNavigate();
   async function fetchData() {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
-    const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_API}casas/`,
-      {
-        headers,
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}casas/`,
+        {
+          headers,
+        }
+      );
+      setCasaData(response.data.data.casas);
+    } catch (err) {
+      if (err.response.data.message === 'jwt expired') {
+        toast.warning('Sesion Expirada \n Inicie Sesion de Nuevo. 😕');
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
       }
-    );
-    setCasaData(response.data.data.casas);
+    }
   }
 
   useEffect(() => {
