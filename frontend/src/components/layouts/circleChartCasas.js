@@ -34,6 +34,7 @@ const CircleChartCasas = () => {
       setChartData(chartData);
     } catch (err) {
       if (err.response.data.err.message === 'jwt expired') {
+
         navigate('/');
       }
       if (err.response.status === 403) {

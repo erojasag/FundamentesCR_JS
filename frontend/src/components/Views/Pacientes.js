@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 import Cookies from 'js-cookie';
 import SideMenu from '../layouts/sideMenu';
 import Casa from '../layouts/casa';
@@ -338,7 +339,11 @@ export default function Pacientes() {
       }
     );
     if (response.status === 201) {
-      window.location.reload();
+      setLoading(true);
+      toast.success('Paciente creado con éxito');
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     }
   };
 
