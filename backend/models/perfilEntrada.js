@@ -35,11 +35,11 @@ const perfilEntrada = db.define(
         key: 'aspectoClinicoId',
       },
     },
-    aspectoPsicoEducativoId: {
+    aspectoPsicoeducativoId: {
       type: DataTypes.UUIDV1,
       references: {
         model: aspectosPsicoEducativos,
-        key: 'aspectoPsicoEducativoId',
+        key: 'aspectoPsicoeducativoId',
       },
     },
     aspectoDesarrolloTallerId: {
@@ -106,7 +106,7 @@ perfilEntrada.addHook('beforeFind', async (options) => {
     },
     {
       model: aspectosPsicoEducativos,
-      as: 'aspectoPsicoEducativo',
+      as: 'aspectoPsicoeducativo',
       attributes: {
         exclude: ['createdAt', 'updatedAt'],
       },
@@ -137,8 +137,8 @@ perfilEntrada.belongsTo(aspectosClinicos, {
 });
 
 perfilEntrada.belongsTo(aspectosPsicoEducativos, {
-  foreignKey: 'aspectoPsicoEducativoId',
-  as: 'aspectoPsicoEducativo',
+  foreignKey: 'aspectoPsicoeducativoId',
+  as: 'aspectoPsicoeducativo',
 });
 
 perfilEntrada.belongsTo(aspectosDesarrolloTalleres, {

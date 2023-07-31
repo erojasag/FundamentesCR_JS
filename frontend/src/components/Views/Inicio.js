@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
@@ -7,8 +7,36 @@ import CircleChartCasas from '../layouts/circleChartCasas';
 import CircleChartEdad from '../layouts/circleChartEdad';
 import CircleChartPersonasPorGenero from '../layouts/circleChartPersonasPorGenero';
 import CircleChartPersonasPorAnoEscolar from '../layouts/circleChartPersonaPorAnoEscolar';
-
+import Cookies from 'js-cookie';
+import axios from 'axios';
 export default function Index() {
+  const [jsonData, setJsonData] = useState(null);
+
+  const fetchData = async () => {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${Cookies.get('jwt')}`,
+    };
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND_API}stats/GetPacientesWithEscolaridad`,
+      {
+        headers,
+      }
+    );
+
+    console.log(response.data.data.data);
+
+    setJsonData(response.data.data.data);
+  };
+
+  const handleGeneratePDF = () => {
+    // Your code to generate the PDF, e.g., open it in a new window for the user to download
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <React.Fragment>
       <div id="page-top">

@@ -16,6 +16,7 @@ const getStatsCasa = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+
     data: {
       data: pacientesPorCasa,
     },
@@ -46,9 +47,22 @@ const getPacientesPorAnoEscolar = catchAsync(async (req, res, next) => {
   });
 });
 
+const getPacientesWithEscolaridad = catchAsync(async (req, res) => {
+  const report = await db.query('Call GetPacientesWithEscolaridad();');
+
+  res.status(200).json({
+    status: 'success',
+    responseType: 'blob',
+    data: {
+      data: report,
+    },
+  });
+});
+
 module.exports = {
   getPacientesPorEdad,
   getStatsCasa,
   getPacientesPorGenero,
   getPacientesPorAnoEscolar,
+  getPacientesWithEscolaridad,
 };

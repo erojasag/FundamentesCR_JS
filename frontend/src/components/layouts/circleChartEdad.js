@@ -4,7 +4,6 @@ import { Doughnut } from 'react-chartjs-2';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import generateBackgroundColors from './randomColor';
-import Navbar from '../layouts/navbar';
 import Error403 from '../Views/Error403';
 
 const CircleChartEdad = () => {
@@ -71,7 +70,6 @@ const CircleChartEdad = () => {
 
   return (
     <React.Fragment>
-      <Navbar />
       {isForbidden ? (
         <Error403 />
       ) : (

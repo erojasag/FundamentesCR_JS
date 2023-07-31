@@ -36,6 +36,7 @@ function Router() {
       <Route exact path="/editarEncuesta/:id" element={<EditarEncuesta />} />
       <Route exact path="/usuarios/" element={<ListaUsuarios />} />
       <Route exact path="/usuarios/:id" element={<EditarUsuarioLog />} />
+
       <Route
         exact
         path="/usuariosInactivos"

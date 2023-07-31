@@ -38,170 +38,195 @@ export default function AspectoPsicoeducativo(props) {
       permanencia: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
   const handleObservacionesPermanencia = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      observacionesPermanencia: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
   const handlePuntajePermanencia = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      puntajePermanencia: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
 
   const handleRezagoEducativo = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      rezagoEducativo: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
   const handleObservacionesRezago = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      observacionesRezago: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
   const handlePuntajeRezago = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      puntajeRezago: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
 
   const handleExclusionEducativa = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      exclusionEducativa: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
   const handleObservacionesExclusion = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      observacionesExclusion: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
   const handlePuntajeExclusion = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      puntajeExclusion: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
 
   const handleDificultades = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      dificultades: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
 
   const handleObservacionesDificultades = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      observacionesDificultades: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
 
   const handlePuntajeDificultades = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      puntajeDificultades: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
 
   const handleApoyoFamiliar = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      apoyoFamiliar: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
   const handleObservacionesApoyo = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      observacionesApoyo: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
   const handlePuntajeApoyo = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      puntajeApoyo: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
 
   const handleViolenciaEscolar = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      violenciaEscolar: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
 
   const handleObservacionesViolencia = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      observacionesViolencia: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
 
   const handlePuntajeViolencia = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      puntajeViolencia: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
 
   const handlePuntajeTotal = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      puntajeTotal: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
   const handlePrioridad = (event) => {
     const updatedAspectoPsicoeducativo = {
       ...aspectoPsicoeducativo,
-      permanencia: event.currentTarget.value,
+      prioridad: event.currentTarget.value,
     };
     setAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
-    props.setUpdatedAspectoClinico(updatedAspectoPsicoeducativo);
+    props.setUpdatedAspectoPsicoeducativo(updatedAspectoPsicoeducativo);
   };
+
+  useEffect(() => {
+    const calculateTotalPuntaje = () => {
+      const sumOfPuntajes =
+        parseInt(aspectoPsicoeducativo.puntajePermanencia || 0) +
+        parseInt(aspectoPsicoeducativo.puntajeRezago || 0) +
+        parseInt(aspectoPsicoeducativo.puntajeExclusion || 0) +
+        parseInt(aspectoPsicoeducativo.puntajeDificultades || 0) +
+        parseInt(aspectoPsicoeducativo.puntajeApoyo || 0) +
+        parseInt(aspectoPsicoeducativo.puntajeViolencia || 0);
+      setAspectoPsicoeducativo({
+        ...aspectoPsicoeducativo,
+        puntajeTotal: sumOfPuntajes,
+      });
+    };
+
+    calculateTotalPuntaje();
+  }, [
+    aspectoPsicoeducativo.puntajePermanencia,
+    aspectoPsicoeducativo.puntajeRezago,
+    aspectoPsicoeducativo.puntajeExclusion,
+    aspectoPsicoeducativo.puntajeDificultades,
+    aspectoPsicoeducativo.puntajeApoyo,
+    aspectoPsicoeducativo.puntajeViolencia,
+  ]);
 
   return (
     <React.Fragment>
@@ -287,7 +312,7 @@ export default function AspectoPsicoeducativo(props) {
             id="puntajeRezago"
             name="puntajeRezago"
             value={aspectoPsicoeducativo.puntajeRezago}
-            onChange={handlePuntajePermanencia}
+            onChange={handlePuntajeRezago}
           />
         </div>
         <div class="form-group col-sm-6">
@@ -314,11 +339,11 @@ export default function AspectoPsicoeducativo(props) {
             id="observacionesPermanencia"
             name="observacionesPermanencia"
             value={aspectoPsicoeducativo.observacionesExclusion}
-            onChange={handleObservacionesRezago}
+            onChange={handleObservacionesExclusion}
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtPuntajeExclusion">Puntaje Rezago Educativo</label>
+          <label for="txtPuntajeExclusion">Puntaje Exclusion Educativa</label>
           <input
             type="number"
             class="form-control form-control-sm input-validar"
@@ -401,7 +426,7 @@ export default function AspectoPsicoeducativo(props) {
             id="puntajeApoyo"
             name="puntajeApoyo"
             value={aspectoPsicoeducativo.puntajeApoyo}
-            onChange={handlePuntajeExclusion}
+            onChange={handlePuntajeApoyo}
           />
         </div>
         <div class="form-group col-sm-6">
@@ -463,8 +488,9 @@ export default function AspectoPsicoeducativo(props) {
             onChange={handlePrioridad}
           >
             <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
-            <option value="false">No</option>
+            <option value="Baja">Baja</option>
+            <option value="Media">Media</option>
+            <option value="Alta">Alta</option>
           </select>
         </div>
       </div>

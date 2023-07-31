@@ -169,6 +169,7 @@ export default function Escolaridad(props) {
             value={escolaridad.tipoEducacion}
             onChange={handleTipoEducacionChange}
           >
+            <option value="null">-No especifica-</option>
             <option value="Preescolar Publico">Preescolar Publico</option>
             <option value="Preescolar Publico">Preescolar Privado</option>
             <option value="Educacion General Basica Publica">
@@ -186,9 +187,7 @@ export default function Escolaridad(props) {
             <option value="Educacion Superior Privada">
               Educacion Tecnica Publica
             </option>
-            <option value="Educacion Superior Privada">
-              CINDEA
-            </option>
+            <option value="Educacion Superior Privada">CINDEA</option>
             <option value="Educacion Superior Publica">
               Educacion Superior Publica
             </option>
@@ -206,6 +205,7 @@ export default function Escolaridad(props) {
             value={escolaridad.anoEscolar}
             onChange={handleAnoEscolarChange}
           >
+            <option value="null">-No especifica-</option>
             <option value="Pre-Kinder">Pre-Kinder</option>
             <option value="Kinder">Kinder</option>
             <option value="Preparatoria">Preparatoria</option>
@@ -275,6 +275,7 @@ export default function Escolaridad(props) {
                 value={escolaridad.tipoAdecuacion}
                 onChange={handleTipoAdecuacionChange}
               >
+                <option value="null">-No especifica-</option>
                 <option value="Adecuacion de Acceso">
                   Adecuacion de Acceso
                 </option>
@@ -298,6 +299,7 @@ export default function Escolaridad(props) {
             value={escolaridad.ultimoAnoAprobado}
             onChange={handleUltimoAnoAprobadoChange}
           >
+            <option value="null">-No especifica-</option>
             <option value="Pre-Kinder">Pre-Kinder</option>
             <option value="Kinder">Kinder</option>
             <option value="Preparatoria">Preparatoria</option>

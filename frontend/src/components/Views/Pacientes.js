@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 import Cookies from 'js-cookie';
 import SideMenu from '../layouts/sideMenu';
 import Casa from '../layouts/casa';
@@ -15,10 +16,12 @@ import Escolaridad from '../layouts/escolaridad';
 import Loading from '../layouts/loading';
 import { Pagination } from 'react-bootstrap';
 import PerfilEntrada from '../layouts/perfilEntrada';
-// import PerfilEntrada from '../layouts/perfilEntrada';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Pacientes() {
   const navigate = useNavigate();
+  const [agregaPerfilEntrada, setAgregaPerfilEntrada] = useState(false);
+
   const [pacientesData, setPacientesData] = useState([]);
 
   const [newPacienteData, setNewPacienteData] = useState({});
@@ -54,9 +57,9 @@ export default function Pacientes() {
   const [perfilEntrada, setPerfilEntrada] = useState('');
   const [updatedPerfilEntrada, setUpdatedPerfilEntrada] = useState(null);
 
-  //datos perfilSalida
-  const [perfilSalida, setPerfilSalida] = useState('');
-  const [updatedPerfilSalida, setUpdatedPerfilSalida] = useState(null);
+  const handlePerfilEntradaChange = (updatedPerfilEntrada) => {
+    setUpdatedPerfilEntrada(updatedPerfilEntrada);
+  };
 
   const handleNameChange = (event) => {
     setNewPacienteData({
@@ -143,7 +146,16 @@ export default function Pacientes() {
       setPacientesData(response.data.data.data);
     } catch (err) {
       if (err.response.data.message === 'jwt expired') {
-        navigate('/');
+        toast.error('Su sesión ha expirado');
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
+      }
+      if (err.status === 500) {
+        toast.error('Su sesión ha expirado');
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
       }
     } finally {
       setLoading(false);
@@ -259,32 +271,65 @@ export default function Pacientes() {
           responseEscolaridad.data.data.data.escolaridadId;
       }
     }
+    if (updatedPerfilEntrada !== null) {
+      const responseAspectosClinicos = await axios.post(
+        `${process.env.REACT_APP_BACKEND_API}aspectosClinicos/`,
+        updatedPerfilEntrada.aspectoClinico,
+        { headers }
+      );
 
-    // if (updatedPerfilEntrada !== null) {
-    //   const responsePerfilEntrada = await axios.post(
-    //     `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/`,
-    //     updatedPerfilEntrada,
-    //     {
-    //       headers,
-    //     }
-    //   );
-    //   if (responsePerfilEntrada.status === 201) {
-    //     setNewPacienteData(responsePerfilEntrada.data.data.data);
-    //   }
-    // }
+      const responseAspectosComunitarios = await axios.post(
+        `${process.env.REACT_APP_BACKEND_API}aspectosComunitarios/`,
+        updatedPerfilEntrada.aspectoComunitario,
+        { headers }
+      );
+      const responseAspectosPsicoeducativos = await axios.post(
+        `${process.env.REACT_APP_BACKEND_API}aspectosPsicoeducativos/`,
+        updatedPerfilEntrada.aspectoPsicoeducativo,
+        { headers }
+      );
+      const responseAspectosDesarrolloTalleres = await axios.post(
+        `${process.env.REACT_APP_BACKEND_API}aspectosDesarrolloTaller/`,
+        updatedPerfilEntrada.aspectoDesarrolloTalleres,
+        { headers }
+      );
 
-    // if (updatedPerfilSalida !== null) {
-    //   const responsePerfilSalida = await axios.post(
-    //     `${process.env.REACT_APP_BACKEND_API}entrevistasSalida/`,
-    //     updatedPerfilSalida,
-    //     {
-    //       headers,
-    //     }
-    //   );
-    //   if (responsePerfilSalida.status === 201) {
-    //     setNewPacienteData(responsePerfilSalida.data.data.data);
-    //   }
-    // }
+      console.log(
+        responseAspectosPsicoeducativos.data.data.data.aspectoPsicoEducativoId
+      );
+
+      if (
+        responseAspectosClinicos.status === 201 &&
+        responseAspectosComunitarios.status === 201 &&
+        responseAspectosPsicoeducativos.status === 201 &&
+        responseAspectosDesarrolloTalleres.status === 201
+      ) {
+        const body = {
+          doctorId: Cookies.get('id'),
+          aspectoClinicoId:
+            responseAspectosClinicos.data.data.data.aspectoClinicoId,
+          aspectoComunitarioId:
+            responseAspectosComunitarios.data.data.data.aspectoComunitarioId,
+          aspectoPsicoeducativoId:
+            responseAspectosPsicoeducativos.data.data.data
+              .aspectoPsicoEducativoId,
+          aspectoDesarrolloTallerId:
+            responseAspectosDesarrolloTalleres.data.data.data
+              .aspectoDesarrolloTallerId,
+        };
+        const responsePerfilEntrada = await axios.post(
+          `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/`,
+          body,
+          {
+            headers,
+          }
+        );
+        if (responsePerfilEntrada.status === 201) {
+          newPacienteData.perfilEntradaId =
+            responsePerfilEntrada.data.data.data.perfilEntradaId;
+        }
+      }
+    }
 
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_API}pacientes/`,
@@ -294,7 +339,11 @@ export default function Pacientes() {
       }
     );
     if (response.status === 201) {
-      window.location.reload();
+      setLoading(true);
+      toast.success('Paciente creado con éxito');
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     }
   };
 
@@ -373,7 +422,6 @@ export default function Pacientes() {
           </a>
           &nbsp; &nbsp;
           <a
-            href="eliminarPaciente"
             className="btn btn-danger btn-sm"
             data-toggle="modal"
             data-target="#usuariosModal"
@@ -707,8 +755,27 @@ export default function Pacientes() {
                           setUpdatedEscolaridad={setUpdatedEscolaridad}
                         />
                         <hr />
-                        <br />
-                        <PerfilEntrada />
+
+                        {!agregaPerfilEntrada ? (
+                          <div class="row col-sm-6">
+                            <button
+                              class="btn btn-success btn-sm"
+                              type="button"
+                              id="btnGuardarCambios"
+                              onClick={() => setAgregaPerfilEntrada(true)}
+                            >
+                              Anadir Perfil de Entrada
+                            </button>
+                          </div>
+                        ) : (
+                          <>
+                            <PerfilEntrada
+                              perfilEntrada={perfilEntrada}
+                              setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
+                            />
+                          </>
+                        )}
+                        <hr />
                       </form>
                       <div class="modal-footer">
                         <button
@@ -733,6 +800,7 @@ export default function Pacientes() {
                 </div>
               </div>
             </div>
+            <ToastContainer />
           </div>
           <Footer />
         </div>
