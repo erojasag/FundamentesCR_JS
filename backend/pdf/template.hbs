@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel='stylesheet' href='style.css' />
+  </head>
+
+  <body>
+    <h1>{{heading}}</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Contacto</th>
+          <th>Edad</th>
+          <th>Nacionalidad</th>
+          <th>Genero</th>
+          <th>Tipo de Educacion</th>
+          <th>Ano Escolar</th>
+          <th>Centro Educativo</th>
+          <th>Ultimo Ano Aprobado</th>
+          <th>Adecuacion</th>
+          <th>Fecha de Salida</th>
+          <th>Motivo de Salida</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each pacientes}}
+          <tr>
+            <td>{{nombre}}</td>
+            <td>{{contacto}}</td>
+            <td>{{edad}}</td>
+            <td>{{nacionalidad}}</td>
+            <td>{{genero}}</td>
+            <td>{{tipoEducacion}}</td>
+            <td>{{anoEscolar}}</td>
+            <td>{{centroEducativo}}</td>
+            <td>{{ultimoAnoAprobado}}</td>
+            <td>{{adecuacion}}</td>
+            <td>{{fechaDeSalida}}</td>
+            <td>{{motivoSalida}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </body>
+</html>

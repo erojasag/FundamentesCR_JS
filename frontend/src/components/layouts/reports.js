@@ -1,42 +1,53 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Page, Document, StyleSheet, Text, PDFViewer } from '@react-pdf/renderer';
 
-// Create styles
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
-    backgroundColor: '#ffffff',
     padding: 20,
   },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
   title: {
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  heading: {
     fontSize: 18,
     marginBottom: 10,
   },
-  text: {
-    fontSize: 12,
+  content: {
+    fontSize: 14,
+    marginBottom: 5,
   },
 });
 
-// Create PDF component
-const MyPDF = ({ data }) => (
-  <Document>
-    {data.map((item, index) => (
-      <Page key={index} size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.title}>Nombre: {item.Nombre}</Text>
-          <Text style={styles.text}>Contacto: {item.Contacto}</Text>
-          <Text style={styles.text}>Edad: {item.Edad}</Text>
-          <Text style={styles.text}>Nacionalidad: {item.Nacionalidad}</Text>
-          {/* Add other fields you want to include in the PDF */}
-        </View>
-      </Page>
-    ))}
-  </Document>
-);
+const PDFDocument = ({ data }) => {
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <Text style={styles.title}>Pacientes con Escolaridad</Text>
+        <Text style={styles.heading}>Rangos de edad atendidos</Text>
+        <Text style={styles.content}>
+          {/* Insert data related to CircleChartEdad */}
+        </Text>
 
-export default MyPDF;
+        <Text style={styles.heading}>Número total de usuarios por casa</Text>
+        <Text style={styles.content}>
+          {/* Insert data related to CircleChartCasas */}
+        </Text>
+
+        <Text style={styles.heading}>Total genero masculino y femenino</Text>
+        <Text style={styles.content}>
+          {/* Insert data related to CircleChartPersonasPorGenero */}
+        </Text>
+
+        <Text style={styles.heading}>Total escolaridad</Text>
+        <Text style={styles.content}>
+          {/* Insert data related to CircleChartPersonasPorAnoEscolar */}
+        </Text>
+      </Page>
+    </Document>
+  );
+};
+
+export default PDFDocument;

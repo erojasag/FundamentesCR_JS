@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 import Stats from '../layouts/stats';
+import PDFDocument from '../layouts/reports';
 import CircleChartCasas from '../layouts/circleChartCasas';
 import CircleChartEdad from '../layouts/circleChartEdad';
 import CircleChartPersonasPorGenero from '../layouts/circleChartPersonasPorGenero';
@@ -14,23 +16,43 @@ export default function Index() {
 
   const fetchData = async () => {
     const headers = {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'inline; filename=output.pdf',
       Authorization: `Bearer ${Cookies.get('jwt')}`,
     };
     const response = await axios.get(
       `${process.env.REACT_APP_BACKEND_API}stats/GetPacientesWithEscolaridad`,
-      {
-        headers,
-      }
+      { headers }
     );
 
-    console.log(response.data.data.data);
+    console.log(response);
 
-    setJsonData(response.data.data.data);
+    setJsonData(response.data);
   };
 
-  const handleGeneratePDF = () => {
-    // Your code to generate the PDF, e.g., open it in a new window for the user to download
+  const handleGeneratePDF = async () => {
+    // Check if jsonData is available
+    if (jsonData) {
+      try {
+        // Generate the PDF as a blob
+        const pdfBlob = new Blob([jsonData], { type: 'application/pdf' });
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+
+        // Create a temporary anchor element to trigger the download
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pdfUrl;
+        downloadLink.download = 'report.pdf';
+        document.body.appendChild(downloadLink);
+
+        // Click the anchor element to initiate the download
+        downloadLink.click();
+
+        // Remove the temporary anchor element from the DOM
+        document.body.removeChild(downloadLink);
+      } catch (error) {
+        console.error('Error downloading PDF:', error);
+      }
+    }
   };
 
   useEffect(() => {
@@ -113,6 +135,7 @@ export default function Index() {
                     </div>
                   </div>
                 </div>
+                <button onClick={handleGeneratePDF}>Generate PDF</button>
               </div>
             </div>
             <Footer />
