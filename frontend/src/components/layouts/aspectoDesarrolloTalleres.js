@@ -73,7 +73,7 @@ export default function AspectoDesarrolloTalleres(props) {
 
       <div class="row">
         <div class="form-group col-sm-6">
-          <label for="txtComparteAnecdotas">Comparte Anecdotas</label>
+          <label for="txtComparteAnecdotas">Comparte Anécdotas</label>
           <select
             class="custom-select"
             id="comparteAnecdotas"
@@ -81,8 +81,8 @@ export default function AspectoDesarrolloTalleres(props) {
             value={aspectoDesarrolloTalleres.comparteAnecdotas}
             onChange={handleComparteAnecdotas}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -97,8 +97,8 @@ export default function AspectoDesarrolloTalleres(props) {
             value={aspectoDesarrolloTalleres.ejerciciosGrupales}
             onChange={handleEjerciciosGrupales}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -111,8 +111,8 @@ export default function AspectoDesarrolloTalleres(props) {
             value={aspectoDesarrolloTalleres.dialogoRespetuoso}
             onChange={handleDialogoRespetuoso}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -125,8 +125,8 @@ export default function AspectoDesarrolloTalleres(props) {
             value={aspectoDesarrolloTalleres.reflexiona}
             onChange={handleReflexiona}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -139,8 +139,8 @@ export default function AspectoDesarrolloTalleres(props) {
             value={aspectoDesarrolloTalleres.seEquivoca}
             onChange={handleSeEquivoca}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>

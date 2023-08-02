@@ -193,8 +193,8 @@ export default function AspectoComunitario(props) {
             value={aspectoComunitario.altaVulnerabilidadViolencia}
             onChange={handleAltaVulnerabilidadViolencia}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -227,7 +227,7 @@ export default function AspectoComunitario(props) {
         <hr />
         <br />
         <div class="form-group col-sm-6">
-          <label for="txtreflexionEntorno">Reflexion de Entorno</label>
+          <label for="txtreflexionEntorno">Reflexión de Entorno</label>
           <select
             class="custom-select"
             id="reflexionEntorno"
@@ -235,14 +235,14 @@ export default function AspectoComunitario(props) {
             value={aspectoComunitario.reflexionEntorno}
             onChange={handleReflexionEntorno}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
           <label for="txtpuntajeReflexionEntorno">
-            Puntaje Reflexion de Entorno
+            Puntaje Reflexión de Entorno
           </label>
           <input
             type="text"
@@ -255,7 +255,7 @@ export default function AspectoComunitario(props) {
         </div>
         <div class="form-group col-sm-6">
           <label for="txtobservacionesReflexionEntorno">
-            Observaciones Reflexion de Entorno
+            Observaciones Reflexión de Entorno
           </label>
           <textarea
             type="text"
@@ -275,8 +275,8 @@ export default function AspectoComunitario(props) {
             value={aspectoComunitario.formasRelacionarse}
             onChange={handleFormasRelacionarse}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -315,8 +315,8 @@ export default function AspectoComunitario(props) {
             value={aspectoComunitario.cuestionamientoNormas}
             onChange={handleCuestionamientoNormas}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -366,7 +366,7 @@ export default function AspectoComunitario(props) {
             value={aspectoComunitario.prioridad}
             onChange={handlePrioridadChange}
           >
-            <option value="null">-No especifica-</option>
+            <option value="null">-No específica-</option>
             <option value="Baja">Baja</option>
             <option value="Media">Media</option>
             <option value="Alta">Alta</option>

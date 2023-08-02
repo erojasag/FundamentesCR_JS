@@ -404,7 +404,7 @@ export default function AspectoClinico(props) {
     <React.Fragment>
       <div class="form-group row justify-content-center">
         <label for="txtDistrito" className="col-form-label-lg">
-          Aspectos Clinicos
+          Aspectos Clínicos
         </label>
       </div>
 
@@ -418,8 +418,8 @@ export default function AspectoClinico(props) {
             value={aspectoClinico.ideacionAutolesiones}
             onChange={handleIdeacionLesiones}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -460,8 +460,8 @@ export default function AspectoClinico(props) {
             value={aspectoClinico.personaSignificativa}
             onChange={handlePersonaSignificativa}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -500,8 +500,8 @@ export default function AspectoClinico(props) {
             value={aspectoClinico.violenciaIntrafamiliar}
             onChange={handleViolenciaIntrafamiliar}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -540,8 +540,8 @@ export default function AspectoClinico(props) {
             value={aspectoClinico.violenciaSexual}
             onChange={handleViolenciaSexual}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -572,7 +572,7 @@ export default function AspectoClinico(props) {
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtcuestionamientoNormas">Violencia Psicologica</label>
+          <label for="txtcuestionamientoNormas">Violencia Psicológica</label>
           <select
             class="custom-select"
             id="cuestionamientoNormas"
@@ -580,14 +580,14 @@ export default function AspectoClinico(props) {
             value={aspectoClinico.violenciaPsicologica}
             onChange={handleViolenciaPsicologica}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
           <label for="txtpuntajeCuestionamientoNormas">
-            Puntaje Violencia Psicologica
+            Puntaje Violencia Psicológica
           </label>
           <input
             type="text"
@@ -600,7 +600,7 @@ export default function AspectoClinico(props) {
         </div>
         <div class="form-group col-sm-6">
           <label for="txtobservacionesReflexionEntorno">
-            Observaciones Violencia Psicologica
+            Observaciones Violencia Psicológica
           </label>
           <textarea
             type="text"
@@ -622,14 +622,14 @@ export default function AspectoClinico(props) {
             value={aspectoClinico.violenciaFisicaFamiliar}
             onChange={handleViolenciaFisicaFamiliar}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
           <label for="txtpuntajeCuestionamientoNormas">
-            Puntaje Violencia Fisica familiar
+            Puntaje Violencia Fisica Familiar
           </label>
           <input
             type="text"
@@ -665,7 +665,7 @@ export default function AspectoClinico(props) {
             onChange={handlePersonasPrivadasLibertad}
           >
             <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -707,7 +707,7 @@ export default function AspectoClinico(props) {
             onChange={handleConsumoDrogasFamilia}
           >
             <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -749,7 +749,7 @@ export default function AspectoClinico(props) {
             onChange={handleAbandonoFamiliar}
           >
             <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -781,7 +781,7 @@ export default function AspectoClinico(props) {
         </div>
         <div class="form-group col-sm-6">
           <label for="txtcuestionamientoNormas">
-            Relacion Emociones y Cuerpo
+            Relación Emociones y Cuerpo
           </label>
           <select
             class="custom-select"
@@ -790,14 +790,14 @@ export default function AspectoClinico(props) {
             value={aspectoClinico.relacionEmocionesCuerpo}
             onChange={handleRelacionEmocionesCuerpo}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
           <label for="txtpuntajeCuestionamientoNormas">
-            Puntaje Relacion Emociones y Cuerpo
+            Puntaje Relación Emociones y Cuerpo
           </label>
           <input
             type="text"
@@ -810,7 +810,7 @@ export default function AspectoClinico(props) {
         </div>
         <div class="form-group col-sm-6">
           <label for="txtobservacionesReflexionEntorno">
-            Observaciones Relacion Emociones y Cuerpo
+            Observaciones Relación Emociones y Cuerpo
           </label>
           <textarea
             type="text"
@@ -832,8 +832,8 @@ export default function AspectoClinico(props) {
             value={aspectoClinico.responsabilidadCuidadores}
             onChange={handleResponsabilidadCuidadores}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -883,7 +883,7 @@ export default function AspectoClinico(props) {
             value={aspectoClinico.prioridad}
             onChange={handlePrioridadChange}
           >
-            <option value="null">-No especifica-</option>
+            <option value="null">-No especifíca-</option>
             <option value="Baja">Baja</option>
             <option value="Media">Media</option>
             <option value="Alta">Alta</option>

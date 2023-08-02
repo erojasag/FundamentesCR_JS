@@ -111,12 +111,12 @@ export default function Encuestas() {
                               <tr>
                                 <th>Nombre Completo</th>
                                 <th>Edad</th>
-                                <th>Cedula</th>
-                                <th>Calificacion</th>
-                                <th>Calificacion T. Educativo</th>
-                                <th>Calificacion T. Creativo</th>
-                                <th>Calificacion T. Clinico</th>
-                                <th>Recomendacion</th>
+                                <th>Cédula</th>
+                                <th>Calificación</th>
+                                <th>Calificación T. Educativo</th>
+                                <th>Calificación T. Creativo</th>
+                                <th>Calificación T. Clínico</th>
+                                <th>Recomendación</th>
                                 <th>Comentarios</th>
                                 <th>Acciones</th>
                               </tr>

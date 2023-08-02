@@ -186,11 +186,11 @@ export default function ListaCasasInactivas() {
                             <thead>
                               <tr key={4}>
                                 <th>Nombre</th>
-                                <th>Canton</th>
+                                <th>Cantón</th>
                                 <th>Provincia</th>
-                                <th>Direccion</th>
+                                <th>Dirección</th>
                                 <th>Activo</th>
-                                <th>Accion</th>
+                                <th>Acción</th>
                               </tr>
                             </thead>
                             <tbody>{getCasas()}</tbody>
