@@ -611,7 +611,7 @@ export default function EditarPaciente() {
                           />
                         </div>
                         <div class="form-group col-sm-6">
-                          <label for="txtTelefono">Telefono</label>
+                          <label for="txtTelefono">Teléfono</label>
                           <input
                             type="email"
                             class="form-control form-control-sm input-validar"
@@ -646,7 +646,7 @@ export default function EditarPaciente() {
                         </div>
 
                         <div class="form-group col-sm-6">
-                          <label for="txtDireccion">Direccion</label>
+                          <label for="txtDireccion">Dirección</label>
                           <textarea
                             type="text"
                             class="form-control form-control-sm input-validar"
@@ -668,7 +668,7 @@ export default function EditarPaciente() {
                           />
                         </div>
                         <div class="form-group col-sm-6">
-                          <label for="txtGenero">Genero</label>
+                          <label for="txtGenero">Género</label>
                           <select
                             class="custom-select"
                             id="genero"
@@ -737,7 +737,7 @@ export default function EditarPaciente() {
                               id="btnGuardarCambios"
                               onClick={() => setAgregaPerfilEntrada(true)}
                             >
-                              Anadir Perfil de Entrada
+                              Añadir Perfil de Entrada
                             </button>
                           </div>
                         </>
@@ -769,7 +769,7 @@ export default function EditarPaciente() {
                               id="btnGuardarCambios"
                               onClick={() => setAgregaPerfilSalida(true)}
                             >
-                              Anadir Perfil de Salida
+                              Añadir Perfil de Salida
                             </button>
                           </div>
                         </>

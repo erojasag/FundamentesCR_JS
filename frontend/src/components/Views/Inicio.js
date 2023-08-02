@@ -83,7 +83,7 @@ export default function Index() {
                   <div className="card shadow mb-4 h-100">
                     <div className="card-header py-3 bg-second-primary">
                       <h6 className="m-0 font-weight-bold text-white">
-                        Total genero masculino y femenino
+                        Total género masculino y femenino
                       </h6>
                     </div>
                     <div className="card-body align-items-center justify-content-center">

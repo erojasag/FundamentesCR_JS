@@ -276,7 +276,7 @@ export default function ListaUsuarios() {
                                 <th>Apellidos</th>
                                 <th>Correo</th>
                                 <th>Tipo de Usuario</th>
-                                <th>Accion</th>
+                                <th>Acción</th>
                               </tr>
                             </thead>
                             <tbody>{getUsuarios()}</tbody>
@@ -436,7 +436,7 @@ export default function ListaUsuarios() {
                                         -No seleccionado-
                                       </option>
                                       <option value="Psicologo">
-                                        Psicologo
+                                        Psicólogo
                                       </option>
                                       <option value="Administrador">
                                         Administrador

@@ -255,10 +255,10 @@ export default function ListaCasas() {
                             <thead>
                               <tr key={4}>
                                 <th>Nombre</th>
-                                <th>Canton</th>
+                                <th>Cantón</th>
                                 <th>Provincia</th>
-                                <th>Direccion</th>
-                                <th>Accion</th>
+                                <th>Dirección</th>
+                                <th>Acción</th>
                               </tr>
                             </thead>
                             <tbody>{getCasas()}</tbody>
@@ -369,7 +369,7 @@ export default function ListaCasas() {
                                     />
                                   </div>
                                   <div class="form-group col-sm-6">
-                                    <label for="txtcanton">Canton</label>
+                                    <label for="txtcanton">Cantón</label>
                                     <input
                                       type="text"
                                       class="form-control form-control-sm input-validar"
@@ -391,11 +391,11 @@ export default function ListaCasas() {
                                       <option selected>
                                         Seleccione una provincia
                                       </option>
-                                      <option value="San Jose">San Jose</option>
+                                      <option value="San Jose">San José</option>
                                       <option value="Cartago">Cartago</option>
                                       <option value="Heredia">Heredia</option>
                                       <option value="Alajuela">Alajuela</option>
-                                      <option value="Limon">Limon</option>
+                                      <option value="Limon">Limón</option>
                                       <option value="Guanacaste">
                                         Guanacaste
                                       </option>
@@ -406,7 +406,7 @@ export default function ListaCasas() {
                                   </div>
 
                                   <div class="form-group col-sm-6">
-                                    <label for="txtDireccion">Direccion</label>
+                                    <label for="txtDireccion">Dirección</label>
                                     <input
                                       type="text"
                                       class="form-control form-control-sm input-validar"

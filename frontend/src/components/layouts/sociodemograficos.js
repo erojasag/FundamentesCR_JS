@@ -120,7 +120,7 @@ export default function Sociodemograficos(props) {
     <React.Fragment>
       <div class="form-group row justify-content-center">
         <label for="txtDistrito" className="col-form-label-lg">
-          Datos Sociodemograficos
+          Datos Sociodemográficos
         </label>
       </div>
 
@@ -135,7 +135,7 @@ export default function Sociodemograficos(props) {
             value={sociodemograficos.tipoVivienda}
             onChange={handleTipoViviendaChange}
           >
-            <option value="Prefiere no comentar">-No especifica-</option>
+            <option value="Prefiere no comentar">-No específica-</option>
             <option value="Propia">Propia</option>
             <option value="Alquila">Alquila</option>
             <option value="Prestada">Prestada</option>
@@ -175,13 +175,13 @@ export default function Sociodemograficos(props) {
             value={sociodemograficos.electricidad}
             onChange={handleElectricidadChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtAguaPotable">Agua Potable </label>
+          <label for="txtAguaPotable">Agua Potable</label>
           <select
             class="custom-select"
             id="aguaPotable"
@@ -189,8 +189,8 @@ export default function Sociodemograficos(props) {
             value={sociodemograficos.aguaPotable}
             onChange={handleAguaPotableChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -214,8 +214,8 @@ export default function Sociodemograficos(props) {
             value={sociodemograficos.internet}
             onChange={handleInternetChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -228,8 +228,8 @@ export default function Sociodemograficos(props) {
             value={sociodemograficos.cable}
             onChange={handleCableChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -242,15 +242,15 @@ export default function Sociodemograficos(props) {
             value={sociodemograficos.recibeSubsidio}
             onChange={handleRecibeSubsidioChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
           {sociodemograficos.recibeSubsidio === 'true' ||
           sociodemograficos.recibeSubsidio === true ? (
             <>
               <div class="form-group col-sm-6">
-                <label for="txtInstitucion">Institucion</label>
+                <label for="txtInstitucion">Institución</label>
                 <input
                   type="text"
                   class="form-control form-control-sm input-validar"
