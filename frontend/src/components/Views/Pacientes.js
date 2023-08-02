@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 import Cookies from 'js-cookie';
 import SideMenu from '../layouts/sideMenu';
 import Casa from '../layouts/casa';
@@ -12,10 +14,14 @@ import Encargado from '../layouts/encargado';
 import DinamicaFamiliar from '../layouts/dinamicaFamiliar';
 import Escolaridad from '../layouts/escolaridad';
 import Loading from '../layouts/loading';
-import { Link } from 'react-router-dom';
-// import PerfilEntrada from '../layouts/perfilEntrada';
+import { Pagination } from 'react-bootstrap';
+import PerfilEntrada from '../layouts/perfilEntrada';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Pacientes() {
+  const navigate = useNavigate();
+  const [agregaPerfilEntrada, setAgregaPerfilEntrada] = useState(false);
+
   const [pacientesData, setPacientesData] = useState([]);
 
   const [newPacienteData, setNewPacienteData] = useState({});
@@ -51,9 +57,9 @@ export default function Pacientes() {
   const [perfilEntrada, setPerfilEntrada] = useState('');
   const [updatedPerfilEntrada, setUpdatedPerfilEntrada] = useState(null);
 
-  //datos perfilSalida
-  const [perfilSalida, setPerfilSalida] = useState('');
-  const [updatedPerfilSalida, setUpdatedPerfilSalida] = useState(null);
+  const handlePerfilEntradaChange = (updatedPerfilEntrada) => {
+    setUpdatedPerfilEntrada(updatedPerfilEntrada);
+  };
 
   const handleNameChange = (event) => {
     setNewPacienteData({
@@ -123,6 +129,41 @@ export default function Pacientes() {
       casaId: event.currentTarget.value,
     });
   };
+
+  const fetchData = async () => {
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+      setLoading(true);
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}pacientes`,
+        {
+          headers,
+        }
+      );
+      setPacientesData(response.data.data.data);
+    } catch (err) {
+      if (err.response.data.message === 'jwt expired') {
+        toast.error('Su sesión ha expirado');
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
+      }
+      if (err.status === 500) {
+        toast.error('Su sesión ha expirado');
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   const deactivateUser = async (pacienteId) => {
     const headers = {
       'Content-Type': 'application/json',
@@ -130,7 +171,7 @@ export default function Pacientes() {
     };
 
     const response = await axios.delete(
-      `http://localhost:3000/pacientes/${pacienteId}`,
+      `${process.env.REACT_APP_BACKEND_API}pacientes/${pacienteId}`,
       {
         headers,
       }
@@ -147,142 +188,164 @@ export default function Pacientes() {
 
     if (updatedDatosMedicos !== null) {
       const responseDatosMedicos = await axios.post(
-        `http://localhost:3000/datosMedicos/`,
+        `${process.env.REACT_APP_BACKEND_API}datosMedicos/`,
         updatedDatosMedicos,
         {
           headers,
         }
       );
+
       if (responseDatosMedicos.status === 201) {
-        setNewPacienteData(responseDatosMedicos.data.data.data);
+        newPacienteData.datosMedicosId =
+          responseDatosMedicos.data.data.data.datosMedicosId;
       }
     }
 
     if (updatedCondicionLaboral !== null) {
       const responseCondicionLaboral = await axios.post(
-        `http://localhost:3000/condicionesLaborales/`,
+        `${process.env.REACT_APP_BACKEND_API}condicionesLaborales/`,
         updatedCondicionLaboral,
         {
           headers,
         }
       );
       if (responseCondicionLaboral.status === 201) {
-        setNewPacienteData(responseCondicionLaboral.data.data.data);
+        newPacienteData.condicionLaboralId =
+          responseCondicionLaboral.data.data.data.condicionLaboralId;
       }
     }
 
     if (updatedSociodemograficos !== null) {
       const responseSociodemograficos = await axios.post(
-        `http://localhost:3000/sociodemograficos/`,
+        `${process.env.REACT_APP_BACKEND_API}sociodemograficos/`,
         updatedSociodemograficos,
         {
           headers,
         }
       );
+
       if (responseSociodemograficos.status === 201) {
-        setNewPacienteData(responseSociodemograficos.data.data.data);
+        newPacienteData.sociodemograficosId =
+          responseSociodemograficos.data.data.data.sociodemograficosId;
       }
     }
 
     if (updatedEncargado !== null) {
       const responseEncargado = await axios.post(
-        `http://localhost:3000/encargados/`,
+        `${process.env.REACT_APP_BACKEND_API}encargados/`,
         updatedEncargado,
         {
           headers,
         }
       );
       if (responseEncargado.status === 201) {
-        setNewPacienteData(responseEncargado.data.data.data);
+        newPacienteData.encargadoId =
+          responseEncargado.data.data.data.encargadoId;
       }
     }
 
     if (updatedDinamicaFamiliar !== null) {
       const responseDinamicaFamiliar = await axios.post(
-        `http://localhost:3000/dinamicasFamiliares/`,
+        `${process.env.REACT_APP_BACKEND_API}dinamicasFamiliares/`,
         updatedDinamicaFamiliar,
         {
           headers,
         }
       );
       if (responseDinamicaFamiliar.status === 201) {
-        setNewPacienteData(responseDinamicaFamiliar.data.data.data);
+        newPacienteData.dinamicaFamiliarId =
+          responseDinamicaFamiliar.data.data.data.dinamicaFamiliarId;
       }
     }
 
     if (updatedEscolaridad !== null) {
       const responseEscolaridad = await axios.post(
-        `http://localhost:3000/escolaridades/`,
+        `${process.env.REACT_APP_BACKEND_API}escolaridades/`,
         updatedEscolaridad,
         {
           headers,
         }
       );
       if (responseEscolaridad.status === 201) {
-        setNewPacienteData(responseEscolaridad.data.data.data);
+        newPacienteData.escolaridadId =
+          responseEscolaridad.data.data.data.escolaridadId;
+      }
+    }
+    if (updatedPerfilEntrada !== null) {
+      const responseAspectosClinicos = await axios.post(
+        `${process.env.REACT_APP_BACKEND_API}aspectosClinicos/`,
+        updatedPerfilEntrada.aspectoClinico,
+        { headers }
+      );
+
+      const responseAspectosComunitarios = await axios.post(
+        `${process.env.REACT_APP_BACKEND_API}aspectosComunitarios/`,
+        updatedPerfilEntrada.aspectoComunitario,
+        { headers }
+      );
+      const responseAspectosPsicoeducativos = await axios.post(
+        `${process.env.REACT_APP_BACKEND_API}aspectosPsicoeducativos/`,
+        updatedPerfilEntrada.aspectoPsicoeducativo,
+        { headers }
+      );
+      const responseAspectosDesarrolloTalleres = await axios.post(
+        `${process.env.REACT_APP_BACKEND_API}aspectosDesarrolloTaller/`,
+        updatedPerfilEntrada.aspectoDesarrolloTalleres,
+        { headers }
+      );
+
+      console.log(
+        responseAspectosPsicoeducativos.data.data.data.aspectoPsicoEducativoId
+      );
+
+      if (
+        responseAspectosClinicos.status === 201 &&
+        responseAspectosComunitarios.status === 201 &&
+        responseAspectosPsicoeducativos.status === 201 &&
+        responseAspectosDesarrolloTalleres.status === 201
+      ) {
+        const body = {
+          doctorId: Cookies.get('id'),
+          aspectoClinicoId:
+            responseAspectosClinicos.data.data.data.aspectoClinicoId,
+          aspectoComunitarioId:
+            responseAspectosComunitarios.data.data.data.aspectoComunitarioId,
+          aspectoPsicoeducativoId:
+            responseAspectosPsicoeducativos.data.data.data
+              .aspectoPsicoEducativoId,
+          aspectoDesarrolloTallerId:
+            responseAspectosDesarrolloTalleres.data.data.data
+              .aspectoDesarrolloTallerId,
+        };
+        const responsePerfilEntrada = await axios.post(
+          `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/`,
+          body,
+          {
+            headers,
+          }
+        );
+        if (responsePerfilEntrada.status === 201) {
+          newPacienteData.perfilEntradaId =
+            responsePerfilEntrada.data.data.data.perfilEntradaId;
+        }
       }
     }
 
-    // if (updatedPerfilEntrada !== null) {
-    //   const responsePerfilEntrada = await axios.post(
-    //     `http://localhost:3000/entrevistasEntrada/`,
-    //     updatedPerfilEntrada,
-    //     {
-    //       headers,
-    //     }
-    //   );
-    //   if (responsePerfilEntrada.status === 201) {
-    //     setNewPacienteData(responsePerfilEntrada.data.data.data);
-    //   }
-    // }
-
-    // if (updatedPerfilSalida !== null) {
-    //   const responsePerfilSalida = await axios.post(
-    //     `http://localhost:3000/entrevistasSalida/`,
-    //     updatedPerfilSalida,
-    //     {
-    //       headers,
-    //     }
-    //   );
-    //   if (responsePerfilSalida.status === 201) {
-    //     setNewPacienteData(responsePerfilSalida.data.data.data);
-    //   }
-    // }
-
     const response = await axios.post(
-      'http://localhost:3000/pacientes/',
+      `${process.env.REACT_APP_BACKEND_API}pacientes/`,
       newPacienteData,
       {
         headers,
       }
     );
     if (response.status === 201) {
-      window.location.reload();
-    }
-  };
-
-  const fetchData = async () => {
-    try {
-      const headers = {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Cookies.get('jwt')}`,
-      };
       setLoading(true);
-      const response = await axios.get('http://localhost:3000/pacientes', {
-        headers,
-      });
-      const data = response.data.data.data;
-
-      setPacientesData(data);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
+      toast.success('Paciente creado con éxito');
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const calculateAge = () => {
@@ -327,8 +390,19 @@ export default function Pacientes() {
     });
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(10);
+
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentPacientes = pacientesData.slice(
+    indexOfFirstUser,
+    indexOfLastUser
+  );
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const getPacientes = () => {
-    return pacientesData.map((paciente) => (
+    return currentPacientes.map((paciente) => (
       <tr key={paciente.pacienteId}>
         <td>{paciente.nombreCompleto}</td>
         <td>{paciente.cedula}</td>
@@ -341,14 +415,13 @@ export default function Pacientes() {
         <td>{paciente.nacionalidad}</td>
         <td>
           <a
-            href={`/${paciente.pacienteId}`}
+            href={`pacientes/${paciente.pacienteId}`}
             className="btn btn-primary btn-sm"
           >
             <i className="fas fa-pencil-alt"></i>
           </a>
           &nbsp; &nbsp;
           <a
-            href="eliminarPaciente"
             className="btn btn-danger btn-sm"
             data-toggle="modal"
             data-target="#usuariosModal"
@@ -373,7 +446,7 @@ export default function Pacientes() {
               <div className="card shadow mb-4 m-overflow">
                 <div className="card-header py-3 bg-second-primary">
                   <h6 className="m-0 font-weight-bold text-white">
-                    Lista de Pacientes
+                    Lista de Beneficiarios
                   </h6>
                 </div>
                 <div className="card-body">
@@ -384,7 +457,7 @@ export default function Pacientes() {
                         data-toggle="modal"
                         data-target="#modalData"
                       >
-                        <i class="fas fa-user-plus"></i> Nuevo Paciente
+                        <i class="fas fa-user-plus"></i> Nuevo Beneficiario
                       </button>
                     </div>
                   </div>
@@ -407,7 +480,7 @@ export default function Pacientes() {
                             <th>Teléfono</th>
                             <th>Edad Actual</th>
                             <th>Fecha de Nacimiento</th>
-                            <th>Genero</th>
+                            <th>Género</th>
                             <th>Nacionalidad</th>
                             <th>Acciones</th>
                           </tr>
@@ -415,6 +488,23 @@ export default function Pacientes() {
                         <tbody>{getPacientes()}</tbody>
                       </table>
                     </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <Pagination className="custom-pagination">
+                      {Array.from({
+                        length: Math.ceil(pacientesData.length / usersPerPage),
+                      }).map((_, index) => (
+                        <Pagination.Item
+                          key={index + 1}
+                          onClick={() => paginate(index + 1)}
+                          className={
+                            index + 1 === currentPage ? 'hide-current' : ''
+                          }
+                        >
+                          {index + 1}
+                        </Pagination.Item>
+                      ))}
+                    </Pagination>
                   </div>
                 </div>
               </div>
@@ -491,8 +581,8 @@ export default function Pacientes() {
                       </button>
                     </div>
                     <div class="modal-body">
-                      <form>
-                        <div class="row">
+                      <form class="mx-auto">
+                        <div class="row justify-content-center">
                           <div class="col-sm-8">
                             <div class="form-row ">
                               <div class="form-group col-sm-6">
@@ -523,7 +613,7 @@ export default function Pacientes() {
                               </div>
                               <div class="form-group col-sm-6">
                                 <label for="txtContacto">
-                                  Telefono de Contacto
+                                  Teléfono de Contacto
                                 </label>
                                 <input
                                   type="number"
@@ -582,7 +672,7 @@ export default function Pacientes() {
                                 />
                               </div>
                               <div class="form-group col-sm-6">
-                                <label for="txtDireccion">Direccion</label>
+                                <label for="txtDireccion">Dirección</label>
                                 <input
                                   type="text"
                                   class="form-control form-control-sm 
@@ -594,7 +684,7 @@ export default function Pacientes() {
                                 />
                               </div>
                               <div class="form-group col-sm-6">
-                                <label for="txtGenero">Genero</label>
+                                <label for="txtGenero">Género</label>
                                 <select
                                   class="custom-select"
                                   id="genero"
@@ -608,6 +698,9 @@ export default function Pacientes() {
                                   <option value="Masculino">Masculino</option>
                                   <option value="Femenino">Femenino</option>
                                   <option value="No-Binario">No-Binario</option>
+                                  <option value="Tansgenero">
+                                    Transgénero
+                                  </option>
                                 </select>
                               </div>
                             </div>
@@ -662,8 +755,27 @@ export default function Pacientes() {
                           setUpdatedEscolaridad={setUpdatedEscolaridad}
                         />
                         <hr />
-                        <br />
-                        {/* <PerfilEntrada /> */}
+
+                        {!agregaPerfilEntrada ? (
+                          <div class="row col-sm-6">
+                            <button
+                              class="btn btn-success btn-sm"
+                              type="button"
+                              id="btnGuardarCambios"
+                              onClick={() => setAgregaPerfilEntrada(true)}
+                            >
+                              Anadir Perfil de Entrada
+                            </button>
+                          </div>
+                        ) : (
+                          <>
+                            <PerfilEntrada
+                              perfilEntrada={perfilEntrada}
+                              setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
+                            />
+                          </>
+                        )}
+                        <hr />
                       </form>
                       <div class="modal-footer">
                         <button
@@ -675,7 +787,7 @@ export default function Pacientes() {
                           Cancel
                         </button>
                         <button
-                          class="btn btn-primary btn-sm"
+                          class="btn btn-success btn-sm"
                           type="button"
                           id="btnGuardar"
                           onClick={createPaciente}
@@ -688,6 +800,7 @@ export default function Pacientes() {
                 </div>
               </div>
             </div>
+            <ToastContainer />
           </div>
           <Footer />
         </div>

@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 import Casa from '../layouts/casa';
 import DatosMedicos from '../layouts/datosMedicos';
+import Loading from '../layouts/loading';
 import axios from 'axios';
+
 import CondicionLaboral from '../layouts/condicionLaboral';
 import Sociodemograficos from '../layouts/sociodemograficos';
 import Encargado from '../layouts/encargado';
 import DinamicaFamiliar from '../layouts/dinamicaFamiliar';
 import Escolaridad from '../layouts/escolaridad';
 import PerfilEntrada from '../layouts/perfilEntrada';
+import PerfilSalida from '../layouts/perfilSalida';
 
 export default function EditarPaciente() {
   const { id } = useParams();
-
+  const [agregaPerfilEntrada, setAgregaPerfilEntrada] = useState(false);
+  const [agregaPerfilSalida, setAgregaPerfilSalida] = useState(false);
   const navigate = useNavigate();
   const [pacienteData, setPacienteData] = useState({});
   //datos medicos
@@ -46,11 +51,13 @@ export default function EditarPaciente() {
 
   //datos perfilEntrada
   const [perfilEntrada, setPerfilEntrada] = useState('');
-  const [updatedPerfilEntrada, setUpdatedPerfilEntrada] = useState(null);
+  const [updatedPerfilEntrada, setUpdatedPerfilEntrada] = useState({});
 
   //datos perfilSalida
   const [perfilSalida, setPerfilSalida] = useState('');
-  const [updatedPerfilSalida, setUpdatedPerfilSalida] = useState(null);
+  const [updatedPerfilSalida, setUpdatedPerfilSalida] = useState({});
+
+  const [loading, setLoading] = useState(false);
 
   const handleNameChange = (event) => {
     setPacienteData({
@@ -116,45 +123,57 @@ export default function EditarPaciente() {
   };
 
   async function fetchPaciente() {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
 
-    const response = await axios.get(`http://localhost:3000/pacientes/${id}`, {
-      headers,
-    });
-    const data = response.data.data.data;
-    console.log(data);
-    setPacienteData(data);
-    setDatosMedicos(data.datosMedicos);
-    setCondicionLaboral(data.condicionLaboral);
-    setSociodemograficos(data.sociodemograficos);
-    setEncargado(data.encargado);
-    setDinamicaFamiliar(data.dinamicaFamiliar);
-    setEscolaridad(data.escolaridad);
-    setPerfilEntrada(data.perfilEntrada);
-
-    if (data.perfilEntradaId !== null) {
-      const responsePerfilEntrada = await axios.get(
-        `http://localhost:3000/entrevistasEntrada/${data.perfilEntradaId}`,
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}pacientes/${id}`,
         {
           headers,
         }
       );
-      const dataPerfilEntrada = responsePerfilEntrada.data.data.data;
-      setPerfilEntrada(dataPerfilEntrada);
+      const data = response.data.data.data;
+      setPacienteData(data);
+      setDatosMedicos(data.datosMedicos);
+      setCondicionLaboral(data.condicionLaboral);
+      setSociodemograficos(data.sociodemograficos);
+      setEncargado(data.encargado);
+      setDinamicaFamiliar(data.dinamicaFamiliar);
+      setEscolaridad(data.escolaridad);
+
+      if (data.perfilEntradaId !== null) {
+        const responsePerfilEntrada = await axios.get(
+          `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/${data.perfilEntradaId}`,
+          {
+            headers,
+          }
+        );
+
+        const dataPerfilEntrada = responsePerfilEntrada.data.data.data;
+        setPerfilEntrada(dataPerfilEntrada);
+        setAgregaPerfilEntrada(true);
+      } else {
+        setPerfilEntrada(null);
+      }
+      if (data.perfilSalidaId !== null) {
+        const responsePerfilSalida = await axios.get(
+          `${process.env.REACT_APP_BACKEND_API}entrevistasSalida/${data.perfilSalidaId}`,
+          {
+            headers,
+          }
+        );
+        const dataPerfilSalida = responsePerfilSalida.data.data.data;
+        setPerfilSalida(dataPerfilSalida);
+        setAgregaPerfilSalida(true);
+      } else {
+        setPerfilSalida(null);
+      }
+    } catch (err) {
+      return;
     }
-    // if (data.perfilSalidaId !== null) {
-    //   const responsePerfilSalida = await axios.get(
-    //     `http://localhost:3000/entrevistasSalida/${data.perfilSalidaId}`,
-    //     {
-    //       headers,
-    //     }
-    //   );
-    //   const dataPerfilSalida = responsePerfilSalida.data.data.data;
-    //   setPerfilSalida(dataPerfilSalida);
-    // }
   }
 
   useEffect(() => {
@@ -183,162 +202,359 @@ export default function EditarPaciente() {
   }, [pacienteData.fechaNacimiento]);
 
   const handleGuardarCambios = async (event) => {
-    event.preventDefault();
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
-    if (updatedDatosMedicos !== null) {
-      if (pacienteData.datosMedicosId === null) {
-        const response = await axios.post(
-          `http://localhost:3000/datosMedicos/`,
+    try {
+      event.preventDefault();
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+      if (updatedDatosMedicos !== null) {
+        if (pacienteData.datosMedicosId === null) {
+          const response = await axios.post(
+            `${process.env.REACT_APP_BACKEND_API}datosMedicos/`,
+            updatedDatosMedicos,
+            {
+              headers,
+            }
+          );
+          pacienteData.datosMedicosId = response.data.data.data.datosMedicosId;
+        }
+
+        await axios.patch(
+          `${process.env.REACT_APP_BACKEND_API}datosMedicos/${pacienteData.datosMedicosId}`,
           updatedDatosMedicos,
           {
             headers,
           }
         );
-        pacienteData.datosMedicosId = response.data.data.data.datosMedicosId;
       }
-
-      await axios.patch(
-        `http://localhost:3000/datosMedicos/${pacienteData.datosMedicosId}`,
-        updatedDatosMedicos,
-        {
-          headers,
+      if (updatedCondicionLaboral !== null) {
+        if (pacienteData.condicionLaboralId === null) {
+          const response = await axios.post(
+            `${process.env.REACT_APP_BACKEND_API}condicionesLaborales/`,
+            updatedCondicionLaboral,
+            {
+              headers,
+            }
+          );
+          pacienteData.condicionLaboralId =
+            response.data.data.data.condicionLaboralId;
         }
-      );
-    }
-    if (updatedCondicionLaboral !== null) {
-      if (pacienteData.condicionLaboralId === null) {
-        const response = await axios.post(
-          `http://localhost:3000/condicionesLaborales/`,
+
+        await axios.patch(
+          `${process.env.REACT_APP_BACKEND_API}condicionesLaborales/${pacienteData.condicionLaboralId}`,
           updatedCondicionLaboral,
           {
             headers,
           }
         );
-        pacienteData.condicionLaboralId =
-          response.data.data.data.condicionLaboralId;
       }
-
-      await axios.patch(
-        `http://localhost:3000/condicionesLaborales/${pacienteData.condicionLaboralId}`,
-        updatedCondicionLaboral,
-        {
-          headers,
+      if (updatedSociodemograficos !== null) {
+        if (pacienteData.sociodemograficosId === null) {
+          const response = await axios.post(
+            `${process.env.REACT_APP_BACKEND_API}sociodemograficos/`,
+            updatedSociodemograficos,
+            {
+              headers,
+            }
+          );
+          pacienteData.sociodemograficosId =
+            response.data.data.data.sociodemograficosId;
         }
-      );
-    }
-    if (updatedSociodemograficos !== null) {
-      if (pacienteData.sociodemograficosId === null) {
-        const response = await axios.post(
-          `http://localhost:3000/sociodemograficos/`,
+
+        await axios.patch(
+          `${process.env.REACT_APP_BACKEND_API}sociodemograficos/${pacienteData.sociodemograficosId}`,
           updatedSociodemograficos,
           {
             headers,
           }
         );
-        pacienteData.sociodemograficosId =
-          response.data.data.data.sociodemograficosId;
       }
-
-      await axios.patch(
-        `http://localhost:3000/sociodemograficos/${pacienteData.sociodemograficosId}`,
-        updatedSociodemograficos,
-        {
-          headers,
+      if (updatedEncargado !== null) {
+        if (pacienteData.encargadoId === null) {
+          const response = await axios.post(
+            `${process.env.REACT_APP_BACKEND_API}encargados/`,
+            updatedEncargado,
+            {
+              headers,
+            }
+          );
+          pacienteData.encargadoId = response.data.data.data.encargadoId;
         }
-      );
-    }
-    if (updatedEncargado !== null) {
-      if (pacienteData.encargadoId === null) {
-        const response = await axios.post(
-          `http://localhost:3000/encargados/`,
+
+        await axios.patch(
+          `${process.env.REACT_APP_BACKEND_API}encargados/${pacienteData.encargadoId}`,
           updatedEncargado,
           {
             headers,
           }
         );
-        pacienteData.encargadoId = response.data.data.data.encargadoId;
       }
-
-      await axios.patch(
-        `http://localhost:3000/encargados/${pacienteData.encargadoId}`,
-        updatedEncargado,
-        {
-          headers,
+      if (updatedDinamicaFamiliar !== null) {
+        if (pacienteData.dinamicaFamiliarId === null) {
+          const response = await axios.post(
+            `${process.env.REACT_APP_BACKEND_API}dinamicasFamiliares/`,
+            updatedDinamicaFamiliar,
+            {
+              headers,
+            }
+          );
+          pacienteData.dinamicaFamiliarId =
+            response.data.data.data.dinamicaFamiliarId;
         }
-      );
-    }
-    if (updatedDinamicaFamiliar !== null) {
-      if (pacienteData.dinamicaFamiliarId === null) {
-        const response = await axios.post(
-          `http://localhost:3000/dinamicasFamiliares/`,
+
+        await axios.patch(
+          `${process.env.REACT_APP_BACKEND_API}dinamicasFamiliares/${pacienteData.dinamicaFamiliarId}`,
           updatedDinamicaFamiliar,
           {
             headers,
           }
         );
-        pacienteData.dinamicaFamiliarId =
-          response.data.data.data.dinamicaFamiliarId;
       }
-
-      await axios.patch(
-        `http://localhost:3000/dinamicasFamiliares/${pacienteData.dinamicaFamiliarId}`,
-        updatedDinamicaFamiliar,
-        {
-          headers,
+      if (updatedEscolaridad !== null) {
+        if (pacienteData.escolaridadId === null) {
+          const response = await axios.post(
+            `${process.env.REACT_APP_BACKEND_API}escolaridades/`,
+            updatedEscolaridad,
+            {
+              headers,
+            }
+          );
+          pacienteData.escolaridadId = response.data.data.data.escolaridadId;
         }
-      );
-    }
-    if (updatedEscolaridad !== null) {
-      if (pacienteData.escolaridadId === null) {
-        const response = await axios.post(
-          `http://localhost:3000/escolaridades/`,
+        await axios.patch(
+          `${process.env.REACT_APP_BACKEND_API}escolaridades/${pacienteData.escolaridadId}`,
           updatedEscolaridad,
           {
             headers,
           }
         );
-        pacienteData.escolaridadId = response.data.data.data.escolaridadId;
       }
-      await axios.patch(
-        `http://localhost:3000/escolaridades/${pacienteData.escolaridadId}`,
-        updatedEscolaridad,
+
+      if (pacienteData.perfilEntradaId !== null) {
+        if (
+          Object.values(updatedPerfilEntrada.aspectoComunitario).length !== 0
+        ) {
+          await axios.patch(
+            `${process.env.REACT_APP_BACKEND_API}aspectosComunitarios/${pacienteData.perfilEntrada.aspectoComunitarioId}`,
+            updatedPerfilEntrada.aspectoComunitario,
+            {
+              headers,
+            }
+          );
+        }
+
+        if (Object.values(updatedPerfilEntrada.aspectoClinico).length !== 0) {
+          await axios.patch(
+            `${process.env.REACT_APP_BACKEND_API}aspectosClinicos/${pacienteData.perfilEntrada.aspectoClinicoId}`,
+            updatedPerfilEntrada.aspectoClinico,
+            {
+              headers,
+            }
+          );
+        }
+        if (
+          Object.values(updatedPerfilEntrada.aspectoPsicoeducativo).length !== 0
+        ) {
+          await axios.patch(
+            `${process.env.REACT_APP_BACKEND_API}aspectosPsicoEducativos/${pacienteData.perfilEntrada.aspectoPsicoeducativoId}`,
+            updatedPerfilEntrada.aspectoPsicoeducativo,
+            {
+              headers,
+            }
+          );
+        }
+        if (
+          Object.values(updatedPerfilEntrada.aspectoDesarrolloTalleres)
+            .length !== 0
+        ) {
+          await axios.patch(
+            `${process.env.REACT_APP_BACKEND_API}aspectosDesarrolloTaller/${pacienteData.perfilEntrada.aspectoDesarrolloTallerId}`,
+            updatedPerfilEntrada.aspectoDesarrolloTalleres,
+            {
+              headers,
+            }
+          );
+        }
+      }
+
+      // if (Object.keys(updatedPerfilEntrada).length !== 0) {
+      //   if(Object.keys(updatedPerfilEntrada.aspectoComunitario).length !== 0){
+      //     const responseAspectosClinicos = await axios.post(
+      //       `${process.env.REACT_APP_BACKEND_API}aspectosClinicos/`,
+      //       updatedPerfilEntrada.aspectoClinico,
+      //       { headers }
+      //     );
+      //   const responseAspectosComunitarios = await axios.post(
+      //     `${process.env.REACT_APP_BACKEND_API}aspectosComunitarios/`,
+      //     updatedPerfilEntrada.aspectoComunitario,
+      //     { headers }
+      //   );
+      //   const responseAspectosPsicoeducativos = await axios.post(
+      //     `${process.env.REACT_APP_BACKEND_API}aspectosPsicoEducativos/`,
+      //     updatedPerfilEntrada.aspectoPsicoeducativo,
+      //     { headers }
+      //   );
+      //   const responseAspectosDesarrolloTalleres = await axios.post(
+      //     `${process.env.REACT_APP_BACKEND_API}aspectosDesarrolloTaller/`,
+      //     updatedPerfilEntrada.aspectoDesarrolloTalleres,
+      //     { headers }
+      //   );
+      //   const responsePerfilEntrada = await axios.post(
+      //     `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/`,
+      //     {
+      //       doctorId: Cookies.get('id'),
+      //       aspectoComunitarioId:
+      //         responseAspectosComunitarios.data.data.data.aspectoComunitarioId,
+      //       aspectoClinicoId:
+      //         responseAspectosClinicos.data.data.data.aspectoClinicoId,
+      //       aspectoPsicoeducativoId:
+      //         responseAspectosPsicoeducativos.data.data.data
+      //           .aspectoPsicoEducativoId,
+      //       aspectoDesarrolloTallerId:
+      //         responseAspectosDesarrolloTalleres.data.data.data
+      //           .aspectoDesarrolloTallerId,
+      //     },
+      //     { headers }
+      //   );
+      //   if (responsePerfilEntrada.status === 201) {
+      //     pacienteData.perfilEntradaId =
+      //       responsePerfilEntrada.data.data.data.perfilEntradaId;
+      //   }
+      // }
+
+      if (pacienteData.perfilSalidaId !== null) {
+        if (
+          Object.values(updatedPerfilSalida.aspectoComunitario).length !== 0
+        ) {
+          await axios.patch(
+            `${process.env.REACT_APP_BACKEND_API}aspectosComunitarios/${pacienteData.perfilSalida.aspectoComunitarioId}`,
+            updatedPerfilSalida.aspectoComunitario,
+            {
+              headers,
+            }
+          );
+        }
+        if (Object.values(updatedPerfilSalida.aspectoClinico).length !== 0) {
+          await axios.patch(
+            `${process.env.REACT_APP_BACKEND_API}aspectosClinicos/${pacienteData.perfilSalida.aspectoClinicoId}`,
+            updatedPerfilSalida.aspectoClinico,
+            {
+              headers,
+            }
+          );
+        }
+        if (
+          Object.values(updatedPerfilSalida.aspectoPsicoeducativo).length !== 0
+        ) {
+          await axios.patch(
+            `${process.env.REACT_APP_BACKEND_API}aspectosPsicoEducativos/${pacienteData.perfilSalida.aspectoPsicoeducativoId}`,
+            updatedPerfilSalida.aspectoPsicoeducativo,
+            {
+              headers,
+            }
+          );
+        }
+        if (
+          Object.values(updatedPerfilSalida.aspectoDesarrolloTalleres)
+            .length !== 0
+        ) {
+          await axios.patch(
+            `${process.env.REACT_APP_BACKEND_API}aspectosDesarrolloTaller/${pacienteData.perfilSalida.aspectoDesarrolloTallerId}`,
+            updatedPerfilSalida.aspectoDesarrolloTalleres,
+            {
+              headers,
+            }
+          );
+        }
+      }
+
+      if (Object.keys(updatedPerfilSalida).length !== 0) {
+        const responseAspectosClinicos = await axios.post(
+          `${process.env.REACT_APP_BACKEND_API}aspectosClinicos/`,
+          updatedPerfilSalida.aspectoClinico,
+          { headers }
+        );
+        const responseAspectosComunitarios = await axios.post(
+          `${process.env.REACT_APP_BACKEND_API}aspectosComunitarios/`,
+          updatedPerfilSalida.aspectoComunitario,
+          { headers }
+        );
+        const responseAspectosPsicoeducativos = await axios.post(
+          `${process.env.REACT_APP_BACKEND_API}aspectosPsicoEducativos/`,
+          updatedPerfilSalida.aspectoPsicoeducativo,
+          { headers }
+        );
+        const responseAspectosDesarrolloTalleres = await axios.post(
+          `${process.env.REACT_APP_BACKEND_API}aspectosDesarrolloTaller/`,
+          updatedPerfilSalida.aspectoDesarrolloTalleres,
+          { headers }
+        );
+        const responsePerfilSalida = await axios.post(
+          `${process.env.REACT_APP_BACKEND_API}entrevistasSalida/`,
+          {
+            doctorId: Cookies.get('id'),
+            aspectoComunitarioId:
+              responseAspectosComunitarios.data.data.data.aspectoComunitarioId,
+            aspectoClinicoId:
+              responseAspectosClinicos.data.data.data.aspectoClinicoId,
+            aspectoPsicoeducativoId:
+              responseAspectosPsicoeducativos.data.data.data
+                .aspectoPsicoEducativoId,
+            aspectoDesarrolloTallerId:
+              responseAspectosDesarrolloTalleres.data.data.data
+                .aspectoDesarrolloTallerId,
+          },
+          { headers }
+        );
+        if (responsePerfilSalida.status === 201) {
+          pacienteData.perfilSalidaId =
+            responsePerfilSalida.data.data.data.perfilSalidaId;
+        }
+      }
+
+      const body = {
+        nombreCompleto: pacienteData.nombreCompleto,
+        fechaNacimiento: pacienteData.fechaNacimiento,
+        contacto: pacienteData.contacto,
+        cedula: pacienteData.cedula,
+        edad: pacienteData.edad,
+        nacionalidad: pacienteData.nacionalidad,
+        distritoResidencia: pacienteData.distritoResidencia,
+        direccion: pacienteData.direccion,
+        genero: pacienteData.genero,
+        casaId: pacienteData.casaId,
+        datosMedicosId: pacienteData.datosMedicosId,
+        condicionLaboralId: pacienteData.condicionLaboralId,
+        sociodemograficosId: pacienteData.sociodemograficosId,
+        encargadoId: pacienteData.encargadoId,
+        dinamicaFamiliarId: pacienteData.dinamicaFamiliarId,
+        escolaridadId: pacienteData.escolaridadId,
+        perfilEntradaId: pacienteData.perfilEntradaId,
+        perfilSalidaId: pacienteData.perfilSalidaId,
+      };
+      const responsePaciente = await axios.patch(
+        `${process.env.REACT_APP_BACKEND_API}pacientes/${pacienteData.pacienteId}`,
+        body,
         {
           headers,
         }
       );
-    }
 
-    const body = {
-      nombreCompleto: pacienteData.nombreCompleto,
-      fechaNacimiento: pacienteData.fechaNacimiento,
-      contacto: pacienteData.contacto,
-      cedula: pacienteData.cedula,
-      edad: pacienteData.edad,
-      nacionalidad: pacienteData.nacionalidad,
-      distritoResidencia: pacienteData.distritoResidencia,
-      direccion: pacienteData.direccion,
-      genero: pacienteData.genero,
-      casaId: pacienteData.casaId,
-      datosMedicosId: pacienteData.datosMedicosId,
-      condicionLaboralId: pacienteData.condicionLaboralId,
-      sociodemograficosId: pacienteData.sociodemograficosId,
-      encargadoId: pacienteData.encargadoId,
-      dinamicaFamiliarId: pacienteData.dinamicaFamiliarId,
-      escolaridadId: pacienteData.escolaridadId,
-      perfilEntradaId: pacienteData.perfilEntradaId,
-      perfilSalidaId: pacienteData.perfilSalidaId,
-    };
-    await axios.patch(
-      `http://localhost:3000/pacientes/${pacienteData.pacienteId}`,
-      body,
-      {
-        headers,
+      if (responsePaciente.status === 201) {
+        setLoading(true);
+        toast.success('Paciente actualizado con exito');
+        setTimeout(() => {
+          navigate('/pacientes');
+        }, 2000);
       }
-    );
-    navigate('/pacientes');
+    } catch (err) {
+      if (err.response.status === 500) {
+        toast.error(
+          'Error al actualizar el paciente,\n verifique que todos los campos esten correctos'
+        );
+      }
+    }
   };
 
   return (
@@ -350,7 +566,9 @@ export default function EditarPaciente() {
           <div class="container-fluid">
             <div class="card shadow mb-4">
               <div class="card-header py-3 bg-second-primary">
-                <h6 class="m-0 font-weight-bold text-white">Editar Paciente</h6>
+                <h6 class="m-0 font-weight-bold text-white">
+                  Editar Beneficiario
+                </h6>
               </div>
               <div class="card-body">
                 <div class="row">
@@ -393,7 +611,7 @@ export default function EditarPaciente() {
                           />
                         </div>
                         <div class="form-group col-sm-6">
-                          <label for="txtTelefono">Telefono</label>
+                          <label for="txtTelefono">Teléfono</label>
                           <input
                             type="email"
                             class="form-control form-control-sm input-validar"
@@ -428,7 +646,7 @@ export default function EditarPaciente() {
                         </div>
 
                         <div class="form-group col-sm-6">
-                          <label for="txtDireccion">Direccion</label>
+                          <label for="txtDireccion">Dirección</label>
                           <textarea
                             type="text"
                             class="form-control form-control-sm input-validar"
@@ -450,7 +668,7 @@ export default function EditarPaciente() {
                           />
                         </div>
                         <div class="form-group col-sm-6">
-                          <label for="txtGenero">Genero</label>
+                          <label for="txtGenero">Género</label>
                           <select
                             class="custom-select"
                             id="genero"
@@ -510,16 +728,69 @@ export default function EditarPaciente() {
                       />
                       <br />
                       <hr />
-                      {pacienteData.perfilEntradaId === null ? (
-                        <PerfilEntrada
-                          perfilEntrada={perfilEntrada}
-                          setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
-                        />
+                      {!agregaPerfilEntrada ? (
+                        <>
+                          <div class="row col-sm-6">
+                            <button
+                              class="btn btn-success btn-sm"
+                              type="button"
+                              id="btnGuardarCambios"
+                              onClick={() => setAgregaPerfilEntrada(true)}
+                            >
+                              Añadir Perfil de Entrada
+                            </button>
+                          </div>
+                        </>
                       ) : (
-                        <PerfilEntrada
-                          perfilEntrada={perfilEntrada}
-                          setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
-                        />
+                        <>
+                          <PerfilEntrada
+                            perfilEntrada={perfilEntrada}
+                            setUpdatedPerfilEntrada={setUpdatedPerfilEntrada}
+                          />
+                          {pacienteData.perfilEntradaId === null ? (
+                            <button
+                              class="btn btn-danger btn-sm"
+                              type="button"
+                              id="btnGuardarCambios"
+                              onClick={() => setAgregaPerfilEntrada(false)}
+                            >
+                              Cancelar
+                            </button>
+                          ) : null}
+                        </>
+                      )}
+                      <hr />
+                      {!agregaPerfilSalida ? (
+                        <>
+                          <div class="row col-sm-6">
+                            <button
+                              class="btn btn-success btn-sm"
+                              type="button"
+                              id="btnGuardarCambios"
+                              onClick={() => setAgregaPerfilSalida(true)}
+                            >
+                              Añadir Perfil de Salida
+                            </button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <PerfilSalida
+                            perfilSalida={perfilSalida}
+                            setUpdatedPerfilSalida={setUpdatedPerfilSalida}
+                          />
+
+                          {pacienteData.perfilSalidaId === null ? (
+                            <button
+                              class="btn btn-danger btn-sm"
+                              type="button"
+                              id="btnGuardarCambios"
+                              onClick={() => setAgregaPerfilSalida(false)}
+                            >
+                              Cancelar
+                            </button>
+                          ) : null}
+                        </>
                       )}
                       <br />
                       <hr />
@@ -545,7 +816,9 @@ export default function EditarPaciente() {
                 </div>
               </div>
             </div>
+            {loading && <Loading />}
           </div>
+          <ToastContainer />
         </div>
         <Footer />
       </div>

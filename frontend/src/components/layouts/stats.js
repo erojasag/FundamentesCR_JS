@@ -15,19 +15,22 @@ export default function Stats() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Cookies.get('jwt')}`,
       };
-      const totalCasas = await axios.get('http://localhost:3000/casas', {
-        headers,
-      });
+      const totalCasas = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}casas`,
+        {
+          headers,
+        }
+      );
       const totalPacientes = await axios.get(
-        'http://localhost:3000/pacientes',
+        `${process.env.REACT_APP_BACKEND_API}pacientes`,
         { headers }
       );
       const totalEncuestas = await axios.get(
-        'http://localhost:3000/encuestasSatisfaccion',
+        `${process.env.REACT_APP_BACKEND_API}encuestasSatisfaccion`,
         { headers }
       );
       const totalSalidas = await axios.get(
-        'http://localhost:3000/entrevistasSalida/',
+        `${process.env.REACT_APP_BACKEND_API}entrevistasSalida`,
         {
           headers,
         }
@@ -60,7 +63,7 @@ export default function Stats() {
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                      Total de Casas escucharte
+                      Total de Casas EscuchArte
                     </div>
                     <div
                       class="h5 mb-0 font-weight-bold text-gray-800"
@@ -105,7 +108,7 @@ export default function Stats() {
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                      Total de Encuestas de Satisfaccion
+                      Total de Encuestas de SatisfacciÓn
                     </div>
                     <div
                       class="h5 mb-0 font-weight-bold text-gray-800"

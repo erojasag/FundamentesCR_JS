@@ -49,7 +49,7 @@ export default function CondicionLaboral(props) {
     <React.Fragment>
       <div class="form-group row justify-content-center">
         <label for="txtDistrito" className="col-form-label-lg">
-          Condiciones Laborales
+          Condiciones Laborales - Encargado
         </label>
       </div>
 
@@ -63,8 +63,8 @@ export default function CondicionLaboral(props) {
             value={condicionLaboral.trabajaActualmente}
             onChange={handleTrabajaActualmenteChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -80,7 +80,7 @@ export default function CondicionLaboral(props) {
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtUltimoEmpleo">Ultimo Empleo</label>
+          <label for="txtUltimoEmpleo">Último Empleo</label>
           <input
             type="text"
             class="form-control form-control-sm input-validar"

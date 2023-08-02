@@ -5,6 +5,7 @@ import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Error401 from './Error401';
@@ -62,7 +63,7 @@ export default function Perfil() {
       };
 
       const response = await axios.get(
-        `http://localhost:3000/usuarios/${Cookies.get('id')}`,
+        `${process.env.REACT_APP_BACKEND_API}usuarios/${Cookies.get('id')}`,
         {
           headers,
         }
@@ -111,12 +112,10 @@ export default function Perfil() {
       }
 
       const response = await axios.patch(
-        `http://localhost:3000/usuarios/actualizarMiPerfil`,
+        `${process.env.REACT_APP_BACKEND_API}usuarios/actualizarMiPerfil`,
         userData,
         { headers }
       );
-
-      console.log(response);
 
       if (response.status === 200) {
         Cookies.set('nombre', userData.nombre + ' ' + userData.primerApe);
@@ -132,8 +131,6 @@ export default function Perfil() {
         window.location.reload();
       }
     } catch (err) {
-      console.log(err);
-
       if (err.response.status === 401) {
         toast.error('Error al actualizar los datos', {
           position: 'top-right',
@@ -147,7 +144,18 @@ export default function Perfil() {
       }
 
       if (err.response.data.err.message === 'jwt expired') {
-        navigate('/');
+        toast.error('Tu sesion a expirado, por favor inicia sesion de nuevo!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
       }
     }
   };
@@ -173,7 +181,7 @@ export default function Perfil() {
                         </div>
                         <div className="card-body text-center">
                           <div className="form-row">
-                            <div className="form-group col-sm-10">
+                            <div className="form-group col-sm-10 mx-auto">
                               <img
                                 id="imgFoto"
                                 src="https://images.unsplash.com/photo-1519648023493-d82b5f8d7b8a?w=300"
@@ -184,7 +192,7 @@ export default function Perfil() {
                             </div>
                           </div>
                           <div className="form-row">
-                            <div className="form-group col-sm-10">
+                            <div className="form-group col-sm-10 mx-auto">
                               <label htmlFor="txtNombre">Nombre</label>
                               <input
                                 type="text"
@@ -197,7 +205,7 @@ export default function Perfil() {
                             </div>
                           </div>
                           <div className="form-row">
-                            <div className="form-group col-sm-10">
+                            <div className="form-group col-sm-10 mx-auto">
                               <label htmlFor="txtPrimerApellido">
                                 Primer Apellido
                               </label>
@@ -212,7 +220,7 @@ export default function Perfil() {
                             </div>
                           </div>
                           <div className="form-row">
-                            <div className="form-group col-sm-10">
+                            <div className="form-group col-sm-10 mx-auto">
                               <label htmlFor="txtSegundoApellido">
                                 Segundo Apellido
                               </label>
@@ -227,7 +235,7 @@ export default function Perfil() {
                             </div>
                           </div>
                           <div className="form-row">
-                            <div className="form-group col-sm-10">
+                            <div className="form-group col-sm-10 mx-auto">
                               <label htmlFor="txtCorreo">Correo</label>
                               <input
                                 type="email"
@@ -240,7 +248,7 @@ export default function Perfil() {
                             </div>
                           </div>
                           <div className="form-row">
-                            <div className="form-group col-sm-10">
+                            <div className="form-group col-sm-10 mx-auto">
                               <label htmlFor="txtRol">Rol</label>
                               <input
                                 type="text"
@@ -254,7 +262,7 @@ export default function Perfil() {
                           </div>
                           <hr />
                           <div className="row">
-                            <div className="col-sm-10">
+                            <div className="col-sm-10 mx-auto">
                               <button
                                 type="button"
                                 className="btn btn-success btn-sm btn-block"

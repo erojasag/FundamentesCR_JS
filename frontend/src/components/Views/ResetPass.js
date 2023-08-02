@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+
 import { useNavigate, useParams } from 'react-router-dom';
 import Footer from '../layouts/footer';
 import { ToastContainer, toast } from 'react-toastify';
@@ -39,7 +40,7 @@ export default function ResetPass() {
         contrasena,
         confirmContrasena,
       };
-      const route = `http://localhost:3000/usuarios/reiniciarContrasena/${token}`;
+      const route = `${process.env.REACT_APP_BACKEND_API}usuarios/reiniciarContrasena/${token}`;
       const response = await axios.patch(route, data);
 
       if (response.status !== 200) {
@@ -70,10 +71,18 @@ export default function ResetPass() {
 
       navigate('/inicio');
     } catch (err) {
-      console.log(err.response.data.message);
       if (err.response.data.message) {
         toast.error(
-          'Las contrasenas no son iguales. Por favor intente de nuevo.'
+          'Las contrasenas no son iguales. Por favor intente de nuevo.',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
         );
         return;
       }
