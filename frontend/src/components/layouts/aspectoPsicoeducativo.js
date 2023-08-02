@@ -246,8 +246,8 @@ export default function AspectoPsicoeducativo(props) {
             value={aspectoPsicoeducativo.permanencia}
             onChange={handlePermanencia}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -286,8 +286,8 @@ export default function AspectoPsicoeducativo(props) {
             value={aspectoPsicoeducativo.rezagoEducativo}
             onChange={handleRezagoEducativo}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -316,7 +316,7 @@ export default function AspectoPsicoeducativo(props) {
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtExclusionEducativa">Exclusion Educativa</label>
+          <label for="txtExclusionEducativa">Exclusión Educativa</label>
           <select
             class="custom-select"
             id="exclusionEducativa"
@@ -324,14 +324,14 @@ export default function AspectoPsicoeducativo(props) {
             value={aspectoPsicoeducativo.exclusionEducativa}
             onChange={handleExclusionEducativa}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
           <label for="txtobservacionesPermanencia">
-            Observaciones Exclusion Educativa
+            Observaciones Exclusión Educativa
           </label>
           <textarea
             type="text"
@@ -343,7 +343,7 @@ export default function AspectoPsicoeducativo(props) {
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtPuntajeExclusion">Puntaje Exclusion Educativa</label>
+          <label for="txtPuntajeExclusion">Puntaje Exclusión Educativa</label>
           <input
             type="number"
             class="form-control form-control-sm input-validar"
@@ -362,8 +362,8 @@ export default function AspectoPsicoeducativo(props) {
             value={aspectoPsicoeducativo.dificultades}
             onChange={handleDificultades}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -400,8 +400,8 @@ export default function AspectoPsicoeducativo(props) {
             value={aspectoPsicoeducativo.apoyoFamiliar}
             onChange={handleApoyoFamiliar}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -438,8 +438,8 @@ export default function AspectoPsicoeducativo(props) {
             value={aspectoPsicoeducativo.violenciaEscolar}
             onChange={handleViolenciaEscolar}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -487,7 +487,7 @@ export default function AspectoPsicoeducativo(props) {
             value={aspectoPsicoeducativo.prioridad}
             onChange={handlePrioridad}
           >
-            <option value="null">-No especifica-</option>
+            <option value="null">-No específica-</option>
             <option value="Baja">Baja</option>
             <option value="Media">Media</option>
             <option value="Alta">Alta</option>

@@ -56,13 +56,13 @@ export default function DinamicaFamiliar(props) {
     <React.Fragment>
       <div class="form-group row justify-content-center">
         <label for="txtDistrito" className="col-form-label-lg">
-          Dinamica Familiar
+          Dinámica Familiar
         </label>
       </div>
 
       <div class="row">
         <div class="form-group col-sm-6">
-          <label for="txtPrivadoLibertad">Privado de Libertad?</label>
+          <label for="txtPrivadoLibertad">Privado de Libertad</label>
           <select
             class="custom-select"
             id="privLibertad"
@@ -70,13 +70,13 @@ export default function DinamicaFamiliar(props) {
             value={dinamicaFamiliar.privLibertad}
             onChange={handlePrivLibertadChange}
           >
-            <option value="null">-No Especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtViolenciaMujer">Violencia contra mujeres?</label>
+          <label for="txtViolenciaMujer">Violencia contra mujeres</label>
           <select
             class="custom-select"
             id="violenciaMujer"
@@ -84,8 +84,8 @@ export default function DinamicaFamiliar(props) {
             value={dinamicaFamiliar.violenciaMujer}
             onChange={handleViolenciaMujerChange}
           >
-            <option value="null">-No Especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -98,8 +98,8 @@ export default function DinamicaFamiliar(props) {
             value={dinamicaFamiliar.violenciaFami}
             onChange={handleViolenciaFamiChange}
           >
-            <option value="null">-No Especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>

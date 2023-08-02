@@ -73,7 +73,7 @@ export default function DatosMedicos(props) {
     <React.Fragment>
       <div class="form-group row justify-content-center">
         <label for="txtDistrito" className="col-form-label-lg">
-          Datos Medicos
+          Datos Médicos
         </label>
       </div>
 
@@ -87,8 +87,8 @@ export default function DatosMedicos(props) {
             value={datosMedicos.alergias}
             onChange={handleAlergiasChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value={'true' || 1}>Si</option>
+            <option value="null">-No específica-</option>
+            <option value={'true' || 1}>Sí</option>
             <option value={'false' || 0}>No</option>
           </select>
         </div>
@@ -101,8 +101,8 @@ export default function DatosMedicos(props) {
             value={datosMedicos.consumo}
             onChange={handleConsumoChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value={'true' || 1}>Si</option>
+            <option value="null">-No específica-</option>
+            <option value={'true' || 1}>Sí</option>
             <option value={'false' || 0}>No</option>
           </select>
         </div>
@@ -115,8 +115,8 @@ export default function DatosMedicos(props) {
             value={datosMedicos.embarazo}
             onChange={handleEmbarazoChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value={'true' || 1}>Si</option>
+            <option value="null">-No específica-</option>
+            <option value={'true' || 1}>Sí</option>
             <option value={'false' || 0}>No</option>
           </select>
         </div>
@@ -129,8 +129,8 @@ export default function DatosMedicos(props) {
             value={datosMedicos.hijoshijas}
             onChange={handleHijoshijasChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value={'true' || 1}>Si</option>
+            <option value="null">-No específica-</option>
+            <option value={'true' || 1}>Sí</option>
             <option value={'false' || 0}>No</option>
           </select>
         </div>
@@ -143,13 +143,13 @@ export default function DatosMedicos(props) {
             value={datosMedicos.expedienteHNP}
             onChange={handleExpedienteHNPChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value={'true' || 1}>Si</option>
+            <option value="null">-No específica-</option>
+            <option value={'true' || 1}>Sí</option>
             <option value={'false' || 0}>No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtSituacionParticular">Situacion Particular</label>
+          <label for="txtSituacionParticular">Situación Particular</label>
           <input
             type="text"
             class="form-control form-control-sm input-validar"

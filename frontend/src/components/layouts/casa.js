@@ -50,7 +50,7 @@ export default function Casa({ onCasaChange, selectedCasa }) {
             value={selectedCasa}
             onChange={onCasaChange}
           >
-            {!selectedCasa && <option value="null">-No especifica-</option>}
+            {!selectedCasa && <option value="null">-No específica-</option>}
             {casaData.map((casa) => (
               <option value={casa.casaId} key={casa.casaId}>
                 {casa.nombreCasa} - {casa.canton}
