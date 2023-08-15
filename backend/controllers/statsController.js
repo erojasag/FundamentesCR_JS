@@ -54,8 +54,6 @@ const getPacientesPorAnoEscolar = catchAsync(async (req, res, next) => {
 const getPacientesWithEscolaridad = catchAsync(async (req, res) => {
   const report = await db.query('Call GetPacientesWithEscolaridad();');
 
-  console.log(report[0]);
-
   const data = {
     title: 'Pacientes con Escolaridad',
     heading: 'Pacientes con Escolaridad',
@@ -77,42 +75,34 @@ const getPacientesWithEscolaridad = catchAsync(async (req, res) => {
     }),
   };
 
-  (async () => {
-    try {
-      const templatePath = path.join(__dirname, '../pdf/template.hbs');
-      const templateContent = fs.readFileSync(templatePath, 'utf-8');
-      const compiledTemplate = handlebars.compile(templateContent);
-      const html = compiledTemplate(data);
+  try {
+    const templatePath = path.join(__dirname, '../pdf/template.hbs');
+    const templateContent = fs.readFileSync(templatePath, 'utf-8');
+    const compiledTemplate = handlebars.compile(templateContent);
+    const html = compiledTemplate(data);
 
-      const browser = await puppeteer.launch();
-      const page = await browser.newPage();
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
 
-      await page.setContent(html);
-      await page.emulateMediaType('print');
+    await page.setContent(html);
+    await page.emulateMediaType('print');
 
-      const pdfPath = path.join(__dirname, 'output.pdf');
-      const pdfBuffer = await page.pdf({
-        path: pdfPath,
-        format: 'A4',
-        printBackground: true,
-      });
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+    });
 
-      await browser.close();
+    await browser.close();
 
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', 'inline; filename="output.pdf"');
-      res.send(pdfBuffer);
-      res.status(200).json({
-        status: 'success',
-        data: {
-          data: pdfBuffer,
-        },
-      });
-      console.log('PDF generated successfully:', pdfPath);
-    } catch (err) {
-      console.error('Error generating PDF:', err);
-    }
-  })();
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename="output.pdf"');
+    res.send(pdfBuffer);
+
+    console.log('PDF generated and sent successfully.');
+  } catch (err) {
+    console.error('Error generating or sending PDF:', err);
+    res.status(500).json({ error: 'Error generating or sending PDF.' });
+  }
 });
 
 module.exports = {

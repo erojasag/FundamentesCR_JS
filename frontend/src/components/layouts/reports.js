@@ -1,53 +1,47 @@
-import React from 'react';
-import { Page, Document, StyleSheet, Text, PDFViewer } from '@react-pdf/renderer';
+import React, { useState } from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'column',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  heading: {
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  content: {
-    fontSize: 14,
-    marginBottom: 5,
-  },
-});
+const ReportDownload = () => {
+  const [downloadLink, setDownloadLink] = useState('');
 
-const PDFDocument = ({ data }) => {
+  const fetchPDFReport = async () => {
+    try {
+      const headers = {
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+        
+      };
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}stats/GetPacientesWithEscolaridad`,
+        {
+          headers,
+          responseType: 'arrayBuffer', // Important to specify the response type as 'blob'
+        }
+      );
+
+      console.log(response);
+
+      // Create a Blob URL to display and download the PDF
+      const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      setDownloadLink(pdfUrl);
+    } catch (error) {
+      console.error('Error fetching PDF report:', error);
+    }
+  };
+
   return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        <Text style={styles.title}>Pacientes con Escolaridad</Text>
-        <Text style={styles.heading}>Rangos de edad atendidos</Text>
-        <Text style={styles.content}>
-          {/* Insert data related to CircleChartEdad */}
-        </Text>
-
-        <Text style={styles.heading}>Número total de usuarios por casa</Text>
-        <Text style={styles.content}>
-          {/* Insert data related to CircleChartCasas */}
-        </Text>
-
-        <Text style={styles.heading}>Total genero masculino y femenino</Text>
-        <Text style={styles.content}>
-          {/* Insert data related to CircleChartPersonasPorGenero */}
-        </Text>
-
-        <Text style={styles.heading}>Total escolaridad</Text>
-        <Text style={styles.content}>
-          {/* Insert data related to CircleChartPersonasPorAnoEscolar */}
-        </Text>
-      </Page>
-    </Document>
+    <div>
+      <button onClick={fetchPDFReport}>Fetch PDF Report</button>
+      {downloadLink && (
+        <div>
+          <a href={downloadLink} download="output .pdf">
+            Download PDF Report
+          </a>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default PDFDocument;
+export default ReportDownload;
