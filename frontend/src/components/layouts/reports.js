@@ -1,42 +1,47 @@
-import React from 'react';
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import React, { useState } from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
-// Create styles
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'column',
-    backgroundColor: '#ffffff',
-    padding: 20,
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-  title: {
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  text: {
-    fontSize: 12,
-  },
-});
+const ReportDownload = () => {
+  const [downloadLink, setDownloadLink] = useState('');
 
-// Create PDF component
-const MyPDF = ({ data }) => (
-  <Document>
-    {data.map((item, index) => (
-      <Page key={index} size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text style={styles.title}>Nombre: {item.Nombre}</Text>
-          <Text style={styles.text}>Contacto: {item.Contacto}</Text>
-          <Text style={styles.text}>Edad: {item.Edad}</Text>
-          <Text style={styles.text}>Nacionalidad: {item.Nacionalidad}</Text>
-          {/* Add other fields you want to include in the PDF */}
-        </View>
-      </Page>
-    ))}
-  </Document>
-);
+  const fetchPDFReport = async () => {
+    try {
+      const headers = {
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+        
+      };
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}stats/GetPacientesWithEscolaridad`,
+        {
+          headers,
+          responseType: 'arrayBuffer', // Important to specify the response type as 'blob'
+        }
+      );
 
-export default MyPDF;
+      console.log(response);
+
+      // Create a Blob URL to display and download the PDF
+      const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      setDownloadLink(pdfUrl);
+    } catch (error) {
+      console.error('Error fetching PDF report:', error);
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={fetchPDFReport}>Fetch PDF Report</button>
+      {downloadLink && (
+        <div>
+          <a href={downloadLink} download="output .pdf">
+            Download PDF Report
+          </a>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ReportDownload;
