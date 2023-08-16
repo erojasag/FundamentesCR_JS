@@ -6,6 +6,7 @@ import AspectoDesarrolloTalleres from './aspectoDesarrolloTalleres';
 import AspectoPsicoeducativo from './aspectoPsicoeducativo';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function PerfilSalida(props) {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ export default function PerfilSalida(props) {
       );
       setPerfilSalida(response.data.data.data);
     } catch (err) {
-      console.log(err);
+      toast.warning('No se pudo obtener el perfil de salida');
       perfilSalida.perfilSalidaId = null;
     }
   }

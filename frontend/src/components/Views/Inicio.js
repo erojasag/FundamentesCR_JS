@@ -1,10 +1,8 @@
 import React from 'react';
-
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 import Stats from '../layouts/stats';
-import ReportDownload from '../layouts/reports';
 import CircleChartCasas from '../layouts/circleChartCasas';
 import CircleChartEdad from '../layouts/circleChartEdad';
 import CircleChartPersonasPorGenero from '../layouts/circleChartPersonasPorGenero';
@@ -87,7 +85,6 @@ export default function Index() {
                   </div>
                 </div>
               </div>
-              {/* <ReportDownload /> */}
             </div>
             <Footer />
           </div>

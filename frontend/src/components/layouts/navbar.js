@@ -22,7 +22,15 @@ export default function Navbar() {
         progress: undefined,
       });
     } catch (err) {
-      console.log(err);
+      toast.warn('No se pudo cerrar sesión. \n Intente nuevamente. 😕', {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } finally {
       Cookies.remove('jwt');
       Cookies.remove('id');
