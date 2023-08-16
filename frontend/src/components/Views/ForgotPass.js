@@ -29,9 +29,13 @@ export default function ForgotPass() {
         return;
       }
 
-      toast.success('Se ha enviado un correo con su nueva contraseña');
-      setEmail('');
-      navigate('/');
+      if (response.status === 200) {
+        toast.success('Se ha enviado un correo con su nueva contraseña');
+        setEmail('');
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
+      }
     } catch (err) {
       if (
         err.response.data.message === 'No hay un usuario asociado a este correo'
@@ -39,7 +43,6 @@ export default function ForgotPass() {
         toast.error('El correo ingresado no existe');
         return;
       }
-      toast.error('El correo ingresado no existe');
     }
   };
   return (
@@ -92,10 +95,10 @@ export default function ForgotPass() {
               </div>
             </div>
           </div>
-          <ToastContainer />
-          <Footer />
         </div>
+        <Footer />
       </div>
+      <ToastContainer />
     </React.Fragment>
   );
 }
