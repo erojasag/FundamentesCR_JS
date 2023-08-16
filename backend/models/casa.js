@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 
-const userType = db.define(
+const Casa = db.define(
   'casas',
   {
     casaId: {
@@ -25,6 +25,11 @@ const userType = db.define(
       type: DataTypes.STRING(100),
       allowNull: false,
     },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -44,4 +49,4 @@ const userType = db.define(
 );
 
 
-module.exports = userType;
+module.exports = Casa;

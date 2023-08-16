@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AspectoComunitario from './aspectoComunitario';
+import AspectoClinico from './aspectoClinico';
+import AspectoDesarrolloTalleres from './aspectoDesarrolloTalleres';
+import AspectoPsicoeducativo from './aspectoPsicoeducativo';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function PerfilSalida(props) {
   const navigate = useNavigate();
@@ -25,19 +29,40 @@ export default function PerfilSalida(props) {
     setUpdatedAspectoDesarrolloTalleres,
   ] = useState({});
 
-  async function getDatosPerfilEntrada() {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
-    const response = await axios.get(
-      `http://localhost:3000/entrevistasEntrada/${props.perfilSalida.perfilSalidaIds}`,
-      {
-        headers,
-      }
-    );
-    setPerfilSalida(response.data.data.data);
+  async function getDatosPerfilSalida() {
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/${props.perfilSalida.perfilSalidaId}`,
+        {
+          headers,
+        }
+      );
+      setPerfilSalida(response.data.data.data);
+    } catch (err) {
+      toast.warning('No se pudo obtener el perfil de salida');
+      perfilSalida.perfilSalidaId = null;
+    }
   }
+  useEffect(() => {
+    const updatedPerfilSalidaData = {
+      aspectoComunitario: updatedAspectoComunitario,
+      aspectoClinico: updatedAspectoClinico,
+      aspectoPsicoeducativo: updatedAspectoPsicoeducativo,
+      aspectoDesarrolloTalleres: updatedAspectoDesarrolloTalleres,
+    };
+
+    // Call the callback function from the props with the updated data
+    props.setUpdatedPerfilSalida(updatedPerfilSalidaData);
+  }, [
+    updatedAspectoComunitario,
+    updatedAspectoClinico,
+    updatedAspectoPsicoeducativo,
+    updatedAspectoDesarrolloTalleres,
+  ]);
 
   useEffect(() => {
     if (!props.perfilSalida) {
@@ -49,16 +74,42 @@ export default function PerfilSalida(props) {
         aspectoDesarrolloId: null,
       });
     } else {
-      getDatosPerfilEntrada(perfilSalida.perfilSalidaId);
-      console.log(perfilSalida);
+      getDatosPerfilSalida(perfilSalida.perfilSalidaId);
     }
   }, []);
 
   return (
     <React.Fragment>
+      <div class="form-group row justify-content-center">
+        <label for="txtDistrito" className="col-form-label-lg">
+          Perfil de Entrada
+        </label>
+      </div>
+
+      <hr />
       <AspectoComunitario
         aspectoComunitario={aspectoComunitario}
         setUpdatedAspectoComunitario={setUpdatedAspectoComunitario}
+      />
+
+      <hr />
+      <AspectoClinico
+        aspectoClinico={aspectoClinico}
+        setUpdatedAspectoClinico={setUpdatedAspectoClinico}
+      />
+
+      <hr />
+      <AspectoPsicoeducativo
+        aspectoPsicoeducativo={aspectoPsicoeducativo}
+        setUpdatedAspectoPsicoeducativo={setUpdatedAspectoPsicoeducativo}
+      />
+
+      <hr />
+      <AspectoDesarrolloTalleres
+        aspectoDesarrolloTalleres={aspectoDesarrolloTalleres}
+        setUpdatedAspectoDesarrolloTalleres={
+          setUpdatedAspectoDesarrolloTalleres
+        }
       />
     </React.Fragment>
   );

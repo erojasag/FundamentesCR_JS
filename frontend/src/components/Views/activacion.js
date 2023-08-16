@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../layouts/footer';
@@ -46,7 +46,7 @@ export default function Activacion() {
         confirmContrasena: data.confirmContrasena,
       };
       const response = await axios.patch(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/activarUsuario/${token}`,
+        `${process.env.REACT_APP_BACKEND_API}usuarios/activarUsuario/${token}`,
         body
       );
 
@@ -66,12 +66,19 @@ export default function Activacion() {
       );
       navigate('/Inicio');
     } catch (err) {
-      console.log(err.response.data.message);
       if (
         err.response.data.message ===
         'Validation error: Las contraseñas no coinciden'
       ) {
-        toast.error('Las contraseñas no coinciden');
+        toast.error('Las contraseñas no coinciden', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
     }
   };

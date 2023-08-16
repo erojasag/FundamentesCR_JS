@@ -4,6 +4,8 @@ import AspectoComunitario from './aspectoComunitario';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import AspectoClinico from './aspectoClinico';
+import AspectoPsicoeducativo from './aspectoPsicoeducativo';
+import AspectoDesarrolloTalleres from './aspectoDesarrolloTalleres';
 
 export default function PerfilEntrada(props) {
   const navigate = useNavigate();
@@ -27,27 +29,51 @@ export default function PerfilEntrada(props) {
   ] = useState({});
 
   async function getDatosPerfilEntrada() {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
-    const response = await axios.get(
-      `http://localhost:3000/entrevistasEntrada/${props.perfilEntrada.perfilEntradaId}`,
-      {
-        headers,
-      }
-    );
-    setPerfilEntrada(response.data.data.data);
-    setAspectoComunitario(response.data.data.data.aspectoComunitario);
-    setAspectoClinico(response.data.data.data.aspectoClinico);
-    setAspectoPsicoeducativo(response.data.data.data.aspectoPsicoeducativo);
-    setAspectoDesarrolloTalleres(
-      response.data.data.data.aspectoDesarrolloTalleres
-    );
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}entrevistasEntrada/${props.perfilEntrada.perfilEntradaId}`,
+        {
+          headers,
+        }
+      );
+
+      setPerfilEntrada(response.data.data.data);
+      setAspectoComunitario(response.data.data.data.aspectoComunitario);
+      setAspectoClinico(response.data.data.data.aspectoClinico);
+      setAspectoPsicoeducativo(response.data.data.data.aspectoPsicoeducativo);
+      setAspectoDesarrolloTalleres(
+        response.data.data.data.aspectoDesarrolloTaller
+      );
+    } catch (error) {
+      perfilEntrada.perfilEntradaId = null;
+    }
   }
 
   useEffect(() => {
-    if (!props.perfilEntrada) {
+    const updatedPerfilEntradaData = {
+      aspectoComunitario: updatedAspectoComunitario,
+      aspectoClinico: updatedAspectoClinico,
+      aspectoPsicoeducativo: updatedAspectoPsicoeducativo,
+      aspectoDesarrolloTalleres: updatedAspectoDesarrolloTalleres,
+    };
+
+    // Call the callback function from the props with the updated data
+    props.setUpdatedPerfilEntrada(updatedPerfilEntradaData);
+  }, [
+    updatedAspectoComunitario,
+    updatedAspectoClinico,
+    updatedAspectoPsicoeducativo,
+    updatedAspectoDesarrolloTalleres,
+  ]);
+
+  // Call the submit function from props (provided by the parent component)
+
+  useEffect(() => {
+    if (props.perfilEntrada === '') {
       setPerfilEntrada({
         doctorId: null,
         aspectoComunitarioId: null,
@@ -57,9 +83,8 @@ export default function PerfilEntrada(props) {
       });
     } else {
       getDatosPerfilEntrada(props.perfilEntrada);
-      console.log(perfilEntrada);
     }
-  }, []);
+  }, [props.perfilEntrada]);
 
   return (
     <React.Fragment>
@@ -68,14 +93,28 @@ export default function PerfilEntrada(props) {
           Perfil de Entrada
         </label>
       </div>
+
       <hr />
       <AspectoComunitario
         aspectoComunitario={aspectoComunitario}
         setUpdatedAspectoComunitario={setUpdatedAspectoComunitario}
       />
+      <hr />
       <AspectoClinico
         aspectoClinico={aspectoClinico}
         setUpdatedAspectoClinico={setUpdatedAspectoClinico}
+      />
+      <hr />
+      <AspectoPsicoeducativo
+        aspectoPsicoeducativo={aspectoPsicoeducativo}
+        setUpdatedAspectoPsicoeducativo={setUpdatedAspectoPsicoeducativo}
+      />
+      <hr />
+      <AspectoDesarrolloTalleres
+        aspectoDesarrolloTalleres={aspectoDesarrolloTalleres}
+        setUpdatedAspectoDesarrolloTalleres={
+          setUpdatedAspectoDesarrolloTalleres
+        }
       />
     </React.Fragment>
   );

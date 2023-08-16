@@ -2,10 +2,11 @@ import React from 'react';
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
-import CircleChart from '../layouts/circleChartEdad';
-import CircleChartCasas from '../layouts/circleChartCasas';
 import Stats from '../layouts/stats';
-
+import CircleChartCasas from '../layouts/circleChartCasas';
+import CircleChartEdad from '../layouts/circleChartEdad';
+import CircleChartPersonasPorGenero from '../layouts/circleChartPersonasPorGenero';
+import CircleChartPersonasPorAnoEscolar from '../layouts/circleChartPersonaPorAnoEscolar';
 export default function Index() {
   return (
     <React.Fragment>
@@ -27,7 +28,7 @@ export default function Index() {
                     </div>
                     <div className="card-body align-items-center justify-content-center">
                       <div className="chart-area" style={{ height: '350px' }}>
-                        <CircleChart />
+                        <CircleChartEdad />
                       </div>
                     </div>
                   </div>
@@ -36,58 +37,7 @@ export default function Index() {
                   <div className="card shadow mb-4 h-100">
                     <div className="card-header py-3 bg-second-primary">
                       <h6 className="m-0 font-weight-bold text-white">
-                      Número total de usuarios por casa
-                      </h6>
-                    </div>
-                    <div className="card-body align-items-center justify-content-center">
-                      <div
-                        className="chart-area"
-                        style={{ height: '350px', width: '100%' }}
-                      >
-                        <CircleChartCasas />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/*<div className="col">
-                  <div className="card shadow mb-4 h-100">
-                    <div className="card-header py-3 bg-second-primary">
-                      <h6 className="m-0 font-weight-bold text-white">
-                      Total genero masculino y femenino
-                      </h6>
-                    </div>
-                    <div className="card-body align-items-center justify-content-center">
-                      <div
-                        className="chart-area"
-                        style={{ height: '350px', width: '100%' }}
-                      >
-                        <CircleChartCasas />
-                      </div>
-                    </div>
-                  </div>
-                </div>*/}
-                {/*<div className="col">
-                  <div className="card shadow mb-4 h-100">
-                    <div className="card-header py-3 bg-second-primary">
-                      <h6 className="m-0 font-weight-bold text-white">
-                      Total escolaridad
-                      </h6>
-                    </div>
-                    <div className="card-body align-items-center justify-content-center">
-                      <div
-                        className="chart-area"
-                        style={{ height: '350px', width: '100%' }}
-                      >
-                        <CircleChartCasas />
-                      </div>
-                    </div>
-                  </div>
-                </div>*/}
-                {/* <div className="col">
-                  <div className="card shadow mb-4 h-100">
-                    <div className="card-header py-3 bg-second-primary">
-                      <h6 className="m-0 font-weight-bold text-white">
-                        Total de procesos
+                        Número total de usuarios por casa
                       </h6>
                     </div>
                     <div className="card-body align-items-center justify-content-center">
@@ -104,7 +54,7 @@ export default function Index() {
                   <div className="card shadow mb-4 h-100">
                     <div className="card-header py-3 bg-second-primary">
                       <h6 className="m-0 font-weight-bold text-white">
-                        Total de salidas
+                        Total género masculino y femenino
                       </h6>
                     </div>
                     <div className="card-body align-items-center justify-content-center">
@@ -112,11 +62,28 @@ export default function Index() {
                         className="chart-area"
                         style={{ height: '350px', width: '100%' }}
                       >
-                        <CircleChartCasas />
+                        <CircleChartPersonasPorGenero />
                       </div>
                     </div>
                   </div>
-                </div> */}
+                </div>
+                <div className="col">
+                  <div className="card shadow mb-4 h-100">
+                    <div className="card-header py-3 bg-second-primary">
+                      <h6 className="m-0 font-weight-bold text-white">
+                        Total escolaridad
+                      </h6>
+                    </div>
+                    <div className="card-body align-items-center justify-content-center">
+                      <div
+                        className="chart-area"
+                        style={{ height: '350px', width: '100%' }}
+                      >
+                        <CircleChartPersonasPorAnoEscolar />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <Footer />

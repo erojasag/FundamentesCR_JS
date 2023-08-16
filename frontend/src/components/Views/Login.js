@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Footer from '../layouts/footer';
-
 import Loading from '../layouts/loading';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,20 +35,27 @@ export default function Login() {
     event.preventDefault();
     try {
       if (!email || !contrasena) {
-        toast.warn('Ingrese su correo y contraseña para iniciar sesión.');
+        toast.warn('Ingrese su correo y contraseña para iniciar sesión.', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         return;
       }
       const data = {
         email,
         contrasena,
       };
-
       setLoading(true);
       const response = await axios.post(
-        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/login',
+        `${process.env.REACT_APP_BACKEND_API}usuarios/login`,
+
         data
       );
-      console.log(response);
       if (response.status === 200) {
         Cookies.set('jwt', response.data.token, { expires: 1 });
         Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
@@ -65,22 +72,59 @@ export default function Login() {
 
         setEmail('');
         setContrasena('');
-        navigate('/Inicio');
+        toast.success('Inicio de sesión exitoso. \n Bienvenid@ 👋🏽', {
+          position: 'top-right',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          navigate('/inicio');
+        }, 2000);
       }
     } catch (err) {
       if (err.response.data.message === 'Correo o contraseña incorrectos') {
         toast.error(
-          'Correo o contraseña incorrectos. Por favor intente de nuevo.'
+          'Correo o contraseña incorrectos. Por favor intente de nuevo.',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
         );
         return;
       }
       if (err.response.data.message === 'El usuario no existe') {
-        toast.error('Este usuario no existe.');
+        toast.error('Este usuario no existe.', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         return;
       }
       if (err.response.status === 401) {
         toast.warn(
-          'Tu cuenta no se encuentra activa. Por favor revisa tu correo para activarla.'
+          'Tu cuenta no se encuentra activa. Por favor revisa tu correo para activarla.',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
         );
         return;
       }
@@ -88,7 +132,16 @@ export default function Login() {
         err.response.data.message === 'pchstr must contain a $ as first char'
       ) {
         toast.warn(
-          'Tu cuenta no se encuentra activa. Por favor revisa tu correo para activarla o bien reinicia tu contrasena dandole al boton, olvide mi contrasena.'
+          'Tu cuenta no se encuentra activa. Por favor revisa tu correo para activarla o bien reinicia tu contrasena dandole al boton, olvide mi contrasena.',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
         );
         return;
       }

@@ -4,7 +4,6 @@ export default function Encargado(props) {
   const [encargado, setEncargado] = useState({});
 
   useEffect(() => {
-    console.log(props.encargado);
     if (props.encargado) {
       setEncargado(props.encargado);
     } else {
@@ -218,7 +217,7 @@ export default function Encargado(props) {
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtCedula">Cedula</label>
+          <label for="txtCedula">Cédula</label>
           <input
             type="text"
             class="form-control form-control-sm input-validar"
@@ -229,7 +228,7 @@ export default function Encargado(props) {
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtContacto">Telefono</label>
+          <label for="txtContacto">Teléfono</label>
           <input
             type="text"
             class="form-control form-control-sm input-validar"
@@ -251,7 +250,7 @@ export default function Encargado(props) {
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtOcupacion">Ocupacion</label>
+          <label for="txtOcupacion">Ocupación</label>
           <input
             type="text"
             class="form-control form-control-sm input-validar"
@@ -262,7 +261,7 @@ export default function Encargado(props) {
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtCondicionLaboral">Condicion Laboral</label>
+          <label for="txtCondicionLaboral">Condición Laboral</label>
           <select
             class="custom-select"
             id="condicionLaboralEncargado"
@@ -270,7 +269,7 @@ export default function Encargado(props) {
             value={encargado.condicionLaboral}
             onChange={handleCondicionLaboralEncargadoChange}
           >
-            <option value="null">-No Especifica-</option>
+            <option value="null">-No específica-</option>
             <option value="Empleado">Empleado</option>
             <option value="Independiente">Independiente</option>
             <option value="Informal">Informal</option>
@@ -287,8 +286,8 @@ export default function Encargado(props) {
             value={encargado.consumoMedicinas}
             onChange={handleConsumoMedicinasChange}
           >
-            <option value="null">-No Especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
@@ -301,13 +300,13 @@ export default function Encargado(props) {
             value={encargado.expedienteHNP}
             onChange={handleExpedienteHNPEncargadoChange}
           >
-            <option value="null">-No Especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No Específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtExpedienteHNP">Situacion Particular</label>
+          <label for="txtExpedienteHNP">Situación Particular</label>
           <input
             type="text"
             class="form-control form-control-sm input-validar"
