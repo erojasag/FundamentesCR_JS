@@ -28,6 +28,8 @@ export default function ForgotPass() {
         navigate('/');
         return;
       }
+
+      toast.success('Se ha enviado un correo con su nueva contraseña');
       setEmail('');
       navigate('/');
     } catch (err) {
