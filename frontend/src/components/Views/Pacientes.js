@@ -294,10 +294,6 @@ export default function Pacientes() {
         { headers }
       );
 
-      console.log(
-        responseAspectosPsicoeducativos.data.data.data.aspectoPsicoEducativoId
-      );
-
       if (
         responseAspectosClinicos.status === 201 &&
         responseAspectosComunitarios.status === 201 &&
@@ -480,7 +476,7 @@ export default function Pacientes() {
                             <th>Teléfono</th>
                             <th>Edad Actual</th>
                             <th>Fecha de Nacimiento</th>
-                            <th>Genero</th>
+                            <th>Género</th>
                             <th>Nacionalidad</th>
                             <th>Acciones</th>
                           </tr>
@@ -613,7 +609,7 @@ export default function Pacientes() {
                               </div>
                               <div class="form-group col-sm-6">
                                 <label for="txtContacto">
-                                  Telefono de Contacto
+                                  Teléfono de Contacto
                                 </label>
                                 <input
                                   type="number"
@@ -672,7 +668,7 @@ export default function Pacientes() {
                                 />
                               </div>
                               <div class="form-group col-sm-6">
-                                <label for="txtDireccion">Direccion</label>
+                                <label for="txtDireccion">Dirección</label>
                                 <input
                                   type="text"
                                   class="form-control form-control-sm 
@@ -684,7 +680,7 @@ export default function Pacientes() {
                                 />
                               </div>
                               <div class="form-group col-sm-6">
-                                <label for="txtGenero">Genero</label>
+                                <label for="txtGenero">Género</label>
                                 <select
                                   class="custom-select"
                                   id="genero"

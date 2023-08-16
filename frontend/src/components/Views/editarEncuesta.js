@@ -208,7 +208,7 @@ export default function EditarEncuesta() {
                       </div>
                       <div class="col-md-2">
                         <div class="form-group">
-                          <label for="idIdentificacion">Cedula:</label>
+                          <label for="idIdentificacion">Cédula:</label>
                           <input
                             type="number"
                             id="idIdentificacion"
@@ -536,7 +536,7 @@ export default function EditarEncuesta() {
                       <div className="col-md-8">
                         <p>
                           ¿Cómo calificaría su experiencia respecto a los
-                          talleres clinicos que ha recibido a través de la
+                          talleres clínicos que ha recibido a través de la
                           fundación?
                         </p>
                       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
@@ -7,36 +7,7 @@ import CircleChartCasas from '../layouts/circleChartCasas';
 import CircleChartEdad from '../layouts/circleChartEdad';
 import CircleChartPersonasPorGenero from '../layouts/circleChartPersonasPorGenero';
 import CircleChartPersonasPorAnoEscolar from '../layouts/circleChartPersonaPorAnoEscolar';
-import Cookies from 'js-cookie';
-import axios from 'axios';
 export default function Index() {
-  const [jsonData, setJsonData] = useState(null);
-
-  const fetchData = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
-    const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_API}stats/GetPacientesWithEscolaridad`,
-      {
-        headers,
-      }
-    );
-
-    console.log(response.data.data.data);
-
-    setJsonData(response.data.data.data);
-  };
-
-  const handleGeneratePDF = () => {
-    // Your code to generate the PDF, e.g., open it in a new window for the user to download
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <React.Fragment>
       <div id="page-top">
@@ -83,7 +54,7 @@ export default function Index() {
                   <div className="card shadow mb-4 h-100">
                     <div className="card-header py-3 bg-second-primary">
                       <h6 className="m-0 font-weight-bold text-white">
-                        Total genero masculino y femenino
+                        Total género masculino y femenino
                       </h6>
                     </div>
                     <div className="card-body align-items-center justify-content-center">

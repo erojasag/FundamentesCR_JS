@@ -258,7 +258,7 @@ export default function AgregarEncuesta() {
                               onChange={handleNombreChange}
                             >
                               {!dataEncuesta.nombreCompleto && (
-                                <option value="null">-No especifica-</option>
+                                <option value="null">-No específica-</option>
                               )}
                               {data.map((paciente) => (
                                 <option
@@ -291,7 +291,7 @@ export default function AgregarEncuesta() {
                     <section class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="idIdentificacion">Cedula:</label>
+                          <label for="idIdentificacion">Cédula:</label>
                           <input
                             type="number"
                             id="idIdentificacion"
@@ -583,7 +583,7 @@ export default function AgregarEncuesta() {
                       <div className="col-md-8">
                         <p>
                           ¿Cómo calificaría su experiencia respecto a los
-                          talleres clinicos que ha recibido a través de la
+                          talleres clínicos que ha recibido a través de la
                           fundación?
                         </p>
                       </div>

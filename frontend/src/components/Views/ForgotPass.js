@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../layouts/footer';
+import { toast } from 'react-toastify';
 
 export default function ForgotPass() {
   const [email, setEmail] = useState('');
@@ -30,7 +31,7 @@ export default function ForgotPass() {
       setEmail('');
       navigate('/');
     } catch (err) {
-      console.log(err);
+      toast.warning('El correo ingresado no existe');
     }
   };
   return (

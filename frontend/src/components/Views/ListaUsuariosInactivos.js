@@ -209,7 +209,7 @@ export default function ListaUsuariosInactivos() {
                                 <th>Correo</th>
                                 <th>Tipo de Usuario</th>
                                 <th>Activo</th>
-                                <th>Accion</th>
+                                <th>Acción</th>
                               </tr>
                             </thead>
                             <tbody>{getUsuarios()}</tbody>

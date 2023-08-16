@@ -48,15 +48,16 @@ const getPacientesPorAnoEscolar = catchAsync(async (req, res, next) => {
 });
 
 const getPacientesWithEscolaridad = catchAsync(async (req, res) => {
-  const report = await db.query('Call GetPacientesWithEscolaridad();');
+  try {
+    const report = await db.query('Call GetPacientesWithEscolaridad();');
 
-  res.status(200).json({
-    status: 'success',
-    responseType: 'blob',
-    data: {
+    res.status(200).json({
+      status: 'success',
       data: report,
-    },
-  });
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Error generating or sending PDF.' });
+  }
 });
 
 module.exports = {

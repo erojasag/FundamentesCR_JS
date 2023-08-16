@@ -200,7 +200,7 @@ export default function EditarUsuarioLog() {
                                   <option value="Administrador">
                                     Administrador
                                   </option>
-                                  <option value="Psicologo">Psicologo</option>
+                                  <option value="Psicologo">Psicólogo</option>
                                 </select>
                               </div>
                             </div>
