@@ -199,21 +199,6 @@ export default function Login() {
                             </button>
                           </div>
                         </div>
-                        <div className="form-group">
-                          <div className="custom-control custom-checkbox small">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="chkMantenerSesion"
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="chkMantenerSesion"
-                            >
-                              Mantener Sesión
-                            </label>
-                          </div>
-                        </div>
                         <button
                           className="btn btn-primary btn-user btn-block"
                           onClick={() => setLoading(!loading)}
