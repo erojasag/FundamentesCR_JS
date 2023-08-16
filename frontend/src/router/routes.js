@@ -20,6 +20,7 @@ import EditarCasa from '../components/Views/EditarCasa';
 import Error403 from '../components/Views/Error403';
 import ListaCasasInactivas from '../components/Views/ListaCasasInactivas';
 import EditarEncuesta from '../components/Views/editarEncuesta';
+import Reportes from '../components/Views/reportes';
 
 function Router() {
   return (
@@ -61,6 +62,7 @@ function Router() {
         path="/cambiarMiContrasena"
         element={<CambiarContrasena />}
       />
+      <Route exact path="/reportes" element={<Reportes />} />
       <Route path="*" element={<Error404 />} />
     </Routes>
   );

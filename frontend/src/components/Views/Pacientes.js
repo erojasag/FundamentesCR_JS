@@ -294,10 +294,6 @@ export default function Pacientes() {
         { headers }
       );
 
-      console.log(
-        responseAspectosPsicoeducativos.data.data.data.aspectoPsicoEducativoId
-      );
-
       if (
         responseAspectosClinicos.status === 201 &&
         responseAspectosComunitarios.status === 201 &&
