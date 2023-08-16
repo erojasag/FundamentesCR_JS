@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../layouts/footer';
+import { toast } from 'react-toastify';
 
 export default function ForgotPass() {
   const [email, setEmail] = useState('');
@@ -17,10 +18,9 @@ export default function ForgotPass() {
         email,
       };
       const response = await axios.post(
-        'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/olvidarContrasena',
+        `${process.env.REACT_APP_BACKEND_API}usuarios/olvidarContrasena`,
         data
       );
-      console.log(response);
 
       if (response.status !== 200) {
         const message = `An error has occured: ${response.statusText}`;
@@ -31,7 +31,7 @@ export default function ForgotPass() {
       setEmail('');
       navigate('/');
     } catch (err) {
-      console.log(err);
+      toast.warning('El correo ingresado no existe');
     }
   };
   return (

@@ -121,6 +121,31 @@ export default function SideMenu() {
             </div>
           </div>
         </li>
+        <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            href="/"
+            data-toggle="collapse"
+            data-target="#collapseReportes"
+            aria-expanded="true"
+            aria-controls="collapseReportes"
+          >
+            <i class="fa-solid fa-clipboard"></i>
+            <span>Reportes</span>
+          </a>
+          <div
+            id="collapseReportes"
+            class="collapse"
+            aria-labelledby="headingReportes"
+            data-parent="#accordionSidebar"
+          >
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="/reportes">
+                Descargar Reportes
+              </a>
+            </div>
+          </div>
+        </li>
         {rol === 'Administrador' ? (
           <>
             <li class="nav-item">
@@ -141,8 +166,11 @@ export default function SideMenu() {
                 data-parent="#accordionSidebar"
               >
                 <div class="bg-white py-2 collapse-inner rounded">
-                  <a class="collapse-item" href="/casas">
+                  <a class="collapse-item" href="/listaCasas">
                     Ver Casas
+                  </a>
+                  <a class="collapse-item" href="/listaCasasInactivas">
+                    Ver Casas Inactivas
                   </a>
                 </div>
               </div>

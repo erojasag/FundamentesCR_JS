@@ -5,6 +5,7 @@ import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Error401 from './Error401';
@@ -62,7 +63,7 @@ export default function Perfil() {
       };
 
       const response = await axios.get(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/${Cookies.get('id')}`,
+        `${process.env.REACT_APP_BACKEND_API}usuarios/${Cookies.get('id')}`,
         {
           headers,
         }
@@ -111,12 +112,10 @@ export default function Perfil() {
       }
 
       const response = await axios.patch(
-        `https://fundamentes-dev-7bd493ab77ac.herokuapp.com/usuarios/actualizarMiPerfil`,
+        `${process.env.REACT_APP_BACKEND_API}usuarios/actualizarMiPerfil`,
         userData,
         { headers }
       );
-
-      console.log(response);
 
       if (response.status === 200) {
         Cookies.set('nombre', userData.nombre + ' ' + userData.primerApe);
@@ -132,8 +131,6 @@ export default function Perfil() {
         window.location.reload();
       }
     } catch (err) {
-      console.log(err);
-
       if (err.response.status === 401) {
         toast.error('Error al actualizar los datos', {
           position: 'top-right',
@@ -147,7 +144,18 @@ export default function Perfil() {
       }
 
       if (err.response.data.err.message === 'jwt expired') {
-        navigate('/');
+        toast.error('Tu sesion a expirado, por favor inicia sesion de nuevo!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
       }
     }
   };

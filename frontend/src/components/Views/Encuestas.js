@@ -3,27 +3,45 @@ import SideMenu from '../layouts/sideMenu';
 import Navbar from '../layouts/navbar';
 import Footer from '../layouts/footer';
 import axios from 'axios';
+
 import Cookies from 'js-cookie';
+import { Pagination } from 'react-bootstrap';
+import Error403 from './Error403';
 
 export default function Encuestas() {
   const [encuestas, setEncuestas] = useState([]);
   const [selectedEncuesta, setSelectedEncuesta] = useState(null);
 
+  const [isForbidden, setIsForbidden] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(5);
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentEncuesta = encuestas.slice(indexOfFirstUser, indexOfLastUser);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const fetchDataEncuestas = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${Cookies.get('jwt')}`,
-    };
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Cookies.get('jwt')}`,
+      };
 
-    const response = await axios.get(
-      'https://fundamentes-dev-7bd493ab77ac.herokuapp.com/encuestasSatisfaccion/',
-      {
-        headers,
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}encuestasSatisfaccion/`,
+        {
+          headers,
+        }
+      );
+
+      setEncuestas(response.data.data.data);
+    } catch (err) {
+      if (err.response.status === 403) {
+        setIsForbidden(true);
+        return;
       }
-    );
-
-    console.log(response.data.data.data);
-    setEncuestas(response.data.data.data);
+    }
   };
 
   useEffect(() => {
@@ -37,6 +55,9 @@ export default function Encuestas() {
         <td>{encuesta.edad}</td>
         <td>{encuesta.cedula}</td>
         <td>{encuesta.calificacion}</td>
+        <td>{encuesta.calificacionTallerEducativo}</td>
+        <td>{encuesta.calificacionTallerCreativo}</td>
+        <td>{encuesta.calificacionTallerClinico}</td>
         <td>{encuesta.recomendacion ? 'Si' : 'No'}</td>
         <td>{encuesta.comentarios}</td>
         <td>
@@ -47,16 +68,6 @@ export default function Encuestas() {
             <i className="fas fa-pencil-alt"></i>
           </a>
           &nbsp; &nbsp;
-          <button
-            href="eliminarPaciente"
-            className="btn btn-danger btn-sm"
-            data-toggle="modal"
-            data-target="#usuariosModal"
-            value={encuesta.encuestaSatisfaccionId}
-            onClick={() => setSelectedEncuesta(encuesta.encuestaSatisfaccionId)}
-          >
-            <i className="fas fa-trash-alt"></i>
-          </button>
         </td>
       </tr>
     ));
@@ -68,99 +79,81 @@ export default function Encuestas() {
         <div id="content-wrapper" class="d-flex flex-column">
           <div id="content">
             <Navbar />
-            <div class="container-fluid">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3 bg-second-primary">
-                  <h6 class="m-0 font-weight-bold text-white">
-                    Lista de Encuestas de Satisfacción
-                  </h6>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <a class="btn btn-success" href="agregarEncuesta">
-                        <i class="fas fa-user-plus"></i> Agregar Encuesta
-                      </a>
+            {isForbidden ? (
+              <Error403 />
+            ) : (
+              <>
+                <div class="container-fluid">
+                  <div class="card shadow mb-4 m-overflow">
+                    <div class="card-header py-3 bg-second-primary">
+                      <h6 class="m-0 font-weight-bold text-white">
+                        Lista de Encuestas de Satisfacción
+                      </h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <a class="btn btn-success" href="agregarEncuesta">
+                            <i class="fas fa-user-plus"></i> Agregar Encuesta
+                          </a>
+                        </div>
+                      </div>
+                      <hr />
+                      <div class="row">
+                        <div class="col-sm-12 wrap-text">
+                          <table
+                            class="table table-bordered"
+                            id="tbdata"
+                            cellspacing="0"
+                            style={{ width: '100%' }}
+                          >
+                            <thead>
+                              <tr>
+                                <th>Nombre Completo</th>
+                                <th>Edad</th>
+                                <th>Cédula</th>
+                                <th>Calificación</th>
+                                <th>Calificación T. Educativo</th>
+                                <th>Calificación T. Creativo</th>
+                                <th>Calificación T. Clínico</th>
+                                <th>Recomendación</th>
+                                <th>Comentarios</th>
+                                <th>Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>{getEncuestas()}</tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <Pagination className="custom-pagination">
+                        {Array.from({
+                          length: Math.ceil(encuestas.length / usersPerPage),
+                        }).map((_, index) => (
+                          <Pagination.Item
+                            key={index + 1}
+                            onClick={() => paginate(index + 1)}
+                            className="first-letter:capitalize"
+                          >
+                            {index + 1}
+                          </Pagination.Item>
+                        ))}
+                      </Pagination>
                     </div>
                   </div>
-                  <hr />
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <table
-                        class="table table-bordered"
-                        id="tbdata"
-                        cellspacing="0"
-                        style={{ width: '100%' }}
-                      >
-                        <thead>
-                          <tr>
-                            <th>Nombre Completo</th>
-                            <th>Edad</th>
-                            <th>Cedula</th>
-                            <th>Calificacion</th>
-                            <th>Recomendacion</th>
-                            <th>Comentarios</th>
-                            <th>Acciones</th>
-                          </tr>
-                        </thead>
-                        <tbody>{getEncuestas()}</tbody>
-                      </table>
-                    </div>
-                  </div>
                 </div>
-              </div>
-            </div>
 
-            <div
-              class="modal fade"
-              id="encuestaModal"
-              tabindex="-1"
-              aria-labelledby="encuestaModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5
-                      class="modal-title"
-                      id="encuestaModalLabel"
-                      data-dismiss="modal"
-                    >
-                      Eliminar
-                    </h5>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <p>¿Seguro que desea eliminar el contenido?</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      data-dismiss="modal"
-                    >
-                      Cerrar
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      data-dismiss="modal"
-                    >
-                      Eliminar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+                <div
+                  class="modal fade"
+                  id="encuestaModal"
+                  tabindex="-1"
+                  aria-labelledby="encuestaModalLabel"
+                  aria-hidden="true"
+                ></div>
+              </>
+            )}
           </div>
-
           <Footer />
         </div>
       </div>

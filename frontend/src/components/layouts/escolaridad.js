@@ -133,7 +133,7 @@ export default function Escolaridad(props) {
 
       <div class="row">
         <div class="form-group col-sm-6">
-          <label for="txtInclusion">Inclusion Escolar?</label>
+          <label for="txtInclusion">Inclusión Escolar</label>
           <select
             class="custom-select"
             id="inclusion"
@@ -141,13 +141,13 @@ export default function Escolaridad(props) {
             value={escolaridad.inclusion}
             onChange={handleInclusionChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtExpulsion">Expulsion</label>
+          <label for="txtExpulsion">Expulsión</label>
           <select
             class="custom-select"
             id="expulsion"
@@ -155,13 +155,13 @@ export default function Escolaridad(props) {
             value={escolaridad.expulsion}
             onChange={handleExpulsionChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtTipoEducacion">Tipo de Educacion</label>
+          <label for="txtTipoEducacion">Tipo de Educación</label>
           <select
             class="custom-select"
             id="tipoEducacion"
@@ -169,31 +169,30 @@ export default function Escolaridad(props) {
             value={escolaridad.tipoEducacion}
             onChange={handleTipoEducacionChange}
           >
-            <option value="Preescolar Publico">Preescolar Publico</option>
+            <option value="null">-No específica-</option>
+            <option value="Preescolar Publico">Preescolar Público</option>
             <option value="Preescolar Publico">Preescolar Privado</option>
             <option value="Educacion General Basica Publica">
-              Educacion General Basica Publica
+              Educacion General Básica Pública
             </option>
             <option value="Educacion General Basica Privada">
-              Educacion General Basica Privada
+              Educación General Básica Privada
             </option>
             <option value="Educacion Diversificada Publica">
-              Educacion Diversificada Publica
+              Educación Diversificada Pública
             </option>
             <option value="Educacion Diversificada Privada">
-              Educacion Diversificada Privada
+              Educación Diversificada Privada
             </option>
             <option value="Educacion Superior Privada">
-              Educacion Tecnica Publica
+              Educación Técnica Pública
             </option>
-            <option value="Educacion Superior Privada">
-              CINDEA
-            </option>
+            <option value="Educacion Superior Privada">CINDEA</option>
             <option value="Educacion Superior Publica">
-              Educacion Superior Publica
+              Educación Superior Pública
             </option>
             <option value="Educacion Superior Privada">
-              Educacion Superior Privada
+              Educación Superior Privada
             </option>
           </select>
         </div>
@@ -206,8 +205,9 @@ export default function Escolaridad(props) {
             value={escolaridad.anoEscolar}
             onChange={handleAnoEscolarChange}
           >
-            <option value="Pre-Kinder">Pre-Kinder</option>
-            <option value="Kinder">Kinder</option>
+            <option value="null">-No específica-</option>
+            <option value="Pre-Kinder">Pre-Kínder</option>
+            <option value="Kinder">Kínder</option>
             <option value="Preparatoria">Preparatoria</option>
             <option value="Primer Grado">Primer Grado</option>
             <option value="Segundo Grado">Segundo Grado</option>
@@ -215,12 +215,12 @@ export default function Escolaridad(props) {
             <option value="Cuarto Grado">Cuarto Grado</option>
             <option value="Quinto Grado">Quinto Grado</option>
             <option value="Sexto Grado">Sexto Grado</option>
-            <option value="Septimo Grado">Septimo Grado</option>
+            <option value="Septimo Grado">Séptimo Grado</option>
             <option value="Octavo Grado">Octavo Grado</option>
             <option value="Noveno Grado">Noveno Grado</option>
-            <option value="Decimo Grado">Decimo Grado</option>
-            <option value="Undecimo Grado">Undecimo Grado</option>
-            <option value="Duodecimo Grado">Duodecimo Grado</option>
+            <option value="Decimo Grado">Décimo Grado</option>
+            <option value="Undecimo Grado">Undécimo Grado</option>
+            <option value="Duodecimo Grado">Duodécimo Grado</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
@@ -235,7 +235,7 @@ export default function Escolaridad(props) {
           />
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtRepitencia">Repite Año?</label>
+          <label for="txtRepitencia">Repite Año</label>
           <select
             class="custom-select"
             id="repitencia"
@@ -243,13 +243,13 @@ export default function Escolaridad(props) {
             value={escolaridad.repitencia}
             onChange={handleRepitenciaChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
-          <label for="txtAdecuacion">Adecuacion?</label>
+          <label for="txtAdecuacion">Adecuación</label>
           <select
             class="custom-select"
             id="adecuacion"
@@ -257,8 +257,8 @@ export default function Escolaridad(props) {
             value={escolaridad.adecuacion}
             onChange={handleAdecuacionChange}
           >
-            <option value="null">-No especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
 
             <option value="false">No</option>
           </select>
@@ -267,7 +267,7 @@ export default function Escolaridad(props) {
         escolaridad.adecuacion === true ? (
           <>
             <div class="form-group col-sm-6">
-              <label for="txtAdecuacion">Tipo de Adecuacion</label>
+              <label for="txtAdecuacion">Tipo de Adecuación</label>
               <select
                 class="custom-select"
                 id="adecuacion"
@@ -275,14 +275,15 @@ export default function Escolaridad(props) {
                 value={escolaridad.tipoAdecuacion}
                 onChange={handleTipoAdecuacionChange}
               >
+                <option value="null">-No específica-</option>
                 <option value="Adecuacion de Acceso">
-                  Adecuacion de Acceso
+                  Adecuación de Acceso
                 </option>
                 <option value="Adecuacion Significativa">
-                  Adecuacion Significativa
+                  Adecuación Significativa
                 </option>
                 <option value="Adecuacion No Significativa">
-                  Adecuacion No Significativa
+                  Adecuación No Significativa
                 </option>
                 <option value="No">No</option>
               </select>
@@ -290,7 +291,7 @@ export default function Escolaridad(props) {
           </>
         ) : null}
         <div class="form-group col-sm-6">
-          <label for="txtUltimoAnoAprobado">Ultimo Año Aprobado</label>
+          <label for="txtUltimoAnoAprobado">Último Año Aprobado</label>
           <select
             class="custom-select"
             id="ultimoAnoAprobado"
@@ -298,8 +299,9 @@ export default function Escolaridad(props) {
             value={escolaridad.ultimoAnoAprobado}
             onChange={handleUltimoAnoAprobadoChange}
           >
-            <option value="Pre-Kinder">Pre-Kinder</option>
-            <option value="Kinder">Kinder</option>
+            <option value="null">-No específica-</option>
+            <option value="Pre-Kinder">Pre-Kínder</option>
+            <option value="Kinder">Kínder</option>
             <option value="Preparatoria">Preparatoria</option>
             <option value="Primer Grado">Primer Grado</option>
             <option value="Segundo Grado">Segundo Grado</option>
@@ -307,12 +309,12 @@ export default function Escolaridad(props) {
             <option value="Cuarto Grado">Cuarto Grado</option>
             <option value="Quinto Grado">Quinto Grado</option>
             <option value="Sexto Grado">Sexto Grado</option>
-            <option value="Septimo Grado">Septimo Grado</option>
+            <option value="Septimo Grado">Séptimo Grado</option>
             <option value="Octavo Grado">Octavo Grado</option>
             <option value="Noveno Grado">Noveno Grado</option>
-            <option value="Decimo Grado">Decimo Grado</option>
-            <option value="Undecimo Grado">Undecimo Grado</option>
-            <option value="Duodecimo Grado">Duodecimo Grado</option>
+            <option value="Decimo Grado">Décimo Grado</option>
+            <option value="Undecimo Grado">Undécimo Grado</option>
+            <option value="Duodecimo Grado">Duodécimo Grado</option>
           </select>
         </div>
         <div class="form-group col-sm-6">
@@ -346,8 +348,8 @@ export default function Escolaridad(props) {
             value={escolaridad.reinsercion}
             onChange={handleReinsercionChange}
           >
-            <option value="null">-No Especifica-</option>
-            <option value="true">Si</option>
+            <option value="null">-No específica-</option>
+            <option value="true">Sí</option>
             <option value="false">No</option>
           </select>
         </div>

@@ -1,23 +1,44 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
-
+import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const [logout, setLogout] = useState(false);
   const navigate = useNavigate();
 
-  const token = Cookies.get('jwt');
-  
   const nombre = Cookies.get('nombre');
 
   const handleLogout = () => {
-    setLogout(true);
-    Cookies.remove('jwt');
-    Cookies.remove('id');
-    Cookies.remove('rol');
-    Cookies.remove('nombre');
-    navigate('/');
+    try {
+      setLogout(true);
+      toast.success('Sesión cerrada con éxito. \n Hasta Luego. 😉', {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch (err) {
+      toast.warn('No se pudo cerrar sesión. \n Intente nuevamente. 😕', {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } finally {
+      Cookies.remove('jwt');
+      Cookies.remove('id');
+      Cookies.remove('rol');
+      Cookies.remove('nombre');
+      navigate('/');
+      setLogout(false);
+    }
   };
   return (
     <React.Fragment>
