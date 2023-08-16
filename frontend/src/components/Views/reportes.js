@@ -45,7 +45,7 @@ export default function Reportes() {
                   <div className="card shadow mb-4 h-100">
                     <div className="card-header py-3 bg-second-primary">
                       <h6 className="m-0 font-weight-bold text-white">
-                        Reporte de Beneficiarios con Escolaridad
+                        Reporte de Beneficiarios por Año Escolar
                       </h6>
                     </div>
                     <div className="card-body d-flex flex-column justify-content-center align-items-center">
