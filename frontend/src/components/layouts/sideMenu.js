@@ -24,7 +24,7 @@ export default function SideMenu() {
         >
           <div class="sidebar-brand-icon">
             <img
-              src="assets/img/Logo.png"
+              src="/assets/img/Logo.png"
               alt=""
               style={{ width: '80px', height: '90px', float: 'left' }}
             />
@@ -34,7 +34,7 @@ export default function SideMenu() {
 
         <hr class="sidebar-divider my-0" />
         <li class="nav-item">
-          <a class="nav-link" href="inicio">
+          <a class="nav-link" href="/inicio">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>
@@ -59,10 +59,10 @@ export default function SideMenu() {
                 data-parent="#accordionSidebar"
               >
                 <div class="bg-white py-2 collapse-inner rounded">
-                  <a class="collapse-item" href="usuarios">
+                  <a class="collapse-item" href="/usuarios">
                     Usuarios
                   </a>
-                  <a class="collapse-item" href="usuariosInactivos">
+                  <a class="collapse-item" href="/usuariosInactivos">
                     Usuarios Inactivos
                   </a>
                 </div>
