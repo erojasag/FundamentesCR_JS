@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../layouts/footer';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function ForgotPass() {
   const [email, setEmail] = useState('');
@@ -28,10 +28,21 @@ export default function ForgotPass() {
         navigate('/');
         return;
       }
-      setEmail('');
-      navigate('/');
+
+      if (response.status === 200) {
+        toast.success('Se ha enviado un correo con su nueva contraseña');
+        setEmail('');
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
+      }
     } catch (err) {
-      toast.warning('El correo ingresado no existe');
+      if (
+        err.response.data.message === 'No hay un usuario asociado a este correo'
+      ) {
+        toast.error('El correo ingresado no existe');
+        return;
+      }
     }
   };
   return (
@@ -84,9 +95,10 @@ export default function ForgotPass() {
               </div>
             </div>
           </div>
-          <Footer />
         </div>
+        <Footer />
       </div>
+      <ToastContainer />
     </React.Fragment>
   );
 }
