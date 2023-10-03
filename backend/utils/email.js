@@ -6,8 +6,7 @@ const sendEmail = catchAsync(async (options) => {
   try {
     //Create the transporter
     const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
+      service: 'Gmail',
       auth: {
         user: process.env.EMAIL_USERNAME,
         pass: process.env.EMAIL_PASSWORD,
@@ -16,7 +15,7 @@ const sendEmail = catchAsync(async (options) => {
     //Define the email options
 
     const mailOptions = {
-      from: 'Emanuel Rojas <emanuel@emanuel.com>',
+      from: 'Fundamentes Costa Rica <fundamentescr@gmail.com>',
       to: options.email,
       subject: options.subject,
       text: options.message,
