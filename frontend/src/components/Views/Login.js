@@ -101,6 +101,9 @@ export default function Login() {
         );
         return;
       }
+      if(err.response){
+        console.log(err.response.data.message);
+      }
       if (err.response.data.message === 'El usuario no existe') {
         toast.error('Este usuario no existe.', {
           position: 'top-right',
