@@ -171,7 +171,7 @@ export default function Escolaridad(props) {
           >
             <option value="null">-No específica-</option>
             <option value="Preescolar Publico">Preescolar Público</option>
-            <option value="Preescolar Publico">Preescolar Privado</option>
+            <option value="Preescolar Privado">Preescolar Privado</option>
             <option value="Educacion General Basica Publica">
               Educacion General Básica Pública
             </option>
@@ -187,7 +187,7 @@ export default function Escolaridad(props) {
             <option value="Educacion Superior Privada">
               Educación Técnica Pública
             </option>
-            <option value="Educacion Superior Privada">CINDEA</option>
+            <option value="CINDEA">CINDEA</option>
             <option value="Educacion Superior Publica">
               Educación Superior Pública
             </option>
