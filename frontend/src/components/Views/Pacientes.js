@@ -143,6 +143,7 @@ export default function Pacientes() {
           headers,
         }
       );
+      console.log(response);
       setPacientesData(response.data.data.data);
     } catch (err) {
       if (err.response.data.message === 'jwt expired') {
@@ -323,6 +324,7 @@ export default function Pacientes() {
         if (responsePerfilEntrada.status === 201) {
           newPacienteData.perfilEntradaId =
             responsePerfilEntrada.data.data.data.perfilEntradaId;
+          newPacienteData.perfilSalidaId= null;
         }
       }
     }
