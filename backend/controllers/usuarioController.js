@@ -39,7 +39,6 @@ const createUser = catchAsync(async (req, res, next) => {
   const doc = await userModel.create(req.body);
   const message = `Bienvenido a fundamentes ${req.body.nombre} ${req.body.primerApe}!.
          Username: ${req.body.email}
-         Password: ${password}
          Porfavor activa tu cuenta ingresando al siguiente link: https://${process.env.URL}/activarCuenta/${doc.dataValues.activationToken}`;
   if (!doc) return next(new AppError('No se pudo crear el registro', 500));
 
