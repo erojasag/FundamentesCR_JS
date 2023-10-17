@@ -51,7 +51,7 @@ const limiter = rateLimit({
 app.use('/', limiter);
 
 //enable CORS
-app.use(cors());
+// app.use(cors());
 
 //data sanitization against XSS
 app.use(xss());
