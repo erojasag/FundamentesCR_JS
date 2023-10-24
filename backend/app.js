@@ -53,7 +53,7 @@ app.use('/', limiter);
 //enable CORS
 app.use(
   cors({
-    origin: '*', // Update with your frontend URL
+    origin: 'https://fundamentes-dev.netlify.app', // Update with your frontend URL
     methods: 'GET,POST,UPDATE,PATCH,DELETE', // Add other HTTP methods as needed
     allowedHeaders: 'Content-Type, Authorization', // Add other headers as needed
   })
