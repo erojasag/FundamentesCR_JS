@@ -4,9 +4,10 @@ import axios from 'axios';
 import Footer from '../layouts/footer';
 import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faShield } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ToastContainer, toast } from 'react-toastify';
+import { Tooltip } from 'react-tooltip';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Activacion() {
@@ -15,6 +16,18 @@ export default function Activacion() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+
+ 
+
+  const isPasswordValid = (password) => {
+    return (
+      password.length >= 8 &&
+      password.length <= 24 &&
+      /[A-Z]/.test(password) &&
+      /[a-z]/.test(password) &&
+      /\d/.test(password)
+    );
+  };
 
   const handleContrasenaChange = (event) => {
     setData({
@@ -45,6 +58,25 @@ export default function Activacion() {
         contrasena: data.contrasena,
         confirmContrasena: data.confirmContrasena,
       };
+
+      if (
+        !isPasswordValid(body.contrasena) ||
+        !isPasswordValid(body.confirmContrasena)
+      ) {
+        toast.error(
+          'Las contraseñas ingresadas no cumplen los requisitos mínimos de seguridad. Por favor, inténtelo de nuevo.',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
+        return;
+      }
       const response = await axios.patch(
         `${process.env.REACT_APP_BACKEND_API}usuarios/activarUsuario/${token}`,
         body
@@ -55,16 +87,31 @@ export default function Activacion() {
         window.alert(message);
         return;
       }
-      Cookies.set('jwt', response.data.token);
-      Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
-      Cookies.set('rol', response.data.data.user.rol.nombreRol, {
-        expires: 1,
-      });
-      Cookies.set(
-        'nombre',
-        response.data.data.user.nombre + ' ' + response.data.data.user.primerApe
-      );
-      navigate('/Inicio');
+      if (response.status === 200) {
+        Cookies.set('jwt', response.data.token);
+        Cookies.set('id', response.data.data.user.usuarioId, { expires: 1 });
+        Cookies.set('rol', response.data.data.user.rol.nombreRol, {
+          expires: 1,
+        });
+        Cookies.set(
+          'nombre',
+          response.data.data.user.nombre +
+            ' ' +
+            response.data.data.user.primerApe
+        );
+        toast.success('Contrasena creada satisfactoriamente!😊', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          navigate('/Inicio');
+        }, 2000);
+      }
     } catch (err) {
       if (
         err.response.data.message ===
@@ -100,6 +147,7 @@ export default function Activacion() {
                         </h1>
                         <p className="mb-4">Ingresa tu nueva contraseña</p>
                       </div>
+
                       <form className="user">
                         <div className="form-group position-relative">
                           <div className="input-with-icon">
@@ -142,6 +190,23 @@ export default function Activacion() {
                               />
                             </button>
                           </div>
+                        </div>
+                        <div className="text-sm text-red-600 mb-4">
+                          <a className="my-anchor1">
+                            <FontAwesomeIcon icon={faShield} />
+                          </a>
+                          <Tooltip anchorSelect=".my-anchor1" place="top">
+                            <p>
+                              Las contraseñas deben cumplir con los siguientes
+                              requisitos:
+                            </p>
+                            <ul className="list-disc list-inside">
+                              <li>Mínimo 8 caracteres</li>
+                              <li>Al menos una letra mayúscula</li>
+                              <li>Al menos una letra minúscula</li>
+                              <li>Al menos un número</li>
+                            </ul>
+                          </Tooltip>
                         </div>
                         <button
                           type="submit"

@@ -184,7 +184,18 @@ export default function ListaUsuarios() {
       );
       if (response.status === 201) {
         setLoading(true);
-        window.location.reload();
+        toast.success('Usuario creado satisfactoriamente!😊', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       }
     } catch (err) {
       if (err.response.data.err.message === 'jwt expired') {
