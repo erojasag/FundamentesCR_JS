@@ -86,6 +86,21 @@ export default function Login() {
         }, 2000);
       }
     } catch (err) {
+      if (err.message === 'Network Error') {
+        toast.error(
+          'Problema de conexion, por favor contacte al administrador!',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
+        return;
+      }
       if (err.response.data.message === 'Correo o contraseña incorrectos') {
         toast.error(
           'Correo o contraseña incorrectos. Por favor intente de nuevo.',
@@ -101,6 +116,7 @@ export default function Login() {
         );
         return;
       }
+
       if (err.response.data.message === 'El usuario no existe') {
         toast.error('Este usuario no existe.', {
           position: 'top-right',

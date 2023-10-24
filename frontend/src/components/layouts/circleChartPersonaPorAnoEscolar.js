@@ -30,7 +30,6 @@ const CircleChartPersonasPorAnoEscolar = () => {
       const chartLabels = personasPorGenero.map(
         (item) => `${item.anoEscolar}: ${item.cantidad_ninos_x_ano_escolar}`
       ); // Create labels using 'edad'
-
       setChartLabels(chartLabels);
       setChartData(chartData);
     } catch (err) {
